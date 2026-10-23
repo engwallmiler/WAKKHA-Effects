@@ -1,0 +1,38 @@
+........................................................................ [ 11%]
+..F..................................................................... [ 23%]
+........................................................................ [ 35%]
+........................................................................ [ 47%]
+........................................................................ [ 59%]
+........................................................................ [ 71%]
+........................................................................ [ 83%]
+........................................................................ [ 95%]
+............................                                             [100%]
+================================== FAILURES ===================================
+___ test_real_shifted_kicks_realign_audio_pipeline_without_waiting_for_pll ____
+
+    def test_real_shifted_kicks_realign_audio_pipeline_without_waiting_for_pll():
+        import numpy as np
+        from beatlight.audio.demo import structure_demo_samples
+        from beatlight.contracts import AudioBlock
+        from beatlight.dsp.pipeline import AudioAnalyzer
+        analyzer = AudioAnalyzer()
+        corrected = None
+        for seq, first in enumerate(range(0, 48000 * 16, 512)):
+            t = np.arange(first, first + 512) / 48000
+            samples = structure_demo_samples(t)
+            env = np.exp(-(((t - 0.2) * 2) % 1) * 12) * (t >= 12)
+            samples[:, 0] += (0.45 * env * np.sin(2 * np.pi * 70 * t)).astype(np.float32)
+            samples[:, 1] += (0.4 * env * np.sin(2 * np.pi * 85 * t)).astype(np.float32)
+            samples.setflags(write=False)
+            at = 100 + first / 48000
+            result = analyzer.process(AudioBlock("shifted-kick", samples, 48000, 2, seq, 512, at, at + 512 / 48000))
+            if result.structure and result.structure.grid.corrections:
+                corrected = result
+                break
+>       assert corrected is not None
+E       assert None is not None
+
+tests\test_continuous_grid.py:203: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_continuous_grid.py::test_real_shifted_kicks_realign_audio_pipeline_without_waiting_for_pll
+1 failed, 603 passed in 109.84s (0:01:49)

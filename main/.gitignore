@@ -1,0 +1,11 @@
+.venv/
+.runtime/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+preview.png
+.venv312/
+.tools/
+preview-espectro.png
+preview-configuracoes.png

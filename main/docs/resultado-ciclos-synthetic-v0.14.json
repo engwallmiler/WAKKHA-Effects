@@ -1,0 +1,95 @@
+{
+  "source": "synthetic",
+  "physical_output": false,
+  "effect": "phrase_show",
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 1966,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 21.0,
+    "audio_age": 0.01599999999962165,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      338,
+      1157,
+      300
+    ]
+  ],
+  "patterns": [
+    {
+      "elapsed": 0.078,
+      "pattern": "acquiring",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 2.171,
+      "pattern": "unison",
+      "cycle": 1,
+      "step": 4
+    },
+    {
+      "elapsed": 11.062,
+      "pattern": "chase",
+      "cycle": 3,
+      "step": 1
+    },
+    {
+      "elapsed": 19.078,
+      "pattern": "reverse",
+      "cycle": 5,
+      "step": 1
+    }
+  ],
+  "sync": {
+    "elapsed": 3.061999999999898,
+    "at": 7579.437,
+    "command": 1,
+    "original_grid_origin": 0,
+    "observed_step": 1,
+    "observed_phase": 0.0,
+    "grid_origin_unchanged": true
+  },
+  "pending_texture_change_observed": false,
+  "coordinated_mover_frames": 1252,
+  "cycles_after_sync": {
+    "1": "unison",
+    "2": "unison",
+    "3": "chase",
+    "4": "chase",
+    "5": "reverse"
+  },
+  "preparations": {
+    "fade": {
+      "frames": 31,
+      "minimum_gain": 0.11428571490666665
+    },
+    "blackout": {
+      "frames": 0,
+      "minimum_gain": null
+    }
+  },
+  "resumed_after_preparation": 4,
+  "drop": {},
+  "pause_steps": [],
+  "pause_confirmed": [],
+  "lighting_hz": 60.0,
+  "lighting_processing_ms": 0.27150000005349284,
+  "closed_cleanly": true,
+  "final_zero": true
+}

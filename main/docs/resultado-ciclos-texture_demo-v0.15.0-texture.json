@@ -1,0 +1,147 @@
+{
+  "source": "texture_demo",
+  "variation": "texture",
+  "physical_output": false,
+  "effect": "phrase_show",
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2154,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 23.0,
+    "audio_age": 0.01599999999962165,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      477,
+      1157,
+      300
+    ]
+  ],
+  "patterns": [
+    {
+      "elapsed": 0.063,
+      "pattern": "acquiring",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 2.156,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 4
+    },
+    {
+      "elapsed": 3.063,
+      "pattern": "response",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 3.078,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 1
+    },
+    {
+      "elapsed": 7.063,
+      "pattern": "sparks",
+      "cycle": 2,
+      "step": 1
+    },
+    {
+      "elapsed": 13.453,
+      "pattern": "buildup",
+      "cycle": 3,
+      "step": 5
+    },
+    {
+      "elapsed": 20.563,
+      "pattern": "question",
+      "cycle": 5,
+      "step": 3
+    }
+  ],
+  "sync": {
+    "elapsed": 3.063000000000102,
+    "at": 12094.125,
+    "command": 1,
+    "original_grid_origin": 0,
+    "observed_step": 1,
+    "observed_phase": 0.02999999999818126,
+    "grid_origin_unchanged": true
+  },
+  "pending_texture_change_observed": true,
+  "coordinated_mover_frames": 1373,
+  "cycles_after_sync": {
+    "1": "chase",
+    "2": "sparks",
+    "3": "sparks",
+    "4": "question",
+    "5": "question"
+  },
+  "par_groups": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    12,
+    15
+  ],
+  "groove_programs": 3,
+  "sync_flash_frames": 13,
+  "sync_minimum_par_intensity": 0.76,
+  "change_reasons": [
+    "densidade ↑",
+    "graves ↓",
+    "ocupação ↑"
+  ],
+  "structural_rhythms": [
+    "Cruzamentos",
+    "Escada crescente",
+    "Ondas"
+  ],
+  "preparations": {
+    "fade": {
+      "frames": 6,
+      "minimum_gain": 0.11428571490666348
+    },
+    "blackout": {
+      "frames": 11,
+      "minimum_gain": 0.0
+    }
+  },
+  "resumed_after_preparation": 2,
+  "drop": {},
+  "pause_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "pause_confirmed": [
+    11
+  ],
+  "lighting_hz": 61.0,
+  "lighting_processing_ms": 0.3102999999100575,
+  "closed_cleanly": true,
+  "final_zero": true
+}

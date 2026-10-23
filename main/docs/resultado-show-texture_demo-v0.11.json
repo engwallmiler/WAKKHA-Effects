@@ -1,0 +1,132 @@
+{
+  "source": "texture_demo",
+  "physical_output": false,
+  "stage_open": true,
+  "duration": 23.0,
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2156,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 23.0,
+    "audio_age": 0,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "patterns": [
+    {
+      "elapsed": 0.063,
+      "pattern": "acquiring"
+    },
+    {
+      "elapsed": 2.172,
+      "pattern": "chase"
+    },
+    {
+      "elapsed": 7.016,
+      "pattern": "fill"
+    },
+    {
+      "elapsed": 8.016,
+      "pattern": "chase"
+    },
+    {
+      "elapsed": 8.516,
+      "pattern": "bounce"
+    },
+    {
+      "elapsed": 12.5,
+      "pattern": "fill"
+    },
+    {
+      "elapsed": 13.438,
+      "pattern": "buildup"
+    },
+    {
+      "elapsed": 20.563,
+      "pattern": "sweep"
+    }
+  ],
+  "transitions": [
+    {
+      "elapsed": 0.063,
+      "state": "warming"
+    },
+    {
+      "elapsed": 2.156,
+      "state": "groove"
+    },
+    {
+      "elapsed": 13.438,
+      "state": "buildup"
+    },
+    {
+      "elapsed": 20.563,
+      "state": "groove"
+    }
+  ],
+  "fills": 2,
+  "peak_novelty": 1.0,
+  "par_intensity_ranges": [
+    {
+      "min": 0.01370813566565373,
+      "max": 0.7644890240482859
+    },
+    {
+      "min": 0.013714591553201491,
+      "max": 0.8
+    },
+    {
+      "min": 0.01370813566565373,
+      "max": 0.8
+    },
+    {
+      "min": 0.01370813566565373,
+      "max": 0.7644890240482859
+    }
+  ],
+  "par_distinct_colors": [
+    176,
+    176,
+    176,
+    176
+  ],
+  "frames_with_par_contrast_above_30_percent": 505,
+  "clocked_frames": 1247,
+  "steps_without_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "confirmed_counts_without_kicks": [
+    11
+  ],
+  "peak_white": 0.9458703458072901,
+  "lighting_hz": 59.0,
+  "peak_lighting_processing_ms": 1.1977000031038187,
+  "stage_geometries": [
+    [
+      0,
+      230,
+      1157,
+      300
+    ]
+  ],
+  "closed_cleanly": true,
+  "final_intensities_zero": true
+}

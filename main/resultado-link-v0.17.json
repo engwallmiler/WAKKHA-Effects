@@ -1,0 +1,35 @@
+{
+  "native": true,
+  "samples": 25,
+  "tempo": 120.0,
+  "peers": [
+    1,
+    1
+  ],
+  "max_phase_error_ms_settled": 0.6989999997131235,
+  "last_a": {
+    "updated_at": 3198.765,
+    "state": "connected",
+    "tempo": 120.0,
+    "beat": 6.170058,
+    "peers": 1,
+    "revision": 1000001,
+    "sample_ms": 0.0,
+    "error": ""
+  },
+  "last_b": {
+    "updated_at": 3198.765,
+    "state": "connected",
+    "tempo": 120.0,
+    "beat": 6.170226,
+    "peers": 1,
+    "revision": 1000001,
+    "sample_ms": 0.0,
+    "error": ""
+  },
+  "tempo_or_transport_written": false,
+  "shutdown": [
+    "disabled",
+    "disabled"
+  ]
+}

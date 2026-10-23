@@ -1,0 +1,188 @@
+{
+  "source": "structure_demo",
+  "variation": "texture",
+  "physical_output": false,
+  "effect": "phrase_show",
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2435,
+    "dropped_blocks": 0,
+    "queue_depth": 2,
+    "elapsed": 26.0,
+    "audio_age": 0,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      477,
+      1157,
+      300
+    ]
+  ],
+  "patterns": [
+    {
+      "elapsed": 0.078,
+      "pattern": "acquiring",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 2.188,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 4
+    },
+    {
+      "elapsed": 8.672,
+      "pattern": "breakdown",
+      "cycle": 2,
+      "step": 4
+    },
+    {
+      "elapsed": 12.969,
+      "pattern": "buildup",
+      "cycle": 3,
+      "step": 4
+    },
+    {
+      "elapsed": 20.172,
+      "pattern": "drop",
+      "cycle": 1,
+      "step": 1
+    },
+    {
+      "elapsed": 24.188,
+      "pattern": "chase",
+      "cycle": 2,
+      "step": 1
+    }
+  ],
+  "sync": {
+    "elapsed": 3.063000000000102,
+    "at": 12198.781,
+    "command": 1,
+    "original_grid_origin": 0,
+    "observed_step": 1,
+    "observed_phase": 0.0,
+    "grid_origin_unchanged": true
+  },
+  "pending_texture_change_observed": true,
+  "coordinated_mover_frames": 1552,
+  "cycles_after_sync": {
+    "1": "chase",
+    "2": "chase",
+    "3": "chase",
+    "4": "chase",
+    "5": "chase"
+  },
+  "par_groups": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    15
+  ],
+  "groove_programs": 1,
+  "sync_flash_frames": 12,
+  "sync_minimum_par_intensity": 0.76,
+  "change_reasons": [
+    "ataques ↓"
+  ],
+  "structural_rhythms": [
+    "Abertura e resposta",
+    "Cruzamentos",
+    "Escada crescente",
+    "Ondas"
+  ],
+  "preparations": {
+    "fade": {
+      "frames": 6,
+      "minimum_gain": 0.11428571491965943
+    },
+    "blackout": {
+      "frames": 0,
+      "minimum_gain": null
+    }
+  },
+  "resumed_after_preparation": 1,
+  "drop": {
+    "1": {
+      "first": 20.17199999999866,
+      "last": 20.67199999999866,
+      "peak": 0.8,
+      "frames": 31
+    },
+    "2": {
+      "first": 20.67199999999866,
+      "last": 21.156999999999243,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "3": {
+      "first": 21.188000000000102,
+      "last": 21.656999999999243,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "4": {
+      "first": 21.67199999999866,
+      "last": 22.17199999999866,
+      "peak": 0.8,
+      "frames": 31
+    },
+    "5": {
+      "first": 22.17199999999866,
+      "last": 22.656999999999243,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "6": {
+      "first": 22.656999999999243,
+      "last": 23.156999999999243,
+      "peak": 0.8,
+      "frames": 30
+    },
+    "7": {
+      "first": 23.17199999999866,
+      "last": 23.656999999999243,
+      "peak": 0.8,
+      "frames": 30
+    },
+    "8": {
+      "first": 23.67199999999866,
+      "last": 24.156999999999243,
+      "peak": 0.8,
+      "frames": 31
+    }
+  },
+  "pause_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "pause_confirmed": [
+    15
+  ],
+  "lighting_hz": 60.0,
+  "lighting_processing_ms": 0.24369999846385326,
+  "closed_cleanly": true,
+  "final_zero": true
+}

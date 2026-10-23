@@ -1,0 +1,82 @@
+{
+  "source": "synthetic_composition_offline",
+  "physical_output": false,
+  "seconds": 28,
+  "elapsed_processing_seconds": 7.039150000000518,
+  "transitions": [
+    {
+      "at": 0.021,
+      "state": "warming",
+      "tension": 0,
+      "confidence": 0,
+      "reason": "Aprendendo o groove: precisa de BPM confiável e ao menos oito kicks.",
+      "peak_intensity": 0
+    },
+    {
+      "at": 4.117,
+      "state": "groove",
+      "tension": 0,
+      "confidence": 0.7,
+      "reason": "Groove; contagem relativa de oito kicks, assumindo 4/4.",
+      "peak_intensity": 0.1192654321039901
+    },
+    {
+      "at": 8.597,
+      "state": "breakdown",
+      "tension": 0.005,
+      "confidence": 0.9,
+      "reason": "Breakdown: ausência de kicks e redução dos graves; procurando sinais de tensão.",
+      "peak_intensity": 0.09079735497516213
+    },
+    {
+      "at": 12.875,
+      "state": "buildup",
+      "tension": 0.202,
+      "confidence": 0.9,
+      "reason": "Build-up: ataques repetidos com aceleração ou crescimento dos agudos.",
+      "peak_intensity": 0.2972459865051002
+    },
+    {
+      "at": 20.117,
+      "state": "drop",
+      "tension": 1,
+      "confidence": 0.85,
+      "reason": "Retorno do kick e dos graves; alta energia no kick 1/8.",
+      "peak_intensity": 0.7098163580312651
+    },
+    {
+      "at": 24.117,
+      "state": "groove",
+      "tension": 0.974,
+      "confidence": 0.7,
+      "reason": "Groove; contagem relativa de oito kicks, assumindo 4/4.",
+      "peak_intensity": 0.11926543213032754
+    }
+  ],
+  "drop_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "max_tension": {
+    "warming": 0,
+    "groove": 0.9736857493531479,
+    "breakdown": 0.19962514034584303,
+    "buildup": 0.9499906432492498,
+    "drop": 1
+  },
+  "mean_block_ms": 2.4210316552851943,
+  "p99_block_ms": 4.316898000215587,
+  "continuity_errors": 0,
+  "errors": {
+    "dsp": "",
+    "kick": "",
+    "beat": "",
+    "structure": ""
+  }
+}

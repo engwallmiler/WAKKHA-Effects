@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beatlight-dmx"
+version = "0.18.0"
+description = "WASAPI, estrutura musical e simulador de palco — BEATLIGHT DMX"
+requires-python = ">=3.12"
+dependencies = ["numpy>=1.26,<3", "scipy>=1.12,<2", "PySide6>=6.7,<7", "PyAudioWPatch>=0.2.12.6,<0.3; sys_platform == 'win32'"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+link = ["aalink==0.2.3"]
+
+[project.scripts]
+beatlight = "beatlight.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

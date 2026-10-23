@@ -1,0 +1,213 @@
+{
+  "source": "structure_demo",
+  "variation": "texture",
+  "physical_output": false,
+  "effect": "phrase_show",
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2437,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 26.014999999999873,
+    "audio_age": 0.014999999999417923,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      477,
+      1157,
+      300
+    ]
+  ],
+  "patterns": [
+    {
+      "elapsed": 0.062,
+      "pattern": "acquiring",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 2.156,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 4
+    },
+    {
+      "elapsed": 3.062,
+      "pattern": "response",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 3.093,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 1
+    },
+    {
+      "elapsed": 8.656,
+      "pattern": "breakdown",
+      "cycle": 2,
+      "step": 4
+    },
+    {
+      "elapsed": 12.937,
+      "pattern": "buildup",
+      "cycle": 3,
+      "step": 4
+    },
+    {
+      "elapsed": 20.156,
+      "pattern": "drop",
+      "cycle": 1,
+      "step": 1
+    },
+    {
+      "elapsed": 24.172,
+      "pattern": "chase",
+      "cycle": 2,
+      "step": 1
+    }
+  ],
+  "sync": {
+    "elapsed": 3.062000000000353,
+    "at": 4097.156,
+    "command": 1,
+    "original_grid_origin": 0,
+    "observed_step": 1,
+    "observed_phase": 0.030000000000002913,
+    "grid_origin_unchanged": true
+  },
+  "pending_texture_change_observed": true,
+  "coordinated_mover_frames": 1420,
+  "cycles_after_sync": {
+    "1": "chase",
+    "2": "chase",
+    "3": "fan",
+    "4": "fan",
+    "5": "fan"
+  },
+  "mover_rhythms": [
+    "Pulso duplo",
+    "Sustentação de quatro tempos"
+  ],
+  "mover_color_count": 24,
+  "mover_level_range": [
+    0.00651789629899981,
+    0.7210600394797857
+  ],
+  "calm_frames": 245,
+  "calm_max_delta": 0.0008234324406458104,
+  "rejected_returns": 0,
+  "par_groups": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    15
+  ],
+  "groove_programs": 1,
+  "sync_flash_frames": 7,
+  "sync_minimum_par_intensity": 0.76,
+  "change_reasons": [
+    "ataques ↓",
+    "graves ↓"
+  ],
+  "structural_rhythms": [
+    "Abertura e resposta",
+    "Cruzamentos",
+    "Escada crescente",
+    "Ondas"
+  ],
+  "preparations": {
+    "fade": {
+      "frames": 4,
+      "minimum_gain": 0.013061224630197297
+    },
+    "blackout": {
+      "frames": 0,
+      "minimum_gain": null
+    }
+  },
+  "resumed_after_preparation": 1,
+  "drop": {
+    "1": {
+      "first": 20.156000000000404,
+      "last": 20.656000000000404,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "2": {
+      "first": 20.672000000000025,
+      "last": 21.172000000000025,
+      "peak": 0.8,
+      "frames": 27
+    },
+    "3": {
+      "first": 21.172000000000025,
+      "last": 21.672000000000025,
+      "peak": 0.8,
+      "frames": 28
+    },
+    "4": {
+      "first": 21.687000000000353,
+      "last": 22.139999999999873,
+      "peak": 0.8,
+      "frames": 25
+    },
+    "5": {
+      "first": 22.172000000000025,
+      "last": 22.625000000000455,
+      "peak": 0.8,
+      "frames": 25
+    },
+    "6": {
+      "first": 22.639999999999873,
+      "last": 23.139999999999873,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "7": {
+      "first": 23.172000000000025,
+      "last": 23.625000000000455,
+      "peak": 0.8,
+      "frames": 26
+    },
+    "8": {
+      "first": 23.656000000000404,
+      "last": 24.125000000000455,
+      "peak": 0.8,
+      "frames": 25
+    }
+  },
+  "pause_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "pause_confirmed": [
+    15
+  ],
+  "lighting_hz": 60.0,
+  "lighting_processing_ms": 0.3636999999798718,
+  "closed_cleanly": true,
+  "final_zero": true
+}

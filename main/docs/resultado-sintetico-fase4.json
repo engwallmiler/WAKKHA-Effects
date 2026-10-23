@@ -1,0 +1,36 @@
+{
+  "source": "synthetic_test_only",
+  "status": {
+    "state": "stopped",
+    "message": "Captura encerrada",
+    "blocks": 1125,
+    "dropped_blocks": 0,
+    "queue_depth": 1,
+    "elapsed": 12,
+    "audio_age": 0,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "analysis_error": "",
+  "kick_error": "",
+  "kicks": {
+    "count": 23,
+    "ready": true,
+    "retained_events": 16,
+    "history_points": 200
+  },
+  "processing_sample_count": 907,
+  "processing_ms": {
+    "mean": 2.309357552376532,
+    "p95": 3.2860199997230666,
+    "max": 5.706400001145084
+  }
+}

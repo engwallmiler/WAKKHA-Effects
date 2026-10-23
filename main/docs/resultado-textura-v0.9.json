@@ -1,0 +1,337 @@
+{
+  "source": "synthetic_texture_demo",
+  "physical_output": false,
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2154,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 23.0,
+    "audio_age": 0.01599999999962165,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "sparse_density": 0.490699992746026,
+  "dense_density": 0.8503316240554885,
+  "minimum_bass_scene_intensity": 0.24305532226001386,
+  "mean_bass_scene_intensity": 0.33786794119370883,
+  "peak_bass_scene_intensity": 0.4059537996889506,
+  "confirmed_in_bass_only_section": 0,
+  "verification": {
+    "updated_at": 29300.03266666352,
+    "confirmed_count": 21,
+    "acoustic_count": 24,
+    "expected_count": 36,
+    "matched_count": 12,
+    "missed_count": 24,
+    "confirmed_events": [
+      {
+        "occurred_at": 29280.06933333286,
+        "detected_at": 29280.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29280.56933333278,
+        "detected_at": 29280.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29281.0693333327,
+        "detected_at": 29281.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29281.56933333262,
+        "detected_at": 29281.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29282.06933333254,
+        "detected_at": 29282.093,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29282.56933333246,
+        "detected_at": 29282.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29295.079333330457,
+        "detected_at": 29295.109,
+        "intensity": 1.0,
+        "confidence": 0.807736063186543
+      },
+      {
+        "occurred_at": 29295.579333330377,
+        "detected_at": 29295.609,
+        "intensity": 1.0,
+        "confidence": 0.9304656939447897
+      },
+      {
+        "occurred_at": 29296.0693333303,
+        "detected_at": 29296.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29296.56933333022,
+        "detected_at": 29296.625,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29297.06933333014,
+        "detected_at": 29297.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29297.56933333006,
+        "detected_at": 29297.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29298.06933332998,
+        "detected_at": 29298.093,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29298.5693333299,
+        "detected_at": 29298.593,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29299.06933332982,
+        "detected_at": 29299.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29299.56933332974,
+        "detected_at": 29299.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      }
+    ],
+    "acoustic_events": [
+      {
+        "occurred_at": 29281.56933333262,
+        "detected_at": 29281.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29282.06933333254,
+        "detected_at": 29282.093,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29282.56933333246,
+        "detected_at": 29282.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29289.329333331378,
+        "detected_at": 29289.375,
+        "intensity": 1.0,
+        "confidence": 0.9299068256292782
+      },
+      {
+        "occurred_at": 29291.329333331058,
+        "detected_at": 29291.375,
+        "intensity": 1.0,
+        "confidence": 0.9299068227635069
+      },
+      {
+        "occurred_at": 29293.329333330737,
+        "detected_at": 29293.375,
+        "intensity": 1.0,
+        "confidence": 0.9299068227615267
+      },
+      {
+        "occurred_at": 29295.079333330457,
+        "detected_at": 29295.109,
+        "intensity": 1.0,
+        "confidence": 0.807736063186543
+      },
+      {
+        "occurred_at": 29295.579333330377,
+        "detected_at": 29295.609,
+        "intensity": 1.0,
+        "confidence": 0.9304656939447897
+      },
+      {
+        "occurred_at": 29296.0693333303,
+        "detected_at": 29296.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29296.56933333022,
+        "detected_at": 29296.625,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29297.06933333014,
+        "detected_at": 29297.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29297.56933333006,
+        "detected_at": 29297.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29298.06933332998,
+        "detected_at": 29298.093,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29298.5693333299,
+        "detected_at": 29298.593,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29299.06933332982,
+        "detected_at": 29299.109,
+        "intensity": 1.0,
+        "confidence": 0.98
+      },
+      {
+        "occurred_at": 29299.56933332974,
+        "detected_at": 29299.609,
+        "intensity": 1.0,
+        "confidence": 0.98
+      }
+    ],
+    "slots": [
+      [
+        29292.069333331427,
+        "sem kick"
+      ],
+      [
+        29292.56933333137,
+        "sem kick"
+      ],
+      [
+        29293.06933333131,
+        "sem kick"
+      ],
+      [
+        29293.569333331252,
+        "sem kick"
+      ],
+      [
+        29294.069333331194,
+        "sem kick"
+      ],
+      [
+        29294.569333331136,
+        "sem kick"
+      ],
+      [
+        29295.069333331077,
+        "confirmado"
+      ],
+      [
+        29295.56933333102,
+        "confirmado"
+      ],
+      [
+        29296.06933333096,
+        "confirmado"
+      ],
+      [
+        29296.569333330906,
+        "confirmado"
+      ],
+      [
+        29297.069333330848,
+        "confirmado"
+      ],
+      [
+        29297.56933333062,
+        "confirmado"
+      ],
+      [
+        29298.069333330408,
+        "confirmado"
+      ],
+      [
+        29298.569333330222,
+        "confirmado"
+      ],
+      [
+        29299.069333330055,
+        "confirmado"
+      ],
+      [
+        29299.56933332991,
+        "confirmado"
+      ]
+    ],
+    "grid": {
+      "updated_at": 29300.03266666352,
+      "state": "tracking",
+      "period": 0.4999999999271361,
+      "anchor_at": 29280.569333332678,
+      "confidence": 0.9087632765237559,
+      "uncertainty_ms": 4.231666666890305,
+      "next_kick_at": 29300.069333329837,
+      "next_phrase_at": 29300.569333329764,
+      "last_reference_at": 29299.56933332974,
+      "horizon_seconds": 59.53666666621939,
+      "predictions": [
+        29300.069333329837,
+        29300.569333329764,
+        29301.06933332969,
+        29301.56933332962,
+        29302.069333329546,
+        29302.569333329473,
+        29303.0693333294,
+        29303.569333329327
+      ],
+      "rejected_offgrid": 3,
+      "forecast_30_at": 29330.069333325464
+    },
+    "rejected_profile": 22,
+    "rejected_grid": 3,
+    "last_confirmed_at": 29299.691333330233
+  },
+  "stage_geometries": [
+    [
+      0,
+      230,
+      1157,
+      300
+    ]
+  ],
+  "errors": [],
+  "closed_cleanly": true,
+  "final_intensities_zero": true
+}

@@ -1,0 +1,100 @@
+{
+  "source": "synthetic_structure_demo",
+  "physical_output": false,
+  "stage_open": true,
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2436,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 26.0,
+    "audio_age": 0.014999999999417923,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "transitions": [
+    {
+      "elapsed": 0.047,
+      "state": "warming"
+    },
+    {
+      "elapsed": 2.156,
+      "state": "groove"
+    },
+    {
+      "elapsed": 8.625,
+      "state": "breakdown"
+    },
+    {
+      "elapsed": 12.906,
+      "state": "buildup"
+    },
+    {
+      "elapsed": 20.156,
+      "state": "drop"
+    },
+    {
+      "elapsed": 24.141,
+      "state": "groove"
+    }
+  ],
+  "drop_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "lighting_hz": 61.0,
+  "lighting_processing_ms": 0.1382000009471085,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      230,
+      1157,
+      300
+    ]
+  ],
+  "build_up_profile_peak": {
+    "movement_hz": 0.3245646037767679,
+    "white_mix": 0.9699999808964762,
+    "pre_drop_intensity": 0.6335015419435502
+  },
+  "grid_prediction_observed": true,
+  "color_profiles": [
+    "auto · aguardando áudio; paleta de apoio",
+    "auto · breakdown azul/violeta",
+    "auto · build-up para branco",
+    "auto · drop vermelho/magenta",
+    "auto · graves vermelho/azul",
+    "auto · textura leve menta/azul"
+  ],
+  "phrase_steps_without_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "confirmed_counts_during_pause": [
+    15
+  ],
+  "closed_cleanly": true,
+  "final_intensities_zero": true
+}

@@ -1,0 +1,151 @@
+{
+  "source": "structure_demo",
+  "effect": "orchestrated_show",
+  "color_model": "RGBW",
+  "white_peaks": [
+    0.9504736031342333,
+    0.9504945265345744,
+    0.9504736031342333,
+    0.9504945265345744,
+    0.9866899750684988,
+    0.985447706074892
+  ],
+  "rgbw_valid": true,
+  "physical_output": false,
+  "stage_open": true,
+  "duration": 26.0,
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2437,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 26.0,
+    "audio_age": 0,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "patterns": [
+    {
+      "elapsed": 0.063,
+      "pattern": "acquiring"
+    },
+    {
+      "elapsed": 2.172,
+      "pattern": "response"
+    },
+    {
+      "elapsed": 2.5,
+      "pattern": "chase"
+    },
+    {
+      "elapsed": 8.516,
+      "pattern": "bounce"
+    },
+    {
+      "elapsed": 8.656,
+      "pattern": "breakdown"
+    },
+    {
+      "elapsed": 12.922,
+      "pattern": "buildup"
+    },
+    {
+      "elapsed": 20.156,
+      "pattern": "drop"
+    },
+    {
+      "elapsed": 24.156,
+      "pattern": "chase"
+    }
+  ],
+  "transitions": [
+    {
+      "elapsed": 0.063,
+      "state": "warming"
+    },
+    {
+      "elapsed": 2.141,
+      "state": "groove"
+    },
+    {
+      "elapsed": 8.656,
+      "state": "breakdown"
+    },
+    {
+      "elapsed": 12.922,
+      "state": "buildup"
+    },
+    {
+      "elapsed": 20.141,
+      "state": "drop"
+    },
+    {
+      "elapsed": 24.156,
+      "state": "groove"
+    }
+  ],
+  "fills": 0,
+  "peak_novelty": 1.0,
+  "par_intensity_ranges": [
+    {
+      "min": 0.008,
+      "max": 0.8
+    },
+    {
+      "min": 0.008,
+      "max": 0.8
+    },
+    {
+      "min": 0.008,
+      "max": 0.8
+    },
+    {
+      "min": 0.008,
+      "max": 0.8
+    }
+  ],
+  "par_distinct_colors": [
+    373,
+    376,
+    372,
+    380
+  ],
+  "frames_with_par_contrast_above_30_percent": 457,
+  "clocked_frames": 1376,
+  "steps_without_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "confirmed_counts_without_kicks": [
+    15
+  ],
+  "peak_white": 0.9458740156778014,
+  "lighting_hz": 60.0,
+  "peak_lighting_processing_ms": 1.2260999999398337,
+  "stage_geometries": [
+    [
+      0,
+      230,
+      1157,
+      300
+    ]
+  ],
+  "closed_cleanly": true,
+  "final_intensities_zero": true
+}

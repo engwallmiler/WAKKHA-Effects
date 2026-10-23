@@ -1,0 +1,65 @@
+{
+  "source": "synthetic_structure_demo",
+  "physical_output": false,
+  "stage_open": true,
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2435,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 26.0,
+    "audio_age": 0.01599999999962165,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "transitions": [
+    {
+      "elapsed": 0.062,
+      "state": "warming"
+    },
+    {
+      "elapsed": 4.062,
+      "state": "groove"
+    },
+    {
+      "elapsed": 8.64,
+      "state": "breakdown"
+    },
+    {
+      "elapsed": 12.937,
+      "state": "buildup"
+    },
+    {
+      "elapsed": 20.047,
+      "state": "drop"
+    },
+    {
+      "elapsed": 24.062,
+      "state": "groove"
+    }
+  ],
+  "drop_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "lighting_hz": 61.0,
+  "lighting_processing_ms": 0.1813000017136801,
+  "errors": [],
+  "closed_cleanly": true,
+  "final_intensities_zero": true
+}

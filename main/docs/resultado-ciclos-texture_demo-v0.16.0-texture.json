@@ -1,0 +1,154 @@
+{
+  "source": "texture_demo",
+  "variation": "texture",
+  "physical_output": false,
+  "effect": "phrase_show",
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2155,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 23.0,
+    "audio_age": 0.01599999999962165,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      477,
+      1157,
+      300
+    ]
+  ],
+  "patterns": [
+    {
+      "elapsed": 0.078,
+      "pattern": "acquiring",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 2.172,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 4
+    },
+    {
+      "elapsed": 7.062,
+      "pattern": "fan",
+      "cycle": 2,
+      "step": 1
+    },
+    {
+      "elapsed": 13.437,
+      "pattern": "buildup",
+      "cycle": 3,
+      "step": 5
+    },
+    {
+      "elapsed": 20.562,
+      "pattern": "question",
+      "cycle": 5,
+      "step": 3
+    }
+  ],
+  "sync": {
+    "elapsed": 3.062000000001717,
+    "at": 16510.843,
+    "command": 1,
+    "original_grid_origin": 0,
+    "observed_step": 1,
+    "observed_phase": 0.032000000004365425,
+    "grid_origin_unchanged": true
+  },
+  "pending_texture_change_observed": true,
+  "coordinated_mover_frames": 1371,
+  "cycles_after_sync": {
+    "1": "chase",
+    "2": "fan",
+    "3": "fan",
+    "4": "question",
+    "5": "question"
+  },
+  "mover_rhythms": [
+    "Cortes e sustentação",
+    "Ondas de oito tempos",
+    "Pulso duplo",
+    "Sustentação de quatro tempos"
+  ],
+  "mover_color_count": 48,
+  "mover_level_range": [
+    0.0,
+    0.7790802000828091
+  ],
+  "calm_frames": 0,
+  "calm_max_delta": null,
+  "rejected_returns": 2,
+  "par_groups": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9,
+    12,
+    14,
+    15
+  ],
+  "groove_programs": 3,
+  "sync_flash_frames": 13,
+  "sync_minimum_par_intensity": 0.76,
+  "change_reasons": [
+    "densidade ↑",
+    "graves ↓",
+    "ocupação ↑"
+  ],
+  "structural_rhythms": [
+    "Cruzamentos",
+    "Escada crescente",
+    "Ondas"
+  ],
+  "preparations": {
+    "fade": {
+      "frames": 8,
+      "minimum_gain": 0.011479590855817704
+    },
+    "blackout": {
+      "frames": 13,
+      "minimum_gain": 0.0
+    }
+  },
+  "resumed_after_preparation": 2,
+  "drop": {},
+  "pause_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "pause_confirmed": [
+    11
+  ],
+  "lighting_hz": 60.0,
+  "lighting_processing_ms": 0.28920000113430433,
+  "closed_cleanly": true,
+  "final_zero": true
+}

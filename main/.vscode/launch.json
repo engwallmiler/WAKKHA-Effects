@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "BEATLIGHT · WASAPI",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run.py",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "BEATLIGHT · Teste sintético",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run.py",
+      "args": [
+        "--synthetic"
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}

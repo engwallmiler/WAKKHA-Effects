@@ -1,0 +1,18 @@
+# Dependências validadas • Windows x64 / Python 3.12 • versão 0.18 (módulo Link opcional instalado neste ambiente)
+PyAudioWPatch==0.2.12.9
+PySide6==6.12.0
+PySide6_Addons==6.12.0
+PySide6_Essentials==6.12.0
+PySide6_Pdf==6.12.0.140
+PySide6_WebEngine==6.12.0.140
+Pygments==2.21.0
+colorama==0.4.6
+iniconfig==2.3.1
+numpy==2.5.4
+packaging==26.3
+pluggy==1.6.0
+pytest==9.1.1
+scipy==1.18.1
+shiboken6==6.12.0
+# Opcional: sincronismo externo
+aalink==0.2.3

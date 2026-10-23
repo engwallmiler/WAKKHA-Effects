@@ -1,0 +1,200 @@
+{
+  "source": "structure_demo",
+  "variation": "texture",
+  "physical_output": false,
+  "effect": "phrase_show",
+  "status": {
+    "state": "running",
+    "message": "Monitorando áudio",
+    "blocks": 2437,
+    "dropped_blocks": 0,
+    "queue_depth": 0,
+    "elapsed": 26.0,
+    "audio_age": 0,
+    "stream_format": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "block_size": 512,
+      "sample_format": "float32",
+      "input_latency": 0.0
+    },
+    "error": "",
+    "notice": ""
+  },
+  "continuity_errors": 0,
+  "errors": [],
+  "stage_geometries": [
+    [
+      0,
+      477,
+      1157,
+      300
+    ]
+  ],
+  "patterns": [
+    {
+      "elapsed": 0.062,
+      "pattern": "acquiring",
+      "cycle": 0,
+      "step": 0
+    },
+    {
+      "elapsed": 2.141,
+      "pattern": "chase",
+      "cycle": 1,
+      "step": 4
+    },
+    {
+      "elapsed": 8.641,
+      "pattern": "breakdown",
+      "cycle": 2,
+      "step": 4
+    },
+    {
+      "elapsed": 12.922,
+      "pattern": "buildup",
+      "cycle": 3,
+      "step": 4
+    },
+    {
+      "elapsed": 20.156,
+      "pattern": "drop",
+      "cycle": 1,
+      "step": 1
+    },
+    {
+      "elapsed": 24.156,
+      "pattern": "chase",
+      "cycle": 2,
+      "step": 1
+    }
+  ],
+  "sync": {
+    "elapsed": 3.061999999999898,
+    "at": 16256.921,
+    "command": 1,
+    "original_grid_origin": 0,
+    "observed_step": 1,
+    "observed_phase": 0.0,
+    "grid_origin_unchanged": true
+  },
+  "pending_texture_change_observed": true,
+  "coordinated_mover_frames": 1543,
+  "cycles_after_sync": {
+    "1": "chase",
+    "2": "chase",
+    "3": "chase",
+    "4": "chase",
+    "5": "chase"
+  },
+  "mover_rhythms": [
+    "Pulso duplo",
+    "Sustentação de quatro tempos"
+  ],
+  "mover_color_count": 25,
+  "mover_level_range": [
+    0.0005510204145352314,
+    0.76
+  ],
+  "calm_frames": 256,
+  "calm_max_delta": 0.0007682808145940689,
+  "rejected_returns": 0,
+  "par_groups": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    15
+  ],
+  "groove_programs": 1,
+  "sync_flash_frames": 13,
+  "sync_minimum_par_intensity": 0.76,
+  "change_reasons": [
+    "ataques ↓"
+  ],
+  "structural_rhythms": [
+    "Abertura e resposta",
+    "Cruzamentos",
+    "Escada crescente",
+    "Ondas"
+  ],
+  "preparations": {
+    "fade": {
+      "frames": 7,
+      "minimum_gain": 0.011479591969483987
+    },
+    "blackout": {
+      "frames": 0,
+      "minimum_gain": null
+    }
+  },
+  "resumed_after_preparation": 1,
+  "drop": {
+    "1": {
+      "first": 20.15599999999904,
+      "last": 20.64099999999962,
+      "peak": 0.8,
+      "frames": 28
+    },
+    "2": {
+      "first": 20.65599999999904,
+      "last": 21.15599999999904,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "3": {
+      "first": 21.17200000000048,
+      "last": 21.67200000000048,
+      "peak": 0.8,
+      "frames": 30
+    },
+    "4": {
+      "first": 21.67200000000048,
+      "last": 22.14099999999962,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "5": {
+      "first": 22.15599999999904,
+      "last": 22.625,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "6": {
+      "first": 22.64099999999962,
+      "last": 23.14099999999962,
+      "peak": 0.8,
+      "frames": 30
+    },
+    "7": {
+      "first": 23.15599999999904,
+      "last": 23.60900000000038,
+      "peak": 0.8,
+      "frames": 29
+    },
+    "8": {
+      "first": 23.65599999999904,
+      "last": 24.14099999999962,
+      "peak": 0.8,
+      "frames": 31
+    }
+  },
+  "pause_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "pause_confirmed": [
+    15
+  ],
+  "lighting_hz": 60.0,
+  "lighting_processing_ms": 0.3291000011813594,
+  "closed_cleanly": true,
+  "final_zero": true
+}

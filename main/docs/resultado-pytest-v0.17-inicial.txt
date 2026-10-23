@@ -1,0 +1,39 @@
+.......................................................................F [ 12%]
+........................................................................ [ 25%]
+........................................................................ [ 38%]
+........................................................................ [ 50%]
+........................................................................ [ 63%]
+........................................................................ [ 76%]
+........................................................................ [ 88%]
+...............................................................          [100%]
+================================== FAILURES ===================================
+_ test_audio_pipeline_acquires_after_four_detected_kicks_before_three_seconds _
+
+    def test_audio_pipeline_acquires_after_four_detected_kicks_before_three_seconds():
+        import numpy as np
+        from beatlight.audio.demo import structure_demo_samples
+        from beatlight.contracts import AudioBlock
+        from beatlight.dsp.pipeline import AudioAnalyzer
+        analyzer = AudioAnalyzer()
+        learned = None
+        for seq, first in enumerate(range(0, 48000 * 3, 512)):
+            t = np.arange(first, first + 512) / 48000
+            samples = structure_demo_samples(t)
+            samples.setflags(write=False)
+            at = 100 + first / 48000
+            result = analyzer.process(AudioBlock("fast-acquire", samples, 48000, 2, seq, 512, at, at + 512 / 48000))
+            if result.structure and result.structure.state == "groove":
+                learned = result
+                break
+        assert learned is not None
+        assert learned.structure.updated_at < 102.5
+>       assert len(learned.structure.confirmed_kicks) == 4
+E       AssertionError: assert 0 == 4
+E        +  where 0 = len(())
+E        +    where () = StructureSnapshot(updated_at=101.22666666666653, state='groove', tension=0.0, confidence=0.55, energy=0.77550753275216....984, intensity=1.0, confidence=0.9483198406656752)), rejected_returns=0, reference_ready=False, timing_source='audio').confirmed_kicks
+E        +      where StructureSnapshot(updated_at=101.22666666666653, state='groove', tension=0.0, confidence=0.55, energy=0.77550753275216....984, intensity=1.0, confidence=0.9483198406656752)), rejected_returns=0, reference_ready=False, timing_source='audio') = MonitorSnapshot(sequence=116, waveform=((0.1413855403661728, 0.14998285472393036, 0.07677580416202545, 0.1372497081756...=0.9), rejected_profile=0, rejected_grid=0, last_confirmed_at=None), kick_verification_error='', timing_source='audio').structure
+
+tests\test_continuous_grid.py:161: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_continuous_grid.py::test_audio_pipeline_acquires_after_four_detected_kicks_before_three_seconds
+1 failed, 566 passed in 184.60s (0:03:04)

@@ -14,6 +14,7 @@ from beatlight.ui.window import MainWindow
 from beatlight.ui.theme import STYLE
 from beatlight.lighting.patterns import MOTIFS
 from beatlight.lighting.rgbw import preview_rgb
+from beatlight import __version__
 root=Path(__file__).resolve().parents[1]
 source=sys.argv[1] if len(sys.argv)>1 else "structure_demo"
 assert source in ("structure_demo","texture_demo","synthetic")
@@ -30,7 +31,7 @@ window.show();window._navigate(7)
 end=monotonic()+5
 while (window.busy or not window.devices) and monotonic()<end:
     app.processEvents();sleep(.005)
-geometry=set();errors=set();patterns=[];captures={};drop={};seen=set()
+geometry=set();errors=set();patterns=[];captures={};drop={};seen=set();drop_detection=None
 mover_frames=0;cycle_patterns={};sync_cycle_patterns={}
 par_groups=set();groove_programs=set();sync_flash_frames=0;sync_minimum=1.0;change_reasons=set();structural_rhythms=set()
 preparation={"fade":[],"blackout":[]};pause_steps=set();pause_counts=set()
@@ -115,6 +116,8 @@ try:
                 window._tick();app.processEvents();window.stage_view.set_snapshot(light);window.stage_pattern_view.set_snapshot(light);captures[name]=window.grab().toImage()
             last_gain=light.phrase_gain
             if light.status=="drop" and audio.structure.state=="drop":
+                if drop_detection is None:
+                    drop_detection=asdict(audio.structure.drop_evidence) if audio.structure.drop_evidence else {}
                 count=audio.structure.drop_kicks
                 row=drop.setdefault(count,dict(first=elapsed,last=elapsed,peak=0.0,frames=0))
                 row.update(last=elapsed,peak=max(row["peak"],max(s.intensity for s in light.states[:4])),frames=row["frames"]+1)
@@ -136,7 +139,7 @@ try:
         par_groups=sorted(par_groups),groove_programs=len(groove_programs),sync_flash_frames=sync_flash_frames,
         sync_minimum_par_intensity=sync_minimum,change_reasons=sorted(change_reasons),structural_rhythms=sorted(structural_rhythms),
         preparations={k:dict(frames=len(v),minimum_gain=min(v) if v else None) for k,v in preparation.items()},
-        resumed_after_preparation=resumed,drop=drop,pause_steps=sorted(pause_steps),pause_confirmed=sorted(pause_counts),
+        resumed_after_preparation=resumed,drop=drop,drop_detection=drop_detection,pause_steps=sorted(pause_steps),pause_confirmed=sorted(pause_counts),
         lighting_hz=light.update_hz,lighting_processing_ms=light.processing_ms)
 finally:
     window.close();end=monotonic()+8
@@ -144,7 +147,7 @@ finally:
 for name,capture in captures.items():capture.save(str(root/f"preview-cycles-{source}-{name}.png"))
 report["closed_cleanly"]=window.closed_ready and not window.light_runtime.running
 report["final_zero"]=all(s.intensity==s.white==0 and s.color==(0,0,0) for s in window.light_runtime.snapshot().states)
-(root/"docs"/f"resultado-ciclos-{source}-v0.18.0-{variation}.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+(root/"docs"/f"resultado-ciclos-{source}-v{__version__}-{variation}.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
 print(json.dumps(report,ensure_ascii=False,indent=2))
 assert report["closed_cleanly"] and report["final_zero"] and not errors
 assert status.dropped_blocks==audio.continuity_errors==0
@@ -156,6 +159,7 @@ if source!="synthetic":assert pause_steps==set(range(1,9)) and len(pause_counts)
 if source=="structure_demo":
     assert calm_frames>60 and calm_deltas and max(calm_deltas)<.025
     assert set(drop)==set(range(1,9))
+    assert 20<=drop[1]["first"]<20.25  # primeiro ataque, sem esperar o segundo kick de 20,5 s
     assert all(row["last"]-row["first"]>.35 and row["peak"]>.7 for row in drop.values())
 elif source=="texture_demo":
     assert preparation["blackout"] and pending_seen

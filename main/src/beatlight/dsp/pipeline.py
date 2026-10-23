@@ -181,7 +181,7 @@ class AudioAnalyzer:
                         except Exception:
                             log.warning("external_clock_unavailable", exc_info=True)
                     self._structure_latest = self._structure.process(feature, events,
-                        external or (self._beat_latest if not self._beat_error else None))
+                        external or (self._beat_latest if not self._beat_error else None), bool(external))
                 except Exception as exc:
                     log.exception("structure_analysis_failed")
                     self._structure_error, self._structure_latest = str(exc), None

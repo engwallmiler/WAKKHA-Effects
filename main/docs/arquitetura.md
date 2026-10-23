@@ -1,4 +1,4 @@
-# Arquitetura — versão 0.18
+# Arquitetura — versão 0.19
 
 ## Fluxo implementado
 
@@ -138,7 +138,7 @@ O Lighting Studio é um inspetor. StageView renderiza os mesmos estados, sem cal
 
 O extrator estrutural recebe o sinal original, com FFT/bandas fixas independentes da inspeção. StructureTracker recebe descritores, kicks e período confiável; aprende o groove, calcula tensão e confirma retorno dos graves com kick. Os oito kicks do pós-drop são eventos detectados e deduplicados, não batidas sintetizadas pelo PLL. Contagem relativa em 4/4 não equivale à detecção de downbeat. Detalhes, limites e critérios em estrutura-musical.md.
 
-A estrutura publica KickGridSnapshot com janelas previstas, confiança, incerteza, horizonte e previsão +30 s quando utilizável. Kicks confirmados são publicados separadamente dos candidatos brutos. A camada de confirmação usa assinaturas graves e 120 ms de observação; a grade preserva a fase durante o breakdown e rejeita contratempos. A previsão não estende o PLL nem garante kick/drop. Detalhes em grid-kicks.md.
+A estrutura publica KickGridSnapshot com janelas previstas, confiança, incerteza, horizonte e previsão +30 s quando utilizável. Kicks confirmados são publicados separadamente dos candidatos brutos. A aprendizagem e a correção da grade usam assinaturas graves e 120 ms de observação; o retorno e os oito kicks do drop também podem usar o perfil transitório de 55 ms. A grade preserva a fase durante o breakdown e rejeita contratempos. A previsão não estende o PLL nem garante kick/drop. Detalhes em grid-kicks.md e drop-detection.md.
 
 ## Textura e verificação de kicks — 0.9
 
@@ -196,6 +196,8 @@ MainWindow publica a seleção/compensação como uma tupla; resolve o mesmo sna
 
 A projeção exige pelo menos um participante e amostra recente (até 500 ms, ou até 250 ms anterior à amostra para descritores capturados). Referência inválida retorna ao snapshot por áudio. Revisões de conexão, reposicionamento grande e compensação invalidam o alinhamento visual manual. Não há saída DMX. O protocolo Link usa rede local; as demais saídas permanecem abstratas.
 
-## Evidência de drop — v0.18
+## Evidência de drop — v0.19
 
-music/drop.py mantém a média de potência linear de até 16 ataques e acompanha pausa e cadência dos candidatos, sem receber áudio bruto ou controlar o relógio externo. KickIdentity publica potência e picos do ataque; o caminho preparado pode usar 90 ms de descritores, com compensação limitada do leito harmônico após pausa. StructureTracker preserva referências apenas durante pausas curtas de build/break, mantendo estado visual de silêncio, e exige identidade, energia e grade antes de entrar no drop. DropEvidenceSnapshot segue no snapshot estrutural e no diagnóstico JSON.
+music/drop.py mantém a média de potência linear de até 16 ataques e acompanha pausa e cadência dos candidatos, sem controlar o relógio externo. KickIdentity aprende também a forma e o decaimento nos primeiros 55 ms do ataque. No retorno armado, subtrai o fundo sonoro em potência e pode confirmar o mesmo ataque sem aguardar a cauda completa. Uma tentativa rápida incerta permanece pendente até 120 ms; descritores rápidos não alteram o perfil aprendido nem autorizam correção da grade. Um candidato contextual pode recuperar um ataque grave real perdido pelo detector geral, com deduplicação das publicações tardias.
+
+StructureTracker usa a fase do Link fornecida pelo pipeline quando ela é válida. Na previsão acústica após ausência longa, a tolerância de retorno é limitada a 18% de um tempo; a correção da grade continua exigindo evidência completa e consistente. Oito kicks reais continuam sendo contados desde o primeiro impacto, com a análise do transiente também ativa durante essa cena. O transiente forte validado dispensa uma subida global de 7 dB quando o baixo já estava presente. DropEvidenceSnapshot acrescenta a janela de confirmação medida e a indicação de ataque recuperado; o palco usa as linhas de tamanho fixo já existentes. Ver drop-detection.md.

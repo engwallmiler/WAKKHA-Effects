@@ -139,7 +139,7 @@ class StructureTracker:
             "buildup": "Build-up provável: ataques rápidos e crescimento espectral."}[state]
         return description + " Contexto provisório; perfil do kick ainda em aquisição. " + seed, .55, target
 
-    def process(self, feature: StructureFeatures, kicks=(), beat=None) -> StructureSnapshot:
+    def process(self, feature: StructureFeatures, kicks=(), beat=None, external_clock=False) -> StructureSnapshot:
         at = feature.at
         if not math.isfinite(at) or self._at is not None and at < self._at:
             raise ValueError("Descritores estruturais devem avançar monotonamente.")
@@ -151,7 +151,9 @@ class StructureTracker:
         self._at = at
         if beat and beat.state == "locked" and beat.confidence >= 0.45 and 0.25 <= beat.period <= 1.2:
             self._period = beat.period
-        if self._grid.ready:
+        external_clock = bool(external_clock and beat and beat.state == "locked"
+            and beat.confidence>=.7 and .25<=beat.period<=1.2 and abs(at-beat.updated_at)<.5)
+        if self._grid.ready and not external_clock:
             self._period = self._grid.period
         if feature.onset:
             self._onsets.append(at)
@@ -197,10 +199,24 @@ class StructureTracker:
         if self._state in ("breakdown", "buildup") and gap_before > max(1.1, 2.2 * self._period):
             self._return_armed = True
         new_kicks = []
-        fast_return = returning and self._return_armed and self._drop_detector.fast_return(at, self._period, self._last_kick)
+        fast_return = (returning and self._return_armed or self._state=="drop") and self._drop_detector.ready
         after_pause = returning and self._drop_detector.pause_recent(at)
+        forecast_return = fast_return and self._drop_detector.fast_return(at,self._period,self._last_kick)
+        def return_aligned(event):
+            if external_clock and beat.last_beat_at is not None:
+                error = abs((event.occurred_at-beat.last_beat_at+beat.period/2)%beat.period-beat.period/2)
+                return error <= max(.025,beat.period*.12)
+            if self._state=="drop" and self._drop_at is not None:
+                error = abs((event.occurred_at-self._drop_at+self._period/2)%self._period-self._period/2)
+                return error <= max(.025,self._period*.12)
+            if forecast_return and self._grid.ready:
+                error = abs((event.occurred_at-self._grid.anchor+self._period/2)%self._period-self._period/2)
+                # A previsão após muitos tempos pode derivar. Aceitar o ataque
+                # dentro de 18% do tempo não realinha a grade com uma só amostra.
+                return error <= self._period*.18
+            return self._grid.matches(event,at)
         for event in self._identity.push(feature, kicks, fast_return=fast_return, after_pause=after_pause,
-                early_matches=lambda candidate: self._grid.matches(candidate, at)):
+                early_matches=return_aligned):
             self._acoustic.append(event)
             if event.occurred_at > at or event.occurred_at <= self._cursor:
                 self._identity.discard(event)
@@ -213,15 +229,17 @@ class StructureTracker:
             strict_return = self._identity.return_matches(event)
             if returning and not strict_return and after_pause:
                 strict_return = self._identity.return_matches(event, after_pause=True)
-            if returning and not strict_return:
+            if (returning or self._state=="drop") and not strict_return:
                 self._rejected_returns += 1
                 self._identity.discard(event)
                 continue
-            if returning and not self._drop_detector.strong_candidate(event, descriptor, self._period, self._last_kick):
+            if (returning or self._state=="drop") and not self._drop_detector.strong_candidate(event, descriptor, self._period, self._last_kick):
                 self._rejected_returns += 1
                 self._identity.discard(event)
                 continue
-            if self._grid.ready and not self._grid.reconcile(event, at, self._identity.correction_matches(event)):
+            local_match = not self._grid.ready or self._grid.reconcile(event, at, self._identity.correction_matches(event))
+            context_return = (returning or self._state=="drop") and return_aligned(event)
+            if not local_match and not context_return:
                 self._identity.discard(event)
                 continue
             if self._last_kick is not None and event.occurred_at - self._last_kick < max(0.22, self._period * 0.55):
@@ -231,7 +249,7 @@ class StructureTracker:
             if learn and (len(self._identity.references) < 4 or self._identity.return_matches(event)):
                 self._drop_detector.learn(descriptor)
             self._identity.accept(event, learn)
-            if learn or self._state == "drop":
+            if (learn or self._state == "drop") and local_match:
                 self._grid.observe(event, beat)
             self._confirmed.append(event)
             self._last_kick = event.occurred_at
@@ -241,7 +259,7 @@ class StructureTracker:
             self._kick_count += 1
             self._phrase_count += 1
             new_kicks.append(event)
-        if self._grid.ready:
+        if self._grid.ready and not external_clock:
             self._period = self._grid.period
         gap = at - self._last_kick if self._last_kick is not None else 0.0
         if feature.rms_db < -60:
@@ -323,8 +341,10 @@ class StructureTracker:
                     recovered = self._drop_detector.recovered(self._pending_descriptor,
                         low, feature.low_db, self._low_ref, self._break_low)
                     if (self._return_armed and pending and 0 <= at - pending.occurred_at < 0.25
-                            and self._grid.matches(pending, at) and recovered):
-                        self._grid.observe(pending, beat)
+                            and return_aligned(pending) and recovered):
+                        if self._grid.matches(pending,at):
+                            self._grid.observe(pending, beat)
+                        self._drop_detector.confirm(pending,self._pending_descriptor,at)
                         self._drop_id += 1
                         self._drop_at = pending.occurred_at
                         self._drop_count = self._phrase_count = 1

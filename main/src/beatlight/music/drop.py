@@ -31,6 +31,9 @@ class DropDetector:
         self.rejected_weak = 0
         self.weak_at = -math.inf
         self.reason = ""
+        self.confirmation_ms = None
+        self.fast_confirmed = False
+        self.rescued_attack = False
 
     def learn(self, descriptor):
         if descriptor is None or descriptor.power_db <= -100:
@@ -98,7 +101,15 @@ class DropDetector:
         # O pico do próprio ataque não espera a média de 600 ms recuperar.
         peak = descriptor.peak_low_db if descriptor is not None else -120
         returned = max(low, current_low, peak)
-        return returned > low_ref - 4 and returned - break_low >= 7
+        # Um transiente separado do fundo, validado em timbre e potência,
+        # também prova o retorno quando o baixo já sustentava a mixagem.
+        return returned > low_ref - 4 and (returned - break_low >= 7
+            or descriptor is not None and descriptor.early)
+
+    def confirm(self,event,descriptor,at):
+        self.confirmation_ms = max(0.0,(at-event.occurred_at)*1000)
+        self.fast_confirmed = bool(descriptor and descriptor.early)
+        self.rescued_attack = bool(descriptor and descriptor.rescued)
 
     def snapshot(self, at, period, last_kick, armed):
         missing = max(0.0, (at - last_kick) / period) if last_kick is not None and period else 0.0
@@ -110,4 +121,5 @@ class DropDetector:
             f"Retorno armado após {missing:.0f} tempos sem kick forte." if armed and missing >= 7.5 else "")
         return DropEvidenceSnapshot(self.reference_db, self.candidate_db,
             self.power_ratio, missing, armed, pause, self.accelerated,
-            self.high_return, self.rejected_weak, reason)
+            self.high_return, self.rejected_weak, reason,self.confirmation_ms,
+            self.fast_confirmed,self.rescued_attack)

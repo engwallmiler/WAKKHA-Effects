@@ -187,6 +187,9 @@ class DropEvidenceSnapshot:
     high_return: bool = False
     rejected_weak: int = 0
     reason: str = ""
+    confirmation_ms: float | None = None  # ataque até decisão; não inclui captura/renderização
+    fast_confirmed: bool = False
+    rescued_attack: bool = False
 
 
 @dataclass(frozen=True, slots=True)

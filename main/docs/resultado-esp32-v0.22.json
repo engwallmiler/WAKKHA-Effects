@@ -1,0 +1,15 @@
+{
+  "version": "0.22.0",
+  "board": "ESP32 DevKit / WROOM-32",
+  "platform": "espressif32 6.12.0",
+  "arduino": "2.0.17",
+  "fastled": "3.10.3",
+  "ram_bytes": 25008,
+  "program_bytes": 291461,
+  "physical_device_used": false,
+  "source_matches_build": true,
+  "merged_file": "firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-300-v0.22.0.bin",
+  "flash_offset": "0x0",
+  "sha256": "9b46db6cc3661fd19cc909819c064c2d8e68041c663088c98fd792a88cec4cff",
+  "bytes": 357360
+}

@@ -1,0 +1,8 @@
+{
+  "version": "0.22.0",
+  "wheel": ".runtime\\dist-v0.22\\beatlight_dmx-0.22.0-py3-none-any.whl",
+  "assets_identical": 7,
+  "usb_modules": true,
+  "firmware_sha256": "9b46db6cc3661fd19cc909819c064c2d8e68041c663088c98fd792a88cec4cff",
+  "native_emulated_pass": true
+}

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "geometry": {
+    "version": 1,
+    "lines": [
+      {
+        "name": "WS2812 · 300 LEDs",
+        "start": {
+          "x": 600,
+          "y": 464
+        },
+        "end": {
+          "x": 600,
+          "y": 76
+        },
+        "meters": 5,
+        "leds": 300,
+        "pixels": 300
+      }
+    ]
+  },
+  "strips": [
+    {
+      "id": "strip-1",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    }
+  ],
+  "show": {
+    "mode": "organic",
+    "palette": "neon",
+    "brightness": 0.8,
+    "sceneBars": 2,
+    "changeMode": "hybrid",
+    "morphBeats": 1,
+    "followStructure": true,
+    "strobes": false
+  }
+}

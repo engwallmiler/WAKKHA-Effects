@@ -1,0 +1,63 @@
+[26596:5888:1024/235107.935:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[26596:5888:1024/235107.935:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[26596:5888:1024/235107.976:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[26596:5888:1024/235107.976:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[26596:5888:1024/235107.976:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[26596:5888:1024/235107.976:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_output": false,
+  "errors": [],
+  "renderer": "software",
+  "scroll_tiles": [
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "stripEffect",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "cueBars",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    }
+  ],
+  "native_manual_drop": true,
+  "render_ms": {
+    "last": 24.399999998509884,
+    "average": 23.912949640330652,
+    "max": 51.599999994039536,
+    "columns": 2.1999999955296516,
+    "glow": 16.5
+  },
+  "ready": true,
+  "independent_rgb": true,
+  "blackout_zero": true,
+  "stop_zero": true,
+  "persisted": true,
+  "drop_kicks": [],
+  "first_drop": null,
+  "dropped_blocks": 0,
+  "closed_cleanly": true,
+  "last_edit_saved_on_close": true
+}

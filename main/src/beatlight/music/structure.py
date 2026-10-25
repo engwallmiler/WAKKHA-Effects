@@ -39,6 +39,7 @@ class StructureTracker:
         self._at = None
         self._cursor = -math.inf
         self._last_kick = None
+        self._last_full_kick = None
         self._first_kick = None
         self._kick_count = 0
         self._phrase_count = 0
@@ -86,6 +87,7 @@ class StructureTracker:
         self._confirmed.clear()
         self._acoustic.clear()
         self._last_kick = None
+        self._last_full_kick = None
         self._cursor = -math.inf
         self._first_kick = None
         self._kick_count = self._phrase_count = 0
@@ -195,13 +197,17 @@ class StructureTracker:
         if feature.rms_db < -60 and returning and self._pause_state is None:
             self._pause_state = self._state
         self._drop_detector.observe(feature, returning, self._period)
-        gap_before = at - self._last_kick if self._last_kick is not None else 0.0
+        for candidate in kicks:
+            if candidate.confidence>=.35 and candidate.occurred_at<=at:
+                self._drop_detector.observe_candidate(candidate,self._period)
+        full_reference=self._last_full_kick if self._last_full_kick is not None else self._last_kick
+        gap_before = at - full_reference if full_reference is not None else 0.0
         if self._state in ("breakdown", "buildup") and gap_before > max(1.1, 2.2 * self._period):
             self._return_armed = True
         new_kicks = []
         fast_return = (returning and self._return_armed or self._state=="drop") and self._drop_detector.ready
         after_pause = returning and self._drop_detector.pause_recent(at)
-        forecast_return = fast_return and self._drop_detector.fast_return(at,self._period,self._last_kick)
+        forecast_return = fast_return and self._drop_detector.fast_return(at,self._period,full_reference)
         def return_aligned(event):
             if external_clock and beat.last_beat_at is not None:
                 error = abs((event.occurred_at-beat.last_beat_at+beat.period/2)%beat.period-beat.period/2)
@@ -226,6 +232,7 @@ class StructureTracker:
                 self._identity.discard(event)
                 continue
             descriptor = self._identity.descriptor(event)
+            full_power=self._drop_detector.full_power(descriptor)
             strict_return = self._identity.return_matches(event)
             if returning and not strict_return and after_pause:
                 strict_return = self._identity.return_matches(event, after_pause=True)
@@ -233,7 +240,7 @@ class StructureTracker:
                 self._rejected_returns += 1
                 self._identity.discard(event)
                 continue
-            if (returning or self._state=="drop") and not self._drop_detector.strong_candidate(event, descriptor, self._period, self._last_kick):
+            if (returning or self._state=="drop") and not self._drop_detector.strong_candidate(event, descriptor, self._period,full_reference):
                 self._rejected_returns += 1
                 self._identity.discard(event)
                 continue
@@ -246,13 +253,16 @@ class StructureTracker:
                 self._identity.discard(event)
                 continue
             learn = not self._learned or self._state in ("warming", "groove")
-            if learn and (len(self._identity.references) < 4 or self._identity.return_matches(event)):
+            learn_profile=learn and (not self._learned or full_power or not self._drop_detector.accelerated)
+            if learn_profile and (len(self._identity.references) < 4 or self._identity.return_matches(event)):
                 self._drop_detector.learn(descriptor)
-            self._identity.accept(event, learn)
+            self._identity.accept(event, learn_profile)
             if (learn or self._state == "drop") and local_match:
                 self._grid.observe(event, beat)
             self._confirmed.append(event)
             self._last_kick = event.occurred_at
+            if strict_return and (full_power or learn_profile):
+                self._last_full_kick=event.occurred_at
             self._pending_kick = event
             self._pending_descriptor = descriptor
             self._first_kick = self._first_kick if self._first_kick is not None else event.occurred_at
@@ -290,7 +300,9 @@ class StructureTracker:
                     feature, recent, low, rms, rate, regular, roll_rate, roll_regular, at)
             else:
                 suppression = self._low_ref - low
-                absent = gap > max(1.1, 2.2 * self._period)
+                full_reference=self._last_full_kick if self._last_full_kick is not None else self._last_kick
+                strong_gap=at-full_reference if full_reference is not None else gap
+                absent = strong_gap > max(1.1, 2.2 * self._period)
                 fast_roll = bool(roll_regular and roll_rate >= max(4.5, 2.25 / self._period)
                     and roll_rate > max(self._groove_roll_rate * 1.4, self._groove_roll_rate + 1.5)
                     and (absent or suppression >= 2 or percussion > self._groove_percussion + 1.5))

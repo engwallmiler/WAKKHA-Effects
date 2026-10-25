@@ -1,0 +1,30 @@
+{
+  "physical_output": false,
+  "actual_project_cloned": true,
+  "patterns": [
+    {
+      "beat": 32,
+      "pattern": "Atmosfera + Estrelas",
+      "next": 48
+    },
+    {
+      "beat": 48,
+      "pattern": "Helix + Ondas Centrais",
+      "next": 64
+    },
+    {
+      "beat": 64,
+      "pattern": "Ping-pong + Helix",
+      "next": 80
+    }
+  ],
+  "lines": 5,
+  "pixels": 1500,
+  "breakdown_pattern": "Aurora + Estrelas",
+  "buildup_pattern": "Scanner + Espelhamento",
+  "automatic_drop": true,
+  "manual_drop": true,
+  "blackout_zero": true,
+  "completed": true,
+  "closed_cleanly": true
+}

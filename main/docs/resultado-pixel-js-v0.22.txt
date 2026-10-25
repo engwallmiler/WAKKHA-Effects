@@ -1,0 +1,44 @@
+✔ initial geometry renders and editing changes physical totals and pixel allocation (50.6586ms)
+✔ invalid form changes are rejected without changing the geometry or saved copy (3.9222ms)
+✔ two clicks create a line using scaled canvas coordinates; reverse, drag, cancel and delete work (7.9696ms)
+✔ JSON import validates the entire candidate and export round-trips applied geometry (7.4848ms)
+✔ storage failure and corrupt saved JSON keep the editor usable (5.9246ms)
+✔ arbitrary line angles, uneven LED groups, RGBW and a single pixel render finite output (3.6417ms)
+✔ interrupted transitions retain each line resolution and survive a geometry change (66.8783ms)
+✔ embedded mode starts disarmed and produces no free-running demo pixels (59.8184ms)
+✔ each WS2811 strip has its own effect, color, brightness and enable state (33.5535ms)
+✔ silence, stopped source, stale bridge, blackout and shutdown emit exact zero (83.7798ms)
+✔ clock keeps advancing without inventing kicks; kick-only strips stay dark (39.8845ms)
+✔ bass and density response use real independent levels without a kick (17.9273ms)
+✔ musical drop enters immediately and ends with the host eight-kick state (26.2248ms)
+✔ sync marks one cycle of eight and never changes the host BPM (16.4838ms)
+✔ geometry deletion keeps surviving strip controls with the correct physical line (7.2925ms)
+✔ project round trip restores geometry and per-strip controls while remaining disarmed (12.5291ms)
+✔ malformed music packets cannot turn on or corrupt the simulator (4.2908ms)
+✔ steady music keeps its pattern; sustained new elements change only at the next eight-beat boundary (999.711ms)
+✔ live organic variation changes at musical bar boundaries without new elements (7.9347ms)
+✔ old projects acquire working hybrid variation while explicit elements/hold choices remain (4.527ms)
+✔ musical fades follow beats even when wall time barely advances (3.602ms)
+✔ manual DROP enters immediately, overrides selected strip responses, ends after eight beats and can cancel (12.4782ms)
+✔ manual drop respects blackout and automatic detection cannot restart the same manual scene (4.1608ms)
+✔ sync during a manual drop preserves the remaining eight-beat duration (2.4969ms)
+✔ capture restart clears scene suppression so a new detector session can emit drop id one (2.4572ms)
+✔ manual drop while the grid is learning still expires and does not fabricate acoustic kicks (797.3981ms)
+✔ structural changes select calm/build repertoires and color/energy overlays even on individual effects (38.7515ms)
+✔ front canvas only receives complete frames, not partial clears or per-strip drawing (12.8964ms)
+✔ delivery delay is compensated in musical phase and old queued packets never look fresh (5.7084ms)
+✔ reverse changes only the selected strip pixel order; speed and phase are independent (34.3952ms)
+✔ preparing WS2812 makes exactly 300 individual pixels and preserves other strips (28.368ms)
+✔ all twenty scene effects use identical RGB values in the physical sampler and preview export (315.7704ms)
+✔ physical effect clock continues without any animation frame or visible Canvas (184.3083ms)
+✔ physical sampling respects blackout, disarm, quiet audio and stale data for all 300 LEDs (18.1212ms)
+✔ physical sampler rejects a grouped strip, RGBW, incorrect resolution and removed identities (6.5762ms)
+✔ manual drop and organic/auto variations share the physical sampling engine (27.4204ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2343.2061

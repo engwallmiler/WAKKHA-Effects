@@ -1,0 +1,27 @@
+✔ initial geometry renders and editing changes physical totals and pixel allocation (51.6167ms)
+✔ invalid form changes are rejected without changing the geometry or saved copy (3.1603ms)
+✔ two clicks create a line using scaled canvas coordinates; reverse, drag, cancel and delete work (7.1356ms)
+✔ JSON import validates the entire candidate and export round-trips applied geometry (5.464ms)
+✔ storage failure and corrupt saved JSON keep the editor usable (4.3402ms)
+✔ arbitrary line angles, uneven LED groups, RGBW and a single pixel render finite output (3.2326ms)
+✔ interrupted transitions retain each line resolution and survive a geometry change (39.807ms)
+✔ embedded mode starts disarmed and produces no free-running demo pixels (65.5642ms)
+✔ each WS2811 strip has its own effect, color, brightness and enable state (32.8725ms)
+✔ silence, stopped source, stale bridge, blackout and shutdown emit exact zero (119.0879ms)
+✔ clock keeps advancing without inventing kicks; kick-only strips stay dark (47.7299ms)
+✔ bass and density response use real independent levels without a kick (23.8476ms)
+✔ musical drop enters immediately and ends with the host eight-kick state (13.7131ms)
+✔ sync marks one cycle of eight and never changes the host BPM (10.4163ms)
+✔ geometry deletion keeps surviving strip controls with the correct physical line (5.896ms)
+✔ project round trip restores geometry and per-strip controls while remaining disarmed (16.1494ms)
+✔ malformed music packets cannot turn on or corrupt the simulator (10.2128ms)
+✔ steady music keeps its pattern; sustained new elements change only at the next eight-beat boundary (647.9018ms)
+✔ reverse changes only the selected strip pixel order; speed and phase are independent (41.4578ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1127.1897

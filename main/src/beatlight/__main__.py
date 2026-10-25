@@ -13,7 +13,7 @@ from beatlight.ui.window import MainWindow
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="BEATLIGHT DMX · Monitor WASAPI Loopback")
+    parser = argparse.ArgumentParser(description="BEATLIGHT · Pixel Studio e sincronização musical")
     parser.add_argument("--synthetic", action="store_true", help="Selecionar sinal sintético de teste")
     parser.add_argument("--config-dir", type=Path, help="Diretório alternativo de preferências e logs")
     args = parser.parse_args()
@@ -38,6 +38,7 @@ def main() -> int:
     if args.synthetic:
         settings = replace(settings, source="synthetic", device_id="test:stereo")
     window = MainWindow(store, settings, "\n".join(x for x in (log_warning, store.warning) if x))
+    window._navigate(9)
     window.show()
     return app.exec()
 

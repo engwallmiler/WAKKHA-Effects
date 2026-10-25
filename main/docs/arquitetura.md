@@ -1,4 +1,28 @@
-# Arquitetura — versão 0.19
+# Arquitetura — versão 0.22
+
+`pixel/usb_protocol.py` define BLP1, CRC32, identificação e configuração de uma saída de 300 WS2812 RGB. `pixel/usb.py` mantém a COM em uma thread, aguarda confirmação e conserva somente o quadro pendente mais recente. A prioridade de blackout pode interromper a espera de confirmação de um frame; falhas encerram a conexão sem reconectar/reativar automaticamente. O emissor é limitado a 30 Hz e descarta amostras com mais de 250 ms.
+
+`ui/pixel_usb.py` amostra `BeatlightPixel.outputFrame(id)` pelo WebChannel do processo local, sem desenhar Canvas. O relógio do motor avança nessa chamada mesmo com a prévia fora da área visível. `computeChannels` é usado tanto pela prévia quanto pela amostragem física, preservando os vinte efeitos e as automações. A identidade selecionada precisa existir como WS2812, 300 LEDs e 300 pixels; não há reamostragem de grupos WS2811. Limites e seleção são salvos em pixel-usb.json, sem ativação/conexão automática.
+
+O firmware em firmware/beatlight_esp32 valida cada pacote completo, aplica limites de brilho/potência e gera WS2812 GRB no GPIO 18. Duplicatas e sequências antigas não atualizam os LEDs; quadros incompletos/corrompidos não renovam o watchdog de 750 ms. Boot, conexão inicial e blackout apagam a fita; o watchdog atua na perda de comunicação enquanto o ESP32 continua energizado. Consulte [esp32-ws2812-usb.md](esp32-ws2812-usb.md), incluindo a limitação ao retirar o USB que alimenta a placa.
+
+`pixel/rendering.py` configura Chromium/Qt Quick para composição por software antes do renderer ser criado. Canvas 2D/WebGL acelerados ficam desativados nessa configuração; a opção não desativa o sandbox. O palco é composto em um Canvas auxiliar e apresentado por uma única cópia, evitando limpar/desenhar parcialmente a superfície visível. A prévia continua limitada a 30 Hz.
+
+O sequenciador do Pixel Studio tem relógio de troca em compassos e relógio de fusão em tempos, independentes dos segundos usados na demonstração. A configuração híbrida é o padrão para projetos antigos sem escolha explícita. Repertórios de breakdown/build-up/groove e a camada de drop acompanham os estados do host. O disparo manual de oito tempos tem prioridade e existe também no cabeçalho Qt, fora da área rolável.
+
+As mensagens musicais incluem `sent_at`; o cliente estima a diferença de base de tempo pela entrega mais rápida observada, compensa a fase e envelhece dados enfileirados. O contador acústico não é alterado. O detector acompanha referências fortes separadas de candidatos fracos acelerados e usa tolerância espectral de até um bin na confirmação; a correção da grade conserva a comparação de timbre completa e estrita.
+
+O foco principal é o **Pixel Studio**, com fitas endereçáveis independentes. A aplicação abre o HTML existente em Qt WebEngine e fornece snapshots musicais via Qt WebChannel. A captura, os detectores, o Link e os painéis anteriores continuam compartilhados; os pixels possuem ativação, blackout e projeto próprios. Uma fita pode ser encaminhada ao ESP32 USB. Consulte [pixel-studio.md](pixel-studio.md).
+
+## Pixel Studio
+
+`pixel/protocol.py` projeta relógio efetivo, kicks confirmados, baixo, densidade e estrutura para mensagens de música; relógio não vira evento de kick. Também valida quadros de pixels com RGB/RGBW de 8 bits. `pixel/project.py` valida geometria e controles de fitas, aplica limites e grava `pixel-studio.json` atomicamente, separado das preferências de áudio v13.
+
+`ui/pixel.py` carrega sob demanda `beatlight/beatlight_pixel_studio.html`, que também integra o pacote como arquivo de dados. O perfil do navegador bloqueia recursos remotos e a ponte expõe operações limitadas a projeto, música e quadros. A porta física é controlada pelo painel nativo e inicia desconectada. A aplicação mantém o nome de dados BEATLIGHT DMX para preservar as preferências existentes.
+
+O motor Canvas conserva os vinte padrões e o editor fornecidos. Controles por fita não dependem do motor anterior de PARs/moves. A análise musical é processada no recebimento; o desenho da prévia fica limitado a 30 Hz, com resolução visual reduzida sem mudar o número de pixels do quadro. A entrada do drop acompanha o estado musical e sua saída acompanha as oito confirmações reais. O sequenciador oferece agenda por N compassos, antecipação por novos elementos, combinação das duas regras e manutenção explícita do padrão.
+
+O aplicativo inicia com fitas desativadas e modo ao vivo. Silêncio, captura parada, dados ausentes por 500 ms e blackout zeram pixels/flashes. Projetos não persistem ativação, pausa, blackout nem seleção de modo ao vivo/demonstração. O fechamento aguarda por até um segundo a confirmação da última edição, sem interromper a limpeza dos runtimes.
 
 ## Fluxo implementado
 
@@ -101,7 +125,7 @@ Importação/exportação atual é de preferências do protótipo. Um projeto de
 | Lighting Automation | Motor implementado: dez efeitos, grupos A/B, transições e prioridade blackout/desativado/manual/automação. Editor completo de regras/cenas está planejado. |
 | Fixture Management | FixtureDefinition e FixtureState implementados com capacidades, grupos e parâmetros normalizados. Inventário de demonstração fixo; editor e personalidades físicas estão planejados. |
 | Visual Simulation | StageView implementado: recebe FixtureState via LightingSnapshot e desenha seis luminárias, fachos e piso 2D. |
-| Lighting Output | LightingOutput define a borda conceitual; nenhum adaptador é ativado ou simulado como hardware funcional. |
+| Lighting Output | LightingOutput permanece a borda conceitual para DMX; PixelUsbOutput implementa separadamente a saída física de uma fita WS2812. |
 | User Interface | Monitor, análise espectral, kicks, ritmo, Lighting Studio, Stage Preview, diagnóstico e configurações implementados. Demais áreas estão identificadas como próximas fases. |
 | Configuration/Projects | Preferências v13 com migração de v1 a v12 implementadas; projetos de iluminação entram com cenas e fixtures reais. |
 | Diagnostics/Testing | Logs, métricas, testes isolados e integração sem hardware implementados. |

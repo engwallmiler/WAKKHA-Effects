@@ -101,7 +101,8 @@ class KickIdentity:
                         excess_harmonics = self._harmonic_excess(descriptor, self.references, after_pause) > harmonic_limit
                         if excess_harmonics:
                             self.rejected_harmonics += 1
-                        passed = (similarity >= 0.72 and not excess_harmonics
+                        shifted=self._shifted_similarity(shape,reference)
+                        passed = ((similarity >= 0.72 or shifted>=.94) and not excess_harmonics
                             and (expected_decay < 3 or decay >= max(1.2, expected_decay * 0.3)))
             if passed:
                 self.prepared[t] = descriptor
@@ -116,8 +117,17 @@ class KickIdentity:
         A grade só limita a janela de procura. Sem aumento real de potência não
         há evento; identidade, decaimento e energia ainda precisam aprová-lo.
         """
-        if len(self.references)<4 or not feature.low_shape or feature.at-self.cursor<.18:
+        if len(self.references)<4 or not feature.low_shape:
             return
+        if feature.at-self.cursor<.18:
+            # Um roll fora da grade pode consumir o refratário do detector geral
+            # imediatamente antes do impacto. Ele não bloqueia um NOVO ataque
+            # alinhado; candidatos alinhados/recentemente recuperados continuam
+            # protegidos contra duplicação.
+            previous=KickEvent(self.cursor,self.cursor,0,.75)
+            if (feature.at-self.cursor<.06 or feature.at-self.rescued_at<.18
+                    or matches is None or matches(previous)):
+                return
         before = [f for f in self.history if .03 <= feature.at-f.at <= .10]
         if len(before)<2:
             return
@@ -183,7 +193,25 @@ class KickIdentity:
         self.similarity = cosine
         # Um kick sobre baixo contínuo pode acrescentar só 1,5–4 dB à mixagem.
         # A potência absoluta do transiente é validada depois, contra o groove.
-        return cosine>=.9 and decay_ok and harmonics<=limit and descriptor.attack_db>=1.5
+        spectral=cosine>=.9 or self._shifted_similarity(shape,reference)>=.94
+        return spectral and decay_ok and harmonics<=limit and descriptor.attack_db>=1.5
+
+    @staticmethod
+    def _shifted_similarity(shape,reference):
+        """Tolerância estreita de altura: no máximo um bin do FFT estrutural.
+
+        A queda e os harmônicos continuam obrigatórios. Não se usa esta
+        tolerância para corrigir a fase da grade.
+        """
+        if len(shape)<6 or len(shape)!=len(reference):return 0.0
+        norm=sum(v*v for v in shape)
+        best=0.0
+        for shift in (-1,1):
+            shifted=tuple(reference[i-shift] if 0<=i-shift<len(reference) else 0.0 for i in range(len(reference)))
+            if sum(v*v for v in shifted)<.9*sum(v*v for v in reference):continue
+            score=sum(a*b for a,b in zip(shape,shifted))/max(1e-12,math.sqrt(norm*sum(v*v for v in shifted)))
+            best=max(best,score)
+        return best
 
     def descriptor(self, event):
         return self.prepared.get(event.occurred_at)
@@ -242,7 +270,8 @@ class KickIdentity:
         minimum_decay = max(1.5,decay*.65) if decay>=3 else max(.6,decay*.5)
         harmonic_limit = max(.02,median(r.harmonic_attack for r in refs)*3+.015)
         attack_limit = max(1.5,min(4.5,median(r.attack_db for r in refs)*.3))
-        return (cosine>=.9 and minimum_decay<=descriptor.decay<=max(16,decay*1.8)
+        spectral=cosine>=.9 or self._shifted_similarity(descriptor.shape,reference)>=.94
+        return (spectral and minimum_decay<=descriptor.decay<=max(16,decay*1.8)
                 and self._harmonic_excess(descriptor, refs, after_pause)<=harmonic_limit
                 and descriptor.attack_db>=attack_limit)
 

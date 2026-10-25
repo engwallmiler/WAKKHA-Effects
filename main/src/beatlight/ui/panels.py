@@ -17,12 +17,12 @@ def build_sidebar(self):
     layout.setContentsMargins(20, 30, 18, 22)
     layout.setSpacing(9)
     layout.addWidget(label("BEATLIGHT", "brand"))
-    layout.addWidget(label("DMX  /  MUSIC TO LIGHT", "eyebrow"))
+    layout.addWidget(label("PIXELS  /  MUSIC TO LIGHT", "eyebrow"))
     layout.addSpacing(38)
     layout.addWidget(label("WORKSPACE", "eyebrow"))
     group = QButtonGroup(self)
     self.nav_group = group
-    for index, text in ((0, "◉   Audio Monitor"), (3, "∿   Análise espectral"), (4, "●   Kick Monitor"), (5, "◷   Rhythm Monitor"), (8, "⇄   Ableton Link"), (6, "◇   Lighting Studio"), (7, "▱   Stage Preview"), (1, "▥   Diagnósticos"), (2, "⚙   Configurações")):
+    for index, text in ((9, "▥   Pixel Studio · LEDs"), (0, "◉   Audio Monitor"), (8, "⇄   Ableton Link"), (5, "◷   Rhythm Monitor"), (4, "●   Kick Monitor"), (3, "∿   Análise espectral"), (6, "◇   Lighting Studio"), (7, "▱   Stage Preview"), (1, "▥   Diagnósticos"), (2, "⚙   Configurações")):
         button = QPushButton(text)
         button.setObjectName("nav")
         button.setCheckable(True)
@@ -32,12 +32,12 @@ def build_sidebar(self):
         layout.addWidget(button)
     layout.addSpacing(30)
     layout.addWidget(label("PRÓXIMAS FASES", "eyebrow"))
-    for name in ("Cenas e regras", "Fixture Manager", "Saídas DMX"):
+    for name in ("Múltiplas saídas USB", "Mapeamento de instalações", "Controladores em rede"):
         item = label("   " + name, "muted")
         item.setContentsMargins(0, 7, 0, 7)
         layout.addWidget(item)
     layout.addStretch()
-    layout.addWidget(label("07–08 — MUSIC & STAGE", "eyebrow"))
+    layout.addWidget(label("PIXEL STUDIO · USB", "eyebrow"))
     layout.addWidget(label("Captura primeiro.\nLuz no tempo certo.", "subtitle", True))
     return sidebar
 

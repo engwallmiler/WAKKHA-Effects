@@ -1,0 +1,221 @@
+Processing esp32dev (platform: espressif32@6.12.0; board: esp32dev; framework: arduino)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32dev.html
+PLATFORM: Espressif 32 (6.12.0) > Espressif ESP32 Dev Module
+HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
+DEBUG: Current (cmsis-dap) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b 
+ - tool-esptoolpy @ 2.40900.250804 (4.9.0) 
+ - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
+Converting beatlight_esp32.ino
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 34 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- FastLED @ 3.10.3
+|-- SPI @ 2.0.0
+Building in release mode
+Compiling .pio\build\esp32dev\src\beatlight_esp32.ino.cpp.o
+Building .pio\build\esp32dev\bootloader.bin
+esptool.py v4.9.0
+Creating esp32 image...
+Merged 1 ELF section
+Successfully created esp32 image.
+Archiving .pio\build\esp32dev\lib9c4\libI2S.a
+Indexing .pio\build\esp32dev\lib9c4\libI2S.a
+Compiling .pio\build\esp32dev\lib414\FS\FS.cpp.o
+Compiling .pio\build\esp32dev\lib414\FS\vfs_api.cpp.o
+Compiling .pio\build\esp32dev\lib375\SD\SD.cpp.o
+Compiling .pio\build\esp32dev\lib375\SD\sd_diskio.cpp.o
+Compiling .pio\build\esp32dev\lib375\SD\sd_diskio_crc.c.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\FastLED.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\bitswap.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\cled_controller.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\colorpalettes.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\crgb.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\allocator.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\async.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\audio.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\audio_input.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\audio_reactive.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\bitset.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\blur.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\bytestreammemory.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\colorutils.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\corkscrew.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\crgb_hsv16.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\downscale.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\ease.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\engine_events.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\fetch.cpp.o
+Archiving .pio\build\esp32dev\lib414\libFS.a
+Indexing .pio\build\esp32dev\lib414\libFS.a
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\fft.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\fft_impl.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\file_system.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\fill.cpp.o
+Archiving .pio\build\esp32dev\lib375\libSD.a
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\gamma.cpp.o
+Indexing .pio\build\esp32dev\lib375\libSD.a
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\gradient.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\hsv16.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\id_tracker.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\io.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\istream.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\json.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\leds.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\line_simplification.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\noise_woryley.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\ostream.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\ptr.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\random.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\raster_sparse.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\rectangular_draw_buffer.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\referent.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\rgbw.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\screenmap.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\sin32.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\splat.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\str.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\str_ui.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\strstream.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\stub_main.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\task.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\tile2x2.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\time.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\time_alpha.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\transform.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\type_traits.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\ui.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\upscale.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\wave_simulation.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\wave_simulation_real.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\xmap.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\xymap.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\xypath.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\xypath_impls.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fl\xypath_renderer.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\2d\blend.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\2d\luminova.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\2d\noisepalette.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\2d\scale_up.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\2d\wave.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\detail\fx_layer.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\frame.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\fx_engine.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\time.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\video.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\video\frame_interpolator.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\video\frame_tracker.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\video\pixel_stream.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\fx\video\video_impl.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\hsv2rgb.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\lib8tion.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\noise.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\adafruit\clockless.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\arm\k20\clockless_objectfled.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\arm\mgm240\fastpin_arm_mgm240.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\compile_test.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\audio\audio.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\audio\sound_util.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\clockless_i2s_esp32s3.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\i2s\i2s_esp32dev.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\rmt_4\idf4_rmt.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\rmt_4\idf4_rmt_impl.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\rmt_5\idf5_rmt.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\rmt_5\strip_rmt.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\esp\32\spi_ws2812\strip_spi.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\stub\Arduino.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\stub\led_sysdefs_stub.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\stub\time_stub.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\active_strip_data.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\engine_listener.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\entry_point.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\fastspi_wasm.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\fs_wasm.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\js.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\js_bindings.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\js_fetch.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\timer.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\platforms\wasm\ui.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\power_mgt.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\sensors\button.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\sensors\digital_pin.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\sensors\pir.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\simplex.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\cq_kernel\cq_kernel.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\cq_kernel\kiss_fft.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\cq_kernel\kiss_fftr.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\espressif\led_strip\src\led_strip_api.c.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\espressif\led_strip\src\led_strip_rmt_dev.c.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\espressif\led_strip\src\led_strip_rmt_encoder.c.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\espressif\led_strip\src\led_strip_spi_dev.c.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\third_party\object_fled\src\OjectFLED.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\transpose8x1_noinline.cpp.o
+Compiling .pio\build\esp32dev\libc5f\FastLED\wiring.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\Esp.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\FirmwareMSC.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\FunctionalInterrupt.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\HWCDC.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\HardwareSerial.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\IPAddress.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\IPv6Address.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\MD5Builder.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\Print.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\Stream.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\StreamString.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\Tone.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\USB.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\USBCDC.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\USBMSC.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\WMath.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\WString.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\base64.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\cbuf.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-adc.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-bt.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-cpu.c.o
+Archiving .pio\build\esp32dev\libc5f\libFastLED.a
+Indexing .pio\build\esp32dev\libc5f\libFastLED.a
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-dac.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-gpio.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-i2c-slave.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-i2c.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-ledc.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-matrix.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-misc.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-psram.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-rgb-led.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-rmt.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-sigmadelta.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-spi.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-time.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-timer.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-tinyusb.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-touch.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\esp32-hal-uart.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\firmware_msc_fat.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\libb64\cdecode.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\libb64\cencode.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\main.cpp.o
+Compiling .pio\build\esp32dev\FrameworkArduino\stdlib_noniso.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\wiring_pulse.c.o
+Compiling .pio\build\esp32dev\FrameworkArduino\wiring_shift.c.o
+Archiving .pio\build\esp32dev\libFrameworkArduino.a
+Indexing .pio\build\esp32dev\libFrameworkArduino.a
+Linking .pio\build\esp32dev\firmware.elf
+Retrieving maximum program size .pio\build\esp32dev\firmware.elf
+Checking size .pio\build\esp32dev\firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   7.6% (used 25008 bytes from 327680 bytes)
+Flash: [==        ]  22.2% (used 291461 bytes from 1310720 bytes)
+Building .pio\build\esp32dev\firmware.bin
+esptool.py v4.9.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+========================= [SUCCESS] Took 49.80 seconds =========================

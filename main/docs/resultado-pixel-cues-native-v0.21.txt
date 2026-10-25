@@ -1,0 +1,37 @@
+[32112:8000:1024/235227.129:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[32112:8000:1024/235227.129:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[32112:8000:1024/235227.193:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[32112:8000:1024/235227.193:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[32112:8000:1024/235227.193:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[32112:8000:1024/235227.193:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_output": false,
+  "actual_project_cloned": true,
+  "patterns": [
+    {
+      "beat": 32,
+      "pattern": "Atmosfera + Estrelas",
+      "next": 48
+    },
+    {
+      "beat": 48,
+      "pattern": "Helix + Ondas Centrais",
+      "next": 64
+    },
+    {
+      "beat": 64,
+      "pattern": "Ping-pong + Helix",
+      "next": 80
+    }
+  ],
+  "lines": 5,
+  "pixels": 1500,
+  "breakdown_pattern": "Aurora + Estrelas",
+  "buildup_pattern": "Scanner + Espelhamento",
+  "automatic_drop": true,
+  "manual_drop": true,
+  "blackout_zero": true,
+  "completed": true,
+  "closed_cleanly": true
+}
+[32112:13872:1024/235228.474:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.

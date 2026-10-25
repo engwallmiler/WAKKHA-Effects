@@ -1,4 +1,16 @@
-# Retorno do drop — versão 0.19
+# Retorno do drop — versão 0.21
+
+## Ajustes da versão 0.21
+
+O detector agora distingue o instante de uma referência de groove do instante de um candidato fraco acelerado. A cadência dos candidatos brutos é acompanhada antes da filtragem pela grade: um roll fraco que começa ainda no groove não pode rebaixar continuamente a potência aprendida e impedir o armamento do retorno. Variações normais de volume com kicks no BPM original continuam permitindo adaptação da referência.
+
+A confirmação espectral aceita um deslocamento de até **um bin** do FFT estrutural, exigindo similaridade de pelo menos 94% nesse caminho. Decaimento, ataque, excesso harmônico, potência e posição musical continuam obrigatórios. A correção da fase da grade não usa essa tolerância. Isso permite que o kick retorne com uma altura grave um pouco diferente sem aguardar outros ataques.
+
+Um candidato recente fora da grade pode ocupar o intervalo mínimo do detector geral justamente antes do impacto. O caminho contextual pode recuperar um novo ataque alinhado, com pelo menos 60 ms de separação, desde que não seja duplicação de um candidato alinhado ou de uma recuperação recente. A identidade e a potência continuam sendo verificadas antes de contar o evento.
+
+Novas regressões reproduzem um roll fraco que altera o aprendizado antes do build, kicks retornando com variações de altura, primeiro impacto bloqueado pelo refratário do detector geral e baixo lento/agudos que não devem virar drop. O caminho Pixel Studio também compensa a idade estimada das mensagens; a decisão acústica e o tempo de exibição são tratados separadamente.
+
+Esses ajustes ampliam os casos cobertos, sem garantir detecção correta em todo arranjo. Não foram fornecidos arquivos de áudio das tracks problemáticas. O botão destacado **DROP AGORA** oferece intervenção manual imediata de oito tempos e não altera o estado musical detectado.
 
 O detector continua causal e heurístico. A decisão rápida de entrada no drop foi separada da aprendizagem do timbre e da correção da grade. No breakdown/build-up aprendido e armado para retorno, procura-se reconhecer o primeiro kick forte com dados do próprio ataque. Não é necessário esperar o próximo kick nem o tempo 1 de uma frase.
 

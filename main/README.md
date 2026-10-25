@@ -1,12 +1,32 @@
-# BEATLIGHT DMX — 0.19
+# BEATLIGHT — Pixel Studio 0.22
 
-Aplicação desktop local para Windows 11. A versão **0.19** separa a decisão rápida de drop da aprendizagem do timbre: no breakdown/build-up já armado, analisa os primeiros **55 ms do ataque**, desconta o baixo que já estava tocando e compara o impacto com os kicks do groove. O objetivo é reconhecer o **primeiro kick forte**, sem esperar o kick seguinte. A análise completa de 120 ms continua sendo usada para aprender o perfil e corrigir a grade.
+Aplicação desktop local para Windows 11. A versão **0.22** adiciona saída física para **uma fita WS2812/WS2812B de 300 LEDs individuais, via ESP32 DevKit/WROOM-32 conectado por USB**. O mesmo motor do Pixel Studio calcula os vinte efeitos, Orgânico/Auto Show, transições, cores, baixo/densidade e estrutura musical. A prévia e a saída compartilham os valores RGB; o ESP32 recebe os quadros e gera o sinal no GPIO 18.
 
-Pratos simultâneos, variações de cauda e um baixo contínuo passam por uma análise do transiente acima do fundo sonoro. Um caminho de recuperação procura ataques reais que o detector geral tenha perdido. Com Link selecionado e válido, a fase externa valida a entrada; ela não precisa esperar a realocação da grade acústica. Kicks fracos em ritmo dobrado continuam comparados com a potência do groove, e pausas breves preservam a referência com as luzes apagadas. **[Critérios e limites do detector de drop](docs/drop-detection.md)**.
+**[Guia de ligação, firmware e operação](docs/esp32-ws2812-usb.md)** · **[Código para o ESP32](firmware/beatlight_esp32/beatlight_esp32.ino)** · **[Projeto de uma fita / 300 LEDs](examples/ws2812-300.json)**. O firmware inclui protocol.h na mesma pasta e uma configuração PlatformIO. A fita precisa de fonte externa de 5 V, GND comum e conversor de nível 3,3 → 5 V; ela não é alimentada pelo USB do ESP32. A saída inicia desativada, com teto de brilho de 25% e limite estimado de 2.000 mA.
 
-A leitura inicial de contexto após 1,2 s, a otimização do áudio e o módulo separado de **Ableton Link** continuam disponíveis. Link fornece BPM/fase à grade e ao show de oito tempos; kicks, baixo, densidade e estrutura continuam no áudio. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**.
+Cada fita tem efeito, paleta, brilho, velocidade, defasagem, sentido e resposta musical próprios. ORGÂNICO e AUTO SHOW oferecem **Compassos + novos elementos**, **A cada N compassos**, **Somente novos elementos** e **Manter padrão**. A fusão ao vivo pode durar de meio tempo a um compasso, ou usar corte direto. Breakdown, build-up e drop têm repertórios e camadas próprias; a estrutura tem prioridade quando seu acompanhamento está ativado. **[Operação do Pixel Studio](docs/pixel-studio.md)**.
 
-## Abrir e testar
+A captura, os detectores e a integração **Ableton Link** continuam disponíveis, assim como os painéis anteriores de PARs/moves. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**. O único transporte físico atual é ESP32 USB para uma fita WS2812 de 300 pixels; não há saída DMX física.
+
+No painel **Saída física · ESP32 USB**, escolha a fita, clique **Preparar 300 WS2812**, selecione a COM e **Conectar ESP32**. Depois clique **Ativar saída física**. Conectar apenas verifica o firmware e configura os limites; não acende a fita. **APAGAR SAÍDA** interrompe a emissão. O botão **Instruções** abre o guia dentro do aplicativo. Firmware e ligação devem estar preparados antes de ativar.
+
+## Começar pelas fitas
+
+1. Feche a versão anterior e abra **iniciar.cmd**. O aplicativo abre no Pixel Studio.
+2. Use **Selecionar entrada** para escolher o WASAPI Loopback da saída usada pelo Traktor. Volte ao Pixel Studio e clique em **Iniciar áudio**. O botão **Ableton Link** leva aos ajustes de sincronização existentes.
+3. Mantenha **BEATLIGHT · áudio / Ableton Link** e clique em **Ativar fitas**. A grade sincroniza o movimento; apenas kicks confirmados geram acentos acústicos. Silêncio, áudio interrompido e blackout apagam a emissão.
+4. No seletor acima do palco, escolha a linha e clique em **Editar fita**. Ajuste seu efeito, paleta, brilho, velocidade, defasagem, sentido e resposta a kick/baixo/densidade. **Seguir show global** mantém aquela fita na automação geral.
+5. Em **Geometria**, desenhe linhas, mova as pontas, altere metragem/LEDs/pixels ou importe sua geometria anterior. O modelo inicial tem seis fitas de 5 m, com 600 LEDs e 200 pixels por fita. Nesse modelo, três LEDs compartilham a cor de um pixel.
+6. Use **Variação automática → Compassos + novos elementos** e escolha **Trocar a cada → 1, 2, 4, 8 ou 16 compassos**. ORGÂNICO/AUTO mudam mesmo com áudio estável; novos elementos podem antecipar a troca para o próximo compasso. **Fusão musical** controla a passagem em tempos, separada do intervalo entre cenas. Clique em **Sincronizar 1/8** no primeiro tempo desejado para alinhar o ciclo de oito tempos. O cartão **Próxima transição** mostra a contagem musical restante.
+7. O projeto é salvo automaticamente no arquivo **pixel-studio.json**, ao lado das preferências do aplicativo. **Exportar projeto de fitas** guarda geometria e controles; **Exportar quadro RGB** guarda os canais de cada pixel controlável. Ativação, blackout e modo de entrada pertencem à sessão.
+
+O botão laranja **DROP AGORA** fica no cabeçalho do aplicativo, inclusive ao rolar a página; também existe no painel do simulador e pelo atalho **D**. Ele entra imediatamente por **oito tempos**, ativa as fitas e respeita blackout, brilho e linhas desabilitadas. Clicar de novo encerra. Esse disparo é identificado como manual e não altera o detector nem cria eventos de kick. Durante a aquisição da grade, usa o último BPM como estimativa; o drop automático continua acompanhando os oito kicks confirmados.
+
+A detecção ganhou proteção para que rolls fracos acelerados não substituam a potência de referência do groove. Um candidato fora da grade que ocupe o intervalo mínimo do detector não bloqueia a recuperação de um ataque novo alinhado. A confirmação também aceita uma variação estreita de altura do kick, mantendo decaimento, harmônicos, energia e fase como requisitos. **[Critérios do detector](docs/drop-detection.md)**.
+
+Para testar sem Traktor, use uma fonte sintética em Audio Monitor ou selecione **Demonstração · BPM interno** no Pixel Studio. A demonstração não representa análise de música. A resolução visual da prévia é reduzida para manter a interface responsiva; a quantidade de pixels e os dados RGB exportados mantêm a resolução configurada.
+
+## Áudio e palco anterior
 
 Feche a versão anterior e dê dois cliques em **iniciar.cmd**. O Python **3.12.10** e as dependências, incluindo SciPy, já estão preparados em **.runtime/python312** neste computador. Depois da instalação inicial, a aplicação funciona offline.
 
@@ -115,7 +135,7 @@ py -3.12 -m venv .venv312
 .\.venv312\Scripts\python.exe run.py
 ~~~
 
-Se já tiver instalado uma versão anterior em .venv312, execute instalar.cmd novamente para adicionar SciPy e atualizar o pacote. Para reproduzir as versões validadas no Windows/Python 3.12, use requirements-windows-py312.lock.txt e instale o pacote com --no-deps.
+Se já tiver instalado uma versão anterior em .venv312, execute instalar.cmd novamente para adicionar as dependências, incluindo pySerial, e atualizar o pacote. Para reproduzir as versões validadas no Windows/Python 3.12, use requirements-windows-py312.lock.txt e instale o pacote com --no-deps.
 
 O runtime portátil e ambientes locais são ignorados pelo Git. O VS Code está configurado para o runtime preparado neste checkout; em outra instalação, selecione .venv312/Scripts/python.exe.
 
@@ -136,11 +156,13 @@ O runtime portátil e ambientes locais são ignorados pelo Git. O VS Code está 
 .\.runtime\python312\python.exe -X utf8 scripts\validate_show.py structure_demo
 .\.runtime\python312\python.exe -X utf8 scripts\validate_show.py texture_demo
 .\.runtime\python312\python.exe scripts\validate_loopback.py --device Realtek --seconds 30 --cycles 3
+.\.runtime\python312\python.exe -X utf8 scripts\validate_pixel_usb.py
+node --test beatlight/tests/geometry.test.cjs beatlight/tests/music.test.cjs beatlight/tests/usb.test.cjs
 ~~~
 
 Os testes automatizados não exigem Traktor nem hardware. A ferramenta Loopback não reproduz som e retorna **0** quando recebeu blocos sem falha, **1** em falha de captura/análise e **2** quando não recebeu blocos e o resultado é inconclusivo. Um resultado com silêncio não comprova a captura de uma faixa do Traktor.
 
-A renderização de QA produz preview.png, preview-espectro.png, preview-kicks.png, preview-ritmo.png, preview-iluminacao.png, preview-palco.png e preview-configuracoes.png com dados sintéticos. validate_stage.py acrescenta preview-breakdown.png, preview-buildup.png e preview-drop.png. validate_texture.py acrescenta preview-baixo.png e preview-densidade.png. validate_grid.py acrescenta preview-grid.png. validate_phrases.py acrescenta preview-cycles-*.png e mede as oito posições do drop, sincronização e preparação. validate_show.py acrescenta preview-rgbw-*.png. render_rgbw.py captura os controles manuais e a inspeção de W. A validação atual tem **626 testes aprovados**; veja docs/validacao.md.
+A renderização de QA produz preview.png, preview-espectro.png, preview-kicks.png, preview-ritmo.png, preview-iluminacao.png, preview-palco.png e preview-configuracoes.png com dados sintéticos. validate_stage.py acrescenta preview-breakdown.png, preview-buildup.png e preview-drop.png. validate_texture.py acrescenta preview-baixo.png e preview-densidade.png. validate_grid.py acrescenta preview-grid.png. validate_phrases.py acrescenta preview-cycles-*.png e mede as oito posições do drop, sincronização e preparação. validate_show.py acrescenta preview-rgbw-*.png. render_rgbw.py captura os controles manuais e a inspeção de W. **validate_pixel_studio.py** exercita o HTML embutido com áudio e gera **preview-pixel-studio.png**. **validate_pixel_usb.py** exercita os vinte efeitos com serial emulada e gera **preview-pixel-usb.png**. A validação atual tem **692 testes Python e 36 testes JavaScript aprovados**; veja docs/validacao.md.
 
 Preferências e logs ficam no diretório local de dados WAKKHA/BEATLIGHT DMX, sob %LOCALAPPDATA%; Configurações mostra o caminho completo. Logs: logs/beatlight.jsonl, com rotação em 2 MB e três cópias. Também é possível utilizar outro diretório:
 

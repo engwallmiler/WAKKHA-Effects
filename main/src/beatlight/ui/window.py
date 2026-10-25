@@ -30,6 +30,7 @@ from beatlight.ui.link import build_link_page, update_link_view
 from beatlight.ui.components import label
 from beatlight.ui.stage import build_stage_page, update_stage_view
 from beatlight.ui.panels import build_sidebar, build_monitor_page, build_diagnostics_page, build_settings_page
+from beatlight.ui.pixel import PixelStudioPage
 
 
 class JobBridge(QObject):
@@ -59,7 +60,7 @@ class MainWindow(QMainWindow):
         self._last_drop_count = 0
         self._render_count = 0
         self._fps_start = monotonic()
-        self.setWindowTitle("BEATLIGHT DMX · Music & Stage")
+        self.setWindowTitle("BEATLIGHT · Pixel Studio & Music")
         self.resize(1440, 960)
         self.setMinimumSize(1100, 760)
         container = QWidget()
@@ -75,7 +76,7 @@ class MainWindow(QMainWindow):
         self.page_title = label("Audio Monitor", "title")
         header.addWidget(self.page_title)
         header.addStretch()
-        header.addWidget(label("DROP & BUILD · v0.19", "badge"))
+        header.addWidget(label("PIXEL & MUSIC · v0.22", "badge"))
         layout.addLayout(header)
         layout.addWidget(label("Da batida ao palco: acompanhe o groove, a tensão e o drop.", "subtitle"))
         self.pages = QStackedWidget()
@@ -88,12 +89,14 @@ class MainWindow(QMainWindow):
         self.pages.addWidget(build_lighting_page(self))
         self.pages.addWidget(build_stage_page(self))
         self.pages.addWidget(build_link_page(self))
+        self.pixel_page=PixelStudioPage(self)
+        self.pages.addWidget(self.pixel_page)
         layout.addWidget(self.pages, 1)
         footer = QHBoxLayout()
         self.footer_status = label("●  Pronto para monitorar", "muted")
         footer.addWidget(self.footer_status)
         footer.addStretch()
-        footer.addWidget(label("LOCAL  /  SEM DMX  /  v0.19.0", "eyebrow"))
+        footer.addWidget(label("PIXEL STUDIO  /  WS2812 USB  /  v0.22.0", "eyebrow"))
         layout.addLayout(footer)
         root.addWidget(body, 1)
         self.setCentralWidget(container)
@@ -136,7 +139,8 @@ class MainWindow(QMainWindow):
         self.pages.setCurrentIndex(index)
         if self.nav_group.button(index):
             self.nav_group.button(index).setChecked(True)
-        self.page_title.setText(("Audio Monitor", "Diagnósticos", "Configurações", "Análise espectral", "Kick Monitor", "Rhythm Monitor", "Lighting Studio", "Stage Preview", "Ableton Link")[index])
+        self.page_title.setText(("Audio Monitor", "Diagnósticos", "Configurações", "Análise espectral", "Kick Monitor", "Rhythm Monitor", "Lighting Studio", "Stage Preview", "Ableton Link", "Pixel Studio")[index])
+        if index==9:self.pixel_page.ensure_loaded()
         self._tick()
 
 
@@ -214,8 +218,7 @@ class MainWindow(QMainWindow):
         self._tick()
         if self.closing:
             if name == "shutdown" and not error:
-                self.closed_ready = True
-                self.close()
+                self._finish_shutdown()
             elif name == "shutdown":
                 self.closing = False
             else:
@@ -238,6 +241,8 @@ class MainWindow(QMainWindow):
                       "stopping": "ENCERRANDO", "error": "ERRO"}.get(status.state, status.state)
         fresh = status.state == "running" and snapshot is not None and status.audio_age < 0.5
         page = self.pages.currentIndex()
+        if page==9 or self.pixel_page.bridge.ready_state:
+            self.pixel_page.update_music(snapshot,status,monotonic())
         if page == 3:
             update_spectral_view(self, snapshot, status, fresh)
         if page == 4:
@@ -443,6 +448,13 @@ class MainWindow(QMainWindow):
             finally:
                 self.link_runtime.stop()
 
+    def _finish_shutdown(self):
+        if not self.pixel_page.closed_ready:
+            QTimer.singleShot(25,self._finish_shutdown)
+            return
+        self.closed_ready=True
+        self.close()
+
     def closeEvent(self, event: QCloseEvent):
         if self.closed_ready:
             self.timer.stop()
@@ -455,6 +467,7 @@ class MainWindow(QMainWindow):
         else:
             event.ignore()
             self.closing = True
+            self.pixel_page.shutdown()
             self.footer_status.setText("Encerrando áudio e iluminação…")
             if not self.busy:
                 self._submit("shutdown", self._shutdown_runtimes)

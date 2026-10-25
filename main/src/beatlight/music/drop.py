@@ -35,6 +35,9 @@ class DropDetector:
         self.fast_confirmed = False
         self.rescued_attack = False
 
+    def full_power(self,descriptor):
+        return descriptor is None or not self.ready or descriptor.power_db>=self.reference_db+10*math.log10(self.MIN_POWER_RATIO)
+
     def learn(self, descriptor):
         if descriptor is None or descriptor.power_db <= -100:
             return
@@ -72,14 +75,18 @@ class DropDetector:
         missing = (at - last_kick) / period if last_kick is not None and period else 0
         return self.ready and (missing >= 7.5 or self.pause_recent(at))
 
+    def observe_candidate(self,event,period):
+        if not self.candidate_times or event.occurred_at>self.candidate_times[-1]:
+            self.candidate_times.append(event.occurred_at)
+        times=[t for t in self.candidate_times if 0<=event.occurred_at-t<=2*period]
+        intervals=[b-a for a,b in zip(times,times[1:])]
+        self.accelerated=bool(period and len(intervals)>=2 and
+            sum(.30*period<=gap<=.68*period for gap in intervals[-3:])>=2)
+
     def strong_candidate(self, event, descriptor, period, last_kick=None):
         self.candidate_at = event.occurred_at
         self.candidate_gap_beats = max(0.0, (event.occurred_at-last_kick)/period) if last_kick is not None and period else 0.0
-        self.candidate_times.append(event.occurred_at)
-        times = [t for t in self.candidate_times if event.occurred_at - t <= 2 * period]
-        intervals = [b - a for a, b in zip(times, times[1:])]
-        self.accelerated = bool(period and len(intervals) >= 2 and
-            sum(.30 * period <= gap <= .68 * period for gap in intervals[-3:]) >= 2)
+        self.observe_candidate(event,period)
         if descriptor is None or not self.ready:
             # Compatibilidade de descritores legados: mantém a recuperação antiga.
             return True

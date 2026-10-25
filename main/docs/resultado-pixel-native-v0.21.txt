@@ -1,0 +1,75 @@
+[13040:21592:1024/235136.875:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[13040:21592:1024/235136.875:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[13040:21592:1024/235136.933:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[13040:21592:1024/235136.933:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[13040:21592:1024/235136.933:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[13040:21592:1024/235136.933:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_output": false,
+  "errors": [],
+  "renderer": "software",
+  "scroll_tiles": [
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "stripEffect",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "cueBars",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    }
+  ],
+  "native_manual_drop": true,
+  "render_ms": {
+    "last": 37.899999998509884,
+    "average": 31.15684931527517,
+    "max": 49.400000005960464,
+    "columns": 4.399999998509884,
+    "glow": 24.5
+  },
+  "ready": true,
+  "independent_rgb": true,
+  "blackout_zero": true,
+  "stop_zero": true,
+  "persisted": true,
+  "drop_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "first_drop": 20.18800000000192,
+  "dropped_blocks": 0,
+  "closed_cleanly": true,
+  "last_edit_saved_on_close": true
+}
+[13040:29316:1024/235208.835:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[13040:29316:1024/235208.835:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[13040:29316:1024/235208.835:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.

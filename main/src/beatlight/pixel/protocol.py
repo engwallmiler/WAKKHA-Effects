@@ -36,6 +36,8 @@ def music_packet(snapshot,status,at):
                      "brightness":unit(structure.brightness) if structure else 0,
                      "drop_id":structure.drop_id if structure else 0,
                      "drop_kicks":structure.drop_kicks if structure else 0,
+                     "drop_phase":structure.drop_evidence.phase if structure and structure.drop_evidence else "idle",
+                     "novelty":unit(structure.drop_evidence.spectral_novelty) if structure and structure.drop_evidence else 0,
                      "bass":unit(texture.bass_level) if texture else 0,
                      "density":unit(texture.density) if texture else 0,
                      "activity":unit(texture.bass_activity) if texture else 0}}

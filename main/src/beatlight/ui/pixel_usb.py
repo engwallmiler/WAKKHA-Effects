@@ -31,7 +31,11 @@ class PixelUsbPanel(QWidget):
                 self.desired_id=saved.get('strip_id','') if isinstance(saved.get('strip_id',''),str) else ''
         except (OSError,ValueError,TypeError):saved={}
         outer=QVBoxLayout(self);outer.setContentsMargins(0,0,0,0)
+        header=QHBoxLayout();self.fold=QPushButton('▸ ESP32 USB · configuração da fita');self.fold.setCheckable(True)
+        header.addWidget(self.fold,1);outer.addLayout(header)
         box=QGroupBox('Saída física · ESP32 USB · 1 fita WS2812 / 300 LEDs individuais')
+        self.controls_box=box;box.setVisible(False)
+        self.fold.toggled.connect(lambda opened:(box.setVisible(opened),self.fold.setText(('▾' if opened else '▸')+' ESP32 USB · configuração da fita')))
         grid=QGridLayout(box);grid.setContentsMargins(10,6,10,8);grid.setHorizontalSpacing(8)
         self.port=QComboBox();self.port.setMinimumWidth(150)
         self.refresh=QPushButton('↻ Portas');self.refresh.clicked.connect(self._scan)
@@ -43,7 +47,8 @@ class PixelUsbPanel(QWidget):
         self.enable.setStyleSheet('QPushButton:checked {background:#1b684e;border:2px solid #59e1af;color:white;}')
         self.off=QPushButton('APAGAR SAÍDA');self.off.clicked.connect(self._off)
         self.off.setStyleSheet('QPushButton {background:#6f2929;color:white;border:1px solid #df7770;font-weight:800;}')
-        for column,widget in enumerate((self.port,self.refresh,self.connect_button,self.source,self.prepare,self.enable,self.off)):
+        header.addWidget(self.enable);header.addWidget(self.off)
+        for column,widget in enumerate((self.port,self.refresh,self.connect_button,self.source,self.prepare)):
             grid.addWidget(widget,0,column)
         limits=QHBoxLayout();limits.setContentsMargins(0,0,0,0)
         limits.addWidget(QLabel('Teto de brilho'))
@@ -52,9 +57,9 @@ class PixelUsbPanel(QWidget):
         self.current=QSpinBox();self.current.setRange(500,20000);self.current.setSingleStep(500);self.current.setSuffix(' mA');self.current.setValue(saved.get('milliamps',2000));limits.addWidget(self.current)
         limits.addWidget(QLabel('5 V externos · GND comum · conversor 3,3 → 5 V · GPIO 18'),1)
         self.guide=QPushButton('Instruções');self.guide.clicked.connect(self._guide);limits.addWidget(self.guide)
-        grid.addLayout(limits,1,0,1,7)
+        grid.addLayout(limits,1,0,1,5)
         self.status=QLabel('Desconectado · use fonte externa de 5 V para a fita, nunca o USB do ESP32.');self.status.setWordWrap(True)
-        grid.addWidget(self.status,2,0,1,7);outer.addWidget(box)
+        outer.addWidget(box);outer.addWidget(self.status);self.status.setFixedHeight(28)
         self.portsReady.connect(self._ports_ready)
         self.timer=QTimer(self);self.timer.setInterval(33);self.timer.timeout.connect(self._tick);self.timer.start()
         self.page.bridge.operatorChanged.connect(self._operator_changed)

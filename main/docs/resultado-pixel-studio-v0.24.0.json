@@ -1,0 +1,70 @@
+{
+  "physical_output": false,
+  "errors": [],
+  "renderer": "software",
+  "scroll_tiles": [
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "stripEffect",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "cueBars",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    }
+  ],
+  "native_manual_drop": true,
+  "render_ms": {
+    "last": 27.899999998509884,
+    "average": 24.439908952877627,
+    "max": 32.30000000074506,
+    "columns": 6.399999998509884,
+    "glow": 16.100000001490116
+  },
+  "processing_ms": {
+    "mean": 1.6752380782846161,
+    "max": 4.846599997108569
+  },
+  "ready": true,
+  "independent_rgb": true,
+  "blackout_zero": true,
+  "stop_zero": true,
+  "persisted": true,
+  "drop_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "first_drop": 20.139999999999418,
+  "dropped_blocks": 0,
+  "closed_cleanly": true,
+  "last_edit_saved_on_close": true
+}

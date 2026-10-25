@@ -100,6 +100,18 @@ def test_ws2812_export_is_rgb_and_rejects_a_fictional_white_emitter():
     with pytest.raises(ValueError):validate_frame(data)
 
 
+def test_layered_show_and_new_effects_round_trip_without_altering_the_usb_pixel_contract():
+    data=project();data['strips'][0]['effect']='vortex'
+    data['show'].update(layerCount=4,progressive=True,energyMotion=True,peakMode='auto',peakEvery=8,peakLevel=.8,morphBeats=8,compositionStyle='hypnotic')
+    assert validate_project(data)==data
+
+
+@pytest.mark.parametrize('field,value',[('layerCount',5),('peakEvery',16),('peakMode','random-every-frame'),('peakLevel',1.1),('progressive',1),('energyMotion','yes'),('compositionStyle','random-per-pixel')])
+def test_invalid_evolution_settings_are_rejected(field,value):
+    data=project();data['show'][field]=value
+    with pytest.raises(ValueError):validate_project(data)
+
+
 def test_rgb_frame_contains_one_rgb_triplet_per_addressable_pixel():
     assert validate_frame(frame())["strips"][0]["data"]==[255,0,0,0,0,255]
 

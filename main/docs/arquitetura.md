@@ -1,4 +1,10 @@
-# Arquitetura — versão 0.22
+# Arquitetura — versão 0.24
+
+O sequenciador mantém descritores de duas a quatro camadas com início musical, envelopes e histórico limitado a doze combinações. A direção Hipnótica usa famílias compatíveis, mínimo de 32 tempos, base por até três composições, uma substituição por frase e envelopes/fusões de oito tempos. Descritores retidos conservam fase, ganho e instante de entrada; o reajuste do relógio também rebaseia esse instante. A direção Variada conserva o mínimo de 16 tempos. Estrutura e comandos manuais têm prioridade. Picos têm origem própria e movimento usa um fator suavizado por energia/contexto, separado do BPM.
+
+A estrutura acrescenta fluxo/novidade espectral e fases de impacto/continuidade, preservando o primeiro kick e os oito contadores reais. O histórico de candidatos é incorporado em lote para evitar reanalisar as mesmas dezesseis entradas a cada FFT. O protocolo/firmware USB 0.22 não mudou. A comparação com o anexo está em avaliacao-recomendacoes-drop-v0.23.md.
+
+O detector mantém médias lineares aparadas do pico grave e da potência do transiente do groove. O contexto armado congela ambas antes do primeiro retorno. Atingir os dois patamares pode provar recuperação sem aguardar a média da mixagem, depois das verificações de identidade/grade. O snapshot acrescenta pico relativo, média, número de referências e mean_reached, preservando os campos anteriores.
 
 `pixel/usb_protocol.py` define BLP1, CRC32, identificação e configuração de uma saída de 300 WS2812 RGB. `pixel/usb.py` mantém a COM em uma thread, aguarda confirmação e conserva somente o quadro pendente mais recente. A prioridade de blackout pode interromper a espera de confirmação de um frame; falhas encerram a conexão sem reconectar/reativar automaticamente. O emissor é limitado a 30 Hz e descarta amostras com mais de 250 ms.
 
@@ -20,7 +26,7 @@ O foco principal é o **Pixel Studio**, com fitas endereçáveis independentes. 
 
 `ui/pixel.py` carrega sob demanda `beatlight/beatlight_pixel_studio.html`, que também integra o pacote como arquivo de dados. O perfil do navegador bloqueia recursos remotos e a ponte expõe operações limitadas a projeto, música e quadros. A porta física é controlada pelo painel nativo e inicia desconectada. A aplicação mantém o nome de dados BEATLIGHT DMX para preservar as preferências existentes.
 
-O motor Canvas conserva os vinte padrões e o editor fornecidos. Controles por fita não dependem do motor anterior de PARs/moves. A análise musical é processada no recebimento; o desenho da prévia fica limitado a 30 Hz, com resolução visual reduzida sem mudar o número de pixels do quadro. A entrada do drop acompanha o estado musical e sua saída acompanha as oito confirmações reais. O sequenciador oferece agenda por N compassos, antecipação por novos elementos, combinação das duas regras e manutenção explícita do padrão.
+O motor Canvas conserva os 26 padrões e o editor fornecidos. Controles por fita não dependem do motor anterior de PARs/moves. A análise musical é processada no recebimento; o desenho da prévia fica limitado a 30 Hz, com resolução visual reduzida sem mudar o número de pixels do quadro. A entrada do drop acompanha o estado musical e sua saída acompanha as oito confirmações reais. O sequenciador oferece agenda por N compassos, antecipação por novos elementos, combinação das duas regras e manutenção explícita do padrão.
 
 O aplicativo inicia com fitas desativadas e modo ao vivo. Silêncio, captura parada, dados ausentes por 500 ms e blackout zeram pixels/flashes. Projetos não persistem ativação, pausa, blackout nem seleção de modo ao vivo/demonstração. O fechamento aguarda por até um segundo a confirmação da última edição, sem interromper a limpeza dos runtimes.
 

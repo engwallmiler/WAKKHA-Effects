@@ -1,0 +1,86 @@
+[15076:6200:1025/172359.091:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[15076:6200:1025/172359.091:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[15076:6200:1025/172359.132:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[15076:6200:1025/172359.132:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[15076:6200:1025/172359.132:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[15076:6200:1025/172359.132:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_output": false,
+  "actual_project_cloned": true,
+  "layers": [
+    {
+      "beat": 32,
+      "weights": [
+        0.9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "beat": 36,
+      "weights": [
+        0.9,
+        0.2131892355000704,
+        3.0372519267580694e-07,
+        0
+      ]
+    },
+    {
+      "beat": 42,
+      "weights": [
+        0.9,
+        0.42,
+        0.46,
+        0.25159373771858967
+      ]
+    },
+    {
+      "beat": 47.8,
+      "weights": [
+        0.9,
+        0.00048783528446855184,
+        0.0005342957877512711,
+        0.0005807562910339903
+      ]
+    }
+  ],
+  "drop_plans": [
+    {
+      "variant": 1,
+      "layers": [
+        "vortex",
+        "helix",
+        "scanner",
+        "weave"
+      ]
+    },
+    {
+      "variant": 3,
+      "layers": [
+        "orbit",
+        "meteor",
+        "vortex",
+        "helix"
+      ]
+    }
+  ],
+  "first_deadline": 52,
+  "calm_speed": 0.3794454537292702,
+  "build_speed": 1.8480263355920794,
+  "peak_sync": true,
+  "lines": 1,
+  "pixels": 300,
+  "stable_stage": true,
+  "minimum_sixteen": true,
+  "folds": true,
+  "stage": {
+    "top": 232.296875,
+    "width": 1105,
+    "height": 388.703125,
+    "bottom": 621,
+    "viewport": 633
+  },
+  "completed": true,
+  "closed_cleanly": true
+}

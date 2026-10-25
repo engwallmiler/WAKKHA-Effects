@@ -63,6 +63,8 @@ class StructureFeatureExtractor:
         self._percussion = AttackEnvelope(0.08, 0.4)
         self._masks = None
         self._texture_masks = None
+        self._spectral_background = None
+        self._novelty_at = None
 
     def push(self, block: AudioBlock) -> list[StructureFeatures]:
         signature = block.sample_rate, block.channels
@@ -92,9 +94,17 @@ class StructureFeatureExtractor:
             total = float(power[visible].sum())
             centroid = float((power[visible] * freq[visible]).sum()) / max(total, 1e-12)
             db = lambda mask: float(10 * np.log10(max(float(power[mask].sum()), 1e-12)))
+            bands = np.asarray([float(power[mask].sum()) for mask in self._texture_masks])
+            distribution = bands / max(float(bands.sum()), 1e-12)
+            novelty = float(np.abs(distribution-self._spectral_background).sum()*.5) if self._spectral_background is not None else 0.0
+            if total>1e-6:
+                amount = 1-math.exp(-max(0,at-self._novelty_at)/.9) if self._novelty_at is not None else 1.0
+                self._spectral_background = distribution if self._spectral_background is None else self._spectral_background+(distribution-self._spectral_background)*amount
+                self._novelty_at = at
             result.append(StructureFeatures(frame.id, at, db(low), db(high),
                 float(10 * np.log10(max(total, 1e-12))), min(1.0, centroid / 8000),
                 onset, roll_onset, db(percussion), tuple(float(v) for v in shape),
                 db((freq >= 250) & (freq < 1500)), db((freq >= 30) & (freq < 250)),
-                tuple(db(mask) for mask in self._texture_masks)))
+                tuple(float(10*np.log10(max(value,1e-12))) for value in bands),
+                min(1.0,max(0.0,self._general.scores[0])),min(1.0,max(0.0,novelty))))
         return result

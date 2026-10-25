@@ -1,4 +1,28 @@
-# Pixel Studio integrado — 0.22
+# Pixel Studio integrado — 0.24
+
+## Apresentação e camadas
+
+O desktop abre em **Foco no palco**. **Mostrar controles** revela painéis recolhíveis para automação/picos, fitas/geometria, biblioteca/drops e aparência/cores. **Editar fita** abre diretamente o painel da linha escolhida. A área USB também é recolhível; ativação e APAGAR SAÍDA permanecem fora dela. As atualizações musicais não abrem/fecham painéis nem mudam a altura dos indicadores.
+
+Existem **26 padrões**, incluindo Trama, Órbitas, Fragmentos, Maré, Mosaico e Vórtice. AUTO SHOW e ORGÂNICO escolhem composições de **duas, três ou quatro camadas**, com memória das últimas doze combinações. Um elemento pode conectar composições vizinhas; a seleção evita repetir a combinação inteira ou retornar sempre à mesma cena após breakdown.
+
+Para receber as combinações, escolha **Efeito → Seguir show global** no controle da fita. Uma fita com efeito próprio conserva essa escolha. Mudanças sustentadas de densidade/atividade e novidade espectral podem solicitar a evolução, respeitando a duração mínima da direção visual escolhida.
+
+**Direção visual → Hipnótica** é o novo padrão, inclusive ao abrir um projeto antigo sem esse campo. Trabalha com famílias Anéis, Corrente, Espiral, Trama, Órbitas, Túnel, Maré e Véu, selecionadas conforme a estrutura. A mesma base conecta até três composições; dentro de uma família, muda somente uma camada por troca, mantendo fase e intensidade das que continuam. As camadas usam movimentos relacionados e cores próximas, com menos deformação espacial. Padrões de pontos dispersos não são sorteados para essas famílias.
+
+Cada composição hipnótica permanece por **pelo menos 32 tempos da grade**. Com evolução progressiva, os elementos crescem ao longo de oito tempos, com entradas distribuídas nos primeiros compassos, e permanecem sustentados. As saídas acontecem na fusão com a próxima composição; não há um esvaziamento automático a cada 16 tempos. Na grade regular de 4/4, 32 tempos correspondem a 32 kicks, mas a contagem continua sem kick. A base pode atravessar pelo menos 96 tempos quando a estrutura permanece estável e as trocas respeitam esse mínimo.
+
+**Direção visual → Variada** conserva as combinações mais livres, mínimo de 16 tempos e entradas/saídas dentro do ciclo. Em ambas as direções, mudanças de estrutura, seleção manual e DROP AGORA podem antecipar a troca. **Manter padrão** preserva a família/composição enquanto mantém o movimento.
+
+**Velocidade automática** suaviza a passagem entre fatores de movimento. Um breakdown com energia/tensão baixas se move devagar; build-up e drop aceleram. BPM, fase e o intervalo de quatro/oito tempos não são acelerados junto com o movimento. Desligue essa opção para usar somente a velocidade escolhida.
+
+O protocolo físico continua BLP1/RGB/300 pixels. **O firmware 0.22 permanece compatível com todos os efeitos e camadas novos; não é necessário regravá-lo.**
+
+## Picos por frase
+
+**Participação automática** inclui picos em algumas composições e os deixa ausentes em outras, mantendo essa escolha durante a composição. Quando entram, repetem um motivo mais intenso a cada quatro ou oito tempos. Um breve recuo antes do acento aumenta seu contraste. Breakdown calmo utiliza um acento mais suave e longo; drops têm sua própria sequência prioritária.
+
+O botão **Sincronizar pico · N tempos** indica a participação pela cor e marca o momento do acento ao ser pressionado. Ele conserva o intervalo indicado e passa a **Sempre ativos**; não altera o BPM, o início da composição ou a sincronização geral. Para retomar a escolha automática, selecione **Picos por frase → Participação automática**. **Sincronizar 1/8** continua sendo o controle separado do ciclo geral. Nenhum desses controles inventa eventos acústicos de kick.
 
 A saída física inicial é **uma fita WS2812/WS2812B RGB com 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. No painel nativo, escolha a fita e use Preparar 300 WS2812 → Conectar ESP32 → Ativar saída física. O mesmo cálculo RGB atende a prévia e a transmissão, inclusive com o palco fora da área visível. Veja [ligação, firmware e operação](esp32-ws2812-usb.md); esse guia também abre pelo botão Instruções do painel.
 
@@ -17,7 +41,7 @@ No modo **BEATLIGHT · áudio / Ableton Link**, o BPM manual fica bloqueado. A g
 - **Somente novos elementos**: conserva o padrão enquanto os elementos forem estáveis.
 - **Manter padrão**: suspende a troca automática de combinações; movimentos e a automação estrutural continuam conforme a configuração.
 
-**Trocar a cada** oferece 1/2/4/8/16 compassos. **Fusão musical** define corte, meio tempo, um/dois tempos ou um compasso; ela controla a passagem entre cenas, não a agenda de trocas. O relógio ao vivo usa a grade musical em vez de contar segundos de animação. **Próxima transição** informa o prazo em compassos/tempos. A ausência de kick não pausa a grade.
+**Trocar a cada** aceita os intervalos existentes, aplicando mínimo de 32 tempos na direção Hipnótica ou 16 na Variada. **Fusão musical** controla a passagem, separada da agenda. Em evolução progressiva, a fusão automática usa pelo menos oito tempos na Hipnótica e quatro na Variada; desligar essa evolução permite fusões curtas ou corte explícito. O relógio ao vivo usa a grade musical. **Próxima transição** informa o prazo em compassos/tempos. Para uma apresentação longa, use Hipnótica, 8 ou 16 compassos, três camadas e evolução progressiva.
 
 Com **Acompanhar breakdown, build-up e drop**, a estrutura tem prioridade sobre os padrões individuais: o breakdown mistura sustentação calma, o build acrescenta movimento/tensão e o drop usa sua sequência de alta energia em todas as fitas habilitadas. Paletas e brilho por fita são respeitados. ORGÂNICO/AUTO usam repertórios próprios em cada trecho. A entrada automática acompanha o estado musical sem esperar o próximo compasso, e a saída segue as oito confirmações reais do detector. **Manter os efeitos escolhidos** desliga essas camadas estruturais automáticas.
 
@@ -27,11 +51,13 @@ O botão laranja fica também no cabeçalho Qt, sempre acessível ao rolar o HTM
 
 Uma detecção automática que chega durante o disparo manual não reinicia seus oito tempos. Sincronizar 1/8 durante a cena conserva a duração restante. Parar/reiniciar a captura limpa a identificação de cenas anteriores. Na demonstração, **Armar drop** ainda agenda a entrada para o próximo compasso; **DROP AGORA** continua sendo imediato.
 
+Cada entrada escolhe um plano diferente dos dois drops anteriores. As camadas são adicionadas progressivamente a cada dois tempos; no drop automático o avanço das camadas considera as posições acústicas confirmadas. O primeiro impacto não espera essas adições nem a confirmação posterior da continuidade. Ao terminar, AUTO/ORGÂNICO escolhem uma composição nova conectada ao contexto atual.
+
 ## Cada fita
 
 Escolha uma linha no seletor acima do palco e clique em **Editar fita**, ou selecione no editor de geometria. Os controles individuais são aplicados imediatamente:
 
-- efeito próprio entre os vinte padrões, ou seguir o show global;
+- efeito próprio entre os 26 padrões, ou seguir o show global;
 - paleta própria, ou seguir a paleta global;
 - brilho de 0–100%, velocidade de 0,1–4× e defasagem;
 - início → fim ou fim → início;
@@ -64,4 +90,4 @@ As mensagens incluem o instante de envio do host; a entrega mais rápida observa
 
 **Saída física é uma ativação separada da prévia.** A conexão USB inicia apagada, e Ativar saída física também ativa o motor de fitas. APAGAR SAÍDA interrompe a emissão até nova ativação; o BLACKOUT global mantém o motor armado e retoma ao ser liberado. Quadros atrasados são descartados, e o firmware apaga após 750 ms sem quadro válido. A saída funciona com fonte externa de 5 V, limites físicos próprios e montagem descrita no guia. Não há DMX físico. A sincronização Traktor/Link continua somente de leitura.
 
-Testes: `node --test beatlight/tests/geometry.test.cjs beatlight/tests/music.test.cjs beatlight/tests/usb.test.cjs`, `python -m pytest`, `python scripts/validate_pixel_studio.py`, `python scripts/validate_pixel_cues.py` e `python scripts/validate_pixel_usb.py`. O primeiro ensaio desktop usa áudio sintético e configuração isolada em `.runtime/pixel-qa`; o segundo clona o projeto disponível para `.runtime/pixel-cues-qa`; o terceiro exercita uma porta ESP32 emulada, sem abrir dispositivo real, usando `.runtime/pixel-usb-qa`. Nenhum abre captura de hardware ou sessão Link nativa. Somente o ambiente automatizado desativa o sandbox aninhado do Chromium; o aplicativo normal não aplica essa opção.
+Testes: `node --test beatlight/tests/geometry.test.cjs beatlight/tests/music.test.cjs beatlight/tests/usb.test.cjs beatlight/tests/evolution.test.cjs`, `python -m pytest` e os scripts `validate_pixel_studio.py`, `validate_pixel_cues.py`, `validate_pixel_usb.py` e `validate_pixel_evolution.py` da pasta scripts. O ensaio de áudio usa configuração isolada em `.runtime/pixel-qa`; cues/evolução usam cópias do projeto em pastas próprias; o ensaio USB exercita uma porta ESP32 emulada em `.runtime/pixel-usb-qa`. Nenhum abre captura de hardware ou sessão Link nativa. Somente o ambiente automatizado desativa o sandbox aninhado do Chromium; o aplicativo normal não aplica essa opção. Veja os resultados em [Validação](validacao.md).

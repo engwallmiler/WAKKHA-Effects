@@ -51,8 +51,9 @@ def wait_seconds(seconds):
 
 def check_tiles():
     checks=[]
+    js('(document.body.classList.contains("presentation")&&document.getElementById("presentationBtn").click(),true)')
     for element in ('sourceMode','stripEffect','cueBars','sourceMode'):
-        js(f"(document.getElementById('{element}').scrollIntoView({{block:'center',behavior:'instant'}}),true)")
+        js(f"(()=>{{const e=document.getElementById('{element}');for(let n=e.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;e.scrollIntoView({{block:'center',behavior:'instant'}});return true}})()")
         wait_seconds(1)
         rect=js(f"(()=>{{const r=document.getElementById('{element}').getBoundingClientRect();return {{x:r.x,y:r.y,width:r.width,height:r.height}}}})()")
         image=window.pixel_page.view.grab().toImage();scale=image.width()/window.pixel_page.view.width()
@@ -62,7 +63,7 @@ def check_tiles():
             window.grab().save(str(root/'preview-pixel-tile-failure.png'))
         assert all(abs(a-b)<12 for a,b in zip(rgb,[23,37,58])),f"Tile incorreto ao rolar {element}: {rgb}; rect={rect}; scroll={js('window.scrollY')}; render={js('BeatlightPixel.status().render_ms')}"
         checks.append({'control':element,'rgb':rgb})
-    js("(scrollTo(0,0),true)");wait_seconds(.2)
+    js("(document.getElementById('geometryFold').open=false,document.getElementById('automationFold').open=false,document.getElementById('presentationBtn').click(),scrollTo(0,0),true)");wait_seconds(.2)
     return checks
 
 try:
@@ -101,12 +102,14 @@ try:
     js("(BeatlightPixel.blackout(true),true)")
     assert all(not any(s["data"]) for s in js("BeatlightPixel.renderFrame()")["strips"])
     js("(BeatlightPixel.blackout(false),BeatlightPixel.sync(),true)")
-    drops=set();first_drop=None
+    drops=set();first_drop=None;processing=[];last_sequence=-1
     until=monotonic()+(1 if smoke else 25)
     screenshot=False
     while monotonic()<until:
         app.processEvents()
         status=window.runtime.status();snapshot=window.runtime.snapshot()
+        if snapshot and snapshot.sequence!=last_sequence:
+            processing.append(snapshot.processing_ms);last_sequence=snapshot.sequence
         rendered=[event for event in window.pixel_page.bridge.events if event["kind"]=="drop-render"]
         if rendered:
             drops.update(event["count"] for event in rendered)
@@ -118,6 +121,7 @@ try:
             if error:report["errors"].append(error)
         sleep(.005)
     report['render_ms']=js('BeatlightPixel.status().render_ms')
+    report['processing_ms']={'mean':sum(processing)/len(processing),'max':max(processing)} if processing else None
     if not smoke:
         assert drops==set(range(1,9)) and first_drop<20.3, f"Kicks={sorted(drops)}, primeiro drop={first_drop}, status={window.runtime.status()}, render={js('BeatlightPixel.status()')}, eventos={list(window.pixel_page.bridge.events)[:4]}"
     else:window.grab().save(str(root/"preview-pixel-studio-smoke.png"))

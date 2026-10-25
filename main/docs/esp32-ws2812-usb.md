@@ -1,8 +1,8 @@
 # ESP32 USB + WS2812: uma fita com 300 LEDs individuais
 
-Versão 0.22. Placa confirmada: **ESP32 DevKit / ESP32-WROOM-32**. Fita RGB WS2812/WS2812B de **5 V**, 300 LEDs. Saída de dados: **GPIO 18**, ordem física **GRB**. Este firmware não é destinado a ESP32-S3/C3 nem a fitas RGBW/12 V.
+Aplicativo 0.24, compatível com o firmware USB 0.22 já fornecido; não é necessário regravá-lo para os efeitos novos. Placa confirmada: **ESP32 DevKit / ESP32-WROOM-32**. Fita RGB WS2812/WS2812B de **5 V**, 300 LEDs. Saída de dados: **GPIO 18**, ordem física **GRB**. Este firmware não é destinado a ESP32-S3/C3 nem a fitas RGBW/12 V.
 
-O computador executa o mesmo motor do Pixel Studio: vinte efeitos, Orgânico, Auto Show, transições por compassos, cores, baixo/densidade, estrutura musical e DROP AGORA. Envia 300 triplos RGB por USB. O ESP32 recebe cada quadro completo e gera o sinal da fita. **Um pixel corresponde a um LED**, sem agrupamentos de três.
+O computador executa o mesmo motor do Pixel Studio: 26 efeitos, Orgânico, Auto Show, transições por compassos, cores, baixo/densidade, estrutura musical e DROP AGORA. Envia 300 triplos RGB por USB. O ESP32 recebe cada quadro completo e gera o sinal da fita. **Um pixel corresponde a um LED**, sem agrupamentos de três.
 
 ## Materiais e alimentação
 
@@ -97,7 +97,7 @@ Troque COM5 pela porta da placa e mantenha o BEATLIGHT desconectado dessa porta 
 
 ## Operar no BEATLIGHT
 
-1. Abra **iniciar.cmd**. Na página Pixel Studio, localize o painel **Saída física · ESP32 USB** acima da prévia.
+1. Abra **iniciar.cmd**. Na página Pixel Studio, expanda **ESP32 USB · configuração da fita** acima da prévia.
 2. Escolha a **fita do projeto** que deseja enviar. Clique **Preparar 300 WS2812**: apenas essa linha passa a ter 300 LEDs, 300 pixels e perfil WS2812; as demais são preservadas. O projeto é salvo normalmente. Se preferir começar com uma única linha, importe [examples/ws2812-300.json](../examples/ws2812-300.json) em **Importar projeto de fitas**; exporte antes seu projeto atual se quiser guardá-lo.
 3. Com o firmware já gravado, selecione a porta **COM** e clique **Conectar ESP32**. O aplicativo confere a identificação e envia os limites de brilho/corrente. A conexão começa com a saída apagada.
 4. Clique **Ativar saída física**. Isso também ativa as fitas no motor de efeitos. **Conectar não equivale a acender**; a ativação física é sempre manual e não é restaurada ao abrir o aplicativo.

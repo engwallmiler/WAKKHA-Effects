@@ -1,0 +1,36 @@
+{
+  "version": "0.23.0",
+  "editable_version": "0.23.0",
+  "wheel": ".runtime\\dist-v0.23\\beatlight_dmx-0.23.0-py3-none-any.whl",
+  "wheel_sha256": "74d537f4025602c3b751fb1e15a095aa17dfa0d6583d7fa1715c140556ccb0f8",
+  "assets_byte_identical": [
+    "beatlight/beatlight_pixel_studio.html",
+    "docs/pixel-studio.md",
+    "docs/drop-detection.md",
+    "docs/avaliacao-recomendacoes-drop-v0.23.md",
+    "docs/esp32-ws2812-usb.md",
+    "docs/validacao.md",
+    "examples/ws2812-300.json",
+    "firmware/beatlight_esp32/beatlight_esp32.ino",
+    "firmware/beatlight_esp32/protocol.h",
+    "firmware/beatlight_esp32/platformio.ini",
+    "firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-300-v0.22.0.bin"
+  ],
+  "modules_byte_identical": [
+    "contracts.py",
+    "dsp/structure_features.py",
+    "music/drop.py",
+    "music/structure.py",
+    "pixel/protocol.py",
+    "pixel/project.py",
+    "pixel/usb.py",
+    "pixel/usb_protocol.py",
+    "ui/pixel_usb.py"
+  ],
+  "firmware_version": "0.22.0",
+  "firmware_bytes": 357360,
+  "firmware_sha256": "9b46db6cc3661fd19cc909819c064c2d8e68041c663088c98fd792a88cec4cff",
+  "requires_pyserial": "3.5",
+  "physical_device_used": false,
+  "passed": true
+}

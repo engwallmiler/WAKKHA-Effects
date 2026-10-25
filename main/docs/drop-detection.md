@@ -1,4 +1,24 @@
-# Retorno do drop — versão 0.21
+# Retorno do drop — versão 0.24
+
+## Média dos picos do groove
+
+A referência agora guarda duas médias em potência linear: o pico grave do kick e a potência do transiente descontando o som que já existia antes. Usa até 16 kicks aceitos e apara os extremos a partir de oito amostras. As médias ficam congeladas no breakdown/build, no contexto interno armado e no primeiro retorno; o candidato não altera a própria referência usada para julgá-lo.
+
+Depois de passar por identidade e alinhamento, um kick com pelo menos 90% da potência média do transiente e 85% do pico médio pode provar diretamente a recuperação. Essa tolerância evita exigir igualdade numérica entre ataques. Assim, o retorno de força integral não precisa esperar a média dos graves da mixagem subir ou um crescimento de 7 dB sobre o breakdown. Não se espera outro kick para usar essa evidência.
+
+O pico absoluto sozinho não basta: uma bassline alta com transiente fraco continua bloqueada. Os caminhos anteriores continuam disponíveis para retornos válidos de menor volume, com os filtros de potência, timbre, cadência e grade existentes. O diagnóstico do Stage Preview informa o pico médio, número de kicks e proporção do candidato. Essa razão é relativa ao groove, não uma medição elétrica nem KickEvent.intensity.
+
+Há regressões para referência com acentos isolados, diferentes ganhos, tolerância de pico/transiente, graves altos sem ataque forte, roll fraco e congelamento da referência até o primeiro kick do drop. O comportamento continua heurístico; precisão e atraso em tracks reais precisam ser conferidos com os respectivos áudios.
+
+## Novidade espectral e continuidade
+
+A versão 0.23 expõe fluxo positivo normalizado e uma medida de novidade da distribuição de energia em 12 bandas, comparada com um fundo adaptativo de 0,9 s. Novidade não equivale a kick: apenas reforça um candidato que passou por identidade, potência e grade. O limiar reforçado para rolls acelerados continua ativo.
+
+Após cerca de oito tempos sem kick forte, um contexto interno de retorno pode ser armado mesmo com baixo sustentado. Isso permite aproveitar o primeiro ataque real sem obrigar o painel a classificar a bassline como breakdown. A decisão acústica continua causal.
+
+O estado de drop agora distingue **impact** e **confirmed**. O primeiro kick aprovado dispara o impacto imediatamente; três kicks acústicos únicos confirmam continuidade. Um impacto seguido de retirada real pode ser rejeitado, retornando ao contexto anterior. Uma lacuna de confirmações sobre graves sustentados permanece incerta e não encurta automaticamente os oito kicks, preservando o comportamento validado anteriormente.
+
+A matriz completa do anexo, itens existentes, mudanças e limites está em [avaliacao-recomendacoes-drop-v0.23.md](avaliacao-recomendacoes-drop-v0.23.md). Não foi acrescentado um classificador de ML nem detecção de drop sem kick.
 
 ## Ajustes da versão 0.21
 

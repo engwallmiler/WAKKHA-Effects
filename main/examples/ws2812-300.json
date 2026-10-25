@@ -37,10 +37,17 @@
     "mode": "organic",
     "palette": "neon",
     "brightness": 0.8,
-    "sceneBars": 2,
+    "sceneBars": 8,
     "changeMode": "hybrid",
-    "morphBeats": 1,
+    "morphBeats": 8,
     "followStructure": true,
-    "strobes": false
+    "strobes": false,
+    "layerCount": 3,
+    "compositionStyle": "hypnotic",
+    "progressive": true,
+    "energyMotion": true,
+    "peakMode": "auto",
+    "peakEvery": 8,
+    "peakLevel": 0.75
   }
 }

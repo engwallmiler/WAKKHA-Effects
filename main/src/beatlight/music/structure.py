@@ -65,6 +65,8 @@ class StructureTracker:
         self._tension = 0.0
         self._drop_id = 0
         self._drop_at = None
+        self._return_context = "breakdown"
+        self._withdrawal_at = None
         self._drop_count = 0
         self._events = deque(maxlen=24)
         self._pending_kick = None
@@ -99,6 +101,7 @@ class StructureTracker:
         self._pause_state = None
         self._pending_descriptor = None
         self._return_armed = False
+        self._withdrawal_at = None
         self._roll_candidate_at = None
         self._last_roll_at = -math.inf
 
@@ -145,7 +148,7 @@ class StructureTracker:
         at = feature.at
         if not math.isfinite(at) or self._at is not None and at < self._at:
             raise ValueError("Descritores estruturais devem avançar monotonamente.")
-        if not all(math.isfinite(v) for v in (feature.low_db, feature.high_db, feature.rms_db, feature.brightness)):
+        if not all(math.isfinite(v) for v in (feature.low_db, feature.high_db, feature.rms_db, feature.brightness,feature.spectral_flux,feature.spectral_novelty)):
             raise ValueError("Descritores estruturais inválidos.")
         if self._at is not None and at - self._at > 0.75:
             self.reset()
@@ -193,13 +196,16 @@ class StructureTracker:
                 self._change(previous, at, .75, self._tension)
             else:
                 self._clear_reference()
-        returning = self._learned and (self._state in ("breakdown", "buildup") or self._pause_state is not None)
+        last_full=self._last_full_kick if self._last_full_kick is not None else self._last_kick
+        if self._learned and self._state=="groove" and last_full is not None and self._period and at-last_full>=7.5*self._period:
+            if self._withdrawal_at is None:
+                self._withdrawal_at=at;self._break_low=low;self._break_high=high
+            self._return_armed=True
+        returning = self._learned and (self._state in ("breakdown", "buildup") or self._pause_state is not None or self._withdrawal_at is not None)
         if feature.rms_db < -60 and returning and self._pause_state is None:
             self._pause_state = self._state
         self._drop_detector.observe(feature, returning, self._period)
-        for candidate in kicks:
-            if candidate.confidence>=.35 and candidate.occurred_at<=at:
-                self._drop_detector.observe_candidate(candidate,self._period)
+        self._drop_detector.observe_candidates(kicks,self._period,at)
         full_reference=self._last_full_kick if self._last_full_kick is not None else self._last_kick
         gap_before = at - full_reference if full_reference is not None else 0.0
         if self._state in ("breakdown", "buildup") and gap_before > max(1.1, 2.2 * self._period):
@@ -253,7 +259,9 @@ class StructureTracker:
                 self._identity.discard(event)
                 continue
             learn = not self._learned or self._state in ("warming", "groove")
-            learn_profile=learn and (not self._learned or full_power or not self._drop_detector.accelerated)
+            # Não incorporar o primeiro retorno à própria referência usada para
+            # julgá-lo, nem aprender o roll enquanto o contexto está armado.
+            learn_profile=learn and not returning and (not self._learned or full_power or not self._drop_detector.accelerated)
             if learn_profile and (len(self._identity.references) < 4 or self._identity.return_matches(event)):
                 self._drop_detector.learn(descriptor)
             self._identity.accept(event, learn_profile)
@@ -316,11 +324,20 @@ class StructureTracker:
                 sustained_roll = self._roll_candidate_at is not None and at - self._roll_candidate_at >= 0.35
                 if self._state == "drop":
                     self._drop_count += len(new_kicks)
+                    withdrawn = gap > max(1.5,3*self._period) and suppression>=7
+                    continued = self._drop_detector.continue_drop(new_kicks,at,withdrawn)
+                    if not continued:
+                        self._drop_count=0;self._break_at=at
+                        self._break_low,self._break_high,self._break_brightness=low,high,brightness
+                        self._break_rate=max(.5,rate);self._pending_kick=None;self._pending_descriptor=None
+                        self._return_armed=True
+                        self._change(self._return_context,at,.65,self._tension)
                     # Falha pontual de confirmação não encerra a cena antes de oito
                     # kicks. Uma retirada real exige também queda sustentada dos graves.
                     withdrawn = gap > max(1.5, 3 * self._period) and suppression >= 7
                     ended = self._drop_count > self.DROP_KICKS or withdrawn
-                    if ended:
+                    if ended and self._state=="drop":
+                        self._drop_detector.phase="complete"
                         self._drop_count = 0
                         self._break_at = None
                         self._change("groove", at, 0.7, 0.0)
@@ -331,11 +348,13 @@ class StructureTracker:
                     self._pending_kick = None
                     self._return_armed = absent
                     self._change("buildup", at, 0.8, self._tension)
-                if self._state in ("groove", "warming", "silence") and absent and suppression >= 5 and rms > -55:
+                latent_return = (self._state=="groove" and self._withdrawal_at is not None and new_kicks and
+                    self._drop_detector.recovered(self._pending_descriptor,low,feature.low_db,self._low_ref,self._break_low))
+                if self._state in ("groove", "warming", "silence") and (absent and suppression>=5 or latent_return) and rms > -55:
                     self._break_at, self._break_low, self._break_high = at, low, high
                     self._break_rate = max(0.5, rate)
                     self._break_brightness = brightness
-                    self._pending_kick = None
+                    if not latent_return:self._pending_kick = None
                     self._return_armed = True
                     self._change("breakdown", at, 0.7, 0.2)
                 if self._state in ("breakdown", "buildup"):
@@ -356,8 +375,10 @@ class StructureTracker:
                             and return_aligned(pending) and recovered):
                         if self._grid.matches(pending,at):
                             self._grid.observe(pending, beat)
-                        self._drop_detector.confirm(pending,self._pending_descriptor,at)
+                        self._return_context=self._state
+                        self._drop_detector.confirm(pending,self._pending_descriptor,at,self._period)
                         self._drop_id += 1
+                        self._withdrawal_at=None
                         self._drop_at = pending.occurred_at
                         self._drop_count = self._phrase_count = 1
                         self._grid.reset_phrase(pending.occurred_at)
@@ -369,7 +390,7 @@ class StructureTracker:
                         self._change("groove", at, 0.5, 0.0)
                 if self._state == "drop":
                     target, confidence = 1.0, 0.85
-                    reason = f"Retorno do kick e dos graves; alta energia no kick {self._drop_count}/8."
+                    reason = f"Retorno do kick e dos graves; alta energia no kick {self._drop_count}/8. "+("Continuidade rítmica confirmada." if self._drop_detector.phase=="confirmed" else "Impacto imediato; verificando continuidade rítmica.")
                 elif self._state in ("breakdown", "buildup"):
                     rise = max(0.0, high - self._break_high)
                     acceleration = max(0.0, rate / self._break_rate - 1) if regular else 0.0
@@ -396,8 +417,8 @@ class StructureTracker:
         if self._state == "drop":
             self._tension = 1.0
         energy = clamp((rms - (self._rms_ref or -25) + 12) / 24) if self._learned else clamp((rms + 60) / 45)
-        evidence = self._drop_detector.snapshot(at, self._period, self._last_kick,
-            self._learned and self._return_armed and (self._state in ("breakdown", "buildup") or self._pause_state is not None))
+        evidence = self._drop_detector.snapshot(at, self._period, self._last_full_kick if self._last_full_kick is not None else self._last_kick,
+            self._learned and self._return_armed and (self._state in ("breakdown", "buildup") or self._pause_state is not None or self._withdrawal_at is not None))
         if self._state in ("breakdown", "buildup") and evidence.reason:
             reason += " " + evidence.reason
         grid = self._grid.snapshot(at)

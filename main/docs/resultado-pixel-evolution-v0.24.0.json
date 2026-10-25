@@ -1,0 +1,82 @@
+{
+  "physical_output": false,
+  "actual_project_cloned": true,
+  "layers": [
+    {
+      "beat": 32,
+      "weights": [
+        0.9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "beat": 40,
+      "weights": [
+        0.9,
+        0.1604499993250005,
+        1.011361279218865e-09,
+        0
+      ]
+    },
+    {
+      "beat": 48,
+      "weights": [
+        0.9,
+        0.32,
+        0.24,
+        0.09234532288543781
+      ]
+    },
+    {
+      "beat": 63.8,
+      "weights": [
+        0.9,
+        0.32,
+        0.24,
+        0.18
+      ]
+    }
+  ],
+  "drop_plans": [
+    {
+      "variant": 0,
+      "layers": [
+        "ripple",
+        "orbit",
+        "meteor",
+        "vortex"
+      ]
+    },
+    {
+      "variant": 2,
+      "layers": [
+        "weave",
+        "lattice",
+        "ripple",
+        "orbit"
+      ]
+    }
+  ],
+  "first_deadline": 68,
+  "connected_family": "Espiral",
+  "calm_speed": 0.38662924224615564,
+  "build_speed": 1.8199147206171447,
+  "peak_sync": true,
+  "lines": 1,
+  "pixels": 300,
+  "stable_stage": true,
+  "minimum_thirtytwo": true,
+  "one_layer_changes": true,
+  "folds": true,
+  "stage": {
+    "top": 232.296875,
+    "width": 1105,
+    "height": 388.703125,
+    "bottom": 621,
+    "viewport": 633
+  },
+  "completed": true,
+  "closed_cleanly": true
+}

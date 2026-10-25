@@ -1,0 +1,76 @@
+[8744:10072:1025/170533.986:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[8744:10072:1025/170533.986:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[8744:10072:1025/170534.027:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[8744:10072:1025/170534.027:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[8744:10072:1025/170534.027:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[8744:10072:1025/170534.027:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_output": false,
+  "errors": [],
+  "renderer": "software",
+  "scroll_tiles": [
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "stripEffect",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "cueBars",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    },
+    {
+      "control": "sourceMode",
+      "rgb": [
+        23,
+        37,
+        58
+      ]
+    }
+  ],
+  "native_manual_drop": true,
+  "render_ms": {
+    "last": 24,
+    "average": 24.2378176381792,
+    "max": 35.100000001490116,
+    "columns": 3.300000000745058,
+    "glow": 15.300000000745058
+  },
+  "processing_ms": {
+    "mean": 1.610675189116164,
+    "max": 4.598100000293925
+  },
+  "ready": true,
+  "independent_rgb": true,
+  "blackout_zero": true,
+  "stop_zero": true,
+  "persisted": true,
+  "drop_kicks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "first_drop": 20.1720000000023,
+  "dropped_blocks": 0,
+  "closed_cleanly": true,
+  "last_edit_saved_on_close": true
+}

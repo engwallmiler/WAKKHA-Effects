@@ -58,7 +58,7 @@ try:
     js('(BeatlightPixel.setInput("demo"),true)')
     pump(lambda:panel.enable.isEnabled());panel.enable.click()
     pump(lambda:panel.runtime.status().frames>=5)
-    effects=['ambient','pulse','chase','mirror','wave','helix','rain','drop','comet','scanner','sparkle','meteor','fire','rainbow','blocks','bounce','ripple','equalizer','snake','aurora']
+    effects=['ambient','pulse','chase','mirror','wave','helix','rain','drop','comet','scanner','sparkle','meteor','fire','rainbow','blocks','bounce','ripple','equalizer','snake','aurora','weave','orbit','shards','tide','lattice','vortex']
     for effect in effects:
         p=js('BeatlightPixel.project()');p['strips'][0].update(effect=effect,response='ambient')
         js('BeatlightPixel.applyProject('+json.dumps(p)+')')
@@ -68,7 +68,7 @@ try:
         report['effects'].append(effect)
     assert any(any(frame) for frame in device.frames)
     count=panel.runtime.status().frames
-    js('(document.getElementById("stripEffect").scrollIntoView({block:"center",behavior:"instant"}),true)')
+    js('(document.body.classList.contains("presentation")&&document.getElementById("presentationBtn").click(),document.getElementById("geometryFold").open=true,document.getElementById("stripEffect").scrollIntoView({block:"center",behavior:"instant"}),true)')
     pump(lambda:panel.runtime.status().frames>=count+8)
     report['scroll_continues']=True
     count=panel.runtime.status().frames
@@ -78,7 +78,7 @@ try:
     js('(BeatlightPixel.blackout(true),true)')
     pump(lambda:device.frames and not any(device.frames[-1]))
     report['blackout_zero']=True
-    js('(BeatlightPixel.blackout(false),scrollTo(0,0),true)')
+    js('(BeatlightPixel.blackout(false),document.getElementById("geometryFold").open=false,!document.body.classList.contains("presentation")&&document.getElementById("presentationBtn").click(),scrollTo(0,0),true)')
     panel.off.click();pump(lambda:device.commands[-1].kind==BLACKOUT)
     assert not panel.runtime.status().armed
     report['physical_off']=True

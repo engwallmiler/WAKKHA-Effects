@@ -146,6 +146,8 @@ class StructureFeatures:
     harmonic_db: float = -120.0  # ataque harmônico em 250–1500 Hz
     bass_db: float = -120.0  # energia em 30–250 Hz
     texture_bands_db: tuple[float, ...] = ()
+    spectral_flux: float = 0.0  # fluxo positivo normalizado do ataque
+    spectral_novelty: float = 0.0  # mudança da distribuição espectral, independente do ganho
 
 
 @dataclass(frozen=True, slots=True)
@@ -190,6 +192,15 @@ class DropEvidenceSnapshot:
     confirmation_ms: float | None = None  # ataque até decisão; não inclui captura/renderização
     fast_confirmed: bool = False
     rescued_attack: bool = False
+    spectral_flux: float = 0.0
+    spectral_novelty: float = 0.0
+    score: float = 0.0  # diagnóstico híbrido; não substitui kick/identidade/grade
+    phase: str = "idle"  # idle, impact, confirmed, rejected, complete
+    rejected_impacts: int = 0
+    reference_peak_db: float | None = None
+    peak_ratio: float = 0.0
+    reference_kicks: int = 0
+    mean_reached: bool = False
 
 
 @dataclass(frozen=True, slots=True)

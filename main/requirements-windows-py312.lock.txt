@@ -1,4 +1,4 @@
-# Dependências validadas • Windows x64 / Python 3.12 • versão 0.22 (Pixel Studio, ESP32 USB; Link opcional instalado)
+# Dependências validadas • Windows x64 / Python 3.12 • versão 0.24 (Pixel Studio, ESP32 USB; Link opcional instalado)
 pyserial==3.5
 PyAudioWPatch==0.2.12.9
 PySide6==6.12.0

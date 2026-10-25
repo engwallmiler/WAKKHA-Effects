@@ -383,6 +383,10 @@ def update_stage_view(self, snapshot, status, at):
             power += f" · última decisão: {evidence.confirmation_ms:.0f} ms de análise"
             if evidence.rescued_attack:
                 power += " · ataque recuperado"
+        if evidence and evidence.reference_peak_db is not None:
+            power += f" · média de {evidence.reference_kicks} kicks: {evidence.reference_peak_db:.1f} dB · pico relativo: {evidence.peak_ratio:.0%}"
+            if evidence.mean_reached:
+                power += " · força do groove atingida"
         self.structure_detail.setText(structure.reason + f" · retornos bloqueados: {structure.rejected_returns}\n" + power +
             f"\nAtaques: {structure.onset_rate:.1f}/s · roll: {structure.roll_rate:.1f}/s · sem kick forte há {structure.kick_gap:.1f} s · movimento: {light.movement_hz:.2f} ciclos/s · W: {max(s.white for s in light.states):.0%}")
     elif snapshot and snapshot.structure_error:

@@ -1,0 +1,48 @@
+[31452:3548:1025/182050.216:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[31452:3548:1025/182050.216:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[31452:3548:1025/182050.258:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[31452:3548:1025/182050.258:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[31452:3548:1025/182050.258:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[31452:3548:1025/182050.258:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "pixels": 300,
+  "effects": [
+    "ambient",
+    "pulse",
+    "chase",
+    "mirror",
+    "wave",
+    "helix",
+    "rain",
+    "drop",
+    "comet",
+    "scanner",
+    "sparkle",
+    "meteor",
+    "fire",
+    "rainbow",
+    "blocks",
+    "bounce",
+    "ripple",
+    "equalizer",
+    "snake",
+    "aurora",
+    "weave",
+    "orbit",
+    "shards",
+    "tide",
+    "lattice",
+    "vortex"
+  ],
+  "scroll_continues": true,
+  "other_page_continues": true,
+  "blackout_zero": true,
+  "physical_off": true,
+  "frames": 82,
+  "fps": 15.495867768582928,
+  "source": "ESP32 DevKit / WROOM-32, GPIO 18, GRB",
+  "closed_cleanly": true,
+  "close_blackout": true
+}

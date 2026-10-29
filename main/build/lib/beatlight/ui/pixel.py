@@ -7,6 +7,7 @@ from collections import deque
 from PySide6.QtCore import QObject,QUrl,QFile,QIODevice,Signal,Slot,Qt,QCoreApplication,QTimer
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QFileDialog,QSizePolicy
 from beatlight.pixel.project import PixelProjectStore,MAX_BYTES
+from beatlight.pixel.project_writer import LatestProjectWriter
 from beatlight.pixel.protocol import music_packet,validate_frame
 from beatlight.pixel.rendering import configure_renderer
 from beatlight.ui.pixel_usb import PixelUsbPanel
@@ -29,14 +30,18 @@ class PixelBridge(QObject):
     notice=Signal(str)
     connected=Signal()
     operatorChanged=Signal()
+    previewRequested=Signal()
 
     def __init__(self,store,parent=None):
         super().__init__(parent)
         self.store=store
+        self.writer=LatestProjectWriter(store,self.notice.emit)
         self.ready_state=False
         self.last_frame=None
         self.events=deque(maxlen=64)
         self.operator={}
+        self._music_pending=None;self._music_inflight=None;self._music_serial=0
+        self.music_coalesced=0
 
     @Slot(str)
     def operatorState(self,payload):
@@ -50,7 +55,12 @@ class PixelBridge(QObject):
         except ValueError:pass
 
     @Slot()
+    def requestPreview(self):
+        self.previewRequested.emit()
+
+    @Slot()
     def ready(self):
+        self._music_pending=self._music_inflight=None
         try:
             data=self.store.load()
             self.project.emit(json.dumps(data,ensure_ascii=False,allow_nan=False))
@@ -63,11 +73,22 @@ class PixelBridge(QObject):
     @Slot(str)
     def saveProject(self,payload):
         try:
-            if len(payload)>MAX_BYTES:raise ValueError("Projeto excede 500 KB.")
-            self.store.save(json.loads(payload))
-            self.notice.emit("Projeto de fitas salvo automaticamente.")
-        except (OSError,ValueError,TypeError,KeyError) as exc:
+            self.writer.submit(payload)
+        except (OSError,ValueError,TypeError,KeyError,RuntimeError) as exc:
             self.notice.emit(f"Projeto não salvo: {exc}")
+
+    def send_music(self,packet):
+        if self._music_inflight is not None:
+            self._music_pending=packet;self.music_coalesced+=1;return
+        self._music_serial+=1;self._music_inflight=self._music_serial
+        self.packet.emit(json.dumps({**packet,'delivery_id':self._music_serial},allow_nan=False,separators=(',',':')))
+
+    @Slot(int)
+    def musicConsumed(self,delivery_id):
+        if delivery_id!=self._music_inflight:return
+        self._music_inflight=None
+        pending=self._music_pending;self._music_pending=None
+        if pending is not None and self.ready_state:self.send_music(pending)
 
     @Slot(str)
     def pixelEvent(self,payload):
@@ -92,9 +113,12 @@ class PixelStudioPage(QWidget):
         super().__init__(owner)
         self.owner=owner
         self.view=None
-        self.load_events=[]
+        self.load_events=deque(maxlen=128)
+        self.render_errors=deque(maxlen=32)
         self.shutting_down=False
         self._web_closed=True
+        self._reloading=False
+        self._render_context=None
         self.bridge=PixelBridge(PixelProjectStore(owner.store.path.parent/"pixel-studio.json"),self)
         self.layout_box=QVBoxLayout(self); self.layout_box.setContentsMargins(0,0,0,0)
         row=QHBoxLayout()
@@ -121,6 +145,7 @@ class PixelStudioPage(QWidget):
         self.notice.setWordWrap(True); self.notice.setFixedHeight(32)
         self.layout_box.addWidget(self.notice)
         self.bridge.notice.connect(self.notice.setText)
+        self.bridge.connected.connect(lambda:setattr(self,'_render_context',None))
 
     def ensure_loaded(self):
         if self.view is not None:return
@@ -146,6 +171,7 @@ class PixelStudioPage(QWidget):
                     return allowed
                 def javaScriptConsoleMessage(page,level,message,line,source):
                     if level==QWebEnginePage.JavaScriptConsoleMessageLevel.ErrorMessageLevel:
+                        self.render_errors.append((line,message[:1000]))
                         self.notice.setText(f"Pixel Studio: {message}")
             self.profile=QWebEngineProfile(self)
             self.interceptor=LocalOnly(self.profile); self.profile.setUrlRequestInterceptor(self.interceptor)
@@ -193,23 +219,56 @@ class PixelStudioPage(QWidget):
         if self.view and self.bridge.ready_state:
             self.webpage.runJavaScript("BeatlightPixel.manualDrop()")
 
+    def reload_preview(self):
+        if self.owner.closing or self._reloading or not self.view:return
+        self._reloading=True;self.usb._off();self.bridge.ready_state=False
+        self.bridge._music_pending=self.bridge._music_inflight=None
+        self.notice.setText('Reabrindo a prévia; áudio continua ativo e a saída USB fica apagada.')
+        launched=False
+        def launch():
+            nonlocal launched
+            if launched or self.owner.closing:return
+            launched=True;self._reloading=False
+            try:
+                asset=studio_asset();self.view.setHtml(asset.read_text(encoding='utf-8'),QUrl.fromLocalFile(str(asset)))
+            except OSError as exc:self.notice.setText(f'Não foi possível reabrir a prévia: {exc}')
+        def wait_writer():
+            if self.bridge.writer.busy or self.bridge.writer.pending:QTimer.singleShot(25,wait_writer)
+            else:launch()
+        def saved(payload):
+            if launched or self.owner.closing:return
+            try:
+                if payload:self.bridge.writer.submit(payload)
+            except (ValueError,RuntimeError) as exc:self.notice.setText(str(exc))
+            wait_writer()
+        self.webpage.runJavaScript('globalThis.BeatlightPixel?JSON.stringify(BeatlightPixel.persistedProject()):""',saved)
+        # A dead renderer cannot return its last edit: recover the last valid file.
+        QTimer.singleShot(1000,wait_writer)
+
     def _download(self,request):
         path,_=QFileDialog.getSaveFileName(self,"Exportar Pixel Studio",request.suggestedFileName(),"JSON (*.json)")
         if path:
             target=Path(path); request.setDownloadDirectory(str(target.parent)); request.setDownloadFileName(target.name); request.accept()
         else:request.cancel()
 
-    def update_music(self,snapshot,status,at):
-        self.start.setEnabled(self.owner.start_button.isEnabled()); self.stop.setEnabled(self.owner.stop_button.isEnabled())
-        self.drop.setEnabled(self.bridge.ready_state and not self.owner.closing and not self.bridge.operator.get("blackout",False)
-            and (self.bridge.operator.get("source")=="demo" or status.state=="running" and status.audio_age<.5))
-        self.status.setText(("Áudio ativo" if status.state=="running" else "Áudio parado")+
-                            (" · relógio Link" if snapshot and snapshot.timing_source=="link" else " · grade acústica"))
+    def set_render_context(self,visible,low_power=False):
+        context=(bool(visible),bool(low_power))
+        if self.bridge.ready_state and context!=self._render_context:
+            self._render_context=context
+            self.webpage.runJavaScript('BeatlightPixel.setRenderPolicy('+','.join(str(value).lower() for value in context)+')')
+
+    def update_music(self,snapshot,status,at,paint=True):
+        if paint:
+            self.start.setEnabled(self.owner.start_button.isEnabled()); self.stop.setEnabled(self.owner.stop_button.isEnabled())
+            self.drop.setEnabled(self.bridge.ready_state and not self.owner.closing and not self.bridge.operator.get("blackout",False)
+                and (self.bridge.operator.get("source")=="demo" or status.state=="running" and status.audio_age<.5))
+            self.status.setText(("Áudio ativo" if status.state=="running" else "Áudio parado")+
+                                (" · relógio Link" if snapshot and snapshot.timing_source=="link" else " · grade acústica"))
         if self.bridge.ready_state:
-            self.bridge.packet.emit(json.dumps(music_packet(snapshot,status,at),allow_nan=False,separators=(",",":")))
+            self.bridge.send_music(music_packet(snapshot,status,at))
 
     @property
-    def closed_ready(self):return self._web_closed and self.usb.runtime.closed
+    def closed_ready(self):return self._web_closed and self.usb.runtime.closed and self.bridge.writer.closed
 
     def shutdown(self):
         self.usb.shutdown()
@@ -219,14 +278,16 @@ class PixelStudioPage(QWidget):
             self.bridge.ready_state=False
             def cleanup():
                 if self._web_closed:return
+                self.bridge.writer.close()
                 self._web_closed=True
                 self.webpage.deleteLater();self.profile.deleteLater()
             def saved(payload):
                 if self._web_closed:return
                 try:
-                    if payload:self.bridge.store.save(json.loads(payload))
-                except (OSError,ValueError,TypeError) as exc:
+                    if payload:self.bridge.writer.submit(payload)
+                except (OSError,ValueError,TypeError,RuntimeError) as exc:
                     self.notice.setText(f"Último ajuste não salvo: {exc}")
                 cleanup()
-            self.webpage.runJavaScript("globalThis.BeatlightPixel?JSON.stringify((BeatlightPixel.shutdown(),BeatlightPixel.project())):''",saved)
+            self.webpage.runJavaScript("globalThis.BeatlightPixel?JSON.stringify((BeatlightPixel.shutdown(),BeatlightPixel.persistedProject())):''",saved)
             QTimer.singleShot(1000,cleanup)
+        elif self.view is None:self.bridge.writer.close()

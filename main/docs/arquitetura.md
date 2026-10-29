@@ -1,4 +1,4 @@
-# Arquitetura — versão 0.24
+# Arquitetura — versão 0.26
 
 O sequenciador mantém descritores de duas a quatro camadas com início musical, envelopes e histórico limitado a doze combinações. A direção Hipnótica usa famílias compatíveis, mínimo de 32 tempos, base por até três composições, uma substituição por frase e envelopes/fusões de oito tempos. Descritores retidos conservam fase, ganho e instante de entrada; o reajuste do relógio também rebaseia esse instante. A direção Variada conserva o mínimo de 16 tempos. Estrutura e comandos manuais têm prioridade. Picos têm origem própria e movimento usa um fator suavizado por energia/contexto, separado do BPM.
 
@@ -8,7 +8,7 @@ O detector mantém médias lineares aparadas do pico grave e da potência do tra
 
 `pixel/usb_protocol.py` define BLP1, CRC32, identificação e configuração de uma saída de 300 WS2812 RGB. `pixel/usb.py` mantém a COM em uma thread, aguarda confirmação e conserva somente o quadro pendente mais recente. A prioridade de blackout pode interromper a espera de confirmação de um frame; falhas encerram a conexão sem reconectar/reativar automaticamente. O emissor é limitado a 30 Hz e descarta amostras com mais de 250 ms.
 
-`ui/pixel_usb.py` amostra `BeatlightPixel.outputFrame(id)` pelo WebChannel do processo local, sem desenhar Canvas. O relógio do motor avança nessa chamada mesmo com a prévia fora da área visível. `computeChannels` é usado tanto pela prévia quanto pela amostragem física, preservando os vinte efeitos e as automações. A identidade selecionada precisa existir como WS2812, 300 LEDs e 300 pixels; não há reamostragem de grupos WS2811. Limites e seleção são salvos em pixel-usb.json, sem ativação/conexão automática.
+`ui/pixel_usb.py` amostra `BeatlightPixel.outputFrame(id)` pelo WebChannel do processo local, sem desenhar Canvas. O relógio do motor avança nessa chamada mesmo com a prévia fora da área visível. `computeChannels` é usado tanto pela prévia quanto pela amostragem física, preservando os 26 efeitos e as automações. A identidade selecionada é uma fita lógica independente ou composta, somando 300 LEDs/pixels WS2812; não há reamostragem de grupos WS2811. Limites e seleção são salvos em pixel-usb.json, sem ativação/conexão automática.
 
 O firmware em firmware/beatlight_esp32 valida cada pacote completo, aplica limites de brilho/potência e gera WS2812 GRB no GPIO 18. Duplicatas e sequências antigas não atualizam os LEDs; quadros incompletos/corrompidos não renovam o watchdog de 750 ms. Boot, conexão inicial e blackout apagam a fita; o watchdog atua na perda de comunicação enquanto o ESP32 continua energizado. Consulte [esp32-ws2812-usb.md](esp32-ws2812-usb.md), incluindo a limitação ao retirar o USB que alimenta a placa.
 
@@ -19,6 +19,26 @@ O sequenciador do Pixel Studio tem relógio de troca em compassos e relógio de 
 As mensagens musicais incluem `sent_at`; o cliente estima a diferença de base de tempo pela entrega mais rápida observada, compensa a fase e envelhece dados enfileirados. O contador acústico não é alterado. O detector acompanha referências fortes separadas de candidatos fracos acelerados e usa tolerância espectral de até um bin na confirmação; a correção da grade conserva a comparação de timbre completa e estrita.
 
 O foco principal é o **Pixel Studio**, com fitas endereçáveis independentes. A aplicação abre o HTML existente em Qt WebEngine e fornece snapshots musicais via Qt WebChannel. A captura, os detectores, o Link e os painéis anteriores continuam compartilhados; os pixels possuem ativação, blackout e projeto próprios. Uma fita pode ser encaminhada ao ESP32 USB. Consulte [pixel-studio.md](pixel-studio.md).
+
+## Operação em segundo plano na 0.26
+
+`MainWindow._tick` preserva a entrega musical e o registro de falhas enquanto minimizado, mas não atualiza widgets/gráficos ocultos. As páginas espectral/kicks/ritmo, medidores, diagnósticos e a tabela de luz são atualizadas somente quando usadas. Em apresentação leve, o operador mantém os controles, sem redesenho dos gráficos. `LightingRuntime.set_suspended` usa um evento para dormir enquanto o palco PAR/moves está oculto; não consulta o provider nem renderiza a 60 Hz nessa pausa.
+
+O HTML expõe `setRenderPolicy(visible, lowPower)` e cancela requestAnimationFrame/timer quando oculto. Nas abas de controle e no modo leve, só a informação de controle é atualizada a 4 Hz, sem Canvas. Recebimento de música, pintura e amostragem física usam `advanceTo` com um instante compartilhado, evitando avanço duplicado e conservando movimento sem pintura. Ao restaurar, o relógio vivo segue o host atual.
+
+`PixelUsbPanel` começa em preview_only, bloqueia conexão/ativação/quadros e reduz seu timer a 250 ms. Na operação física, continua a 33 ms mesmo minimizado. A ação HTML `previewProject` recupera a montagem física, usa áudio recente ou demonstração e emite `requestPreview`; somente esse comando explícito pede ao host o modo sem USB. Snapshots antigos de operador não mudam o modo escolhido. Ao trocar para prévia, apaga e desconecta; retomada física é manual.
+
+`patch.mirrors[].mode` aceita `exact` ou `fit`, com padrão legado proporcional. Projetos e edições exatas validam pixel/formato antes de alterar o estado. O ajuste de destinos aplica geometria/perfis/conexões atomicamente. Cartões de grupos são reconstruídos em edições, sem trabalho de layout a cada frame. [Ensaio comparativo](apresentacao-leve.md).
+
+## Topologia e confiabilidade na 0.25
+
+`pixel/topology.py` valida o campo opcional `patch` do projeto v1: `runs` ordena trechos com sentido próprio, `mirrors` liga referências a destinos simultâneos. Projetos sem `patch` conservam barras independentes. A validação expande os membros para impedir sobreposição de destinos, auto-referência e ciclos entre barras e fitas inteiras.
+
+O HTML mantém uma topologia compilada por identidade estável. Cada fita lógica possui um domínio contínuo, buffers Float32/Uint32/Uint8 e cache por quadro. Somente os pontos solicitados são calculados; as cópias reutilizam a referência e normalizam a posição quando há resoluções diferentes. Trechos de destino não consomem posições no domínio original do efeito, mas conservam seus endereços na saída física. `outputFrame` concatena os trechos na ordem do fio e aplica a reversão de cada trecho. Perfis e liga/desliga são locais por barra. Texturas têm uma linha por pixel controlável e são reutilizadas em alterações de nome/posição. O desenho das fitas não usa halo.
+
+`pixel/project_writer.py` oferece uma thread de gravação com um pedido ativo e somente o último pendente. Validação, escrita temporária, flush/fsync e substituição atômica ocorrem fora da interface. O fechamento espera a última gravação sem bloquear o processamento de eventos Qt. `PixelBridge` mantém uma mensagem musical em voo e a mais recente pendente; a confirmação `musicConsumed(delivery_id)` libera a próxima. Confirmações antigas não liberam mensagens novas.
+
+A consulta USB às fontes também tem apenas um pedido em voo, com prazo de dois segundos; listas iguais não recriam os widgets. Históricos de navegação/erros são deques limitados. Reabrir a prévia desarma USB, guarda a edição respondida ou usa o último projeto salvo, e recarrega o HTML no mesmo perfil/página. A captura continua independente. [Medições, capacidades e limitações](confiabilidade.md).
 
 ## Pixel Studio
 

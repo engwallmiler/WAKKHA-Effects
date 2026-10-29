@@ -21,6 +21,7 @@ class PixelUsbPanel(QWidget):
         self.page=page;self.runtime=runtime or PixelUsbOutput()
         self.path=page.owner.store.path.parent/'pixel-usb.json'
         self.closing=False;self.pending=False;self.generation=0
+        self.preview_only=True
         self.request_at=0;self.last_sources=-10;self.last_status=-10;self.reading_sources=False
         self.error='';self.desired_id='';saved={}
         try:
@@ -33,6 +34,10 @@ class PixelUsbPanel(QWidget):
         outer=QVBoxLayout(self);outer.setContentsMargins(0,0,0,0)
         header=QHBoxLayout();self.fold=QPushButton('▸ ESP32 USB · configuração da fita');self.fold.setCheckable(True)
         header.addWidget(self.fold,1);outer.addLayout(header)
+        self.mode=QComboBox();self.mode.addItem('Simular projeto atual · sem USB',True);self.mode.addItem('Saída física · ESP32 USB',False)
+        self.mode.setToolTip('Simular usa o projeto existente, incluindo barras e grupos, e bloqueia conexão e quadros USB. A fonte pode ser áudio/Link ou demonstração.')
+        header.insertWidget(0,self.mode)
+        self.mode.currentIndexChanged.connect(lambda:self.set_preview_only(self.mode.currentData()))
         box=QGroupBox('Saída física · ESP32 USB · 1 fita WS2812 / 300 LEDs individuais')
         self.controls_box=box;box.setVisible(False)
         self.fold.toggled.connect(lambda opened:(box.setVisible(opened),self.fold.setText(('▾' if opened else '▸')+' ESP32 USB · configuração da fita')))
@@ -48,6 +53,7 @@ class PixelUsbPanel(QWidget):
         self.off=QPushButton('APAGAR SAÍDA');self.off.clicked.connect(self._off)
         self.off.setStyleSheet('QPushButton {background:#6f2929;color:white;border:1px solid #df7770;font-weight:800;}')
         header.addWidget(self.enable);header.addWidget(self.off)
+        self.reload=QPushButton('Reabrir prévia');self.reload.clicked.connect(page.reload_preview);header.addWidget(self.reload)
         for column,widget in enumerate((self.port,self.refresh,self.connect_button,self.source,self.prepare)):
             grid.addWidget(widget,0,column)
         limits=QHBoxLayout();limits.setContentsMargins(0,0,0,0)
@@ -63,8 +69,25 @@ class PixelUsbPanel(QWidget):
         self.portsReady.connect(self._ports_ready)
         self.timer=QTimer(self);self.timer.setInterval(33);self.timer.timeout.connect(self._tick);self.timer.start()
         self.page.bridge.operatorChanged.connect(self._operator_changed)
+        self.page.bridge.previewRequested.connect(lambda:self.mode.setCurrentIndex(0))
+        self.page.bridge.connected.connect(self._bridge_ready)
+        self.source_request_at=0;self.source_timeout=False
+        self.sources_payload=None
         self.saved_port=saved.get('port','') if isinstance(saved.get('port',''),str) else ''
         self._scan();self._tick()
+
+    def set_preview_only(self,preview_only):
+        self.preview_only=bool(preview_only)
+        self.last_status=-10
+        if self.preview_only:
+            self._off()
+            if not self.runtime.closed:self.runtime.disconnect()
+        self.timer.setInterval(250 if self.preview_only else 33)
+        if self.page.bridge.ready_state:
+            self.page.webpage.runJavaScript('BeatlightPixel.setHostOutput('+str(self.preview_only).lower()+')')
+        self.fold.setEnabled(not self.preview_only)
+        self.fold.setChecked(not self.preview_only)
+        self._tick()
 
     def _save(self):
         temporary=None
@@ -116,6 +139,7 @@ class PixelUsbPanel(QWidget):
         if error:self.error=error
 
     def _connect(self):
+        if self.preview_only:return
         self.generation+=1;self.pending=False;self.error=''
         if not self.runtime.closed:self.runtime.disconnect();return
         try:
@@ -127,6 +151,7 @@ class PixelUsbPanel(QWidget):
         if self.runtime.status().armed:self.runtime.arm(False)
 
     def _prepare(self):
+        if self.page.bridge.operator.get('simulation'):return
         source=self.source.currentData()
         if not source or not self.page.bridge.ready_state:return
         self._off();self.error=''
@@ -139,6 +164,10 @@ class PixelUsbPanel(QWidget):
         self.last_sources=-10
 
     def _arm(self,enabled):
+        if enabled and getattr(self,'preview_only',False):
+            self._off();self.error='Somente simulação: selecione Saída física · ESP32 USB para transmitir.';return
+        if enabled and self.page.bridge.operator.get('simulation'):
+            self._off();return
         self.generation+=1;self.pending=False;self.error=''
         try:
             self.runtime.arm(enabled)
@@ -152,14 +181,22 @@ class PixelUsbPanel(QWidget):
 
     def _operator_changed(self):
         state=self.page.bridge.operator
+        if state.get('simulation'):
+            self._off();return
         if state.get('blackout') or not state.get('armed',False):
             # Ignore samples requested before blackout, even if their JS callback
             # arrives after the priority command has already cleared the strip.
             self.generation+=1;self.pending=False;self.runtime.blackout()
 
+    def _bridge_ready(self):
+        self._off();self.reading_sources=False;self.source_timeout=False;self.sources_payload=None;self.last_sources=-10
+        self.set_preview_only(self.preview_only)
+
     def _sources(self,payload):
         self.reading_sources=False
+        self.source_timeout=False
         if self.closing:return
+        if payload==self.sources_payload:return
         try:
             data=json.loads(payload)
             previous=self.source.currentData() or self.desired_id
@@ -171,6 +208,7 @@ class PixelUsbPanel(QWidget):
             if index>=0:self.source.setCurrentIndex(index)
             self.source.blockSignals(False)
             self.desired_id=self.source.currentData() or ''
+            self.sources_payload=payload
         except (ValueError,TypeError,KeyError):self.source.blockSignals(False)
 
     def _frame(self,payload,generation,source,at):
@@ -188,9 +226,11 @@ class PixelUsbPanel(QWidget):
     def _tick(self):
         if self.closing:return
         at=monotonic();state=self.runtime.status();ready=self.page.view is not None and self.page.bridge.ready_state
-        if ready and not self.reading_sources and at-self.last_sources>=1:
-            self.reading_sources=True;self.last_sources=at
+        if ready and not self.preview_only and not self.reading_sources and at-self.last_sources>=1:
+            self.reading_sources=True;self.last_sources=at;self.source_request_at=at
             self.page.webpage.runJavaScript('JSON.stringify(BeatlightPixel.outputSources())',self._sources)
+        if self.reading_sources and at-self.source_request_at>2 and not self.source_timeout:
+            self.source_timeout=True;self.fail('A prévia não respondeu; saída física apagada. Reabra a prévia antes de ativar novamente.')
         if state.armed and ready:
             if self.pending and at-self.request_at>.25:
                 self.error='Motor de efeitos não respondeu a tempo; saída física apagada.';self._off()
@@ -200,16 +240,20 @@ class PixelUsbPanel(QWidget):
                 expression='JSON.stringify((()=>{try{return BeatlightPixel.outputFrame('+json.dumps(source)+')}catch(e){return {error:e.message}}})())'
                 self.page.webpage.runJavaScript(expression,lambda payload,g=generation,s=source,t=at:self._frame(payload,g,s,t))
         elif state.armed:self._off()
+        if not getattr(self.page.owner,'visuals_active',True):return
         if at-self.last_status<.2:return
         self.last_status=at;connected=state.state=='connected';busy=state.state in ('connecting','stopping')
         self.port.setEnabled(self.runtime.closed);self.brightness.setEnabled(self.runtime.closed);self.current.setEnabled(self.runtime.closed)
         self.connect_button.setText('Conectando…' if state.state=='connecting' else 'Desconectar' if not self.runtime.closed else 'Conectar ESP32')
-        self.connect_button.setEnabled(not self.closing and state.state!='stopping')
-        self.source.setEnabled(not state.armed);self.prepare.setEnabled(ready and not state.armed and self.source.count()>0)
-        self.enable.setEnabled(connected and ready and self.source.count()>0)
+        self.connect_button.setEnabled(not self.closing and not self.preview_only and state.state!='stopping')
+        virtual=self.page.bridge.operator.get('simulation',False)
+        self.source.setEnabled(not self.preview_only and not state.armed and not virtual);self.prepare.setEnabled(not self.preview_only and ready and not state.armed and not virtual and not self.source_timeout and self.source.count()>0)
+        self.enable.setEnabled(not self.preview_only and connected and ready and not virtual and not self.source_timeout and self.source.count()>0)
         self.enable.setChecked(state.armed);self.enable.setText('Saída física ATIVA' if state.armed else 'Ativar saída física')
         self.off.setEnabled(connected or busy)
-        if self.error or state.error:self.status.setText(self.error or state.error)
+        if self.preview_only:self.status.setText('Projeto atual em simulação · conexão e quadros USB bloqueados. Use áudio/Link ou Demonstração na prévia.')
+        elif virtual:self.status.setText('Montagem temporária · saída física desativada.')
+        elif self.error or state.error:self.status.setText(self.error or state.error)
         elif connected:
             sending=state.armed and state.last_frame and at-state.last_frame<.3
             self.status.setText(f"{state.port} · ESP32 {state.firmware} · 300 WS2812 · "+('TRANSMITINDO' if sending else 'SAÍDA APAGADA')+f" · {state.frames} quadros confirmados · {state.fps:.1f} fps · {state.dropped} substituídos/atrasados")

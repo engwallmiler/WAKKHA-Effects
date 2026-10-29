@@ -1,0 +1,52 @@
+[15564:26732:1027/221332.608:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[15564:26732:1027/221332.609:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[15564:26732:1027/221332.673:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[15564:26732:1027/221332.673:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[15564:26732:1027/221332.674:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[15564:26732:1027/221332.674:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.25.0",
+  "physical_device_used": false,
+  "serial_emulated_only": true,
+  "requested_wall_seconds": 180.0,
+  "requested_musical_hours": 8.0,
+  "real_six_hour_run": false,
+  "renderer_stall_disarms_output": true,
+  "stale_frames_rejected": true,
+  "actual_wall_seconds": 180.0,
+  "main_cpu_seconds": 106.109375,
+  "published_packets": 3841,
+  "musical_hours_observed": 8.000001972222222,
+  "musical_coalesced": 10,
+  "render_ms": {
+    "frames": 3983,
+    "last": 6,
+    "average": 6.0007280944009045,
+    "max": 32.70000000001164,
+    "columns": 0.7999999999301508,
+    "glow": 0
+  },
+  "performance": {
+    "allocations": 12,
+    "rootAllocations": 7,
+    "sampledPixels": 1172700,
+    "frames": 7820,
+    "roots": 1,
+    "source_pixels": 150,
+    "signal_bytes": 6300,
+    "texture_bytes": 10800,
+    "history": 12
+  },
+  "audio_blocks": 16876,
+  "dropped_audio_blocks": 0,
+  "usb_frames": 3802,
+  "usb_fps": 21.34146341463334,
+  "project_writes": 90,
+  "project_replacements": 0,
+  "renderer_pid": 3056,
+  "stable_buffers": true,
+  "mirror_checks": true,
+  "preview_reload_preserves_audio_and_project": true,
+  "closed_cleanly": true,
+  "passed": true
+}

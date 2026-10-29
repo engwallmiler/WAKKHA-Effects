@@ -1,8 +1,18 @@
-# BEATLIGHT — Pixel Studio 0.24
+# BEATLIGHT — Pixel Studio 0.26.0
 
-Aplicação desktop local para Windows 11. A versão **0.24** prioriza motivos hipnóticos em AUTO/ORGÂNICO: famílias de padrões compatíveis, composições de **pelo menos 32 tempos**, uma base conectando até três frases e apenas uma camada substituída por troca dentro da família. São 26 padrões e duas a quatro camadas, com movimentos relacionados, cores próximas e crescimento progressivo ao longo de oito tempos. A velocidade acompanha a energia e a grade continua durante trechos sem kick.
+**Operação 0.26:** **Palco**, **Efeitos e cores**, **Fitas e grupos** e **Biblioteca e drops** organizam os controles. Os grupos aplicados aparecem em cartões com origem/destinos e edição direta. Há **Cópia exata** e adaptação proporcional, com ação para igualar a resolução dos destinos. **Simular meu projeto · sem USB** usa a montagem atual; **Testar outra montagem** cria o teste temporário separado.
 
-**Picos por frase** podem participar automaticamente das combinações, repetindo um acento a cada quatro ou oito tempos. **Sincronizar pico** marca o acento desejado sem alterar o BPM ou o sincronismo geral. Cada drop recebe um plano diferente, com camadas adicionadas progressivamente durante as oito posições. A interface abre em **Foco no palco**; **Mostrar controles** revela os painéis recolhíveis. O botão para apagar a saída física permanece acessível.
+**Apresentação leve** pausa desenhos e gráficos, mantendo captura, Link, efeitos e transmissão. Minimizar também suspende automaticamente o trabalho gráfico. [Operação e apresentação leve](docs/apresentacao-leve.md).
+
+**As fitas agora são exibidas sem difusão, halo ou reflexo.** O controle foi removido; projetos antigos são aceitos e o ajuste anterior é ignorado.
+
+**Conexões livres entre barras:** em **Fitas e grupos → Conexões · continuidade e simetria**, una barras em uma fita contínua na ordem desejada, ou faça várias barras repetirem uma referência simultaneamente, com inversão opcional. Os recursos podem ser combinados dentro da mesma fita física. [Como configurar](docs/conexoes-fitas.md) · [Uma fita de 300 pixels dividida em seis barras simétricas](examples/uma-fita-300-6-barras.json).
+
+A rodada de confiabilidade reduz recálculos, reaproveita texturas, retira gravações de disco da interface e limita mensagens pendentes. **Reabrir prévia** recupera o simulador mantendo a captura ativa e a saída física desativada até nova ativação. [Otimizações, medições e ensaio de oito horas reais](docs/confiabilidade.md).
+
+Aplicação desktop local para Windows 11. A versão **0.26** prioriza motivos hipnóticos em AUTO/ORGÂNICO: famílias de padrões compatíveis, composições de **pelo menos 32 tempos**, uma base conectando até três frases e apenas uma camada substituída por troca dentro da família. São 26 padrões e duas a quatro camadas, com movimentos relacionados, cores próximas e crescimento progressivo ao longo de oito tempos. A velocidade acompanha a energia e a grade continua durante trechos sem kick.
+
+**Picos por frase** podem participar automaticamente das combinações, repetindo um acento a cada quatro ou oito tempos. **Sincronizar pico** marca o acento desejado sem alterar o BPM ou o sincronismo geral. Cada drop recebe um plano diferente, com camadas adicionadas progressivamente durante as oito posições. A interface abre em **Foco no palco**; **Mostrar todos os controles** revela os painéis recolhíveis. O botão para apagar a saída física permanece acessível.
 
 A saída física continua em **uma fita WS2812/WS2812B de 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. O cálculo RGB é compartilhado pela prévia e pela transmissão. **O firmware 0.22 que já está funcionando continua compatível: não é necessário regravar o ESP32 para usar os novos efeitos.**
 
@@ -12,7 +22,7 @@ Cada fita tem efeito, paleta, brilho, velocidade, defasagem, sentido e resposta 
 
 A captura, os detectores e a integração **Ableton Link** continuam disponíveis, assim como os painéis anteriores de PARs/moves. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**. O único transporte físico atual é ESP32 USB para uma fita WS2812 de 300 pixels; não há saída DMX física.
 
-Expanda **ESP32 USB · configuração da fita**, escolha a fita, clique **Preparar 300 WS2812**, selecione a COM e **Conectar ESP32**. Depois clique **Ativar saída física**. Conectar apenas verifica o firmware e configura os limites; não acende a fita. **APAGAR SAÍDA** permanece visível com o painel recolhido. **Instruções** abre o guia dentro do aplicativo.
+Selecione **Saída física · ESP32 USB** no cabeçalho e expanda **ESP32 USB · configuração da fita**, escolha a fita, clique **Preparar 300 WS2812**, selecione a COM e **Conectar ESP32**. Depois clique **Ativar saída física**. Conectar apenas verifica o firmware e configura os limites; não acende a fita. **APAGAR SAÍDA** permanece visível com o painel recolhido. **Instruções** abre o guia dentro do aplicativo.
 
 ## Começar pelas fitas
 
@@ -166,12 +176,12 @@ O runtime portátil e ambientes locais são ignorados pelo Git. O VS Code está 
 .\.runtime\python312\python.exe scripts\validate_loopback.py --device Realtek --seconds 30 --cycles 3
 .\.runtime\python312\python.exe -X utf8 scripts\validate_pixel_usb.py
 .\.runtime\python312\python.exe -X utf8 scripts\validate_pixel_evolution.py
-node --test beatlight/tests/geometry.test.cjs beatlight/tests/music.test.cjs beatlight/tests/usb.test.cjs beatlight/tests/evolution.test.cjs
+node --test beatlight/tests/*.test.cjs
 ~~~
 
 Os testes automatizados não exigem Traktor nem hardware. A ferramenta Loopback não reproduz som e retorna **0** quando recebeu blocos sem falha, **1** em falha de captura/análise e **2** quando não recebeu blocos e o resultado é inconclusivo. Um resultado com silêncio não comprova a captura de uma faixa do Traktor.
 
-A renderização de QA produz preview.png, preview-espectro.png, preview-kicks.png, preview-ritmo.png, preview-iluminacao.png, preview-palco.png e preview-configuracoes.png com dados sintéticos. validate_stage.py acrescenta preview-breakdown.png, preview-buildup.png e preview-drop.png. validate_texture.py acrescenta preview-baixo.png e preview-densidade.png. validate_grid.py acrescenta preview-grid.png. validate_phrases.py acrescenta preview-cycles-*.png e mede as oito posições do drop, sincronização e preparação. validate_show.py acrescenta preview-rgbw-*.png. render_rgbw.py captura os controles manuais e a inspeção de W. **validate_pixel_studio.py** exercita o HTML embutido com áudio e gera **preview-pixel-studio.png**. **validate_pixel_usb.py** exercita os 26 efeitos com serial emulada e gera **preview-pixel-usb.png**. A validação atual tem **712 testes Python e 53 testes JavaScript aprovados**; veja docs/validacao.md.
+A renderização de QA produz preview.png, preview-espectro.png, preview-kicks.png, preview-ritmo.png, preview-iluminacao.png, preview-palco.png e preview-configuracoes.png com dados sintéticos. validate_stage.py acrescenta preview-breakdown.png, preview-buildup.png e preview-drop.png. validate_texture.py acrescenta preview-baixo.png e preview-densidade.png. validate_grid.py acrescenta preview-grid.png. validate_phrases.py acrescenta preview-cycles-*.png e mede as oito posições do drop, sincronização e preparação. validate_show.py acrescenta preview-rgbw-*.png. render_rgbw.py captura os controles manuais e a inspeção de W. **validate_pixel_studio.py** exercita o HTML embutido com áudio e gera **preview-pixel-studio.png**. **validate_pixel_usb.py** exercita os 26 efeitos com serial emulada e gera **preview-pixel-usb.png**. A validação atual tem **744 testes Python e 78 testes JavaScript aprovados**; veja docs/validacao.md.
 
 Preferências e logs ficam no diretório local de dados WAKKHA/BEATLIGHT DMX, sob %LOCALAPPDATA%; Configurações mostra o caminho completo. Logs: logs/beatlight.jsonl, com rotação em 2 MB e três cópias. Também é possível utilizar outro diretório:
 
@@ -183,6 +193,9 @@ As preferências são salvas ao fechar. **Salvar ajustes** persiste e aplica os 
 
 ## Documentação e próximos passos
 
+- **[docs/apresentacao-leve.md](docs/apresentacao-leve.md)**: simular o projeto atual, abas, operação minimizada e modo leve.
+- **[docs/conexoes-fitas.md](docs/conexoes-fitas.md)**: continuidade, simetria e um cabo de 300 pixels em seis barras.
+- **[docs/confiabilidade.md](docs/confiabilidade.md)**: gargalos, limites das filas, recuperação e ensaio prolongado.
 - **docs/drop-detection.md**: potência do kick, aceleração do build, pausa e critérios de retorno.
 - **docs/ableton-link.md**: instalação, Traktor/BeatSync, fonte de relógio, compensação e diagnóstico independente.
 - **docs/ciclos-oito.md**: motivos de oito tempos, sincronização, preparação e correção do drop.

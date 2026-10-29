@@ -37,6 +37,21 @@ def test_worker_runs_without_gui_and_stops_dark():
     assert all(s.intensity == 0 for s in runtime.snapshot().states)
 
 
+def test_suspended_legacy_preview_does_no_provider_work_and_resumes():
+    calls=[]
+    def counted():calls.append(1);return provider()
+    runtime=LightingRuntime(counted,LightingControls(LightConfig(light_effect='ambient'),armed=True))
+    runtime.set_suspended(True);runtime.start()
+    try:
+        wait_for(lambda:runtime.snapshot().status=='disabled')
+        sleep(.08);assert not calls
+        runtime.set_suspended(False);wait_for(lambda:len(calls)>=3)
+        runtime.set_suspended(True);wait_for(lambda:runtime.snapshot().status=='disabled')
+        before=len(calls);sleep(.08);assert len(calls)==before
+    finally:runtime.stop()
+    assert not runtime.running
+
+
 def test_engine_failure_is_latched_dark_until_a_control_changes(monkeypatch, caplog):
     runtime = LightingRuntime(provider, LightingControls(LightConfig(light_effect="ambient"), armed=True))
     original = runtime.engine.render

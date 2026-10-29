@@ -1,0 +1,151 @@
+[24204:25716:1026/215509.308:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[24204:25716:1026/215509.308:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[24204:25716:1026/215509.344:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[24204:25716:1026/215509.344:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[24204:25716:1026/215509.344:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[24204:25716:1026/215509.344:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "physical_device_used": false,
+  "audio_capture_started": false,
+  "samples": [
+    {
+      "halo": 0,
+      "far": 0,
+      "core": [
+        60,
+        186,
+        151
+      ],
+      "edge": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "percent": 0
+    },
+    {
+      "halo": 23949,
+      "far": 0,
+      "core": [
+        60,
+        186,
+        151
+      ],
+      "edge": [
+        41,
+        33,
+        26,
+        20,
+        13,
+        6,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "percent": 100
+    },
+    {
+      "halo": 100884,
+      "far": 11271,
+      "core": [
+        60,
+        186,
+        151
+      ],
+      "edge": [
+        57,
+        54,
+        51,
+        48,
+        42,
+        39,
+        36,
+        36,
+        30,
+        30,
+        24,
+        21,
+        15,
+        12,
+        6,
+        6,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "percent": 300
+    }
+  ],
+  "rgb_unchanged": true,
+  "zero_halo": true,
+  "stronger_wider_halo": true,
+  "saved_glow": 3,
+  "original_project_preserved_after_virtual_preview": true,
+  "closed_cleanly": true,
+  "passed": true
+}

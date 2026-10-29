@@ -1,0 +1,23 @@
+{
+  "version": "0.24.2",
+  "wheel_sha256": "34cd659fd09c8895617bd38c112fd67aa7d495c2f778f30c80f8276ea6ef4180",
+  "assets_match": [
+    "beatlight/beatlight_pixel_studio.html",
+    "docs/pixel-studio.md",
+    "docs/validacao.md",
+    "examples/ws2812-300.json"
+  ],
+  "modules_match": [
+    "__init__.py",
+    "pixel/project.py",
+    "ui/pixel.py",
+    "ui/window.py"
+  ],
+  "firmware_sha256": "9b46db6cc3661fd19cc909819c064c2d8e68041c663088c98fd792a88cec4cff",
+  "python_tests": 50,
+  "javascript_tests": 61,
+  "native_diffusion_passed": true,
+  "compileall": true,
+  "launcher_help": true,
+  "passed": true
+}

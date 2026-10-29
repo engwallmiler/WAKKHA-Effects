@@ -47,10 +47,12 @@ def js(expression):
 report={'physical_device_used':False,'emulated_serial':True,'pixels':300,'effects':[]}
 try:
     pump(lambda:window.pixel_page.bridge.ready_state)
+    panel.mode.setCurrentIndex(1)
     project=json.loads((root/'examples/ws2812-300.json').read_text(encoding='utf-8'))
     js('BeatlightPixel.applyProject('+json.dumps(project)+')')
     pump(lambda:panel.source.count()==1 and panel.refresh.isEnabled())
     panel.prepare.click();pump(lambda:js('BeatlightPixel.project().geometry.lines[0].pixels')==300)
+    pump(lambda:panel.connect_button.isEnabled())
     panel.port.clear();panel.port.addItem('EMULADO · nenhuma placa física','EMULATED')
     panel.connect_button.click();pump(lambda:panel.runtime.status().state=='connected')
     assert not panel.runtime.status().armed and not device.frames

@@ -4,6 +4,7 @@ import math
 import os
 from pathlib import Path
 import tempfile
+from beatlight.pixel.topology import validate_patch,validate_exact_copies
 
 EFFECTS={"inherit","ambient","pulse","chase","mirror","wave","helix","rain","drop","comet",
          "scanner","sparkle","meteor","fire","rainbow","blocks","bounce","ripple","equalizer","snake","aurora",
@@ -53,11 +54,14 @@ def validate_project(data):
             raise ValueError("Ativação ou sentido da fita inválido.")
         if not number(strip.get("brightness"),0,1) or not number(strip.get("speed"),.1,4) or not number(strip.get("phase"),0,1):
             raise ValueError("Brilho, velocidade ou fase da fita inválido.")
+    if 'patch' in data:
+        validate_patch(data['patch'],ids)
+        validate_exact_copies(data['patch'],lines,strips)
     show=data.get("show",{})
     if not isinstance(show,dict) or len(show)>64:
         raise ValueError("Controles globais inválidos.")
     ranges={"bpm":(40,240),"brightness":(0,1),"speed":(.1,4),"trail":(0,1),"transition":(1,12),
-            "variation":(0,1),"white":(0,1),"kickDepth":(0,1),"dropEnergy":(0,1),"strobeLevel":(0,1),"peakLevel":(0,1)}
+            "variation":(0,1),"white":(0,1),"kickDepth":(0,1),"dropEnergy":(0,1),"strobeLevel":(0,1),"peakLevel":(0,1),"glow":(0,3)}
     choices={"palette":PALETTES-{"inherit"},"colorBehavior":{"scene","spectrum","beat","bar","solid"},
              "colorMode":{"rgb","rgbw"},"whiteTone":{"warm","neutral","cool"},"kickMode":{"beat","bar","off"},
              "dropStyle":{"impact","turbo","prism"},"strobeMode":{"drop","beat","bar"},"strobeColor":{"rgbw","rgb","white"},

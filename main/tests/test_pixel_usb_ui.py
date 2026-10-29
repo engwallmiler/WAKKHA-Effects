@@ -15,7 +15,7 @@ def test_blackout_invalidates_a_nonzero_sample_already_in_flight():
 
 def test_other_operator_updates_do_not_cancel_a_valid_sample_or_flash_black():
     calls=[]
-    panel=SimpleNamespace(page=SimpleNamespace(bridge=SimpleNamespace(operator={'blackout':False,'armed':True,'manualDrop':True})),
+    panel=SimpleNamespace(page=SimpleNamespace(bridge=SimpleNamespace(operator={'blackout':False,'armed':True,'manualDrop':True,'previewOnly':True})),
         runtime=SimpleNamespace(blackout=lambda:calls.append('blackout')),generation=7,pending=True)
     PixelUsbPanel._operator_changed(panel)
     assert calls==[] and panel.generation==7 and panel.pending

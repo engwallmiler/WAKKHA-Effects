@@ -22,6 +22,8 @@ class LightingRuntime:
         self._controls = controls or LightingControls()
         self._lock = Lock()
         self._stop = Event()
+        self._wake = Event()
+        self._suspended = False
         self._thread = None
         self._revision = 0
         self._snapshot = self.engine.render(LightingInput(), self._controls, monotonic())
@@ -41,6 +43,12 @@ class LightingRuntime:
     def snapshot(self) -> LightingSnapshot:
         with self._lock:
             return self._snapshot
+
+    def set_suspended(self, suspended):
+        with self._lock:
+            changed=self._suspended!=bool(suspended)
+            self._suspended=bool(suspended)
+        if changed:self._wake.set()
 
     def start(self):
         if self._thread and self._thread.is_alive():
@@ -71,7 +79,11 @@ class LightingRuntime:
             started = perf_counter()
             at = monotonic()
             with self._lock:
-                controls, revision = self._controls, self._revision
+                controls, revision, suspended = self._controls, self._revision, self._suspended
+            if suspended:
+                self._publish_dark('disabled','Prévia PAR/moves pausada enquanto esta página está oculta.')
+                self._wake.wait();self._wake.clear();deadline=perf_counter()
+                continue
             if failed_revision != revision:
                 try:
                     snapshot, status = self._provider()
@@ -107,6 +119,7 @@ class LightingRuntime:
 
     def stop(self):
         self._stop.set()
+        self._wake.set()
         if self._thread and self._thread.is_alive():
             self._thread.join(timeout=3)
             if self._thread.is_alive():

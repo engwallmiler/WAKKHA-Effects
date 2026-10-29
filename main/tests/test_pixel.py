@@ -18,6 +18,19 @@ def project():
             "show":{"mode":"organic","brightness":.8,"followStructure":True}}
 
 
+@pytest.mark.parametrize('glow',[0,.35,1,3])
+def test_preview_diffusion_is_saved_as_a_project_setting(tmp_path,glow):
+    data=project();data['show']['glow']=glow
+    store=PixelProjectStore(tmp_path/'preview.json');store.save(data)
+    assert store.load()==data
+
+
+@pytest.mark.parametrize('glow',[-.01,3.01,float('nan'),True,'0'])
+def test_invalid_preview_diffusion_is_rejected(glow):
+    data=project();data['show']['glow']=glow
+    with pytest.raises(ValueError):validate_project(data)
+
+
 def status(**changes):
     return replace(RuntimeStatus("running","",0,0,0,0,0,None),**changes)
 

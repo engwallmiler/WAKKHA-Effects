@@ -1,47 +1,34 @@
-# Validação — versão 0.24
+# Validação — versão 0.26.0
 
-Registro: 2026-10-25. Windows x64, Python 3.12.10, Qt WebEngine por software. Esta rodada acrescenta referência explícita dos picos do groove e direção visual Hipnótica. Nenhum dispositivo físico foi aberto ou regravado.
+Registro: **2026-10-28 (UTC)**. Grupos visíveis, cópia exata/proporcional, simulação do projeto atual sem USB, abas e operação minimizada/apresentação leve. Nenhum ESP32, captura de áudio física ou sessão Link nativa foi usado nos ensaios desta entrega.
 
-## Regressões automatizadas
+## Regressão
 
-**712 testes Python passaram em 138,83 s**, sem testes pulados. [Resultado](resultado-pytest-v0.24.txt). As regressões novas conferem médias em potência linear com acentos isolados, três níveis de ganho, tolerância conjunta do pico e transiente, rejeição de baixo alto com ataque fraco, roll acelerado e congelamento da referência durante build/primeiro retorno. O contrato de projeto aceita as duas direções visuais e rejeita valores desconhecidos.
+**744 testes Python**: DSP/estrutura, captura, Link, projetos, topologia, persistência, transporte, worker e ponte Qt. Inclui validação exata de pixels/perfis, preservação do projeto em falha, suspensão/retomada do worker PAR e distinção entre uma solicitação explícita de prévia e um snapshot antigo. [Saída completa](resultado-pytest-v0.26.txt).
 
-Continuam aprovados os testes de primeiro impacto no pipeline completo, timbre/assinatura curta, basslines, agudos sem kick, pausas, BPM/fase Link, deduplicação, oito confirmações acústicas, continuidade e isolamento de falhas.
+**78 testes JavaScript**, sem falhas: evolução/ritmo e amostragem dos 26 efeitos, grupos, ordem dos fios, cópia exata, inversão, proporcionalidade, ajuste atômico de destino e conservação das posições. Verificam prévia do projeto atual sem alterar a montagem, bloqueio de quadros físicos, parada/retomada do agendamento visual e avanço dos efeitos sem pintar. [Saída completa](resultado-pixel-js-v0.26.txt).
 
-**53 testes JavaScript passaram.** [Resultado](resultado-pixel-js-v0.24.txt). A direção Variada conserva as regressões de mínimo de 16 tempos. A Hipnótica acrescenta:
+## Qt nativo: apresentação, páginas ocultas e USB
 
-- permanência mínima de 32 tempos mesmo com novos elementos;
-- base preservada por três composições, com somente uma camada substituída em cada troca dentro da família;
-- crescimento das camadas ao longo de oito tempos e sustentação após a antiga fronteira de 16;
-- repertórios compatíveis com breakdown/build e prioridade da mudança estrutural;
-- continuidade dos elementos retidos e da sincronização;
-- repetição visual do conjunto de ondas em um ciclo comum, sem deriva independente;
-- migração de projetos antigos para o novo padrão sem alterar geometria/controles das fitas.
+[validate_pixel_presentation.py](../scripts/validate_pixel_presentation.py) passou em Qt WebEngine por software, com configuração isolada em `.runtime/pixel-presentation-qa`. Sete fases de aproximadamente oito segundos: palco, controles, modo leve, minimização, espectro visível, palco PAR e retorno aos pixels.
 
-Também passaram os testes existentes de todos os 26 efeitos, blackout, silêncio, dados antigos, picos de quatro/oito tempos, drop manual/automático e cálculo RGB compartilhado com USB.
+- Pixels continuam mudando e os três pares permanecem iguais em todas as fases.
+- Áudio e quadros USB emulados continuam, com **zero descartes de áudio**.
+- **Zero desenhos Canvas** nos controles, no modo leve, minimizado e fora da página de pixels.
+- Espectro recebe atualizações somente em sua página visível. Worker/tabela PAR são atualizados somente no palco anterior.
+- Restauração retoma o desenho; simular o projeto atual preserva geometria/grupos, apaga e desconecta a saída emulada.
+- Ausência de erros JavaScript; fechamento conclui e apaga a saída.
 
-## Evolução e interface nativas
+[JSON com CPU e contadores](resultado-pixel-presentation-v0.26.0.json) · [Log nativo](resultado-pixel-presentation-native-v0.26.txt) · [Cartões de grupos](../preview-pixel-groups-v0.26.png) · [Apresentação leve](../preview-pixel-presentation-v0.26.png).
 
-[validate_pixel_evolution.py](../scripts/validate_pixel_evolution.py) passou com relógio controlado, motor HTML real e uma cópia isolada do projeto disponível. A cópia usa uma linha de 300 pixels e quatro camadas seguindo o show global. O projeto real não foi alterado. [Resultado](resultado-pixel-evolution-v0.24.0.json).
+A CPU registrada separa processo principal e renderer e usa um núcleo lógico como 100%. Os padrões evoluem entre fases; o ensaio não mede isoladamente a FFT nem certifica a carga do Traktor. A medição final foi executada sem pytest simultâneo. As mensagens de inicialização gráfica do Qt offscreen permanecem no log; as verificações de desenho/canais passaram e as capturas foram inspecionadas.
 
-O ensaio confirmou crescimento gradual, mesma composição até o prazo de 32 tempos/fronteira de compasso, mesma família e apenas uma substituição na próxima frase. Passaram a desaceleração do breakdown, aceleração do build, dois planos diferentes de drop com oito posições, sincronizar pico, painéis recolhíveis, altura estável do palco e fechamento limpo. A captura aguarda a pintura nativa depois das mudanças de painel: preview-pixel-evolution.png.
+O [ensaio USB pelos controles reais da interface](../scripts/validate_pixel_usb.py) também passou para **26 efeitos**, configuração de limites, ativação, blackout, continuidade fora da página e encerramento. Usa exclusivamente uma porta emulada. [JSON USB](resultado-pixel-usb-v0.26.0.json) · [Log](resultado-pixel-usb-native-v0.26.txt). Corrigida a disputa entre escolha física e mensagens antigas de operador; botões de conexão refletem imediatamente a troca de modo.
 
-## Áudio sintético e latência observada
+## Distribuição e limites
 
-[validate_pixel_studio.py](../scripts/validate_pixel_studio.py) passou com áudio sintético e Qt WebChannel. [Resultado](resultado-pixel-studio-v0.24.0.json). O primeiro quadro do drop apareceu em **20,140 s**, para impacto em **20,000 s**: cerca de **140 ms** no cenário completo. Foram vistas as oito posições, com **zero blocos de áudio descartados**. DSP: média **1,68 ms**, máximo **4,85 ms**. Desenho: média **24,44 ms**, máximo **32,30 ms**.
+O HTML, guias, exemplos e módulos integram o wheel 0.26.0. Compilação, iniciar.cmd --help, instalação editável, identidade dos arquivos e hash do firmware são conferidos em [resultado-package-v0.26.json](resultado-package-v0.26.json). O firmware **0.22 permanece idêntico** e não requer regravação.
 
-Passaram as amostras de pintura após rolagem, drop manual nativo, RGB independente, blackout, áudio parado, persistência e fechamento. Essa latência inclui o cenário desktop; as regressões separadas do pipeline também verificam o primeiro ataque. Os números não demonstram precisão universal nem garantem FPS/latência em outras máquinas ou tracks.
+Não houve ensaio de seis/oito horas reais. O relógio acelerado de oito horas e os buffers limitados foram verificados na 0.25; os novos testes verificam a continuidade sem pintura. [Histórico 0.25](validacao-v0.25.md) · [Auditoria e comando de oito horas reais](confiabilidade.md). Ainda precisam de ensaio prolongado a memória do Chromium, o conjunto real Traktor/Link e o transporte físico. O motor permanece no processo WebEngine; modo leve não o torna independente de falhas desse processo.
 
-## Saída USB e pacote
-
-[validate_pixel_usb.py](../scripts/validate_pixel_usb.py) passou com serial/firmware emulados e nenhuma COM real aberta. [Resultado](resultado-pixel-usb-v0.24.0.json). Os 26 padrões produziram quadros de 900 bytes RGB; foram confirmados 82 quadros e o indicador desse ensaio offscreen ficou aproximadamente em 15,50 fps. Rolagem, troca de painel, blackout, APAGAR SAÍDA e apagamento/liberação da porta ao fechar passaram. Esse indicador emulado não mede a taxa da montagem do usuário.
-
-A saída permanece uma fita WS2812/WS2812B RGB de 300 LEDs, ESP32 DevKit/WROOM-32, GPIO 18, BLP1 e 921.600 baud. **O firmware 0.22 continua compatível; não é necessário regravar.** A imagem de 357.360 bytes mantém SHA256 `9b46db6cc3661fd19cc909819c064c2d8e68041c663088c98fd792a88cec4cff`. Não foram acrescentadas saídas paralelas ou DMX físico.
-
-O aplicativo e o pacote editável passam a 0.24.0, com as mesmas dependências e pySerial 3.5. O wheel inclui HTML, módulos Python, projeto de 300 pixels, guias e firmware compatível. A conferência de bytes, versão e hash fica em resultado-package-v0.24.json. Compilação de src/scripts e iniciar.cmd --help integram a conferência final.
-
-## Limites
-
-A média dos picos só prova recuperação após um ataque real passar por identidade, potência e alinhamento. A bassline isolada e a previsão de relógio não criam kicks. A referência conjunta usa tolerância de 90% da potência do transiente e 85% do pico; os caminhos anteriores de menor volume permanecem sujeitos aos filtros existentes. São critérios heurísticos, não um modelo treinado.
-
-Não foram fornecidos arquivos das tracks problemáticas. Os resultados sintéticos não medem precisão em toda a biblioteca nem latência elétrica na fita. Nenhuma nova sessão Link/Traktor nativa foi aberta. Operação: [pixel-studio.md](pixel-studio.md). Critérios: [drop-detection.md](drop-detection.md). Histórico: [validacao-v0.23.md](validacao-v0.23.md).
+Operação: [apresentacao-leve.md](apresentacao-leve.md) · [conexoes-fitas.md](conexoes-fitas.md) · [esp32-ws2812-usb.md](esp32-ws2812-usb.md).

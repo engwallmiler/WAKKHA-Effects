@@ -7,7 +7,7 @@ from pathlib import Path
 from time import monotonic
 from PySide6.QtCore import QObject, QTimer, Qt, Signal
 from PySide6.QtGui import QCloseEvent
-from PySide6.QtWidgets import QFileDialog, QHBoxLayout, QMainWindow, QStackedWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QFileDialog, QHBoxLayout, QMainWindow, QStackedWidget, QVBoxLayout, QWidget, QPushButton
 from beatlight.audio.synthetic import SyntheticSource
 from beatlight.audio.wasapi import WasapiSource
 from beatlight.configuration.store import Settings, SettingsStore
@@ -50,6 +50,8 @@ class MainWindow(QMainWindow):
         self.bridge = JobBridge()
         self.bridge.completed.connect(self._job_done)
         self.busy = False
+        self.presentation_mode = False
+        self._last_button_state = None
         self.closing = False
         self.closed_ready = False
         self.devices = []
@@ -76,9 +78,16 @@ class MainWindow(QMainWindow):
         self.page_title = label("Audio Monitor", "title")
         header.addWidget(self.page_title)
         header.addStretch()
-        header.addWidget(label("PIXEL & MUSIC · v0.24", "badge"))
+        self.performance_button=QPushButton('Apresentação leve')
+        self.performance_button.setCheckable(True)
+        self.performance_button.setToolTip('Pausa desenhos e o palco PAR/moves. Áudio, Link, efeitos de pixels e envio USB continuam. Os controles do show permanecem disponíveis.')
+        self.performance_button.toggled.connect(self._set_presentation)
+        header.addWidget(self.performance_button)
+        header.addWidget(label("PIXEL & MUSIC · v0.26", "badge"))
         layout.addLayout(header)
         layout.addWidget(label("Da batida ao palco: acompanhe o groove, a tensão e o drop.", "subtitle"))
+        self.performance_notice=label('Apresentação leve: gráficos e prévias pausados. Captura, Link e efeitos de pixels continuam ativos.','notice',True)
+        self.performance_notice.setVisible(False);layout.addWidget(self.performance_notice)
         self.pages = QStackedWidget()
         self.pages.addWidget(build_monitor_page(self))
         self.pages.addWidget(build_diagnostics_page(self))
@@ -96,10 +105,11 @@ class MainWindow(QMainWindow):
         self.footer_status = label("●  Pronto para monitorar", "muted")
         footer.addWidget(self.footer_status)
         footer.addStretch()
-        footer.addWidget(label("PIXEL STUDIO  /  WS2812 USB  /  v0.24.0", "eyebrow"))
+        footer.addWidget(label("PIXEL STUDIO  /  WS2812 USB  /  v0.26.0", "eyebrow"))
         layout.addLayout(footer)
         root.addWidget(body, 1)
         self.setCentralWidget(container)
+        self.light_runtime.set_suspended(True)
         self.light_runtime.start()
         self.timer = QTimer(self)
         self.timer.setInterval(round(1000 / settings.ui_fps))
@@ -224,44 +234,42 @@ class MainWindow(QMainWindow):
             else:
                 self._submit("shutdown", self._shutdown_runtimes)
 
+    @property
+    def visuals_active(self):
+        return self.isVisible() and not self.isMinimized()
+
+    def _set_presentation(self,enabled):
+        self.presentation_mode=bool(enabled)
+        self.performance_notice.setVisible(enabled)
+        if enabled:self.pixel_page.usb.fold.setChecked(False)
+        self.performance_button.setText('Apresentação leve · ATIVA' if enabled else 'Apresentação leve')
+        self._tick()
+
     def _tick(self):
         status = self.runtime.status()
         snapshot = self._effective_snapshot()
         running = status.state in ("starting", "running", "stopping")
         mutable = not self.busy and not running and not self.closing
-        for widget in (self.source_combo, self.device_combo, self.block_combo,
-                       self.refresh_button, self.apply_button, self.import_button,
-                       self.queue_spin, self.silence_spin, self.fps_spin, *self.dsp_widgets, *self.kick_widgets, *self.beat_widgets):
-            widget.setEnabled(mutable)
-        self.start_button.setEnabled(mutable and bool(self.devices))
-        self.stop_button.setEnabled(not self.busy and running and not self.closing)
-        self.spectral_start.setEnabled(self.start_button.isEnabled())
-        self.spectral_stop.setEnabled(self.stop_button.isEnabled())
+        button_state=(mutable,bool(self.devices),running,self.busy,self.closing)
+        if button_state!=self._last_button_state:
+            self._last_button_state=button_state
+            for widget in (self.source_combo, self.device_combo, self.block_combo,
+                           self.refresh_button, self.apply_button, self.import_button,
+                           self.queue_spin, self.silence_spin, self.fps_spin, *self.dsp_widgets, *self.kick_widgets, *self.beat_widgets):
+                widget.setEnabled(mutable)
+            self.start_button.setEnabled(mutable and bool(self.devices))
+            self.stop_button.setEnabled(not self.busy and running and not self.closing)
+            self.spectral_start.setEnabled(self.start_button.isEnabled())
+            self.spectral_stop.setEnabled(self.stop_button.isEnabled())
         state_text = {"stopped": "PARADA", "starting": "ABRINDO", "running": "CAPTURANDO",
                       "stopping": "ENCERRANDO", "error": "ERRO"}.get(status.state, status.state)
         fresh = status.state == "running" and snapshot is not None and status.audio_age < 0.5
         page = self.pages.currentIndex()
+        visible=self.visuals_active
+        self.pixel_page.set_render_context(visible and page==9,self.presentation_mode)
+        self.light_runtime.set_suspended(not visible or self.presentation_mode or page not in (6,7))
         if page==9 or self.pixel_page.bridge.ready_state:
-            self.pixel_page.update_music(snapshot,status,monotonic())
-        if page == 3:
-            update_spectral_view(self, snapshot, status, fresh)
-        if page == 4:
-            update_kick_view(self, snapshot, status, fresh)
-        if page == 5:
-            update_rhythm_view(self, snapshot, status)
-        # Controles compartilhados continuam atualizados em qualquer página.
-        update_lighting_view(self)
-        if page == 8:
-            update_link_view(self)
-        if page == 7:
-            update_stage_view(self, snapshot, status, monotonic())
-        signal = "CLIPPING" if fresh and snapshot.clipping else "SILÊNCIO" if fresh and snapshot.silent else "SINAL ATIVO" if fresh else state_text
-        self.signal_badge.setText(signal)
-        self.footer_status.setText("●  " + ("Aguardando novos blocos" if status.state == "running" and not fresh else status.message))
-        self.wave.active = self.meter.active = fresh
-        self.wave.snapshot = self.meter.snapshot = snapshot
-        self.wave.update()
-        self.meter.update()
+            self.pixel_page.update_music(snapshot,status,monotonic(),paint=visible and page==9)
         if status.state != self._last_state:
             self._event(f"Estado: {state_text.lower()} • {status.message}")
             self._last_state = status.state
@@ -274,6 +282,24 @@ class MainWindow(QMainWindow):
         if status.dropped_blocks > self._last_drop_count:
             self._event(f"Sobrecarga: {status.dropped_blocks} bloco(s) descartado(s).")
             self._last_drop_count = status.dropped_blocks
+        if not visible:return
+        self.footer_status.setText("●  " + ("Aguardando novos blocos" if status.state == "running" and not fresh else status.message))
+        if self.presentation_mode:return
+        if page == 3:update_spectral_view(self, snapshot, status, fresh)
+        if page == 4:update_kick_view(self, snapshot, status, fresh)
+        if page == 5:update_rhythm_view(self, snapshot, status)
+        if page in (6,7):update_lighting_view(self)
+        if page == 8:update_link_view(self)
+        if page == 7:update_stage_view(self, snapshot, status, monotonic())
+        if page not in (0,1):return
+        signal = "CLIPPING" if fresh and snapshot.clipping else "SILÊNCIO" if fresh and snapshot.silent else "SINAL ATIVO" if fresh else state_text
+        self.signal_badge.setText(signal)
+        self.footer_status.setText("●  " + ("Aguardando novos blocos" if status.state == "running" and not fresh else status.message))
+        self.wave.active = self.meter.active = fresh
+        self.wave.snapshot = self.meter.snapshot = snapshot
+        if page==0:
+            self.wave.update()
+            self.meter.update()
         fmt = status.stream_format
         if fmt:
             self.metrics["rate"].setText(f"{fmt.sample_rate / 1000:g} kHz")

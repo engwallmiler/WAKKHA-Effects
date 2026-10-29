@@ -1,0 +1,51 @@
+[20304:14348:1027/234505.210:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[20304:14348:1027/234505.210:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[20304:14348:1027/234505.261:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[20304:14348:1027/234505.261:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[20304:14348:1027/234505.261:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[20304:14348:1027/234505.261:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[20304:10428:1027/234509.913:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[20304:10428:1027/234509.913:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[20304:10428:1027/234509.913:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+{
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "pixels": 300,
+  "effects": [
+    "ambient",
+    "pulse",
+    "chase",
+    "mirror",
+    "wave",
+    "helix",
+    "rain",
+    "drop",
+    "comet",
+    "scanner",
+    "sparkle",
+    "meteor",
+    "fire",
+    "rainbow",
+    "blocks",
+    "bounce",
+    "ripple",
+    "equalizer",
+    "snake",
+    "aurora",
+    "weave",
+    "orbit",
+    "shards",
+    "tide",
+    "lattice",
+    "vortex"
+  ],
+  "scroll_continues": true,
+  "other_page_continues": true,
+  "blackout_zero": true,
+  "physical_off": true,
+  "frames": 82,
+  "fps": 17.0,
+  "source": "ESP32 DevKit / WROOM-32, GPIO 18, GRB",
+  "closed_cleanly": true,
+  "close_blackout": true
+}

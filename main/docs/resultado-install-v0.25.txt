@@ -1,0 +1,22 @@
+Obtaining file:///C:/Users/walli/OneDrive/%C3%81rea%20de%20Trabalho/Waka%20Discoteca/WAKKHA%20Effects/main
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: beatlight-dmx
+  Building editable for beatlight-dmx (pyproject.toml): started
+  Building editable for beatlight-dmx (pyproject.toml): finished with status 'done'
+  Created wheel for beatlight-dmx: filename=beatlight_dmx-0.25.0-0.editable-py3-none-any.whl size=1809 sha256=56dec4330e66e6bffae3d98943a9589f2074a612b1e0b74f937be610e223e69f
+  Stored in directory: C:\Users\walli\AppData\Local\Temp\pip-ephem-wheel-cache-4648jc84\wheels\65\8c\66\3263fd827a4bd14d8bd4868012426470eecba4d09d9c79855a
+Successfully built beatlight-dmx
+Installing collected packages: beatlight-dmx
+  Attempting uninstall: beatlight-dmx
+    Found existing installation: beatlight-dmx 0.25.0
+    Uninstalling beatlight-dmx-0.25.0:
+      Successfully uninstalled beatlight-dmx-0.25.0
+  WARNING: The script beatlight.exe is installed in 'C:\Users\walli\OneDrive\�rea de Trabalho\Waka Discoteca\WAKKHA Effects\main\.runtime\python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed beatlight-dmx-0.25.0
+
+[notice] A new release of pip is available: 26.2.1 -> 26.2.2
+[notice] To update, run: C:\Users\walli\OneDrive\�rea de Trabalho\Waka Discoteca\WAKKHA Effects\main\.runtime\python312\python.exe -m pip install --upgrade pip

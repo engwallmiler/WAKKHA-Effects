@@ -1,0 +1,162 @@
+✔ new elements cannot replace a combination before sixteen grid beats (84.721ms)
+✔ layers enter and retire gradually while the base and composition remain stable (8.1735ms)
+✔ returning from breakdown chooses a fresh composition instead of a fixed groove scene (132.5189ms)
+✔ automatic peaks participate by composition and never switch on every beat (7.9768ms)
+✔ peak sync marks only its own four/eight-beat accent and blackout still wins (85.6471ms)
+✔ each drop has a different recent plan and progressive layers without extending its eight beats (266.5614ms)
+✔ energy motion is slower in a calm breakdown, smooths changes, and keeps BPM/grid untouched (952.8189ms)
+✔ old projects receive evolution defaults without changing strip geometry or controls (5.4177ms)
+✔ hypnotic direction holds each motif for thirty-two beats even with new elements (5.2442ms)
+✔ a hypnotic family keeps the base and replaces only one layer per phrase (126.7649ms)
+✔ hypnotic secondary layers grow over eight beats and stay sustained across the old sixteen-beat boundary (5.5533ms)
+✔ structural changes preempt a long hypnotic phrase and choose contextual families (20.6142ms)
+✔ hypnotic motion uses stable harmonic rates and retained layers survive phrase/sync boundaries (72.978ms)
+✔ compatible wave motifs repeat a common visual cycle instead of unrelated phase drift (25.909ms)
+✔ variation still deforms the same combination instead of becoming a disconnected control (29.3515ms)
+✔ capture restart rebases layer deadlines instead of leaving them far in the future (4.7614ms)
+✔ sustained timbral novelty can evolve an elements-only composition while an isolated onset cannot (5.2399ms)
+✔ initial geometry renders and editing changes physical totals and pixel allocation (94.4757ms)
+✔ invalid form changes are rejected without changing the geometry or saved copy (5.1356ms)
+✔ two clicks create a line using scaled canvas coordinates; reverse, drag, cancel and delete work (14.1457ms)
+✔ JSON import validates the entire candidate and export round-trips applied geometry (14.3308ms)
+✔ storage failure and corrupt saved JSON keep the editor usable (7.8819ms)
+✖ arbitrary line angles, uneven LED groups, RGBW and a single pixel render finite output (5.9248ms)
+✔ interrupted transitions retain each line resolution and survive a geometry change (41.1008ms)
+✔ embedded mode starts disarmed and produces no free-running demo pixels (87.193ms)
+✔ each WS2811 strip has its own effect, color, brightness and enable state (41.459ms)
+✔ silence, stopped source, stale bridge, blackout and shutdown emit exact zero (95.5393ms)
+✔ clock keeps advancing without inventing kicks; kick-only strips stay dark (50.618ms)
+✔ bass and density response use real independent levels without a kick (30.6486ms)
+✔ musical drop enters immediately and ends with the host eight-kick state (28.7407ms)
+✔ sync marks one cycle of eight and never changes the host BPM (9.4312ms)
+✔ geometry deletion keeps surviving strip controls with the correct physical line (6.5122ms)
+✔ project round trip restores geometry and per-strip controls while remaining disarmed (14.1887ms)
+✔ malformed music packets cannot turn on or corrupt the simulator (6.0471ms)
+✔ steady music keeps its pattern; sustained new elements change only at the next eight-beat boundary (345.2284ms)
+✔ live organic variation respects a minimum of sixteen beats even with an eight-beat setting (7.4369ms)
+✔ old projects acquire working hybrid variation while explicit elements/hold choices remain (4.4506ms)
+✔ musical fades follow beats even when wall time barely advances (5.0094ms)
+✔ manual DROP enters immediately, overrides selected strip responses, ends after eight beats and can cancel (18.477ms)
+✔ manual drop respects blackout and automatic detection cannot restart the same manual scene (8.3505ms)
+✔ sync during a manual drop preserves the remaining eight-beat duration (3.2029ms)
+✔ capture restart clears scene suppression so a new detector session can emit drop id one (2.7917ms)
+✔ manual drop while the grid is learning still expires and does not fabricate acoustic kicks (1188.8081ms)
+✔ structural changes select calm/build repertoires and color/energy overlays even on individual effects (25.9393ms)
+✔ front canvas only receives complete frames, not partial clears or per-strip drawing (6.4406ms)
+✔ delivery delay is compensated in musical phase and old queued packets never look fresh (6.3339ms)
+✔ reverse changes only the selected strip pixel order; speed and phase are independent (30.2969ms)
+✔ visible simulation button starts six individually addressable virtual strips without audio or USB (163.8441ms)
+✔ virtual counts and edits leave the actual one-strip project and its stored geometry intact (20.5068ms)
+✔ virtual scene can follow live audio/Link without hardware and respects stale data and blackout (47.7297ms)
+✔ virtual geometry can never be prepared or sampled as physical output (8.9017ms)
+✔ closing a virtual session returns the actual project for native persistence (18.203ms)
+✔ demo source remains available on the existing project without changing the installation (42.0077ms)
+✔ preparing WS2812 makes exactly 300 individual pixels and preserves other strips (45.0321ms)
+✔ all twenty-six scene effects use identical RGB values in the physical sampler and preview export (441.0716ms)
+✔ physical effect clock continues without any animation frame or visible Canvas (53.8366ms)
+✔ physical sampling respects blackout, disarm, quiet audio and stale data for all 300 LEDs (19.6718ms)
+✔ physical sampler rejects a grouped strip, RGBW, incorrect resolution and removed identities (7.6314ms)
+✔ manual drop and organic/auto variations share the physical sampling engine (29.9901ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 58
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2185.8222
+
+✖ failing tests:
+
+test at beatlight\tests\geometry.test.cjs:82:1
+✖ arbitrary line angles, uneven LED groups, RGBW and a single pixel render finite output (5.9248ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   0,
+  +   0,
+  +   0,
+  -   13,
+  -   13,
+  -   13,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   42,
+  -   42,
+  -   42,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   86,
+  -   86,
+  -   86,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   118,
+  -   118,
+  -   118,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   132,
+  -   132,
+  -   132,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   118,
+  -   118,
+  -   118,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   86,
+  -   86,
+  -   86,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   42,
+  -   42,
+  -   42,
+      255,
+  +   0,
+  +   0,
+  +   0,
+  -   13,
+  -   13,
+  -   13,
+      255
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\walli\OneDrive\Área de Trabalho\Waka Discoteca\WAKKHA Effects\main\beatlight\tests\geometry.test.cjs:97:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+        0,   0,   0, 255,   0,   0,   0, 255,   0,
+        0,   0, 255,   0,   0,   0, 255,   0,   0,
+        0, 255,   0,   0,   0, 255,   0,   0,   0,
+      255,   0,   0,   0, 255,   0,   0,   0, 255
+    ],
+    expected: [
+       13,  13,  13, 255,  42,  42,  42, 255,
+       86,  86,  86, 255, 118, 118, 118, 255,
+      132, 132, 132, 255, 118, 118, 118, 255,
+       86,  86,  86, 255,  42,  42,  42, 255,
+       13,  13,  13, 255
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

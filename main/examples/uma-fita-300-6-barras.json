@@ -1,0 +1,250 @@
+{
+  "version": 1,
+  "geometry": {
+    "version": 1,
+    "lines": [
+      {
+        "name": "Barra 01",
+        "start": {
+          "x": 146,
+          "y": 464
+        },
+        "end": {
+          "x": 146,
+          "y": 76
+        },
+        "meters": 0.8333,
+        "leds": 50,
+        "pixels": 50
+      },
+      {
+        "name": "Barra 02",
+        "start": {
+          "x": 328,
+          "y": 464
+        },
+        "end": {
+          "x": 328,
+          "y": 76
+        },
+        "meters": 0.8333,
+        "leds": 50,
+        "pixels": 50
+      },
+      {
+        "name": "Barra 03",
+        "start": {
+          "x": 510,
+          "y": 464
+        },
+        "end": {
+          "x": 510,
+          "y": 76
+        },
+        "meters": 0.8333,
+        "leds": 50,
+        "pixels": 50
+      },
+      {
+        "name": "Barra 04",
+        "start": {
+          "x": 690,
+          "y": 464
+        },
+        "end": {
+          "x": 690,
+          "y": 76
+        },
+        "meters": 0.8333,
+        "leds": 50,
+        "pixels": 50
+      },
+      {
+        "name": "Barra 05",
+        "start": {
+          "x": 872,
+          "y": 464
+        },
+        "end": {
+          "x": 872,
+          "y": 76
+        },
+        "meters": 0.8333,
+        "leds": 50,
+        "pixels": 50
+      },
+      {
+        "name": "Barra 06",
+        "start": {
+          "x": 1054,
+          "y": 464
+        },
+        "end": {
+          "x": 1054,
+          "y": 76
+        },
+        "meters": 0.8333,
+        "leds": 50,
+        "pixels": 50
+      }
+    ]
+  },
+  "strips": [
+    {
+      "id": "strip-1",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "strip-2",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "strip-3",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "strip-4",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "strip-5",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "strip-6",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    }
+  ],
+  "show": {
+    "mode": "organic",
+    "palette": "neon",
+    "brightness": 0.8,
+    "sceneBars": 8,
+    "changeMode": "hybrid",
+    "morphBeats": 8,
+    "followStructure": true,
+    "strobes": false,
+    "layerCount": 3,
+    "compositionStyle": "hypnotic",
+    "progressive": true,
+    "energyMotion": true,
+    "peakMode": "auto",
+    "peakEvery": 8,
+    "peakLevel": 0.75
+  },
+  "patch": {
+    "version": 1,
+    "runs": [
+      {
+        "id": "one-cable",
+        "name": "Uma fita - 300 pixels / 6 barras",
+        "segments": [
+          {
+            "strip_id": "strip-1",
+            "reverse": false
+          },
+          {
+            "strip_id": "strip-2",
+            "reverse": false
+          },
+          {
+            "strip_id": "strip-3",
+            "reverse": false
+          },
+          {
+            "strip_id": "strip-4",
+            "reverse": false
+          },
+          {
+            "strip_id": "strip-5",
+            "reverse": false
+          },
+          {
+            "strip_id": "strip-6",
+            "reverse": false
+          }
+        ]
+      }
+    ],
+    "mirrors": [
+      {
+        "source": "strip-1",
+        "targets": [
+          {
+            "id": "strip-6",
+            "reverse": false
+          }
+        ],
+        "mode": "exact"
+      },
+      {
+        "source": "strip-2",
+        "targets": [
+          {
+            "id": "strip-5",
+            "reverse": false
+          }
+        ],
+        "mode": "exact"
+      },
+      {
+        "source": "strip-3",
+        "targets": [
+          {
+            "id": "strip-4",
+            "reverse": false
+          }
+        ],
+        "mode": "exact"
+      }
+    ]
+  }
+}

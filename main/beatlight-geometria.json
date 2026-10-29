@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "lines": [
+    {
+      "name": "Virtual 01",
+      "start": {
+        "x": 153.6,
+        "y": 538.2
+      },
+      "end": {
+        "x": 153.6,
+        "y": 149.1
+      },
+      "meters": 1.5,
+      "leds": 90,
+      "pixels": 90
+    },
+    {
+      "name": "Virtual 02",
+      "start": {
+        "x": 346.3,
+        "y": 541.8
+      },
+      "end": {
+        "x": 346.3,
+        "y": 152.7
+      },
+      "meters": 1.5,
+      "leds": 90,
+      "pixels": 90
+    },
+    {
+      "name": "Virtual 03",
+      "start": {
+        "x": 847.3,
+        "y": 549
+      },
+      "end": {
+        "x": 846.1,
+        "y": 149.1
+      },
+      "meters": 1.5,
+      "leds": 90,
+      "pixels": 90
+    },
+    {
+      "name": "Virtual 04",
+      "start": {
+        "x": 1052.1,
+        "y": 549
+      },
+      "end": {
+        "x": 1049.7,
+        "y": 150.3
+      },
+      "meters": 1.5,
+      "leds": 90,
+      "pixels": 90
+    }
+  ]
+}

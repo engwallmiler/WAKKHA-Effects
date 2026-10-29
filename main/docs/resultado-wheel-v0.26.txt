@@ -1,0 +1,12 @@
+Processing .\.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: beatlight-dmx
+  Building wheel for beatlight-dmx (pyproject.toml): started
+  Building wheel for beatlight-dmx (pyproject.toml): finished with status 'done'
+  Created wheel for beatlight-dmx: filename=beatlight_dmx-0.26.0-py3-none-any.whl size=424311 sha256=188af4d2b8f4937c25c9a8f9a48856b58e2d9377fc323ddae45720a835d195c3
+  Stored in directory: C:\Users\walli\AppData\Local\Temp\pip-ephem-wheel-cache-hgms1w_k\wheels\65\8c\66\3263fd827a4bd14d8bd4868012426470eecba4d09d9c79855a
+Successfully built beatlight-dmx
+
+[notice] A new release of pip is available: 26.2.1 -> 26.2.2
+[notice] To update, run: C:\Users\walli\OneDrive\�rea de Trabalho\Waka Discoteca\WAKKHA Effects\main\.runtime\python312\python.exe -m pip install --upgrade pip

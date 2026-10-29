@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "beatlight-dmx"
-version = "0.24.0"
+version = "0.26.0"
 description = "Pixel Studio, WS2812 via ESP32 USB e sincronização musical — BEATLIGHT"
 requires-python = ">=3.12"
 dependencies = ["numpy>=1.26,<3", "scipy>=1.12,<2", "PySide6>=6.7,<7", "pyserial==3.5", "PyAudioWPatch>=0.2.12.6,<0.3; sys_platform == 'win32'"]
@@ -21,8 +21,8 @@ where = ["src"]
 
 [tool.setuptools.data-files]
 "share/beatlight" = ["beatlight/beatlight_pixel_studio.html"]
-"share/beatlight/docs" = ["docs/esp32-ws2812-usb.md", "docs/resultado-esp32-v0.22.json", "docs/validacao.md", "docs/pixel-studio.md", "docs/drop-detection.md", "docs/avaliacao-recomendacoes-drop-v0.23.md"]
-"share/beatlight/examples" = ["examples/ws2812-300.json"]
+"share/beatlight/docs" = ["docs/esp32-ws2812-usb.md", "docs/resultado-esp32-v0.22.json", "docs/validacao.md", "docs/pixel-studio.md", "docs/conexoes-fitas.md", "docs/confiabilidade.md", "docs/apresentacao-leve.md", "docs/resultado-pixel-presentation-v0.26.0.json", "docs/resultado-pixel-usb-v0.26.0.json", "docs/drop-detection.md", "docs/avaliacao-recomendacoes-drop-v0.23.md"]
+"share/beatlight/examples" = ["examples/ws2812-300.json", "examples/fitas-simetricas-continuas.json", "examples/uma-fita-300-6-barras.json"]
 "share/beatlight/firmware/beatlight_esp32" = ["firmware/beatlight_esp32/beatlight_esp32.ino", "firmware/beatlight_esp32/protocol.h", "firmware/beatlight_esp32/platformio.ini"]
 "share/beatlight/firmware/beatlight_esp32/dist" = ["firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-300-v0.22.0.bin"]
 

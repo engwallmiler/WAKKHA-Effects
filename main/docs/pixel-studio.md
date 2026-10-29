@@ -1,4 +1,18 @@
-# Pixel Studio integrado — 0.24
+# Pixel Studio integrado — 0.26.0
+
+## Conexões e imagem sem difusão
+
+A prévia das fitas não tem halo, difusão nem reflexo, sem controle de intensidade. O valor show.glow de projetos antigos é ignorado e não volta a ser exportado. Os flashes superiores são elementos separados, com controles próprios.
+
+Em **Mostrar controles → Fitas e geometria → Conexões · continuidade e simetria**, crie fitas contínuas compostas por várias barras ou cópias simultâneas de uma referência. Cada trecho tem ordem e sentido de ligação; cada cópia pode ser invertida. Os dois recursos funcionam juntos, inclusive dentro de um único cabo de 300 pixels. [Passo a passo e exemplos](conexoes-fitas.md).
+
+## Operação, abas e modo leve
+
+O cabeçalho começa em **Simular projeto atual · sem USB**. A ação **Simular meu projeto · sem USB** inicia a prévia da instalação já montada; usa áudio recente ou demonstração sem áudio. Não troca a geometria nem os grupos. **Testar outra montagem** cria o teste temporário separado. Para transmitir, escolha **Saída física · ESP32 USB**, conecte e ative explicitamente.
+
+As abas **Palco**, **Efeitos e cores**, **Fitas e grupos** e **Biblioteca e drops** organizam a interface. Os grupos ativos aparecem em cartões; os editores só aplicam alterações ao confirmar. Cópia exata exige pixels/formato compatíveis; a opção proporcional preserva resoluções diferentes.
+
+**Apresentação leve**, no cabeçalho nativo, mantém os controles acessíveis e pausa gráficos/desenho. Minimizar também suspende automaticamente as prévias. Música e amostragem física continuam avançando o mesmo relógio. O worker PAR/moves dorme quando suas páginas estão ocultas. O espectro não recebe atualizações gráficas oculto, minimizado ou no modo leve; a FFT necessária ao motor continua. [Operação detalhada e limites](apresentacao-leve.md).
 
 ## Apresentação e camadas
 
@@ -64,19 +78,21 @@ Escolha uma linha no seletor acima do palco e clique em **Editar fita**, ou sele
 - fita ligada/apagada;
 - resposta combinada, grade, kick real, baixo, densidade ou sustentação.
 
+Em uma fita contínua, os controles de efeito são compartilhados a partir da primeira barra; as demais editam essa mesma base. Em uma cópia, esses controles ficam bloqueados, pois seguem a referência. Liga/desliga e perfil continuam por barra.
+
 As linhas podem ter comprimento, resolução e direção diferentes. Reverter a direção do efeito não troca a identificação da fita. Ao excluir uma linha, os controles das linhas sobreviventes acompanham suas identidades.
 
-Os perfis **WS2811 · RGB** e **WS2812 · RGB individual** geram três canais por pixel, inclusive para branco obtido pela combinação RGB. Eles não criam um emissor W dedicado. **RGBW · simulação** é um perfil virtual separado. A escolha global RGBW da demonstração não transforma essas fitas RGB em RGBW. Para a saída USB desta versão, a linha selecionada precisa estar em WS2812, 300 LEDs e 300 pixels; o botão Preparar ajusta apenas essa linha, preservando as demais.
+Os perfis **WS2811 · RGB** e **WS2812 · RGB individual** geram três canais por pixel, inclusive para branco obtido pela combinação RGB. Eles não criam um emissor W dedicado. **RGBW · simulação** é um perfil virtual separado. A escolha global RGBW da demonstração não transforma essas fitas RGB em RGBW. Para a saída USB desta versão, a fita lógica selecionada precisa somar 300 LEDs e 300 pixels, com perfil WS2812 em todos os trechos. Preparar 300 WS2812 distribui esses 300 endereços proporcionalmente entre seus trechos e preserva as outras fitas. Uma linha independente continua sendo uma saída possível.
 
 O modelo inicial usa seis linhas de 5 m, 600 LEDs e 200 pixels cada. Os três LEDs de cada grupo desse modelo compartilham um triplo RGB; o quadro exportado contém 200 pixels, sem duplicar 600 endereços. As resoluções do editor são configuráveis, conforme a geometria fornecida pelo usuário. Limites: 32 linhas, 32.768 LEDs físicos e 8.192 pixels no total; cada linha aceita até 4.096 LEDs e 2.048 pixels.
 
 ## Salvar, importar e exportar
 
-`pixel-studio.json` fica no diretório das preferências/logs do BEATLIGHT. O projeto é independente do arquivo `preferences.json` v13, que continua cuidando de áudio, Link e palco anterior. As gravações são validadas e atômicas; um projeto inválido não substitui o último válido.
+`pixel-studio.json` fica no diretório das preferências/logs do BEATLIGHT. O projeto é independente do arquivo `preferences.json` v13, que continua cuidando de áudio, Link e palco anterior. As gravações são validadas e atômicas em uma thread própria; há somente uma gravação ativa e a última edição pendente. Um projeto inválido não substitui o último válido. O aviso de salvamento só confirma a escrita concluída.
 
-**Exportar projeto de fitas** inclui geometria, identificadores, controles por fita e controles globais. **Importar projeto de fitas** recupera esses dados. Ativação, blackout, pausa e seleção de entrada ao vivo/demonstração não são reativados pelo projeto. O fechamento também salva a última edição, mesmo se o usuário não aguardou o pequeno intervalo do salvamento automático.
+**Exportar projeto de fitas** inclui geometria, identificadores, continuidade, simetria, controles por fita e controles globais. **Importar projeto de fitas** recupera esses dados. Ativação, blackout, pausa e seleção de entrada ao vivo/demonstração não são reativados pelo projeto. O fechamento também salva a última edição, mesmo se o usuário não aguardou o pequeno intervalo do salvamento automático.
 
-**Exportar/importar geometria** continua aceitando o JSON versão 1 do HTML original. Esse formato guarda somente linhas. Use o projeto completo para transferir também efeitos e cores.
+**Exportar/importar geometria** continua aceitando o JSON versão 1 do HTML original. Esse formato guarda somente linhas. Use o projeto completo para transferir também conexões, efeitos e cores.
 
 **Exportar quadro RGB** gera JSON com `physical_output: false` e uma lista por fita: identificação, perfil, modelo, LEDs, pixels, ordem lógica de canais e valores inteiros de 0–255. A ordem lógica exportada é **RGB** para WS2811/WS2812; o firmware converte RGB em **GRB** no fio da WS2812. O perfil virtual RGBW usa quatro canais. O arquivo exportado é um registro dos pixels calculados; o envio contínuo ao hardware acontece pelo painel USB nativo.
 
@@ -84,10 +100,12 @@ O modelo inicial usa seis linhas de 5 m, 600 LEDs e 200 pixels cada. Os três LE
 
 `pixel/protocol.py` projeta snapshots musicais para um contrato pequeno e valida quadros RGB/RGBW. `pixel/project.py` valida e salva projetos. `ui/pixel.py` hospeda o HTML em Qt WebEngine, usa Qt WebChannel e bloqueia navegação/recursos remotos. O HTML continua funcionando sozinho em demonstração. O pacote inclui o HTML como recurso de dados; não há cópia divergente do motor de efeitos.
 
-A lógica musical é processada no recebimento dos dados, sem esperar o próximo quadro de animação. A prévia embutida usa uma imagem menor e limita desenho a 30 Hz; o arquivo de quadro preserva todos os pixels configurados. Os halos usam uma camada pequena para evitar filtros caros por software. O quadro é composto fora da superfície visível e apresentado de uma só vez, por cópia de pixels em memória. O desenho pausa quando o palco sai da área visível, enquanto a grade e as cenas continuam avançando. Chromium e Qt Quick usam composição por software por padrão, com Canvas acelerado/WebGL desativados para contornar os artefatos gráficos. Essa configuração segue a alternativa de renderização por software documentada pelo [Qt WebEngine](https://doc.qt.io/qt-6.10/qtwebengine-features.html#hardware-acceleration). O sandbox do aplicativo normal permanece ativo. O motor gráfico continua sendo o simulador Canvas, não um worker de transmissão física independente da interface.
+A lógica musical é processada no recebimento dos dados, sem esperar o próximo quadro de animação. A prévia embutida usa uma imagem menor e limita desenho a 30 Hz; o arquivo de quadro preserva todos os pixels configurados. As fitas são compostas sem halo. O cálculo das referências é reutilizado pelas cópias em cada quadro; as texturas são dimensionadas por pixel controlável e reutilizadas nas edições de posição. O quadro é composto fora da superfície visível e apresentado de uma só vez, por cópia de pixels em memória. O desenho pausa quando o palco sai da área visível, enquanto a grade e as cenas continuam avançando. Chromium e Qt Quick usam composição por software por padrão, com Canvas acelerado/WebGL desativados para contornar os artefatos gráficos. Essa configuração segue a alternativa de renderização por software documentada pelo [Qt WebEngine](https://doc.qt.io/qt-6.10/qtwebengine-features.html#hardware-acceleration). O sandbox do aplicativo normal permanece ativo. O motor gráfico continua sendo o simulador Canvas, não um worker de transmissão física independente da interface.
 
-As mensagens incluem o instante de envio do host; a entrega mais rápida observada estabelece uma estimativa da diferença entre relógios. A fase considera a idade estimada da mensagem. Dados enfileirados antigos não se tornam novos kicks nem são tratados como áudio recente. A estimativa não mede a latência física do dispositivo de som. Para investigação técnica, `BEATLIGHT_PIXEL_RENDERER=gpu` mantém o backend padrão em uma sessão de teste; a configuração normal prioriza estabilidade por software.
+A ponte entrega uma mensagem musical por vez e mantém apenas a mais recente pendente enquanto aguarda confirmação do renderizador. As mensagens incluem o instante de envio do host; a entrega mais rápida observada estabelece uma estimativa da diferença entre relógios. A fase considera a idade estimada da mensagem. Dados enfileirados antigos não se tornam novos kicks nem são tratados como áudio recente. A estimativa não mede a latência física do dispositivo de som. Para investigação técnica, `BEATLIGHT_PIXEL_RENDERER=gpu` mantém o backend padrão em uma sessão de teste; a configuração normal prioriza estabilidade por software.
 
 **Saída física é uma ativação separada da prévia.** A conexão USB inicia apagada, e Ativar saída física também ativa o motor de fitas. APAGAR SAÍDA interrompe a emissão até nova ativação; o BLACKOUT global mantém o motor armado e retoma ao ser liberado. Quadros atrasados são descartados, e o firmware apaga após 750 ms sem quadro válido. A saída funciona com fonte externa de 5 V, limites físicos próprios e montagem descrita no guia. Não há DMX físico. A sincronização Traktor/Link continua somente de leitura.
 
-Testes: `node --test beatlight/tests/geometry.test.cjs beatlight/tests/music.test.cjs beatlight/tests/usb.test.cjs beatlight/tests/evolution.test.cjs`, `python -m pytest` e os scripts `validate_pixel_studio.py`, `validate_pixel_cues.py`, `validate_pixel_usb.py` e `validate_pixel_evolution.py` da pasta scripts. O ensaio de áudio usa configuração isolada em `.runtime/pixel-qa`; cues/evolução usam cópias do projeto em pastas próprias; o ensaio USB exercita uma porta ESP32 emulada em `.runtime/pixel-usb-qa`. Nenhum abre captura de hardware ou sessão Link nativa. Somente o ambiente automatizado desativa o sandbox aninhado do Chromium; o aplicativo normal não aplica essa opção. Veja os resultados em [Validação](validacao.md).
+**Reabrir prévia** fica no cabeçalho USB e recarrega o simulador, mantendo a captura de áudio ativa. Tenta preservar a última edição; se o processo não responder, recupera o último projeto válido salvo. A saída física é apagada e requer nova ativação. Veja [confiabilidade e ensaio prolongado](confiabilidade.md).
+
+Testes: `node --test beatlight/tests/*.test.cjs`, `python -m pytest` e os scripts `validate_pixel_studio.py`, `validate_pixel_cues.py`, `validate_pixel_usb.py` e `validate_pixel_evolution.py` da pasta scripts. O ensaio de áudio usa configuração isolada em `.runtime/pixel-qa`; cues/evolução usam cópias do projeto em pastas próprias; o ensaio USB exercita uma porta ESP32 emulada em `.runtime/pixel-usb-qa`. Nenhum abre captura de hardware ou sessão Link nativa. Somente o ambiente automatizado desativa o sandbox aninhado do Chromium; o aplicativo normal não aplica essa opção. Veja os resultados em [Validação](validacao.md).

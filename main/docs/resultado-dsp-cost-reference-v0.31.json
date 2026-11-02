@@ -1,0 +1,35 @@
+{
+  "version": "0.31.0",
+  "reference_only": true,
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "diagnostics_enabled": false,
+  "cases": {
+    "groove": {
+      "audio_seconds_per_run": 8,
+      "cpu_seconds": [
+        0.96875,
+        1.53125,
+        1.328125
+      ],
+      "median_cpu_seconds": 1.328125,
+      "median_fraction_one_core": 0.166015625,
+      "kick_history": 200,
+      "profile_history": 64,
+      "click_history": 120
+    },
+    "groove_click": {
+      "audio_seconds_per_run": 8,
+      "cpu_seconds": [
+        1.390625,
+        1.140625,
+        1.59375
+      ],
+      "median_cpu_seconds": 1.390625,
+      "median_fraction_one_core": 0.173828125,
+      "kick_history": 200,
+      "profile_history": 64,
+      "click_history": 120
+    }
+  }
+}

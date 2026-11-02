@@ -38,6 +38,7 @@ class DropDetector:
         self.confirmation_ms = None
         self.fast_confirmed = False
         self.rescued_attack = False
+        self.click_supported = False
         self.spectral_flux = self.spectral_novelty = self.score = 0.0
         self.phase = "idle"
         self.continuation_count = 0
@@ -167,6 +168,7 @@ class DropDetector:
         self.confirmation_ms = max(0.0,(at-event.occurred_at)*1000)
         self.fast_confirmed = bool(descriptor and descriptor.early)
         self.rescued_attack = bool(descriptor and descriptor.rescued)
+        self.click_supported = bool(descriptor and descriptor.click_supported)
         self.phase = "impact"
         self.continuation_count = 1
         self.continuation_deadline = at+max(1.25,3.5*period)
@@ -196,4 +198,4 @@ class DropDetector:
             self.fast_confirmed,self.rescued_attack,self.spectral_flux,
             self.spectral_novelty,min(1.0,self.score),self.phase,self.rejected_impacts,
             reference_peak_db=self.reference_peak_db,peak_ratio=self.peak_ratio,
-            reference_kicks=len(self.powers),mean_reached=self.mean_reached)
+            reference_kicks=len(self.powers),mean_reached=self.mean_reached,click_supported=self.click_supported)

@@ -1,5 +1,9 @@
 # Estrutura musical e palco — versão 0.18
 
+**Atualização 0.28:** a grade acústica estabiliza um BPM inteiro por padrão; o operador pode informar um BPM fixo. Ataques sobre a grade têm prioridade, preservando a evidência de kick sob baixo e evitando falsas transições por ausência aparente. [Funcionamento e limites](grade-audio-estavel.md).
+
+**Atualização 0.27:** recuperação espectral de ataques sob baixo sustentado, grade adquirida entre candidatos intermediários e limites do decaimento abaixo do fundo. [Guia e evidências](kicks-baixo.md).
+
 ## Comportamento
 
 A primeira leitura estrutural foi antecipada junto do simulador por solicitação do usuário: o breakdown deve criar tensão na luz; após o drop, a alta energia deve durar oito kicks.

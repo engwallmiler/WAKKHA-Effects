@@ -1,0 +1,1315 @@
+{
+  "version": "0.28.0",
+  "reference_only": true,
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "causal": true,
+  "cases": {
+    "normal": {
+      "true": 1,
+      "false": 0,
+      "missed": 0,
+      "available_delay_ms": {
+        "median": 85.33333333333282,
+        "p95": 85.33333333333282,
+        "max": 85.33333333333282,
+        "within_150ms": 1,
+        "early": 0
+      },
+      "kicks": {
+        "truth": 21,
+        "true": 21,
+        "false": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 134.6666666666665,
+          "p95": 1133.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 17,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          },
+          {
+            "truth_at": 12.0,
+            "at": 12.000000000000142,
+            "available_at": 12.085333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": 1.4210854715202004e-10,
+            "available_delay_ms": 85.33333333333282
+          },
+          {
+            "truth_at": 12.5,
+            "at": 12.501333333333111,
+            "available_at": 12.586666666666666,
+            "sensor": "spectral",
+            "timestamp_error_ms": 1.3333333331111419,
+            "available_delay_ms": 86.666666666666
+          },
+          {
+            "truth_at": 13.0,
+            "at": 13.0013333333331,
+            "available_at": 13.088,
+            "sensor": "energy",
+            "timestamp_error_ms": 1.3333333331004837,
+            "available_delay_ms": 87.99999999999919
+          },
+          {
+            "truth_at": 13.5,
+            "at": 13.50133333333309,
+            "available_at": 13.578666666666667,
+            "sensor": "spectral",
+            "timestamp_error_ms": 1.3333333330898256,
+            "available_delay_ms": 78.66666666666688
+          },
+          {
+            "truth_at": 14.0,
+            "at": 14.00133333333308,
+            "available_at": 14.08,
+            "sensor": "energy",
+            "timestamp_error_ms": 1.3333333330791675,
+            "available_delay_ms": 80.00000000000007
+          },
+          {
+            "truth_at": 14.5,
+            "at": 14.501333333333069,
+            "available_at": 14.581333333333333,
+            "sensor": "spectral",
+            "timestamp_error_ms": 1.3333333330685093,
+            "available_delay_ms": 81.33333333333326
+          },
+          {
+            "truth_at": 15.0,
+            "at": 15.001333333333058,
+            "available_at": 15.082666666666666,
+            "sensor": "energy",
+            "timestamp_error_ms": 1.3333333330578512,
+            "available_delay_ms": 82.66666666666644
+          },
+          {
+            "truth_at": 15.5,
+            "at": 15.501333333333047,
+            "available_at": 15.584,
+            "sensor": "spectral",
+            "timestamp_error_ms": 1.333333333047193,
+            "available_delay_ms": 83.99999999999963
+          },
+          {
+            "truth_at": 16.0,
+            "at": 16.000000000000366,
+            "available_at": 16.085333333333335,
+            "sensor": "energy",
+            "timestamp_error_ms": 3.659295089164516e-10,
+            "available_delay_ms": 85.3333333333346
+          },
+          {
+            "truth_at": 16.5,
+            "at": 16.50133333333311,
+            "available_at": 16.650666666666666,
+            "sensor": "spectral",
+            "timestamp_error_ms": 1.3333333331111419,
+            "available_delay_ms": 150.66666666666606
+          }
+        ],
+        "missed_at": [],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      ],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.546875,
+        "wall_seconds": 2.6175252000000455,
+        "cpu_fraction_of_one_core": 0.14981617647058823,
+        "processing_ms_p50": 1.1911000000282002,
+        "processing_ms_p95": 3.0361599999196183,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.538099999967017,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "masked": {
+      "true": 0,
+      "false": 0,
+      "missed": 1,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 21,
+        "true": 11,
+        "false": 0,
+        "missed": 10,
+        "precision": 1.0,
+        "recall": 0.5238095238095238,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [
+          12.0,
+          12.5,
+          13.0,
+          13.5,
+          14.0,
+          14.5,
+          15.0,
+          15.5,
+          16.0,
+          16.5
+        ],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 3.296875,
+        "wall_seconds": 3.399764199999936,
+        "cpu_fraction_of_one_core": 0.19393382352941177,
+        "processing_ms_p50": 2.110999999899832,
+        "processing_ms_p95": 3.1365550000259637,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.09209999995619,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "very_masked": {
+      "true": 0,
+      "false": 0,
+      "missed": 1,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 21,
+        "true": 11,
+        "false": 0,
+        "missed": 10,
+        "precision": 1.0,
+        "recall": 0.5238095238095238,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [
+          12.0,
+          12.5,
+          13.0,
+          13.5,
+          14.0,
+          14.5,
+          15.0,
+          15.5,
+          16.0,
+          16.5
+        ],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 3.0,
+        "wall_seconds": 3.0251059999998233,
+        "cpu_fraction_of_one_core": 0.17647058823529413,
+        "processing_ms_p50": 1.5832000000273183,
+        "processing_ms_p95": 3.027999999858366,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.151399999931527,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "weak_roll": {
+      "true": 0,
+      "false": 0,
+      "missed": 1,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 21,
+        "true": 11,
+        "false": 0,
+        "missed": 10,
+        "precision": 1.0,
+        "recall": 0.5238095238095238,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [
+          12.0,
+          12.5,
+          13.0,
+          13.5,
+          14.0,
+          14.5,
+          15.0,
+          15.5,
+          16.0,
+          16.5
+        ],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.78125,
+        "wall_seconds": 2.7761183000000074,
+        "cpu_fraction_of_one_core": 0.1636029411764706,
+        "processing_ms_p50": 1.3692999999648237,
+        "processing_ms_p95": 2.9635550000307376,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 4.349499999989348,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "bass_only": {
+      "true": 0,
+      "false": 0,
+      "missed": 0,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 11,
+        "true": 11,
+        "false": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.796875,
+        "wall_seconds": 2.8795088999997915,
+        "cpu_fraction_of_one_core": 0.1645220588235294,
+        "processing_ms_p50": 1.4376999999967666,
+        "processing_ms_p95": 3.0154099999435853,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 6.042600000000675,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "crash": {
+      "true": 0,
+      "false": 0,
+      "missed": 0,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 11,
+        "true": 11,
+        "false": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.953125,
+        "wall_seconds": 3.0100978999998915,
+        "cpu_fraction_of_one_core": 0.17371323529411764,
+        "processing_ms_p50": 1.5261500000178785,
+        "processing_ms_p95": 3.280044999928577,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.236100000047372,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "pluck": {
+      "true": 0,
+      "false": 0,
+      "missed": 0,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 11,
+        "true": 11,
+        "false": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.84375,
+        "wall_seconds": 2.967057699999941,
+        "cpu_fraction_of_one_core": 0.16727941176470587,
+        "processing_ms_p50": 1.4932000000271728,
+        "processing_ms_p95": 3.0909399999472935,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.4685000000063155,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "unlearned_click": {
+      "true": 0,
+      "false": 0,
+      "missed": 1,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 21,
+        "true": 11,
+        "false": 0,
+        "missed": 10,
+        "precision": 1.0,
+        "recall": 0.5238095238095238,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [
+          12.0,
+          12.5,
+          13.0,
+          13.5,
+          14.0,
+          14.5,
+          15.0,
+          15.5,
+          16.0,
+          16.5
+        ],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.71875,
+        "wall_seconds": 2.760664499999848,
+        "cpu_fraction_of_one_core": 0.15992647058823528,
+        "processing_ms_p50": 1.355699999976423,
+        "processing_ms_p95": 2.916530000129568,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.481400000007852,
+        "block_budget_ms": 10.666666666666666
+      }
+    },
+    "late_click": {
+      "true": 0,
+      "false": 0,
+      "missed": 1,
+      "available_delay_ms": null,
+      "kicks": {
+        "truth": 21,
+        "true": 11,
+        "false": 0,
+        "missed": 10,
+        "precision": 1.0,
+        "recall": 0.5238095238095238,
+        "false_per_minute": 0.0,
+        "tolerance_ms": 75.0,
+        "available_delay_ms": {
+          "median": 139.9999999999997,
+          "p95": 1383.3333333333333,
+          "max": 1633.3333333333333,
+          "within_150ms": 8,
+          "early": 0
+        },
+        "matches": [
+          {
+            "truth_at": 0.5,
+            "at": 0.49133333333333357,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666433,
+            "available_delay_ms": 1633.3333333333333
+          },
+          {
+            "truth_at": 1.0,
+            "at": 0.991333333333334,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666666046,
+            "available_delay_ms": 1133.3333333333333
+          },
+          {
+            "truth_at": 1.5,
+            "at": 1.4913333333333345,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666666549,
+            "available_delay_ms": 633.3333333333333
+          },
+          {
+            "truth_at": 2.0,
+            "at": 1.991333333333335,
+            "available_at": 2.1333333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666665046,
+            "available_delay_ms": 133.33333333333331
+          },
+          {
+            "truth_at": 2.5,
+            "at": 2.4913333333333245,
+            "available_at": 2.6346666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666675482,
+            "available_delay_ms": 134.6666666666665
+          },
+          {
+            "truth_at": 3.0,
+            "at": 2.991333333333314,
+            "available_at": 3.136,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.66666666668614,
+            "available_delay_ms": 136.0000000000001
+          },
+          {
+            "truth_at": 3.5,
+            "at": 3.491333333333303,
+            "available_at": 3.6373333333333333,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666696798,
+            "available_delay_ms": 137.33333333333331
+          },
+          {
+            "truth_at": 4.0,
+            "at": 3.9913333333332925,
+            "available_at": 4.1386666666666665,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666707457,
+            "available_delay_ms": 138.6666666666665
+          },
+          {
+            "truth_at": 4.5,
+            "at": 4.491333333333283,
+            "available_at": 4.64,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666717227,
+            "available_delay_ms": 139.9999999999997
+          },
+          {
+            "truth_at": 5.0,
+            "at": 4.991333333333272,
+            "available_at": 5.141333333333334,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666727885,
+            "available_delay_ms": 141.33333333333377
+          },
+          {
+            "truth_at": 5.5,
+            "at": 5.4913333333332615,
+            "available_at": 5.642666666666667,
+            "sensor": "energy",
+            "timestamp_error_ms": -8.666666666738543,
+            "available_delay_ms": 142.66666666666694
+          }
+        ],
+        "missed_at": [
+          12.0,
+          12.5,
+          13.0,
+          13.5,
+          14.0,
+          14.5,
+          15.0,
+          15.5,
+          16.0,
+          16.5
+        ],
+        "false_events": []
+      },
+      "decisions": {},
+      "drop_positions": [],
+      "click_supported": false,
+      "performance": {
+        "cpu_seconds": 2.890625,
+        "wall_seconds": 2.9394412000001466,
+        "cpu_fraction_of_one_core": 0.17003676470588236,
+        "processing_ms_p50": 1.513749999958236,
+        "processing_ms_p95": 3.119934999972428,
+        "processing_percentiles_window": "last_8192_blocks",
+        "processing_ms_max": 5.809099999851242,
+        "block_budget_ms": 10.666666666666666
+      }
+    }
+  },
+  "passed": true,
+  "boundary_scoring": "same evaluator as 0.29; stored detections rescored, analyzer not rerun"
+}

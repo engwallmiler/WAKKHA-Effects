@@ -1,0 +1,125 @@
+{
+  "version": "0.35.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "choices": [
+    {
+      "beat": 48.04266666666667,
+      "continuous": false,
+      "family": "Espiral",
+      "minimum": 32
+    },
+    {
+      "beat": 84.04053333333333,
+      "continuous": false,
+      "family": "Espiral",
+      "minimum": 32
+    },
+    {
+      "beat": 116.05269333333969,
+      "continuous": false,
+      "family": "Espiral",
+      "minimum": 32
+    },
+    {
+      "beat": 148,
+      "continuous": true,
+      "family": "Correntes cruzadas",
+      "minimum": 32
+    },
+    {
+      "beat": 184.03711999998092,
+      "continuous": false,
+      "family": "Anéis",
+      "minimum": 32
+    },
+    {
+      "beat": 216.02773333333334,
+      "continuous": false,
+      "family": "Anéis",
+      "minimum": 32
+    },
+    {
+      "beat": 248.04736000000636,
+      "continuous": false,
+      "family": "Anéis",
+      "minimum": 32
+    },
+    {
+      "beat": 280,
+      "continuous": false,
+      "family": "Cascata",
+      "minimum": 32
+    },
+    {
+      "beat": 312.0012799999873,
+      "continuous": true,
+      "family": "Maré cromática",
+      "minimum": 32
+    },
+    {
+      "beat": 344.0420266666412,
+      "continuous": false,
+      "family": "Órbitas",
+      "minimum": 32
+    },
+    {
+      "beat": 376,
+      "continuous": false,
+      "family": "Órbitas",
+      "minimum": 32
+    },
+    {
+      "beat": 408.00533333333334,
+      "continuous": false,
+      "family": "Órbitas",
+      "minimum": 32
+    },
+    {
+      "beat": 440,
+      "continuous": false,
+      "family": "Corrente",
+      "minimum": 32
+    },
+    {
+      "beat": 472,
+      "continuous": true,
+      "family": "Fusão contínua",
+      "minimum": 32
+    },
+    {
+      "beat": 504.03434666668574,
+      "continuous": false,
+      "family": "Túnel",
+      "minimum": 32
+    },
+    {
+      "beat": 536.0471466666858,
+      "continuous": false,
+      "family": "Túnel",
+      "minimum": 32
+    },
+    {
+      "beat": 568.0019200000127,
+      "continuous": false,
+      "family": "Túnel",
+      "minimum": 32
+    },
+    {
+      "beat": 600.0238933333079,
+      "continuous": false,
+      "family": "Prisma",
+      "minimum": 32
+    }
+  ],
+  "exit_buttons_work": true,
+  "continuous_entries": 3,
+  "buffers_reused": true,
+  "minimized_output_continues": true,
+  "blackout_zero": true,
+  "frames": 76,
+  "fps": 21.319796954302124,
+  "persisted_controls": true,
+  "closed_cleanly": true,
+  "passed": true
+}

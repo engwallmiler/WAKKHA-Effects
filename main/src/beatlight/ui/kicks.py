@@ -1,5 +1,6 @@
 """Painel de inspeção de kicks; consome snapshots imutáveis, sem DSP na GUI."""
 from time import monotonic
+import math
 from PySide6.QtCore import QPointF, QRectF, Qt
 from PySide6.QtGui import QColor, QFont, QPainter, QPainterPath, QPen
 from PySide6.QtWidgets import (QHBoxLayout, QVBoxLayout, QWidget, QPushButton,
@@ -51,13 +52,42 @@ class KickActivityWidget(QWidget):
                 ink.setAlpha(235 if self.active else 80)
                 p.setPen(QPen(ink, 2, style))
                 p.drawPath(path)
-            for kick in snapshot.events:
+            for index,color,style in ((1,'#b496ff',Qt.PenStyle.SolidLine),(2,'#df99c9',Qt.PenStyle.DashLine)):
+                path=QPainterPath()
+                for i,item in enumerate(snapshot.masked_history):
+                    pos=point(item[0],item[index])
+                    path.moveTo(pos) if i==0 else path.lineTo(pos)
+                ink=QColor(color);ink.setAlpha(220 if self.active else 70);p.setPen(QPen(ink,1.5,style));p.drawPath(path)
+            confirmed_times={event.occurred_at for event in self.verification.confirmed_events} if self.verification else set()
+            grid = self.verification.grid if self.verification else None
+            if grid and grid.period and grid.anchor_at is not None:
+                first = math.ceil((now - 2 - grid.anchor_at) / grid.period)
+                for index in range(first, first + math.ceil(2 / grid.period) + 1):
+                    target = grid.anchor_at + index * grid.period
+                    if target > now:
+                        break
+                    x = point(target, 0).x()
+                    p.setPen(QPen(QColor('#40515d'), 1, Qt.PenStyle.DashLine))
+                    p.drawLine(QPointF(x, area.top()), QPointF(x, area.bottom()))
+            peak_grid = self.verification.peak_grid if self.verification else None
+            if peak_grid and peak_grid.period and peak_grid.anchor_at is not None:
+                first = math.ceil((now-2-peak_grid.anchor_at)/peak_grid.period)
+                for index in range(first, first+math.ceil(2/peak_grid.period)+1):
+                    target = peak_grid.anchor_at+index*peak_grid.period
+                    if target>now:
+                        break
+                    x = point(target,0).x()
+                    p.setPen(QPen(QColor('#6cbdf6'),1,Qt.PenStyle.DotLine))
+                    p.drawLine(QPointF(x,area.top()),QPointF(x,area.bottom()))
+            events = {kick.occurred_at: kick for kick in snapshot.events}
+            if self.verification:
+                events.update((kick.occurred_at, kick) for kick in self.verification.confirmed_events)
+            for kick in events.values():
                 if 0 <= now - kick.occurred_at <= 2:
                     x = point(kick.occurred_at, 0).x()
-                    p.setPen(QPen(QColor("#7daeff"), 1, Qt.PenStyle.DotLine))
-                    p.drawLine(QPointF(x, area.top()), QPointF(x, area.bottom()))
-                    p.setBrush(QColor("#7daeff"))
-                    p.drawEllipse(QPointF(x, area.top() + 7), 4, 4)
+                    confirmed = kick.occurred_at in confirmed_times
+                    p.setPen(QPen(QColor('#65edaf' if confirmed else '#8396a4'), 2 if confirmed else 1))
+                    p.drawLine(QPointF(x, area.top() if confirmed else area.bottom()-7), QPointF(x, area.bottom()))
             if self.verification:
                 for t, verdict in self.verification.slots:
                     if 0 <= now - t <= 2:
@@ -82,6 +112,12 @@ def build_kick_page(self):
     choose = QPushButton("Selecionar entrada →")
     choose.clicked.connect(lambda: self._navigate(0))
     toolbar.addWidget(choose)
+    self.kick_grid_settings = QPushButton('BPM e grade →')
+    def open_grid_settings():
+        self._navigate(2)
+        self.pages.widget(2).ensureWidgetVisible(self.beat_mode_combo, 50, 50)
+    self.kick_grid_settings.clicked.connect(open_grid_settings)
+    toolbar.addWidget(self.kick_grid_settings)
     self.kick_start = QPushButton("▶  Iniciar")
     self.kick_start.setObjectName("primary")
     self.kick_start.clicked.connect(self._start)
@@ -93,7 +129,7 @@ def build_kick_page(self):
     row = QHBoxLayout()
     self.kick_metrics = {}
     for key, title, note in (("count", "CANDIDATOS GRAVES", "Saída bruta; pode incluir baixo"),
-        ("intensity", "FORÇA DO ÚLTIMO KICK", "Relativa ao histórico recente"),
+        ("intensity", "FORÇA DO CANDIDATO", "Relativa ao histórico; não é potência isolada do kick"),
         ("confidence", "CONFIANÇA DO EVENTO", "Heurística, não probabilidade"),
         ("energy", "ENERGIA NA BANDA", "RMS filtrado em dBFS")):
         frame, value = metric(title, note)
@@ -111,31 +147,31 @@ def build_kick_page(self):
         self.kick_confirmation_metrics[key] = value
         confirmation_row.addWidget(frame, 1)
     layout.addLayout(confirmation_row)
-    self.kick_confirmation_detail = stable_label("Aguardando áudio para separar kick confirmado e janela prevista.", "muted", 2)
+    self.kick_confirmation_detail = stable_label("Aguardando áudio para separar kick confirmado e janela prevista.", "muted", 4)
     layout.addWidget(self.kick_confirmation_detail)
     frame, contents = card()
     heading = QHBoxLayout()
-    heading.addWidget(label("Atividade e limiar adaptativo", "section"))
+    heading.addWidget(label("Energia e novidade espectral · dois caminhos de ataque", "section"))
     heading.addStretch()
     self.kick_badge = label("AGUARDANDO", "badge")
     heading.addWidget(self.kick_badge)
     contents.addLayout(heading)
     self.kick_plot = KickActivityWidget()
     contents.addWidget(self.kick_plot)
-    contents.addWidget(label("<span style='color:#6de9c1'>● Atividade</span> &nbsp; <span style='color:#e5c482'>┄ Limiar</span> &nbsp; <span style='color:#7daeff'>● Candidatos graves</span> &nbsp; <span style='color:#6de9c1'>┃ Grade com kick</span> &nbsp; <span style='color:#f0c36a'>┃ Grade sem kick</span> &nbsp; · Últimos 2 segundos", "muted", True))
-    self.kick_parameters = label("Banda 40–150 Hz · análise independente", "muted", True)
+    contents.addWidget(label("<span style='color:#6de9c1'>● Ataque por energia</span> · <span style='color:#e5c482'>┄ Seu limiar</span> · <span style='color:#b496ff'>● Novidade espectral</span> · <span style='color:#df99c9'>┄ Seu limiar</span><br><span style='color:#65edaf'>┃ Kick confirmado</span> · <span style='color:#8396a4'>╵ Candidato bruto (base)</span> · <span style='color:#8396a4'>┊ Grade de tempo</span> · <span style='color:#6cbdf6'>┊ Grade de picos reais</span> · <span style='color:#f0c36a'>┃ Tempo sem kick (base)</span> · Últimos 2 segundos", "muted", True))
+    self.kick_parameters = stable_label("Banda 40–150 Hz · análise independente", "muted", 2)
     contents.addWidget(self.kick_parameters)
     layout.addWidget(frame)
     frame, contents = card()
     event_row = QHBoxLayout()
     self.kick_indicator = label("SEM EVENTOS", "badge")
     self.kick_indicator.setMinimumWidth(150)
-    self.kick_detail = label("Aguardando áudio.", "muted", True)
+    self.kick_detail = stable_label("Aguardando áudio.", "muted", 3)
     event_row.addWidget(self.kick_indicator)
     event_row.addWidget(self.kick_detail, 1)
     contents.addLayout(event_row)
-    self.kick_table = QTableWidget(0, 5)
-    self.kick_table.setHorizontalHeaderLabels(("Há (tempo do áudio)", "Força relativa", "Confiança heurística", "Intervalo anterior", "Verificação"))
+    self.kick_table = QTableWidget(0, 6)
+    self.kick_table.setHorizontalHeaderLabels(("Há (tempo do áudio)", "Força relativa", "Confiança heurística", "Intervalo anterior", "Sensor", "Verificação"))
     self.kick_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
     self.kick_table.verticalHeader().hide()
     self.kick_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
@@ -163,9 +199,22 @@ def update_kick_view(self, snapshot, status, fresh):
         value.setText(str(count) if count is not None else "—")
     grid = verification.grid if verification else None
     if grid and grid.state in ("tracking", "predicting"):
-        self.kick_confirmation_detail.setText(f"Grade {60/grid.period:.1f} BPM · intervalo esperado {grid.period*1000:.0f} ms · confiança {grid.confidence:.0%} · {grid.state}\nPerfil rejeitou {verification.rejected_profile} candidatos; grade rejeitou {verification.rejected_grid}. Tempos previstos podem permanecer sem kick.")
+        bpm = f'{60/grid.period:.0f}' if grid.tempo_locked and grid.tempo_mode in ('integer','manual') else f'{60/grid.period:.1f}'
+        mode = 'BPM fixo' if grid.tempo_mode=='manual' else 'inteiro estabilizado' if grid.tempo_mode=='integer' and grid.tempo_locked else 'estabilizando o BPM inteiro' if grid.tempo_mode=='integer' else 'contínuo'
+        self.kick_confirmation_detail.setText(f"Grade {bpm} BPM · {mode} · intervalo {grid.period*1000:.0f} ms · confiança {grid.confidence:.0%}\nPerfil rejeitou {verification.rejected_profile}; grade rejeitou {verification.rejected_grid}. A previsão não cria kicks.")
     else:
         self.kick_confirmation_detail.setText("Confirmação acústica em aprendizado; aguardando grade confiável de BPM. Previsões não acionam pulsos.")
+    peak_grid = verification.peak_grid if verification else None
+    if peak_grid:
+        detail = (f"Grade auxiliar de máximos: {peak_grid.references}/3 referências; o reaprendizado do perfil funciona independentemente." if peak_grid.anchor_at is None else
+            f"Grade de picos · {'prevendo, sem ataque recente' if peak_grid.state=='predicting' else 'acompanhando'} · espectro {peak_grid.spectral_similarity:.0%} · forma {peak_grid.envelope_similarity:.0%} · potência {peak_grid.power_ratio:.2f}× · desvio {peak_grid.phase_error_ms:+.0f} ms")
+        self.kick_confirmation_detail.setText(self.kick_confirmation_detail.text()+"\n"+detail)
+    recovery = verification.kick_recovery if verification else None
+    if recovery:
+        recovery_state = (f"Perfil recorrente ativo · reaprendizados {recovery.relearns}" if recovery.relearns and not recovery.progress else
+            f"Reaprendendo perfil {recovery.progress}/{recovery.required} · reaprendizados {recovery.relearns}")
+        self.kick_confirmation_detail.setText(self.kick_confirmation_detail.text()+
+            f"\n{recovery_state} · {recovery.decision} {recovery.reason}")
     self.kick_confirmation_detail.setToolTip(self.kick_confirmation_detail.text())
     self.kick_plot.snapshot = kicks
     self.kick_plot.active = fresh and kicks is not None
@@ -193,13 +242,17 @@ def update_kick_view(self, snapshot, status, fresh):
     self.kick_metrics["confidence"].setText(f"{event.confidence:.0%}" if event else "—")
     confirmed = verification.confirmed_events[-1] if verification and verification.confirmed_events else None
     self.kick_indicator.setText("KICK CONFIRMADO" if confirmed and fresh and verification.last_confirmed_at is not None and monotonic() - verification.last_confirmed_at < 0.16 else "ESCUTANDO" if fresh and kicks.ready else "ADAPTANDO" if fresh else "PARADO")
-    self.kick_parameters.setText(f"Banda {kicks.band_hz[0]:g}–{kicks.band_hz[1]:g} Hz · janela {kicks.window_ms:.1f} ms · passo {kicks.hop_ms:.1f} ms · parâmetros próprios do detector")
-    self.kick_detail.setText(f"Ataque {kicks.attack:.2f} · fluxo grave {kicks.flux:.2f} · contraste {kicks.contrast:.1f}× · atividade {kicks.score:.2f} / limiar {kicks.threshold:.2f} · apoio rítmico {kicks.regularity:.0%}")
+    self.kick_parameters.setText(f"Banda {kicks.band_hz[0]:g}–{kicks.band_hz[1]:g} Hz · janela {kicks.window_ms:.1f} ms · passo {kicks.hop_ms:.1f} ms · "
+        + (f'prioridade na grade · {kicks.offgrid_count} ataques fora dela' if kicks.grid_guided else 'aquisição acústica · sem prioridade da grade'))
+    self.kick_detail.setText(f"Ataque {kicks.attack:.2f} · contraste {kicks.contrast:.1f}× · energia {kicks.score:.2f}/{kicks.threshold:.2f} · novidade {kicks.masked_score:.2f}/{kicks.masked_threshold:.2f}. O baixo pode reduzir o contraste sem apagar o novo ataque espectral.")
     # Os horários usam o tempo analisado, congelando corretamente ao parar.
     key = (kicks.frame_id, kicks.events, verification) if self.pages.currentIndex() == 4 else None
     if key is not None and key != self._kick_events_key:
         self._kick_events_key = key
-        events = kicks.events[-8:]
+        combined = {e.occurred_at:e for e in kicks.events}
+        if verification:
+            combined.update((e.occurred_at,e) for e in verification.confirmed_events)
+        events = sorted(combined.values(),key=lambda e:e.occurred_at)[-8:]
         self.kick_table.setRowCount(len(events))
         for row, index in enumerate(range(len(events) - 1, -1, -1)):
             kick = events[index]
@@ -208,7 +261,7 @@ def update_kick_view(self, snapshot, status, fresh):
             acoustic_times = {e.occurred_at for e in verification.acoustic_events} if verification else set()
             verdict = ("CONFIRMADO" if kick.occurred_at in confirmed_times else "FORA DA GRADE" if kick.occurred_at in acoustic_times
                 else "REJEITADO" if verification and verification.updated_at - kick.occurred_at >= 0.14 else "EM ANÁLISE")
-            values = (f"{max(0, kicks.analyzed_at - kick.occurred_at):.2f} s", f"{kick.intensity:.0%}", f"{kick.confidence:.0%}", f"{interval * 1000:.0f} ms" if interval else "—", verdict)
+            values = (f"{max(0, kicks.analyzed_at - kick.occurred_at):.2f} s", f"{kick.intensity:.0%}", f"{kick.confidence:.0%}", f"{interval * 1000:.0f} ms" if interval else "—", {'spectral':'Espectral','grid':'Grade + áudio','grid-peak':'Pico + BPM','grid-profile':'Perfil + grade'}.get(kick.evidence,'Energia'),verdict)
             for col, value in enumerate(values):
                 item = self.kick_table.item(row, col)
                 if item is None:

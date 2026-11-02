@@ -263,8 +263,11 @@ def update_rhythm_view(self, snapshot, status):
             detail.setText("Aguardando hipótese")
         return
     linked = snapshot.timing_source == "link"
-    self.rhythm_badge.setText("ABLETON LINK" if linked and live else STATES[beat.state] if live else "PARADO · ÚLTIMO RESULTADO")
-    self.rhythm_metrics["bpm"].setText(f"{beat.bpm:.1f}" if beat.bpm else "—")
+    stabilizing = bool(grid and grid.period and grid.tempo_mode=='integer' and not grid.tempo_locked and not linked)
+    self.rhythm_badge.setText("ABLETON LINK" if linked and live else 'ESTABILIZANDO BPM' if live and stabilizing else STATES[beat.state] if live else "PARADO · ÚLTIMO RESULTADO")
+    integer = bool(grid and grid.tempo_locked and grid.tempo_mode in ('integer','manual') and not linked)
+    self.rhythm_metrics["bpm"].setText((f"{beat.bpm:.0f}" if integer else f"{beat.bpm:.1f}") if beat.bpm else "—")
+    self.rhythm_metrics['bpm'].setToolTip(f'Estimativa acústica antes da estabilização: {grid.estimated_bpm:.2f} BPM' if integer else '')
     self.rhythm_metrics["confidence"].setText(f"{beat.confidence:.0%}")
     self.rhythm_metrics["period"].setText(f"{beat.period * 1000:.1f} ms" if beat.period else "—")
     self.rhythm_metrics["next"].setText(f"{max(0, beat.next_beat_at - beat.updated_at) * 1000:.0f} ms" if beat.next_beat_at else "—")
@@ -274,6 +277,10 @@ def update_rhythm_view(self, snapshot, status):
         "locked": "Grade local acompanhada por kicks. Desvios consistentes corrigem fase e BPM.",
         "coasting": "Sincronismo estimado: o relógio segue a previsão sem novos kicks alinhados."}
     self.rhythm_state_detail.setText(("BPM e fase seguem a sessão Link. O relógio não indica presença de kick nem posição da track." if linked else descriptions[beat.state]) if live else "Captura parada. Valores preservados; o relógio está congelado.")
+    if live and not linked and grid and grid.period and grid.tempo_mode in ('integer','manual'):
+        self.rhythm_state_detail.setText('BPM fixo informado. Ataques reais corrigem a fase; o período permanece fixo.' if grid.tempo_mode=='manual' else
+            'Adquirindo oito ataques para estabilizar o BPM inteiro.' if stabilizing else
+            'BPM inteiro estabilizado. Um ataque isolado não muda o andamento; mudanças persistentes permitem correção.')
     age = max(0, beat.updated_at - beat.last_reference_at) if beat.last_reference_at is not None else None
     self.rhythm_detail.setText(f"Erro do último ajuste: {beat.phase_error_ms:+.1f} ms · alinhados {beat.matched_kicks} · fora da grade {beat.rejected_kicks}"
         + (f"\nReferência há {age:.2f} s · " + (f"grade contínua · correções {grid.corrections}" if grid and grid.state in ("tracking", "predicting") else f"PLL limitado a {self.settings.beat_hold_seconds:g} s") if age is not None else "")

@@ -1,34 +1,35 @@
-# Validação — versão 0.26.0
+# Validação — versão 0.36.0
 
-Registro: **2026-10-28 (UTC)**. Grupos visíveis, cópia exata/proporcional, simulação do projeto atual sem USB, abas e operação minimizada/apresentação leve. Nenhum ESP32, captura de áudio física ou sessão Link nativa foi usado nos ensaios desta entrega.
+Registro: **2026-11-01**. Saída WS2812 de 1 a 300 LEDs, incluindo a fita de 120 LEDs do usuário. Ensaios sem ESP32 físico, captura real, Traktor ou Link nativo.
 
 ## Regressão
 
-**744 testes Python**: DSP/estrutura, captura, Link, projetos, topologia, persistência, transporte, worker e ponte Qt. Inclui validação exata de pixels/perfis, preservação do projeto em falha, suspensão/retomada do worker PAR e distinção entre uma solicitação explícita de prévia e um snapshot antigo. [Saída completa](resultado-pytest-v0.26.txt).
+**157 testes JavaScript passaram**. Os novos casos cobrem preparação de 120 LEDs sem substituir identidade/desenho, persistência, cabo contínuo com trechos de 30 + 90 LEDs e preservação atômica de cópias exatas incompatíveis. A suíte mantém os efeitos, continuidade, simetria, automações e verificações de memória limitada. [Log](resultado-pixel-js-v0.36.txt).
 
-**78 testes JavaScript**, sem falhas: evolução/ritmo e amostragem dos 26 efeitos, grupos, ordem dos fios, cópia exata, inversão, proporcionalidade, ajuste atômico de destino e conservação das posições. Verificam prévia do projeto atual sem alterar a montagem, bloqueio de quadros físicos, parada/retomada do agendamento visual e avanço dos efeitos sem pintar. [Saída completa](resultado-pixel-js-v0.26.txt).
+**144 testes Python passaram**, incluindo projetos, topologia, confiabilidade, USB e interface. Os novos casos verificam 1/30/120/299/300 pixels, validação estrita, preenchimento apagado, preparação com a fita selecionada, rejeição de respostas de fontes anteriores, mensagens de falha e prazo da preparação. [Log](resultado-pytest-v0.36.txt).
 
-## Qt nativo: apresentação, páginas ocultas e USB
+A análise musical não foi alterada; a suíte DSP completa não foi repetida. O pacote confere DSP, música e contratos byte a byte contra o wheel 0.35. [Registro anterior](validacao-v0.35.md) · [Verificação do pacote](resultado-package-v0.36.json).
 
-[validate_pixel_presentation.py](../scripts/validate_pixel_presentation.py) passou em Qt WebEngine por software, com configuração isolada em `.runtime/pixel-presentation-qa`. Sete fases de aproximadamente oito segundos: palco, controles, modo leve, minimização, espectro visível, palco PAR e retorno aos pixels.
+## Interface nativa e USB emulado
 
-- Pixels continuam mudando e os três pares permanecem iguais em todas as fases.
-- Áudio e quadros USB emulados continuam, com **zero descartes de áudio**.
-- **Zero desenhos Canvas** nos controles, no modo leve, minimizado e fora da página de pixels.
-- Espectro recebe atualizações somente em sua página visível. Worker/tabela PAR são atualizados somente no palco anterior.
-- Restauração retoma o desenho; simular o projeto atual preserva geometria/grupos, apaga e desconecta a saída emulada.
-- Ausência de erros JavaScript; fechamento conclui e apaga a saída.
+[validate_pixel_strip_size.py](../scripts/validate_pixel_strip_size.py) abre a aplicação Qt com uma serial emulada e um projeto contendo fitas de 300 e 120 LEDs. O ensaio usa demonstração, sem abrir uma COM real, e confirmou:
 
-[JSON com CPU e contadores](resultado-pixel-presentation-v0.26.0.json) · [Log nativo](resultado-pixel-presentation-native-v0.26.txt) · [Cartões de grupos](../preview-pixel-groups-v0.26.png) · [Apresentação leve](../preview-pixel-presentation-v0.26.png).
+- a fita salva de 120 LEDs é selecionada com o total correto;
+- preparar mantém nome, identidade, coordenadas, metragem e as outras fitas;
+- os 120 pixels produzem 360 canais RGB reais e os 180 endereços excedentes recebem zero;
+- a troca 300 → 120 apaga os endereços que deixaram de ser usados;
+- o envio continua minimizado;
+- reabrir a prévia preserva o projeto e exige ativação física manual;
+- seleção e perfil são salvos e o fechamento envia blackout.
 
-A CPU registrada separa processo principal e renderer e usa um núcleo lógico como 100%. Os padrões evoluem entre fases; o ensaio não mede isoladamente a FFT nem certifica a carga do Traktor. A medição final foi executada sem pytest simultâneo. As mensagens de inicialização gráfica do Qt offscreen permanecem no log; as verificações de desenho/canais passaram e as capturas foram inspecionadas.
+[Relatório](resultado-pixel-strip-size-v0.36.0.json) · [Captura da interface](../preview-fita-120-v0.36.png).
 
-O [ensaio USB pelos controles reais da interface](../scripts/validate_pixel_usb.py) também passou para **26 efeitos**, configuração de limites, ativação, blackout, continuidade fora da página e encerramento. Usa exclusivamente uma porta emulada. [JSON USB](resultado-pixel-usb-v0.26.0.json) · [Log](resultado-pixel-usb-native-v0.26.txt). Corrigida a disputa entre escolha física e mensagens antigas de operador; botões de conexão refletem imediatamente a troca de modo.
+O emulador registra payloads e confirma comandos; não reproduz alimentação, potência, integridade elétrica ou temporização da fita. A execução curta inclui trocas e recarga da prévia, e não constitui benchmark de fps ou teste de seis horas.
 
-## Distribuição e limites
+## Comportamento e distribuição
 
-O HTML, guias, exemplos e módulos integram o wheel 0.26.0. Compilação, iniciar.cmd --help, instalação editável, identidade dos arquivos e hash do firmware são conferidos em [resultado-package-v0.26.json](resultado-package-v0.26.json). O firmware **0.22 permanece idêntico** e não requer regravação.
+O bloqueio relatado era a exigência de exatamente 300 LEDs na amostragem e no conversor RGB; a preparação também forçava 300 no projeto. A nova UI mostra a quantidade física, utiliza o total indicado e confirma a fita preparada na mesma resposta. Consultas de fontes de uma revisão anterior são ignoradas. Preparação, conexão e ativação continuam separadas.
 
-Não houve ensaio de seis/oito horas reais. O relógio acelerado de oito horas e os buffers limitados foram verificados na 0.25; os novos testes verificam a continuidade sem pintura. [Histórico 0.25](validacao-v0.25.md) · [Auditoria e comando de oito horas reais](confiabilidade.md). Ainda precisam de ensaio prolongado a memória do Chromium, o conjunto real Traktor/Link e o transporte físico. O motor permanece no processo WebEngine; modo leve não o torna independente de falhas desse processo.
+A saída real aceita uma fita lógica com 1 a 300 LEDs individuais, com perfil WS2812 em todos os trechos. O protocolo BLP1 continua com 300 endereços e recebe zeros depois do último LED do projeto. O firmware 0.22 permanece idêntico; não precisa ser regravado. Não há nova thread, FFT ou fila no caminho de efeitos.
 
-Operação: [apresentacao-leve.md](apresentacao-leve.md) · [conexoes-fitas.md](conexoes-fitas.md) · [esp32-ws2812-usb.md](esp32-ws2812-usb.md).
+Instalação editável e wheel são **0.36.0**. Fontes e recursos declarados são comparados byte a byte ao pacote. [Verificação](resultado-package-v0.36.json) · [Operação para 120 LEDs](fitas-variaveis-v0.36.md).

@@ -114,12 +114,14 @@ def test_ws2812_export_is_rgb_and_rejects_a_fictional_white_emitter():
 
 
 def test_layered_show_and_new_effects_round_trip_without_altering_the_usb_pixel_contract():
-    data=project();data['strips'][0]['effect']='vortex'
-    data['show'].update(layerCount=4,progressive=True,energyMotion=True,peakMode='auto',peakEvery=8,peakLevel=.8,morphBeats=8,compositionStyle='hypnotic')
+    data=project();data['strips'][0]['effect']='liquid'
+    data['show'].update(layerCount=4,progressive=True,energyMotion=True,peakMode='auto',peakEvery=8,peakLevel=.8,
+        peakStyle='wave',peakColor='palette',morphBeats=8,compositionStyle='continuous',musicColors=True,dropVariety=True,
+        flowDepth=.75,flowSpeed=2.5,regularStyle='varied',autoContinuous=True)
     assert validate_project(data)==data
 
 
-@pytest.mark.parametrize('field,value',[('layerCount',5),('peakEvery',16),('peakMode','random-every-frame'),('peakLevel',1.1),('progressive',1),('energyMotion','yes'),('compositionStyle','random-per-pixel')])
+@pytest.mark.parametrize('field,value',[('layerCount',5),('peakEvery',16),('peakMode','random-every-frame'),('peakLevel',1.1),('peakStyle','invalid'),('peakColor','ultraviolet'),('progressive',1),('energyMotion','yes'),('compositionStyle','random-per-pixel'),('musicColors','yes'),('dropVariety',1),('flowDepth',1.1),('flowDepth',True),('flowSpeed',0),('flowSpeed',2.51),('autoContinuous','yes'),('regularStyle','continuous')])
 def test_invalid_evolution_settings_are_rejected(field,value):
     data=project();data['show'][field]=value
     with pytest.raises(ValueError):validate_project(data)

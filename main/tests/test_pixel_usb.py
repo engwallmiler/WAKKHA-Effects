@@ -56,6 +56,20 @@ def test_physical_frame_never_resamples_groups_or_accepts_rgbw():
         with pytest.raises(ValueError):rgb_payload({**frame,**change},'a')
 
 
+@pytest.mark.parametrize('pixels',[1,30,120,299,300])
+def test_short_strip_uses_exact_rgb_values_and_clears_unused_firmware_addresses(pixels):
+    frame={'id':'short','profile':'ws2812','model':'RGB','pixels':pixels,'leds':pixels,'data':[12,0,255]*pixels}
+    payload=rgb_payload(frame,'short')
+    assert len(payload)==900
+    assert payload[:pixels*3]==bytes([12,0,255])*pixels
+    assert payload[pixels*3:]==bytes((300-pixels)*3)
+
+
+@pytest.mark.parametrize('pixels',[0,301,True,120.0,-1])
+def test_invalid_short_strip_counts_are_rejected(pixels):
+    with pytest.raises(ValueError):rgb_payload({'id':'a','profile':'ws2812','model':'RGB','pixels':pixels,'leds':pixels,'data':[]},'a')
+
+
 @pytest.fixture
 def output():
     ports=[];runtimes=[]

@@ -86,9 +86,12 @@ class OutputConfig:
 
 
 def rgb_payload(frame,strip_id):
-    if not isinstance(frame,dict) or frame.get("id")!=strip_id or frame.get("profile")!="ws2812" or frame.get("model")!="RGB" or frame.get("pixels")!=PIXELS or frame.get("leds")!=PIXELS:
-        raise ValueError("Prepare a fita escolhida como WS2812, 300 LEDs e 300 pixels.")
+    pixels=frame.get("pixels") if isinstance(frame,dict) else None
+    if not isinstance(frame,dict) or frame.get("id")!=strip_id or frame.get("profile")!="ws2812" or frame.get("model")!="RGB" or type(pixels) is not int or not 1<=pixels<=PIXELS or type(frame.get("leds")) is not int or frame["leds"]!=pixels:
+        raise ValueError("Prepare a fita escolhida como WS2812: 1 a 300 LEDs, um pixel por LED.")
     data=frame.get("data")
-    if not isinstance(data,list) or len(data)!=MAX_PAYLOAD or any(type(v) is not int or not 0<=v<=255 for v in data):
-        raise ValueError("Quadro WS2812 precisa de exatamente 900 canais RGB inteiros.")
-    return bytes(data)
+    if not isinstance(data,list) or len(data)!=pixels*3 or any(type(v) is not int or not 0<=v<=255 for v in data):
+        raise ValueError("Quadro WS2812 precisa de três canais RGB inteiros por pixel.")
+    # Firmware BLP1 still receives 300 addresses. Unused addresses are always dark,
+    # including after selecting a shorter strip on the same connected controller.
+    return bytes(data)+bytes(MAX_PAYLOAD-len(data))

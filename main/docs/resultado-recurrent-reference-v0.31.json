@@ -1,0 +1,92 @@
+{
+  "version": "0.31.0",
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "cases": {
+    "kick": {
+      "metrics": {
+        "true": 9,
+        "missed": 19,
+        "false": 0,
+        "truth": 28,
+        "max_error_ms": 11.11
+      },
+      "after_change": 0,
+      "stable_bpms": [
+        127.0
+      ],
+      "false_drops": 0,
+      "final_state": "groove",
+      "rejected_profile": 19,
+      "relearns": 0
+    },
+    "held": {
+      "metrics": {
+        "true": 9,
+        "missed": 0,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 11.11
+      },
+      "after_change": 0,
+      "stable_bpms": [
+        127.0
+      ],
+      "false_drops": 0,
+      "final_state": "groove",
+      "rejected_profile": 1,
+      "relearns": 0
+    },
+    "offbeat": {
+      "metrics": {
+        "true": 9,
+        "missed": 0,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 11.11
+      },
+      "after_change": 0,
+      "stable_bpms": [
+        127.0
+      ],
+      "false_drops": 0,
+      "final_state": "buildup",
+      "rejected_profile": 0,
+      "relearns": 0
+    },
+    "harmonic": {
+      "metrics": {
+        "true": 9,
+        "missed": 0,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 11.11
+      },
+      "after_change": 0,
+      "stable_bpms": [
+        127.0
+      ],
+      "false_drops": 0,
+      "final_state": "buildup",
+      "rejected_profile": 19,
+      "relearns": 0
+    },
+    "roll": {
+      "metrics": {
+        "true": 9,
+        "missed": 0,
+        "false": 2,
+        "truth": 9,
+        "max_error_ms": 11.11
+      },
+      "after_change": 2,
+      "stable_bpms": [
+        127.0
+      ],
+      "false_drops": 0,
+      "final_state": "buildup",
+      "rejected_profile": 0,
+      "relearns": 0
+    }
+  }
+}

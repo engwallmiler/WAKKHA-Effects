@@ -1,0 +1,30 @@
+[2492:19436:1030/170904.950:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[2492:19436:1030/170904.950:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[2492:19436:1030/170905.000:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[2492:19436:1030/170905.000:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[2492:19436:1030/170905.000:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[2492:19436:1030/170905.000:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.29.0",
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "connected_browser_used": false,
+  "blocks": 1574,
+  "dropped_audio_blocks": 0,
+  "drop_positions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "click_supported": true,
+  "report_native_render": true,
+  "report_audio_metadata": true,
+  "report_seek": true,
+  "report_autoplay": false,
+  "passed": true
+}

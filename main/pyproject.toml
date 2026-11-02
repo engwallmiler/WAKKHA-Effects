@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "beatlight-dmx"
-version = "0.26.0"
+version = "0.36.0"
 description = "Pixel Studio, WS2812 via ESP32 USB e sincronização musical — BEATLIGHT"
 requires-python = ">=3.12"
 dependencies = ["numpy>=1.26,<3", "scipy>=1.12,<2", "PySide6>=6.7,<7", "pyserial==3.5", "PyAudioWPatch>=0.2.12.6,<0.3; sys_platform == 'win32'"]
@@ -15,14 +15,37 @@ link = ["aalink==0.2.3"]
 
 [project.scripts]
 beatlight = "beatlight.__main__:main"
+beatlight-replay = "beatlight.replay:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.data-files]
 "share/beatlight" = ["beatlight/beatlight_pixel_studio.html"]
-"share/beatlight/docs" = ["docs/esp32-ws2812-usb.md", "docs/resultado-esp32-v0.22.json", "docs/validacao.md", "docs/pixel-studio.md", "docs/conexoes-fitas.md", "docs/confiabilidade.md", "docs/apresentacao-leve.md", "docs/resultado-pixel-presentation-v0.26.0.json", "docs/resultado-pixel-usb-v0.26.0.json", "docs/drop-detection.md", "docs/avaliacao-recomendacoes-drop-v0.23.md"]
-"share/beatlight/examples" = ["examples/ws2812-300.json", "examples/fitas-simetricas-continuas.json", "examples/uma-fita-300-6-barras.json"]
+"share/beatlight/docs" = [
+    "docs/esp32-ws2812-usb.md", "docs/resultado-esp32-v0.22.json", "docs/validacao.md",
+    "docs/pixel-studio.md", "docs/conexoes-fitas.md", "docs/confiabilidade.md", "docs/apresentacao-leve.md",
+    "docs/resultado-pixel-presentation-v0.26.0.json", "docs/resultado-pixel-usb-v0.26.0.json",
+    "docs/kicks.md", "docs/kicks-baixo.md", "docs/grid-kicks.md", "docs/drop-detection.md", "docs/grade-audio-estavel.md",
+    "docs/resultado-grade-audio-v0.27.0.json", "docs/resultado-grade-audio-v0.28.0.json", "docs/resultado-grade-audio-ui-v0.28.0.json",
+    "docs/resultado-kick-masking-v0.26.0.json", "docs/resultado-kick-masking-v0.27.0.json",
+    "docs/resultado-kick-masking-ui-v0.27.0.json", "docs/avaliacao-recomendacoes-drop-v0.23.md",
+    "docs/replay-causal.md", "docs/avaliacao-abordagens-v0.29.md", "docs/resultado-replay-drop-v0.28.0.json",
+    "docs/resultado-replay-drop-v0.29.0.json", "docs/resultado-dsp-cost-v0.29.json", "docs/resultado-replay-ui-v0.29.0.json",
+    "docs/direcao-visual-v0.30.md", "docs/resultado-pixel-direction-v0.30.0.json",
+    "docs/grade-picos-v0.31.md", "docs/resultado-peak-grid-reference-v0.30.json",
+    "docs/resultado-peak-grid-v0.31.json", "docs/resultado-peak-grid-ui-v0.31.json",
+    "docs/resultado-dsp-cost-reference-v0.30.json", "docs/resultado-dsp-cost-current-v0.31.json",
+    "docs/perfil-recorrente-v0.32.md", "docs/resultado-recurrent-reference-v0.31.json",
+    "docs/resultado-recurrent-v0.32.json", "docs/resultado-recurrent-ui-v0.32.json",
+    "docs/resultado-peak-grid-v0.32.json", "docs/resultado-dsp-cost-reference-v0.31.json",
+    "docs/resultado-dsp-cost-current-v0.32.json", "docs/picos-continuos-v0.33.md",
+    "docs/resultado-pixel-peaks-v0.33.0.json", "docs/ondas-organicas-v0.34.md",
+    "docs/resultado-pixel-flow-v0.34.0.json", "docs/auto-continuo-v0.35.md",
+    "docs/resultado-auto-continuous-v0.35.0.json", "docs/fitas-variaveis-v0.36.md",
+    "docs/resultado-pixel-strip-size-v0.36.0.json"
+]
+"share/beatlight/examples" = ["examples/ws2812-300.json", "examples/fitas-simetricas-continuas.json", "examples/uma-fita-300-6-barras.json", "examples/replay-labels.json"]
 "share/beatlight/firmware/beatlight_esp32" = ["firmware/beatlight_esp32/beatlight_esp32.ino", "firmware/beatlight_esp32/protocol.h", "firmware/beatlight_esp32/platformio.ini"]
 "share/beatlight/firmware/beatlight_esp32/dist" = ["firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-300-v0.22.0.bin"]
 

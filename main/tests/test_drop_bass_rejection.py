@@ -3,11 +3,13 @@ import pytest
 from beatlight.audio.demo import structure_demo_samples
 from beatlight.contracts import AudioBlock
 from beatlight.dsp.pipeline import AudioAnalyzer
+from beatlight.music.config import BeatConfig
 
 
 @pytest.mark.parametrize("offbeat", [True, False])
-def test_bass_without_kick_is_not_a_drop_and_real_grid_return_still_is(offbeat):
-    analyzer = AudioAnalyzer()
+@pytest.mark.parametrize('mode', ['continuous','integer'])
+def test_bass_without_kick_is_not_a_drop_and_real_grid_return_still_is(offbeat,mode):
+    analyzer = AudioAnalyzer(beat_config=BeatConfig(beat_grid_mode=mode))
     false_section, true_section = [], []
     raw_events = set()
     for seq, first in enumerate(range(0, 48000 * 26, 512)):
@@ -38,8 +40,9 @@ def test_bass_without_kick_is_not_a_drop_and_real_grid_return_still_is(offbeat):
     assert true_section[-1].state == "groove"
 
 
-def test_aggressive_harmonic_bass_on_the_grid_does_not_create_drop():
-    analyzer = AudioAnalyzer()
+@pytest.mark.parametrize('mode', ['continuous','integer'])
+def test_aggressive_harmonic_bass_on_the_grid_does_not_create_drop(mode):
+    analyzer = AudioAnalyzer(beat_config=BeatConfig(beat_grid_mode=mode))
     false_section, returned = [], []
     raw_times=set()
     for seq,first in enumerate(range(0,48000*26,512)):

@@ -1,0 +1,9 @@
+Processing .\.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: beatlight-dmx
+  Building wheel for beatlight-dmx (pyproject.toml): started
+  Building wheel for beatlight-dmx (pyproject.toml): finished with status 'done'
+  Created wheel for beatlight-dmx: filename=beatlight_dmx-0.27.0-py3-none-any.whl size=441782 sha256=ff1a247b5640a5853b8051d70cc7b00877cd3b487206feeb0176bb48c827619a
+  Stored in directory: C:\Users\walli\AppData\Local\Temp\pip-ephem-wheel-cache-0apqs_lz\wheels\65\8c\66\3263fd827a4bd14d8bd4868012426470eecba4d09d9c79855a
+Successfully built beatlight-dmx

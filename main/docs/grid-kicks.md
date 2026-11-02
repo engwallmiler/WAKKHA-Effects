@@ -1,8 +1,12 @@
-# Grade contínua e confirmação de kicks — versão 0.10
+# Grade contínua e confirmação de kicks — versão 0.28
+
+**Atualização 0.28:** BPM inteiro estável como padrão, BPM fixo informado opcional e grade confiável orientando candidatos acústicos. A aquisição inicial continua com quatro ataques; o inteiro é estabilizado após oito observações reais. O modo contínuo conserva o ajuste fracionário. [Uso, critérios e limites](grade-audio-estavel.md).
+
+**Atualização 0.27:** recuperação espectral de ataques sob baixo sustentado, grade adquirida entre candidatos intermediários e limites do decaimento abaixo do fundo. [Guia e evidências](kicks-baixo.md).
 
 ## Aquisição e relógio
 
-A grade local adquire referência com **quatro candidatos aprovados pela análise acústica**, formando três intervalos regulares. O maior desvio de intervalo deve ficar em até 6% da mediana, e o BPM deve pertencer à faixa configurada (90–160 por padrão). Não espera que o PLL fique locked nem exige oito kicks/três segundos de histórico. Sem referência anterior, esses primeiros ataques ainda são uma hipótese acústica, não uma classificação infalível de instrumento.
+A grade local adquire referência inicial com **quatro candidatos aprovados pela análise acústica**, formando três intervalos regulares. O maior desvio de intervalo deve ficar em até 6% da mediana, e o BPM deve pertencer à faixa configurada (90–160 por padrão). Não espera que o PLL fique locked; no modo inteiro, oito observações permitem estabilizar o período. O modo fixo usa o BPM informado. Sem referência anterior, esses primeiros ataques ainda são uma hipótese acústica, não uma classificação infalível de instrumento.
 
 StructureTracker usa essa aquisição para sair de Aprendendo e formar a referência de groove. No teste sintético a 120 BPM, a aquisição ocorreu em aproximadamente 2,14 s, incluindo o aquecimento do detector e a confirmação de cerca de 120 ms. Isso não garante o mesmo prazo em uma track real.
 
@@ -22,7 +26,7 @@ A correção grande é aplicada uma vez ao ser confirmada e pode deslocar a posi
 
 ## Confirmação acústica e proteção contra basslines
 
-O detector bruto continua independente. KickIdentity compara a distribuição normalizada de 30–250 Hz, o decaimento de 80–130 ms e o ataque harmônico em 250–1500 Hz, subtraindo a potência anterior ao ataque. Após quatro referências, a confirmação normal exige similaridade ≥0,72 e, para referências com queda ≥3 dB, queda mínima de 30% da referência e ao menos 1,2 dB. A proporção harmônica deve ficar abaixo de max(0,04; mediana × 4 + 0,025).
+O detector bruto recebe um prior opcional da grade confiável, mantendo propostas fora dela separadas dos candidatos que alimentam o BPM. KickIdentity compara a distribuição normalizada de 30–250 Hz, o decaimento de 80–130 ms e o ataque harmônico em 250–1500 Hz, subtraindo a potência anterior ao ataque. Após quatro referências, a confirmação normal exige similaridade ≥0,72 e, para referências com queda ≥3 dB, queda mínima de 30% da referência e ao menos 1,2 dB. A proporção harmônica deve ficar abaixo de max(0,04; mediana × 4 + 0,025). A exceção contextual para transientes mascarados num groove inteiro/fixo está descrita no [guia 0.28](grade-audio-estavel.md); não autoriza drops.
 
 **Alterar a grade exige uma identidade mais próxima**: similaridade ≥0,90, queda entre 85% e 130% da referência quando esta tem queda ≥3 dB (senão diferença ≤2 dB), proporção harmônica abaixo de max(0,02; mediana × 3 + 0,015). Isso impede que a correção temporal, por si só, promova um baixo parecido ao papel de kick. Referências são aprendidas apenas em aquecimento/groove; candidatos rejeitados não mudam o perfil.
 

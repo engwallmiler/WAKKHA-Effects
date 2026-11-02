@@ -50,13 +50,13 @@ O exemplo contém:
 
 Os primeiros três trechos mostram a base contínua do efeito. Os três seguintes repetem os trechos correspondentes no mesmo instante. As cópias conservam seus endereços no fio, mas não gastam posições adicionais na base visual: o efeito completo percorre os 150 pixels de origem e aparece também nas três cópias.
 
-No painel **ESP32 USB**, escolha **Uma fita - 300 pixels / 6 barras**. O aplicativo envia um único quadro de 900 bytes RGB, na ordem dos seis trechos. O firmware 0.22 permanece compatível e não precisa ser regravado. A versão atual transmite uma única fita lógica de 300 pixels; várias fitas lógicas no desenho não criam novas saídas físicas no ESP32.
+No painel **ESP32 USB**, escolha **Uma fita - 300 pixels / 6 barras**. O aplicativo envia um único quadro de 900 bytes RGB, na ordem dos seis trechos. O firmware 0.22 permanece compatível e não precisa ser regravado. A versão atual transmite uma única fita lógica de 1 a 300 pixels; várias fitas lógicas no desenho não criam novas saídas físicas no ESP32. Nas fitas menores, os endereços não usados são enviados apagados.
 
 O segundo exemplo, [fitas-simetricas-continuas.json](../examples/fitas-simetricas-continuas.json), mostra duas fitas lógicas de 300 pixels, cada uma com três trechos, com cópia entre as fitas inteiras. A prévia mostra ambas; a saída USB permite selecionar uma delas.
 
 ## Resolução, limites e salvamento
 
-**Preparar 300 WS2812** distribui 300 pixels individuais entre os trechos da fita selecionada, proporcionalmente à resolução anterior, com pelo menos um pixel por trecho. Aplica o perfil WS2812 a todos eles. As outras fitas permanecem com suas resoluções anteriores. Confira os comprimentos físicos e a distribuição de pixels da instalação antes de ativar a saída.
+**Preparar fita WS2812** aplica o total indicado em **LEDs na fita física** (1 a 300), com um pixel por LED. Se o total já corresponde ao projeto, conserva os LEDs por trecho; se você alterar o total, redistribui os endereços proporcionalmente à resolução anterior, com pelo menos um pixel por trecho. Aplica o perfil WS2812 a todos eles. As outras fitas permanecem com suas resoluções anteriores. Cópias exatas incompatíveis são explicadas sem modificar o projeto. Confira os comprimentos físicos e a distribuição de pixels da instalação antes de ativar a saída.
 
 Uma barra pertence a apenas uma fita contínua. Cada barra de destino segue uma referência, e uma cópia não pode ser usada como origem de outra cópia. Essa regra também considera a sobreposição entre uma fita inteira e seus trechos; evita ciclos e ordens ambíguas. Reúna vários destinos no mesmo grupo. Permanecem os limites de 32 barras, 8.192 pixels controláveis e 32.768 LEDs no projeto.
 

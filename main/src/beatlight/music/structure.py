@@ -6,11 +6,12 @@ relativas de oito tempos assumem 4/4. Nenhuma dependência de áudio, Qt ou luz.
 from collections import deque
 import math
 from statistics import median
-from beatlight.contracts import MusicalEvent, StructureFeatures, StructureSnapshot
+from beatlight.contracts import MusicalEvent, StructureFeatures, StructureSnapshot, KickRecoverySnapshot
 from beatlight.music.grid import KickGrid
 from beatlight.music.config import BeatConfig
 from beatlight.music.kick_identity import KickIdentity
 from beatlight.music.drop import DropDetector
+from beatlight.music.peak_grid import PeakGridTracker
 
 
 def clamp(value, low=0.0, high=1.0):
@@ -24,13 +25,15 @@ def mean_db(values):
 class StructureTracker:
     DROP_KICKS = 8
 
-    def __init__(self, config: BeatConfig | None = None):
+    def __init__(self, config: BeatConfig | None = None, diagnostics=None):
         self.config = config or BeatConfig()
+        self.diagnostics = diagnostics
         self.reset()
 
     def reset(self):
         self._grid = KickGrid(self.config)
-        self._identity = KickIdentity()
+        self._identity = KickIdentity(self.diagnostics)
+        self._peaks = PeakGridTracker(diagnostics=self.diagnostics)
         self._drop_detector = DropDetector()
         self._pause_state = None
         self._pending_descriptor = None
@@ -85,7 +88,8 @@ class StructureTracker:
         self._onsets.clear()
         self._percussion_onsets.clear()
         self._grid = KickGrid(self.config)
-        self._identity = KickIdentity()
+        self._identity = KickIdentity(self.diagnostics)
+        self._peaks = PeakGridTracker(diagnostics=self.diagnostics)
         self._confirmed.clear()
         self._acoustic.clear()
         self._last_kick = None
@@ -144,7 +148,7 @@ class StructureTracker:
             "buildup": "Build-up provável: ataques rápidos e crescimento espectral."}[state]
         return description + " Contexto provisório; perfil do kick ainda em aquisição. " + seed, .55, target
 
-    def process(self, feature: StructureFeatures, kicks=(), beat=None, external_clock=False) -> StructureSnapshot:
+    def process(self, feature: StructureFeatures, kicks=(), beat=None, external_clock=False,raw_candidates=None) -> StructureSnapshot:
         at = feature.at
         if not math.isfinite(at) or self._at is not None and at < self._at:
             raise ValueError("Descritores estruturais devem avançar monotonamente.")
@@ -205,7 +209,7 @@ class StructureTracker:
         if feature.rms_db < -60 and returning and self._pause_state is None:
             self._pause_state = self._state
         self._drop_detector.observe(feature, returning, self._period)
-        self._drop_detector.observe_candidates(kicks,self._period,at)
+        self._drop_detector.observe_candidates(kicks if raw_candidates is None else raw_candidates,self._period,at)
         full_reference=self._last_full_kick if self._last_full_kick is not None else self._last_kick
         gap_before = at - full_reference if full_reference is not None else 0.0
         if self._state in ("breakdown", "buildup") and gap_before > max(1.1, 2.2 * self._period):
@@ -225,10 +229,43 @@ class StructureTracker:
                 error = abs((event.occurred_at-self._grid.anchor+self._period/2)%self._period-self._period/2)
                 # A previsão após muitos tempos pode derivar. Aceitar o ataque
                 # dentro de 18% do tempo não realinha a grade com uma só amostra.
-                return error <= self._period*.18
+                tolerance = .12 if self._grid.tempo_locked and self.config.beat_grid_mode in ('integer','manual') else .18
+                return error <= self._period*tolerance
             return self._grid.matches(event,at)
+        stable_groove = (self._state=='groove' and not returning and self._grid.ready and self._grid.tempo_locked
+            and self.config.beat_grid_mode in ('integer','manual'))
+        peak_period = 0.
+        stable_peak_period = False
+        phase_hint = None
+        if external_clock:
+            peak_period,phase_hint = beat.period,beat.last_beat_at
+            stable_peak_period = True
+        elif self.config.beat_grid_mode in ('integer','manual'):
+            if self._grid.ready:
+                peak_period = self._grid.period if self._grid.tempo_locked else 60/round(60/self._grid.period)
+                phase_hint = self._grid.anchor
+                stable_peak_period = True
+            elif self.config.beat_grid_mode=='manual':
+                peak_period = 60/self.config.beat_fixed_bpm
+            elif beat and beat.state=='locked' and beat.confidence>=.6 and .25<=beat.period<=1.2:
+                peak_period = 60/round(60/beat.period)
+        peak_matches = self._peaks.process(feature,peak_period,phase_hint=phase_hint,
+            stable=stable_peak_period,learn=not returning and self._state in ('warming','groove'),
+            seed_matches=self._identity.peak_seed_matches if len(self._identity.references)>=4 else None)
+        # O retorno do drop mantém sua decisão própria e exigência de potência.
+        recover_peaks = tuple(match for match in peak_matches
+            if self._last_kick is None or match.event.occurred_at-self._last_kick>=max(.22,peak_period*.55)) \
+            if not returning and self._state in ('warming','groove') else ()
+        def recurrent_aligned(event):
+            error = abs((event.occurred_at-phase_hint+peak_period/2)%peak_period-peak_period/2)
+            return error<=max(.025,peak_period*.12)
+        recurrent_enabled = bool(stable_peak_period and phase_hint is not None and self._state!='drop')
         for event in self._identity.push(feature, kicks, fast_return=fast_return, after_pause=after_pause,
-                early_matches=return_aligned):
+                early_matches=return_aligned, grid_matches=return_aligned if stable_groove else None,
+                peak_matches=recover_peaks,allow_peak_recovery=not returning and self._state in ('warming','groove'),
+                recurrent_period=peak_period if recurrent_enabled else 0.,
+                recurrent_matches=recurrent_aligned if recurrent_enabled else None,
+                recurrent_needed=gap_before>max(1.1,peak_period*2.2)):
             self._acoustic.append(event)
             if event.occurred_at > at or event.occurred_at <= self._cursor:
                 self._identity.discard(event)
@@ -238,38 +275,85 @@ class StructureTracker:
                 self._identity.discard(event)
                 continue
             descriptor = self._identity.descriptor(event)
+            recurrent_supported = bool(descriptor and descriptor.recurrent_supported)
             full_power=self._drop_detector.full_power(descriptor)
             strict_return = self._identity.return_matches(event)
             if returning and not strict_return and after_pause:
                 strict_return = self._identity.return_matches(event, after_pause=True)
-            if (returning or self._state=="drop") and not strict_return:
+            if (returning or self._state=="drop") and not strict_return and not recurrent_supported:
+                if self.diagnostics:
+                    self.diagnostics({'kind':'return_rejected','gate':'return_identity','at':at,
+                        'candidate_at':event.occurred_at,'state':self._state,
+                        'power_db':descriptor.power_db if descriptor else None})
                 self._rejected_returns += 1
                 self._identity.discard(event)
                 continue
-            if (returning or self._state=="drop") and not self._drop_detector.strong_candidate(event, descriptor, self._period,full_reference):
+            if (returning or self._state=="drop") and not recurrent_supported and not self._drop_detector.strong_candidate(event, descriptor, self._period,full_reference):
+                if self.diagnostics:
+                    self.diagnostics({'kind':'return_rejected','gate':'return_power','at':at,
+                        'candidate_at':event.occurred_at,'power_ratio':self._drop_detector.power_ratio,
+                        'accelerated':self._drop_detector.accelerated,'state':self._state})
                 self._rejected_returns += 1
                 self._identity.discard(event)
                 continue
-            local_match = not self._grid.ready or self._grid.reconcile(event, at, self._identity.correction_matches(event))
+            peak_supported = bool(descriptor and (descriptor.peak_supported or recurrent_supported))
+            local_match = not self._grid.ready or self._grid.reconcile(event, at,
+                peak_supported or self._identity.correction_matches(event),phase_only=peak_supported)
             context_return = (returning or self._state=="drop") and return_aligned(event)
             if not local_match and not context_return:
+                if self.diagnostics:
+                    self.diagnostics({'kind':'candidate_rejected','gate':'grid_alignment','at':at,'candidate_at':event.occurred_at})
                 self._identity.discard(event)
                 continue
-            if self._last_kick is not None and event.occurred_at - self._last_kick < max(0.22, self._period * 0.55):
+            minimum_spacing=max(.22,self._period*.55) if self._grid.ready or external_clock else .18
+            if self._last_kick is not None and event.occurred_at - self._last_kick < minimum_spacing:
                 self._identity.discard(event)
                 continue
+            if recurrent_supported:
+                references = self._identity.commit_recurrent()
+                self._peaks = PeakGridTracker(diagnostics=self.diagnostics)
+                self._drop_detector = DropDetector()
+                for reference in references:self._drop_detector.learn(reference)
+                self._withdrawal_at = self._break_at = self._pause_state = None
+                self._return_armed = False
+                self._drop_count = 0
+                self._low_ref,self._rms_ref = low,rms
+                self._groove_rate,self._groove_roll_rate,self._groove_percussion = rate,roll_rate,percussion
+                self._roll_candidate_at = None
+                self._last_roll_at = -math.inf
+                returning = False
+                stable_groove = True
+                self._change('groove',at,.8,0.)
             learn = not self._learned or self._state in ("warming", "groove")
+            was_ready=self._grid.ready
+            if peak_supported and was_ready:
+                self._grid.last_reference = event.occurred_at
+            elif (learn or self._state == "drop") and local_match:
+                self._grid.observe(event, beat)
+            if not was_ready and self._grid.ready:
+                aligned=[candidate for candidate in self._confirmed if self._grid.matches(candidate,at)]
+                self._kick_count=len(aligned);self._phrase_count=len(aligned)
+                self._confirmed.clear();self._confirmed.extend(aligned)
+                self._first_kick=aligned[0].occurred_at if aligned else None
+                self._last_kick=aligned[-1].occurred_at if aligned else None
+                self._last_full_kick=self._last_kick
+                self._pending_kick=self._pending_descriptor=None
+                references=self._identity.align_references(lambda candidate:self._grid.matches(candidate,at))
+                self._drop_detector=DropDetector()
+                for reference in references:self._drop_detector.learn(reference)
+                if not self._grid.matches(event,at):
+                    self._identity.discard(event)
+                    continue
             # Não incorporar o primeiro retorno à própria referência usada para
             # julgá-lo, nem aprender o roll enquanto o contexto está armado.
-            learn_profile=learn and not returning and (not self._learned or full_power or not self._drop_detector.accelerated)
+            learn_profile=learn and not returning and not peak_supported and (not self._learned or full_power or not self._drop_detector.accelerated)
             if learn_profile and (len(self._identity.references) < 4 or self._identity.return_matches(event)):
                 self._drop_detector.learn(descriptor)
             self._identity.accept(event, learn_profile)
-            if (learn or self._state == "drop") and local_match:
-                self._grid.observe(event, beat)
             self._confirmed.append(event)
             self._last_kick = event.occurred_at
-            if strict_return and (full_power or learn_profile):
+            if ((strict_return and (full_power or learn_profile))
+                    or ((stable_groove or peak_supported) and descriptor and descriptor.grid_supported)):
                 self._last_full_kick=event.occurred_at
             self._pending_kick = event
             self._pending_descriptor = descriptor
@@ -371,6 +455,11 @@ class StructureTracker:
                     pending = self._pending_kick
                     recovered = self._drop_detector.recovered(self._pending_descriptor,
                         low, feature.low_db, self._low_ref, self._break_low)
+                    if self.diagnostics and new_kicks and pending:
+                        self.diagnostics({'kind':'return_decision','gate':'impact_ready' if recovered and return_aligned(pending) and self._return_armed else 'recovery_or_context',
+                            'at':at,'candidate_at':pending.occurred_at,'armed':self._return_armed,
+                            'aligned':return_aligned(pending),'recovered':recovered,
+                            'low_db':low,'break_low_db':self._break_low,'groove_low_db':self._low_ref})
                     if (self._return_armed and pending and 0 <= at - pending.occurred_at < 0.25
                             and return_aligned(pending) and recovered):
                         if self._grid.matches(pending,at):
@@ -428,4 +517,7 @@ class StructureTracker:
             (phrase - 1) // 4 + 1 if phrase else 0, self._drop_count, self._drop_id, self._drop_at,
             self._last_kick, self._period, reason, tuple(self._events), roll_rate,
             clamp((roll_rate * self._period - 1) / 6) if roll_regular and self._period else 0.0,
-            grid, self._identity.rejected, self._identity.similarity, tuple(self._confirmed) if self._grid.ready else (), tuple(self._acoustic), self._rejected_returns, self._learned, drop_evidence=evidence)
+            grid, self._identity.rejected, self._identity.similarity, tuple(self._confirmed) if self._grid.ready else (), tuple(self._acoustic), self._rejected_returns, self._learned, drop_evidence=evidence,
+            peak_grid=self._peaks.snapshot(at) if peak_period else None,
+            kick_recovery=KickRecoverySnapshot(len(self._identity.recurrent.candidates),self._identity.recurrent.REQUIRED,
+                self._identity.recurrent.relearns,self._identity.last_reason,self._identity.recurrent.reason))

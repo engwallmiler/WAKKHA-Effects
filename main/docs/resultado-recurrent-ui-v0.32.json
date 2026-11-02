@@ -1,0 +1,19 @@
+{
+  "version": "0.32.0",
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "passed": true,
+  "sensors": [
+    "Perfil + grade",
+    "Espectral",
+    "Espectral",
+    "Espectral",
+    "Energia",
+    "Energia",
+    "Energia",
+    "Energia"
+  ],
+  "detail": "Grade 127 BPM · inteiro estabilizado · intervalo 472 ms · confiança 91%\nPerfil rejeitou 4; grade rejeitou 0. A previsão não cria kicks.\nGrade auxiliar de máximos: 0/3 referências; o reaprendizado do perfil funciona independentemente.\nPerfil recorrente ativo · reaprendizados 1 · Recorrência validada; novo perfil pronto. Perfil reaprendido por quatro ataques reais na grade.",
+  "bpm": 127.0,
+  "relearns": 1
+}

@@ -1,4 +1,26 @@
-# BEATLIGHT — Pixel Studio 0.26.0
+# BEATLIGHT — Pixel Studio 0.36.0
+
+**Saída USB 0.36:** fitas de **1 a 300 LEDs individuais**, incluindo 120 LEDs, com o firmware 0.22 existente. **Preparar fita WS2812** usa a quantidade física indicada no painel e mantém a seleção, o desenho e as conexões. Os endereços não usados são enviados apagados. [Como usar sua fita de 120 LEDs](docs/fitas-variaveis-v0.36.md).
+
+**AUTO 0.35:** AUTO SHOW e ORGÂNICO agora saem do contínuo fixo e restauram a direção regular. O botão **CONTÍNUO FIXO** também alterna para sair. O AUTO intercala trechos contínuos entre combinações regulares, sem repeti-los em sequência; cada trecho dura pelo menos 32 tempos. A participação pode ser desligada em Automação. [Operação](docs/auto-continuo-v0.35.md).
+
+**Movimento 0.34:** o botão **CONTÍNUO** começa com **Ondas orgânicas**. Há também **Correntes cruzadas** e **Maré cromática**, com regiões de cores e brilho que percorrem a fita em velocidades distintas, mantendo todos os LEDs acesos. Profundidade e velocidade das ondas são ajustáveis; as mudanças de velocidade não reiniciam o desenho. [Como usar](docs/ondas-organicas-v0.34.md).
+
+**Luzes 0.33:** picos com **Clarão de fita inteira**, Onda ou Blocos; intensidade de 0% até o teto de brilho disponível, com branco de destaque ou cores da apresentação. O botão **CONTÍNUO** ativa combinações de fitas preenchidas, fades e cores suaves. Há quatro novos efeitos: Banho de cor, Respiração plena, Gradiente contínuo e Cores em fusão. [Como usar](docs/picos-continuos-v0.33.md).
+
+**Kicks 0.32:** quatro ataques reais compatíveis sobre a grade podem **reaprender um perfil antigo que ficou bloqueando os kicks**, inclusive depois de o sistema entrar em breakdown por essas rejeições. A prioridade da grade inteira/manual continua no piso de 40% de confiança. O monitor mostra progresso, motivo da decisão e o sensor **Perfil + grade**. [Correção, operação e limites](docs/perfil-recorrente-v0.32.md).
+
+**Kicks 0.31:** grade virtual ancorada nos **máximos reais dos transientes**, usando o BPM estável. Compara espectro, forma e potência entre ataques e com o perfil aprendido; recupera kicks mascarados no groove e rejeita propostas fora da grade. O Kick Monitor mostra a grade de picos em azul e identifica recuperações como **Pico + BPM**. Previsões sem áudio não viram kicks; o comparador não recalcula o BPM. [Funcionamento, operação e limites](docs/grade-picos-v0.31.md).
+
+**Show 0.30:** **12 desenhos de drop** com seleção embaralhada sem repetição imediata; famílias e combinações com memória por groove, breakdown e build-up. **Paletas musicais** alternam cores por estrutura e evoluem com energia/tensão. A direção Hipnótica conserva os motivos longos; os novos controles ficam em **Automação** e vêm ativados em projetos anteriores. [Como funciona e como ajustar](docs/direcao-visual-v0.30.md).
+
+**Detecção 0.29:** canal auxiliar de clique **2–6 kHz**, aprendido no groove e combinado com corpo grave, queda, potência e grade. Ajuda a confirmar o primeiro kick mascarado pelo baixo pela janela curta, conservando oito kicks reais no pós-drop. O clique sozinho não dispara. Não foram adicionados modelos, novos FFTs ou dependências. [Avaliação das sugestões e proteções](docs/avaliacao-abordagens-v0.29.md).
+
+**Replay causal com rótulos:** `replay.cmd audio.wav rotulos.json --out .runtime/replays/teste-01` produz prévia HTML, métricas JSON e decisões por candidato. Mede kicks, drops, estrutura, atraso real de disponibilidade e falsos/minuto; não abre captura ou saída física. [Como rotular e executar](docs/replay-causal.md) · [Exemplo de rótulos](examples/replay-labels.json).
+
+**Detecção 0.28:** grade por áudio com **BPM inteiro estável** como padrão, modo de **BPM fixo informado** e prioridade para ataques reais sobre a grade confiável. Ataques de baixo antecipados não bloqueiam o kick seguinte nem alimentam livremente o estimador de BPM. O Kick Monitor separa visualmente candidato bruto, previsão e confirmação. Em **Configurações → BPM e sincronização**, escolha o modo, salve e reinicie a captura. [Funcionamento e limites](docs/grade-audio-estavel.md).
+
+**Detecção 0.27:** recuperação de ataques mascarados pela linha de baixo, novidade espectral com confirmação curta, aquisição de quatro tempos entre candidatos intermediários e referência do groove alinhada à grade. O Kick Monitor distingue os dois sensores e destaca kicks confirmados. [Explicação, testes e limites](docs/kicks-baixo.md).
 
 **Operação 0.26:** **Palco**, **Efeitos e cores**, **Fitas e grupos** e **Biblioteca e drops** organizam os controles. Os grupos aplicados aparecem em cartões com origem/destinos e edição direta. Há **Cópia exata** e adaptação proporcional, com ação para igualar a resolução dos destinos. **Simular meu projeto · sem USB** usa a montagem atual; **Testar outra montagem** cria o teste temporário separado.
 
@@ -14,15 +36,15 @@ Aplicação desktop local para Windows 11. A versão **0.26** prioriza motivos h
 
 **Picos por frase** podem participar automaticamente das combinações, repetindo um acento a cada quatro ou oito tempos. **Sincronizar pico** marca o acento desejado sem alterar o BPM ou o sincronismo geral. Cada drop recebe um plano diferente, com camadas adicionadas progressivamente durante as oito posições. A interface abre em **Foco no palco**; **Mostrar todos os controles** revela os painéis recolhíveis. O botão para apagar a saída física permanece acessível.
 
-A saída física continua em **uma fita WS2812/WS2812B de 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. O cálculo RGB é compartilhado pela prévia e pela transmissão. **O firmware 0.22 que já está funcionando continua compatível: não é necessário regravar o ESP32 para usar os novos efeitos.**
+A saída física atende **uma fita WS2812/WS2812B de 1 a 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. O cálculo RGB é compartilhado pela prévia e pela transmissão. **O firmware 0.22 que já está funcionando continua compatível: não é necessário regravar o ESP32 para usar os novos efeitos.**
 
 **[Guia de ligação, firmware e operação](docs/esp32-ws2812-usb.md)** · **[Código para o ESP32](firmware/beatlight_esp32/beatlight_esp32.ino)** · **[Projeto de uma fita / 300 LEDs](examples/ws2812-300.json)**. O firmware inclui protocol.h na mesma pasta e uma configuração PlatformIO. A fita precisa de fonte externa de 5 V, GND comum e conversor de nível 3,3 → 5 V; ela não é alimentada pelo USB do ESP32. A saída inicia desativada, com teto de brilho de 25% e limite estimado de 2.000 mA.
 
 Cada fita tem efeito, paleta, brilho, velocidade, defasagem, sentido e resposta musical próprios. ORGÂNICO e AUTO SHOW oferecem **Compassos + novos elementos**, **A cada N compassos**, **Somente novos elementos** e **Manter padrão**. **Direção visual → Hipnótica** é o padrão; usa fusões progressivas de pelo menos oito tempos, preservando as camadas que continuam. A opção **Variada** conserva as combinações mais livres e mínimo de 16 tempos. Mudanças de estrutura têm prioridade. **[Operação do Pixel Studio](docs/pixel-studio.md)**.
 
-A captura, os detectores e a integração **Ableton Link** continuam disponíveis, assim como os painéis anteriores de PARs/moves. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**. O único transporte físico atual é ESP32 USB para uma fita WS2812 de 300 pixels; não há saída DMX física.
+A captura, os detectores e a integração **Ableton Link** continuam disponíveis, assim como os painéis anteriores de PARs/moves. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**. O único transporte físico atual é ESP32 USB para uma fita WS2812 de até 300 pixels; não há saída DMX física.
 
-Selecione **Saída física · ESP32 USB** no cabeçalho e expanda **ESP32 USB · configuração da fita**, escolha a fita, clique **Preparar 300 WS2812**, selecione a COM e **Conectar ESP32**. Depois clique **Ativar saída física**. Conectar apenas verifica o firmware e configura os limites; não acende a fita. **APAGAR SAÍDA** permanece visível com o painel recolhido. **Instruções** abre o guia dentro do aplicativo.
+Selecione **Saída física · ESP32 USB** no cabeçalho e expanda **ESP32 USB · configuração da fita**, escolha a fita, confira **LEDs na fita física** e clique **Preparar fita WS2812**. Selecione a COM e **Conectar ESP32**; depois clique **Ativar saída física**. Conectar apenas verifica o firmware e configura os limites; não acende a fita. **APAGAR SAÍDA** permanece visível com o painel recolhido. **Instruções** abre o guia dentro do aplicativo.
 
 ## Começar pelas fitas
 
@@ -181,7 +203,7 @@ node --test beatlight/tests/*.test.cjs
 
 Os testes automatizados não exigem Traktor nem hardware. A ferramenta Loopback não reproduz som e retorna **0** quando recebeu blocos sem falha, **1** em falha de captura/análise e **2** quando não recebeu blocos e o resultado é inconclusivo. Um resultado com silêncio não comprova a captura de uma faixa do Traktor.
 
-A renderização de QA produz preview.png, preview-espectro.png, preview-kicks.png, preview-ritmo.png, preview-iluminacao.png, preview-palco.png e preview-configuracoes.png com dados sintéticos. validate_stage.py acrescenta preview-breakdown.png, preview-buildup.png e preview-drop.png. validate_texture.py acrescenta preview-baixo.png e preview-densidade.png. validate_grid.py acrescenta preview-grid.png. validate_phrases.py acrescenta preview-cycles-*.png e mede as oito posições do drop, sincronização e preparação. validate_show.py acrescenta preview-rgbw-*.png. render_rgbw.py captura os controles manuais e a inspeção de W. **validate_pixel_studio.py** exercita o HTML embutido com áudio e gera **preview-pixel-studio.png**. **validate_pixel_usb.py** exercita os 26 efeitos com serial emulada e gera **preview-pixel-usb.png**. A validação atual tem **744 testes Python e 78 testes JavaScript aprovados**; veja docs/validacao.md.
+A renderização de QA produz preview.png, preview-espectro.png, preview-kicks.png, preview-ritmo.png, preview-iluminacao.png, preview-palco.png e preview-configuracoes.png com dados sintéticos. validate_stage.py acrescenta preview-breakdown.png, preview-buildup.png e preview-drop.png. validate_texture.py acrescenta preview-baixo.png e preview-densidade.png. validate_grid.py acrescenta preview-grid.png. validate_phrases.py acrescenta preview-cycles-*.png e mede as oito posições do drop, sincronização e preparação. validate_show.py acrescenta preview-rgbw-*.png. render_rgbw.py captura os controles manuais e a inspeção de W. **validate_pixel_studio.py** exercita o HTML embutido com áudio e gera **preview-pixel-studio.png**. **validate_pixel_usb.py** exercita os 26 efeitos com serial emulada e gera **preview-pixel-usb.png**. A validação atual tem **759 testes Python e 78 testes JavaScript aprovados**; veja docs/validacao.md.
 
 Preferências e logs ficam no diretório local de dados WAKKHA/BEATLIGHT DMX, sob %LOCALAPPDATA%; Configurações mostra o caminho completo. Logs: logs/beatlight.jsonl, com rotação em 2 MB e três cópias. Também é possível utilizar outro diretório:
 

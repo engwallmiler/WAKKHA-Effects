@@ -1,0 +1,89 @@
+{
+  "version": "0.29.0",
+  "reference": {
+    "version": "0.28.0",
+    "reference_only": true,
+    "synthetic_only": true,
+    "physical_device_used": false,
+    "diagnostics_enabled": false,
+    "cases": {
+      "groove": {
+        "audio_seconds_per_run": 8,
+        "cpu_seconds": [
+          0.734375,
+          1.0625,
+          1.0625
+        ],
+        "median_cpu_seconds": 1.0625,
+        "median_fraction_one_core": 0.1328125,
+        "kick_history": 200,
+        "profile_history": 64,
+        "click_history": 0
+      },
+      "groove_click": {
+        "audio_seconds_per_run": 8,
+        "cpu_seconds": [
+          1.046875,
+          1.171875,
+          1.125
+        ],
+        "median_cpu_seconds": 1.125,
+        "median_fraction_one_core": 0.140625,
+        "kick_history": 200,
+        "profile_history": 64,
+        "click_history": 0
+      }
+    }
+  },
+  "current": {
+    "version": "0.29.0",
+    "reference_only": false,
+    "synthetic_only": true,
+    "physical_device_used": false,
+    "diagnostics_enabled": false,
+    "cases": {
+      "groove": {
+        "audio_seconds_per_run": 8,
+        "cpu_seconds": [
+          0.734375,
+          0.984375,
+          1.03125
+        ],
+        "median_cpu_seconds": 0.984375,
+        "median_fraction_one_core": 0.123046875,
+        "kick_history": 200,
+        "profile_history": 64,
+        "click_history": 120
+      },
+      "groove_click": {
+        "audio_seconds_per_run": 8,
+        "cpu_seconds": [
+          1.015625,
+          1.125,
+          1.09375
+        ],
+        "median_cpu_seconds": 1.09375,
+        "median_fraction_one_core": 0.13671875,
+        "kick_history": 200,
+        "profile_history": 64,
+        "click_history": 120
+      }
+    }
+  },
+  "comparisons": {
+    "groove": {
+      "before_fraction_one_core": 0.1328125,
+      "after_fraction_one_core": 0.123046875,
+      "delta_percentage_points_one_core": -0.9765625,
+      "relative_change_percent": -7.352941176470584
+    },
+    "groove_click": {
+      "before_fraction_one_core": 0.140625,
+      "after_fraction_one_core": 0.13671875,
+      "delta_percentage_points_one_core": -0.390625,
+      "relative_change_percent": -2.777777777777779
+    }
+  },
+  "simultaneous_pytest": false,
+  "physical_device_used": false
+}

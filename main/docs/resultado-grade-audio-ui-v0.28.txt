@@ -1,0 +1,18 @@
+{
+  "version": "0.28.0",
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "external_clock_used": false,
+  "blocks": 751,
+  "dropped_audio_blocks": 0,
+  "raw_candidates": 22,
+  "confirmed_kicks": 16,
+  "offgrid_attacks": 6,
+  "period": 0.46875,
+  "bpm": 128.0,
+  "tempo_locked": true,
+  "last_processing_ms": 8.842399998684414,
+  "grid_settings_shortcut": true,
+  "table_columns": 6,
+  "passed": true
+}

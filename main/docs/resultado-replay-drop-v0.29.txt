@@ -1,0 +1,10 @@
+normal {'true': 1, 'false': 0, 'missed': 0, 'available_delay_ms': {'median': 85.33333333333282, 'p95': 85.33333333333282, 'max': 85.33333333333282, 'within_150ms': 1, 'early': 0}, 'drop_positions': [[1, 2, 3, 4, 5, 6, 7, 8]], 'click_supported': False}
+masked {'true': 1, 'false': 0, 'missed': 0, 'available_delay_ms': {'median': 96.00000000000009, 'p95': 96.00000000000009, 'max': 96.00000000000009, 'within_150ms': 1, 'early': 0}, 'drop_positions': [[1, 2, 3, 4, 5, 6, 7, 8]], 'click_supported': True}
+very_masked {'true': 1, 'false': 0, 'missed': 0, 'available_delay_ms': {'median': 96.00000000000009, 'p95': 96.00000000000009, 'max': 96.00000000000009, 'within_150ms': 1, 'early': 0}, 'drop_positions': [[1, 2, 3, 4, 5, 6, 7, 8]], 'click_supported': True}
+weak_roll {'true': 1, 'false': 0, 'missed': 0, 'available_delay_ms': {'median': 96.00000000000009, 'p95': 96.00000000000009, 'max': 96.00000000000009, 'within_150ms': 1, 'early': 0}, 'drop_positions': [[1, 2, 3, 4, 5, 6, 7, 8]], 'click_supported': True}
+bass_only {'true': 0, 'false': 0, 'missed': 0, 'available_delay_ms': None, 'drop_positions': [], 'click_supported': False}
+crash {'true': 0, 'false': 0, 'missed': 0, 'available_delay_ms': None, 'drop_positions': [], 'click_supported': False}
+pluck {'true': 0, 'false': 0, 'missed': 0, 'available_delay_ms': None, 'drop_positions': [], 'click_supported': False}
+unlearned_click {'true': 0, 'false': 0, 'missed': 1, 'available_delay_ms': None, 'drop_positions': [], 'click_supported': False}
+late_click {'true': 0, 'false': 0, 'missed': 1, 'available_delay_ms': None, 'drop_positions': [], 'click_supported': False}
+APROVADO: C:\Users\walli\OneDrive\Área de Trabalho\Waka Discoteca\WAKKHA Effects\main\docs\resultado-replay-drop-v0.29.0.json

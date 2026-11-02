@@ -1,0 +1,161 @@
+[23648:29516:1101/192221.650:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[23648:29516:1101/192221.650:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[23648:29516:1101/192221.696:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[23648:29516:1101/192221.696:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[23648:29516:1101/192221.696:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[23648:29516:1101/192221.696:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.840:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[23648:28480:1101/192224.841:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+{
+  "version": "0.33.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "levels": [
+    {
+      "percent": 0,
+      "mean": 28.515555555555554,
+      "minimum": 1,
+      "maximum": 52
+    },
+    {
+      "percent": 25,
+      "mean": 90.05555555555556,
+      "minimum": 65,
+      "maximum": 111
+    },
+    {
+      "percent": 50,
+      "mean": 148.51333333333332,
+      "minimum": 129,
+      "maximum": 164
+    },
+    {
+      "percent": 75,
+      "mean": 203.7288888888889,
+      "minimum": 193,
+      "maximum": 212
+    },
+    {
+      "percent": 100,
+      "mean": 255.0,
+      "minimum": 255,
+      "maximum": 255
+    }
+  ],
+  "patterns": [
+    {
+      "style": "wave",
+      "maximum": 255,
+      "sha256": "7c7599a0e8dc258970ae4634bb1bb42becbdd0dcc8583bf97e3106d57acb3004"
+    },
+    {
+      "style": "blocks",
+      "maximum": 255,
+      "sha256": "46d861edc5e573be755e6bd2975be040e9c77b61bd7e3d14e6d2ea546ad58673"
+    }
+  ],
+  "continuous": {
+    "source": "live",
+    "simulation": false,
+    "previewOnly": false,
+    "rendering": {
+      "visible": true,
+      "lowPower": false,
+      "workspace": "stage"
+    },
+    "armed": true,
+    "blackout": false,
+    "fresh": true,
+    "beat": 40.06927999998729,
+    "bpm": 128,
+    "structure": "groove",
+    "drop_kicks": 0,
+    "effect": "organic",
+    "pattern": "Respira��o plena + Banho de cor + Cores em fus�o",
+    "pending": false,
+    "manualDrop": false,
+    "context": "groove",
+    "nextBeat": 68,
+    "transition": 0,
+    "delivery_ms": 0,
+    "composition_id": 3,
+    "signature": "breathe|colorflow|wash",
+    "layers": [
+      {
+        "id": "breathe",
+        "weight": 0.9
+      },
+      {
+        "id": "wash",
+        "weight": 0.16239989760196635
+      },
+      {
+        "id": "colorflow",
+        "weight": 1.5267987456005112e-07
+      }
+    ],
+    "heldBeats": 8.032000000000004,
+    "minimumBeats": 32,
+    "family": "Respira��o plena",
+    "generation": 0,
+    "motionFactor": 0.7972140605020023,
+    "peak": {
+      "active": true,
+      "every": 8,
+      "phase": 0.06821333332062096,
+      "level": 0,
+      "style": "blocks",
+      "color": "white",
+      "envelope": 0
+    },
+    "dropVariant": null,
+    "dropLayers": [],
+    "dropMotif": "",
+    "dropName": "",
+    "colours": {
+      "enabled": true,
+      "primary": "magenta",
+      "accent": "ice",
+      "context": "groove",
+      "energy": 0.3043352483798549,
+      "tension": 0.09783237581007267
+    },
+    "performance": {
+      "allocations": 12,
+      "rootAllocations": 8,
+      "sampledPixels": 12300,
+      "frames": 85,
+      "roots": 1,
+      "source_pixels": 150,
+      "signal_bytes": 6300,
+      "texture_bytes": 10800,
+      "history": 3,
+      "direction_bags": 3,
+      "direction_items": 9
+    },
+    "render_ms": {
+      "frames": 42,
+      "last": 11.899999991059303,
+      "average": 6.476190476545265,
+      "max": 11.899999991059303,
+      "columns": 0.7999999970197678,
+      "glow": 0
+    }
+  },
+  "buffers_reused": true,
+  "minimized_output_continues": true,
+  "blackout_zero": true,
+  "frames": 54,
+  "fps": 19.607843137014623,
+  "closed_cleanly": true,
+  "persisted_controls": true,
+  "passed": true
+}

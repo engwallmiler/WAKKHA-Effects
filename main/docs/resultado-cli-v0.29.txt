@@ -1,0 +1,9 @@
+usage: run.py [-h] [--synthetic] [--config-dir CONFIG_DIR]
+
+BEATLIGHT � Pixel Studio e sincroniza��o musical
+
+options:
+  -h, --help            show this help message and exit
+  --synthetic           Selecionar sinal sint�tico de teste
+  --config-dir CONFIG_DIR
+                        Diret�rio alternativo de prefer�ncias e logs

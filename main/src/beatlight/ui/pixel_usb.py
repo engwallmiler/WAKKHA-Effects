@@ -23,7 +23,7 @@ class PixelUsbPanel(QWidget):
         self.closing=False;self.pending=False;self.generation=0
         self.preview_only=True
         self.request_at=0;self.last_sources=-10;self.last_status=-10;self.reading_sources=False
-        self.error='';self.desired_id='';saved={}
+        self.error='';self.desired_id='';self.preparing=False;self.source_revision=0;self.source_metadata={};saved={}
         try:
             if self.path.exists() and self.path.stat().st_size<4096:
                 saved=json.loads(self.path.read_text(encoding='utf-8'))
@@ -38,7 +38,7 @@ class PixelUsbPanel(QWidget):
         self.mode.setToolTip('Simular usa o projeto existente, incluindo barras e grupos, e bloqueia conexão e quadros USB. A fonte pode ser áudio/Link ou demonstração.')
         header.insertWidget(0,self.mode)
         self.mode.currentIndexChanged.connect(lambda:self.set_preview_only(self.mode.currentData()))
-        box=QGroupBox('Saída física · ESP32 USB · 1 fita WS2812 / 300 LEDs individuais')
+        box=QGroupBox('Saída física · ESP32 USB · 1 fita WS2812 / 1 a 300 LEDs individuais')
         self.controls_box=box;box.setVisible(False)
         self.fold.toggled.connect(lambda opened:(box.setVisible(opened),self.fold.setText(('▾' if opened else '▸')+' ESP32 USB · configuração da fita')))
         grid=QGridLayout(box);grid.setContentsMargins(10,6,10,8);grid.setHorizontalSpacing(8)
@@ -47,7 +47,8 @@ class PixelUsbPanel(QWidget):
         self.connect_button=QPushButton('Conectar ESP32');self.connect_button.clicked.connect(self._connect)
         self.source=QComboBox();self.source.setMinimumWidth(150);self.source.currentIndexChanged.connect(self._source_changed)
         self.source.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon);self.source.setMinimumContentsLength(12)
-        self.prepare=QPushButton('Preparar 300 WS2812');self.prepare.clicked.connect(self._prepare)
+        self.prepare=QPushButton('Preparar fita WS2812');self.prepare.clicked.connect(self._prepare)
+        self.prepare.setToolTip('Prepara somente a fita selecionada, com a quantidade indicada abaixo. Preserva nome, desenho e conexões; não transmite nem ativa a saída.')
         self.enable=QPushButton('Ativar saída física');self.enable.setCheckable(True);self.enable.clicked.connect(self._arm)
         self.enable.setStyleSheet('QPushButton:checked {background:#1b684e;border:2px solid #59e1af;color:white;}')
         self.off=QPushButton('APAGAR SAÍDA');self.off.clicked.connect(self._off)
@@ -56,6 +57,12 @@ class PixelUsbPanel(QWidget):
         self.reload=QPushButton('Reabrir prévia');self.reload.clicked.connect(page.reload_preview);header.addWidget(self.reload)
         for column,widget in enumerate((self.port,self.refresh,self.connect_button,self.source,self.prepare)):
             grid.addWidget(widget,0,column)
+        count_row=QHBoxLayout();count_row.addWidget(QLabel('LEDs na fita física'))
+        self.pixel_count=QSpinBox();self.pixel_count.setRange(1,300);self.pixel_count.setValue(300)
+        self.pixel_count.setToolTip('Quantidade total de LEDs físicos da fita lógica selecionada, somando seus trechos. Um LED = um pixel WS2812.')
+        count_row.addWidget(self.pixel_count);grid.addLayout(count_row,1,0,1,2)
+        self.source_info=QLabel('Selecione a fita do projeto.');self.source_info.setWordWrap(True)
+        grid.addWidget(self.source_info,1,2,1,3)
         limits=QHBoxLayout();limits.setContentsMargins(0,0,0,0)
         limits.addWidget(QLabel('Teto de brilho'))
         self.brightness=QSpinBox();self.brightness.setRange(0,100);self.brightness.setSuffix('%');self.brightness.setValue(round(saved.get('brightness',64)*100/255));limits.addWidget(self.brightness)
@@ -63,7 +70,7 @@ class PixelUsbPanel(QWidget):
         self.current=QSpinBox();self.current.setRange(500,20000);self.current.setSingleStep(500);self.current.setSuffix(' mA');self.current.setValue(saved.get('milliamps',2000));limits.addWidget(self.current)
         limits.addWidget(QLabel('5 V externos · GND comum · conversor 3,3 → 5 V · GPIO 18'),1)
         self.guide=QPushButton('Instruções');self.guide.clicked.connect(self._guide);limits.addWidget(self.guide)
-        grid.addLayout(limits,1,0,1,5)
+        grid.addLayout(limits,2,0,1,5)
         self.status=QLabel('Desconectado · use fonte externa de 5 V para a fita, nunca o USB do ESP32.');self.status.setWordWrap(True)
         outer.addWidget(box);outer.addWidget(self.status);self.status.setFixedHeight(28)
         self.portsReady.connect(self._ports_ready)
@@ -149,21 +156,38 @@ class PixelUsbPanel(QWidget):
     def _source_changed(self):
         self.generation+=1;self.pending=False
         if self.runtime.status().armed:self.runtime.arm(False)
+        self.desired_id=self.source.currentData() or ''
+        item=self.source_metadata.get(self.desired_id)
+        if item:
+            self.pixel_count.setValue(item['leds'])
+            self.source_info.setText(f"Selecionada: {item['name']} · {item['leds']} LEDs · {item['pixels']} pixels · {item['profile'].upper()}")
+        else:self.source_info.setText('Selecione a fita do projeto.')
+        self.error='';self.last_status=-10
 
     def _prepare(self):
-        if self.page.bridge.operator.get('simulation'):return
+        if self.preview_only or self.preparing or self.page.bridge.operator.get('simulation'):return
         source=self.source.currentData()
         if not source or not self.page.bridge.ready_state:return
-        self._off();self.error=''
-        expression='(()=>{try{BeatlightPixel.prepareWs2812('+json.dumps(source)+');return "ok"}catch(e){return e.message}})()'
-        self.page.webpage.runJavaScript(expression,lambda value:self._prepared(value))
+        self._off();self.error='';self.preparing=True;self.preparing_at=monotonic();generation=self.generation
+        self.source_revision+=1;self.reading_sources=False;self.last_status=-10
+        self.source.setEnabled(False);self.pixel_count.setEnabled(False);self.prepare.setEnabled(False);self.enable.setEnabled(False)
+        expression='JSON.stringify((()=>{try{BeatlightPixel.prepareWs2812('+json.dumps(source)+','+str(self.pixel_count.value())+');return {sources:BeatlightPixel.outputSources()}}catch(e){return {error:e.message}}})())'
+        self.page.webpage.runJavaScript(expression,lambda value:self._prepared(value,generation,source))
 
-    def _prepared(self,value):
-        if self.closing:return
-        self.error='' if value=='ok' else str(value or 'Não foi possível preparar a fita.')
-        self.last_sources=-10
+    def _prepared(self,value,generation,source):
+        if self.closing or generation!=self.generation:return
+        self.preparing=False;self.last_sources=-10;self.last_status=-10
+        try:
+            data=json.loads(value)
+            if 'error' in data:raise ValueError(data['error'])
+            self._sources(json.dumps(data['sources']))
+            item=self.source_metadata[source]
+            self.source_info.setText(f"Pronta: {item['name']} · WS2812 · {item['pixels']} LEDs individuais. Clique Ativar saída física após conectar.")
+            self._save()
+        except (ValueError,TypeError,KeyError) as exc:self.error=str(exc) or 'Não foi possível preparar a fita.'
 
     def _arm(self,enabled):
+        if self.preparing:return
         if enabled and getattr(self,'preview_only',False):
             self._off();self.error='Somente simulação: selecione Saída física · ESP32 USB para transmitir.';return
         if enabled and self.page.bridge.operator.get('simulation'):
@@ -177,6 +201,8 @@ class PixelUsbPanel(QWidget):
 
     def _off(self):
         self.generation+=1;self.pending=False
+        if self.preparing:
+            self.preparing=False;self.source_revision+=1;self.reading_sources=False;self.last_sources=-10;self.last_status=-10
         self.runtime.arm(False)
 
     def _operator_changed(self):
@@ -189,25 +215,33 @@ class PixelUsbPanel(QWidget):
             self.generation+=1;self.pending=False;self.runtime.blackout()
 
     def _bridge_ready(self):
-        self._off();self.reading_sources=False;self.source_timeout=False;self.sources_payload=None;self.last_sources=-10
+        self._off();self.preparing=False;self.source_revision+=1;self.reading_sources=False;self.source_timeout=False;self.sources_payload=None;self.last_sources=-10
         self.set_preview_only(self.preview_only)
 
-    def _sources(self,payload):
+    def _sources(self,payload,revision=None):
+        if revision is not None and revision!=self.source_revision:return
         self.reading_sources=False
         self.source_timeout=False
         if self.closing:return
         if payload==self.sources_payload:return
         try:
             data=json.loads(payload)
+            if not isinstance(data,list) or any(not isinstance(item,dict) or not isinstance(item.get('id'),str) or not isinstance(item.get('name'),str) or not isinstance(item.get('profile'),str) or type(item.get('leds')) is not int or type(item.get('pixels')) is not int for item in data):return
             previous=self.source.currentData() or self.desired_id
             if self.runtime.status().armed and not any(item['id']==previous for item in data):
                 self._off();self.error='A fita física foi removida do projeto. Escolha outra fita e ative novamente.'
             self.source.blockSignals(True);self.source.clear()
-            for item in data:self.source.addItem(f"{item['name']} · {item['pixels']} px",item['id'])
+            for item in data:self.source.addItem(f"{item['name']} · {item['pixels']} px · {item['profile'].upper()}",item['id'])
             index=self.source.findData(previous)
             if index>=0:self.source.setCurrentIndex(index)
             self.source.blockSignals(False)
             self.desired_id=self.source.currentData() or ''
+            self.source_metadata={item['id']:item for item in data}
+            item=self.source_metadata.get(self.desired_id)
+            if item:
+                self.pixel_count.setValue(item['leds'])
+                self.source_info.setText(f"Selecionada: {item['name']} · {item['leds']} LEDs · {item['pixels']} pixels · {item['profile'].upper()}")
+            else:self.source_info.setText('Nenhuma fita disponível no projeto.')
             self.sources_payload=payload
         except (ValueError,TypeError,KeyError):self.source.blockSignals(False)
 
@@ -226,9 +260,12 @@ class PixelUsbPanel(QWidget):
     def _tick(self):
         if self.closing:return
         at=monotonic();state=self.runtime.status();ready=self.page.view is not None and self.page.bridge.ready_state
-        if ready and not self.preview_only and not self.reading_sources and at-self.last_sources>=1:
+        if self.preparing and at-self.preparing_at>2:
+            self.fail('A preparação não respondeu. Reabra a prévia e prepare a fita novamente.')
+        if ready and not self.preview_only and not self.preparing and not self.reading_sources and at-self.last_sources>=1:
             self.reading_sources=True;self.last_sources=at;self.source_request_at=at
-            self.page.webpage.runJavaScript('JSON.stringify(BeatlightPixel.outputSources())',self._sources)
+            revision=self.source_revision
+            self.page.webpage.runJavaScript('JSON.stringify(BeatlightPixel.outputSources())',lambda payload,r=revision:self._sources(payload,r))
         if self.reading_sources and at-self.source_request_at>2 and not self.source_timeout:
             self.source_timeout=True;self.fail('A prévia não respondeu; saída física apagada. Reabra a prévia antes de ativar novamente.')
         if state.armed and ready:
@@ -247,16 +284,20 @@ class PixelUsbPanel(QWidget):
         self.connect_button.setText('Conectando…' if state.state=='connecting' else 'Desconectar' if not self.runtime.closed else 'Conectar ESP32')
         self.connect_button.setEnabled(not self.closing and not self.preview_only and state.state!='stopping')
         virtual=self.page.bridge.operator.get('simulation',False)
-        self.source.setEnabled(not self.preview_only and not state.armed and not virtual);self.prepare.setEnabled(not self.preview_only and ready and not state.armed and not virtual and not self.source_timeout and self.source.count()>0)
-        self.enable.setEnabled(not self.preview_only and connected and ready and not virtual and not self.source_timeout and self.source.count()>0)
+        editable=not self.preview_only and not state.armed and not virtual and not self.preparing
+        self.source.setEnabled(editable);self.pixel_count.setEnabled(editable)
+        self.prepare.setEnabled(editable and ready and not self.source_timeout and self.source.count()>0)
+        self.enable.setEnabled(not self.preview_only and connected and ready and not virtual and not self.preparing and not self.source_timeout and self.source.count()>0)
         self.enable.setChecked(state.armed);self.enable.setText('Saída física ATIVA' if state.armed else 'Ativar saída física')
         self.off.setEnabled(connected or busy)
         if self.preview_only:self.status.setText('Projeto atual em simulação · conexão e quadros USB bloqueados. Use áudio/Link ou Demonstração na prévia.')
         elif virtual:self.status.setText('Montagem temporária · saída física desativada.')
+        elif self.preparing:self.status.setText('Preparando a fita selecionada… saída apagada.')
         elif self.error or state.error:self.status.setText(self.error or state.error)
         elif connected:
             sending=state.armed and state.last_frame and at-state.last_frame<.3
-            self.status.setText(f"{state.port} · ESP32 {state.firmware} · 300 WS2812 · "+('TRANSMITINDO' if sending else 'SAÍDA APAGADA')+f" · {state.frames} quadros confirmados · {state.fps:.1f} fps · {state.dropped} substituídos/atrasados")
+            item=self.source_metadata.get(self.source.currentData(),{})
+            self.status.setText(f"{state.port} · ESP32 {state.firmware} · {item.get('name','Fita')} · {item.get('pixels','?')} px · "+('TRANSMITINDO' if sending else 'SAÍDA APAGADA')+f" · {state.frames} quadros confirmados · {state.fps:.1f} fps · {state.dropped} substituídos/atrasados")
         elif busy:self.status.setText('Conectando e verificando firmware…' if state.state=='connecting' else 'Apagando a fita e encerrando USB…')
         else:self.status.setText('Desconectado · fonte externa 5 V · brilho inicial 25% e limite estimado 2.000 mA.')
 

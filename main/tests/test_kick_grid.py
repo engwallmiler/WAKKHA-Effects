@@ -17,6 +17,26 @@ def learned_grid(bpm=120):
     return grid, beats, t
 
 
+def test_acquisition_finds_four_real_beats_among_offbeat_candidates():
+    grid=KickGrid()
+    for t in [0,.24,.5,.76,1,1.23]:grid.observe(KickEvent(t,t,1,.8))
+    assert not grid.ready  # três kicks regulares não viram quatro por previsão
+    grid.observe(KickEvent(1.5,1.5,1,.8))
+    assert grid.ready and grid.period==pytest.approx(.5)
+    assert [t for _,t in grid.observations]==pytest.approx([0,.5,1,1.5])
+    assert len(grid.seeds)<=16
+
+
+def test_first_four_jittered_attacks_do_not_bias_period_until_real_kicks_are_rejected():
+    grid=KickGrid()
+    for t in [0,.42,.82,1.24]:grid.observe(KickEvent(t,t,1,.8))
+    assert grid.ready
+    for t in [1.62,2.02,2.42,2.82,3.22,3.62,4.02]:
+        event=KickEvent(t,t,1,.8);assert grid.matches(event,t)
+        grid.observe(event)
+    assert grid.period==pytest.approx(.4,abs=.006)
+
+
 @pytest.mark.parametrize("bpm", [90, 120, 150])
 def test_thirty_second_forecast_preserves_grid_without_inventing_a_kick_or_extending_pll(bpm):
     grid, beats, last = learned_grid(bpm)

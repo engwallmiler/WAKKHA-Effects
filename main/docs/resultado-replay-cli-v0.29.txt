@@ -1,0 +1,6 @@
+4/17 s
+9/17 s
+14/17 s
+Replay concluído: C:\Users\walli\OneDrive\Área de Trabalho\Waka Discoteca\WAKKHA Effects\main\.runtime\replays\drop-v0.29-final\report.html
+kicks: 21/21 corretos, 0 falsos, 0 perdidos
+drops: 1/1 corretos, 0 falsos, 0 perdidos

@@ -1,0 +1,69 @@
+[28928:4668:1101/195009.093:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[28928:4668:1101/195009.093:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[28928:4668:1101/195009.148:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[28928:4668:1101/195009.148:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[28928:4668:1101/195009.148:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[28928:4668:1101/195009.148:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.34.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "patterns": [
+    {
+      "effect": "liquid",
+      "first_sha256": "0d6f5a1c7517f84e3d57bf78ae48371a7f53ecd4d790656ebeb95bd1f62d9e45",
+      "last_sha256": "fe9b2802304a0c40a2086d9bddb9fa1c6536d954760344455b5d5d2e70fdf8b6",
+      "darkest_pixel": 28,
+      "brightest_pixel": 97,
+      "flow": {
+        "depth": 1,
+        "speed": 1,
+        "effectiveSpeed": 1,
+        "phase": 3.4200815531798905
+      }
+    },
+    {
+      "effect": "crossflow",
+      "first_sha256": "6c655c43ab2e84caff9310ae9069d3084a15afd93185ead3b6cdf55a326d990b",
+      "last_sha256": "bb098dcb154f5265864ae469060b3bde8254efba72454d5985ed8336bb6c01ff",
+      "darkest_pixel": 23,
+      "brightest_pixel": 109,
+      "flow": {
+        "depth": 1,
+        "speed": 1,
+        "effectiveSpeed": 1,
+        "phase": 6.53522137059753
+      }
+    },
+    {
+      "effect": "chromatide",
+      "first_sha256": "77469739501d97315a1ad1d454a8a5fd005f693ddc767558569e38c8a200c02b",
+      "last_sha256": "7efd9df6a2713a6313eb20550d2652d37936133906bd75323f90a418dda61683",
+      "darkest_pixel": 34,
+      "brightest_pixel": 79,
+      "flow": {
+        "depth": 1,
+        "speed": 1,
+        "effectiveSpeed": 1,
+        "phase": 9.577721697876132
+      }
+    }
+  ],
+  "speed_no_phase_reset": true,
+  "buffers_reused": true,
+  "minimized_motion_continues": true,
+  "blackout_zero": true,
+  "frames": 118,
+  "fps": 21.341463414704844,
+  "render": {
+    "frames": 140,
+    "last": 5.200000002980232,
+    "average": 6.115714286161321,
+    "max": 10.900000005960464,
+    "columns": 0.10000000894069672,
+    "glow": 0
+  },
+  "persisted_controls": true,
+  "closed_cleanly": true,
+  "passed": true
+}

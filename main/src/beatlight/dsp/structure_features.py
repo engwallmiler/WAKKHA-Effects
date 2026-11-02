@@ -61,6 +61,8 @@ class StructureFeatureExtractor:
         self._spectrum = StreamingSpectrum(self.config)
         self._general = AttackEnvelope(0.12, 0.55)
         self._percussion = AttackEnvelope(0.08, 0.4)
+        self._click = AttackEnvelope(0.18, 0.55)
+        self._click_mask = self._click_masks = None
         self._masks = None
         self._texture_masks = None
         self._spectral_background = None
@@ -82,10 +84,22 @@ class StructureFeatureExtractor:
                     (freq >= 300) & (freq < 3000))
                 edges = np.geomspace(30, min(16000, block.sample_rate / 2), 13)
                 self._texture_masks = tuple((freq >= a) & (freq < b) for a, b in zip(edges, edges[1:]))
+                self._click_mask = (freq>=2000)&(freq<6000)
+                self._click_masks = tuple((freq>=a)&(freq<b) for a,b in ((2000,3000),(3000,4000),(4000,5000),(5000,6000)))
             low, high, attacks, visible, percussion = self._masks
             at = (frame.started_at + frame.ended_at) / 2
             onset = self._general.process(power[attacks], at, frame.id)
             roll_onset = self._percussion.process(power[percussion], at, frame.id)
+            click_onset = self._click.process(power[self._click_mask], at, frame.id)
+            click_power = np.asarray([float(power[mask].sum()) for mask in self._click_masks])
+            click_total = float(click_power.sum())
+            # Se o fluxo cruzou enquanto o clique ainda estava abaixo do piso,
+            # a próxima janela audível ainda deve poder provar o novo ataque.
+            if (not click_onset and click_total>1e-6 and self._click.attack_power>=click_total*.35
+                    and at-self._click.last_at>=.04):
+                click_onset = True
+                self._click.last_at = at
+            click_shape = np.sqrt(click_power/max(click_total,1e-12))
             # Rejeita vazamento espectral de hats: o ataque precisa ter corpo em médios.
             roll_onset = bool(roll_onset and self._percussion.attack_power >
                 max(self._general.attack_power * 0.12, float(power[attacks].sum()) * 0.01))
@@ -106,5 +120,6 @@ class StructureFeatureExtractor:
                 onset, roll_onset, db(percussion), tuple(float(v) for v in shape),
                 db((freq >= 250) & (freq < 1500)), db((freq >= 30) & (freq < 250)),
                 tuple(float(10*np.log10(max(value,1e-12))) for value in bands),
-                min(1.0,max(0.0,self._general.scores[0])),min(1.0,max(0.0,novelty))))
+                min(1.0,max(0.0,self._general.scores[0])),min(1.0,max(0.0,novelty)),
+                float(10*np.log10(max(click_total,1e-12))),click_onset,tuple(float(value) for value in click_shape)))
         return result

@@ -1,0 +1,13 @@
+{
+  "version": "0.27.0",
+  "physical_device_used": false,
+  "synthetic_only": true,
+  "blocks": 749,
+  "dropped_audio_blocks": 0,
+  "raw_candidates": 15,
+  "confirmed_kicks": 15,
+  "spectral_candidates": 15,
+  "masked_history": 200,
+  "last_processing_ms": 1.7592999993212288,
+  "passed": true
+}

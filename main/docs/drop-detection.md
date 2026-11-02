@@ -1,5 +1,11 @@
 # Retorno do drop — versão 0.24
 
+**Atualização 0.29:** clique de 2–6 kHz previamente aprendido pode apoiar a identidade curta quando o baixo reduz o contraste da mixagem. Exige corpo/queda/harmônicos compatíveis, grade e margem de potência; preserva o contador de oito kicks confirmados. [Critérios e avaliação](avaliacao-abordagens-v0.29.md) · [Replay com rótulos](replay-causal.md).
+
+**Atualização 0.28:** prioridade acústica na grade confiável, BPM inteiro estável e proteção contra falsa ausência de kick sob bassline. No groove estável, o transiente descontado do fundo pode manter a identificação; esse critério não autoriza drops nem reaprende a referência. O retorno inteiro/fixo não amplia a janela a 18% do período. [Detalhes](grade-audio-estavel.md).
+
+**Atualização 0.27:** recuperação espectral de ataques sob baixo sustentado, grade adquirida entre candidatos intermediários e limites do decaimento abaixo do fundo. [Guia e evidências](kicks-baixo.md).
+
 ## Média dos picos do groove
 
 A referência agora guarda duas médias em potência linear: o pico grave do kick e a potência do transiente descontando o som que já existia antes. Usa até 16 kicks aceitos e apara os extremos a partir de oito amostras. As médias ficam congeladas no breakdown/build, no contexto interno armado e no primeiro retorno; o candidato não altera a própria referência usada para julgá-lo.

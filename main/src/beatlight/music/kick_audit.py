@@ -48,4 +48,5 @@ class KickAudit:
             self.origin = self.slot_index = None
         return KickVerificationSnapshot(at, self.confirmed_count, self.acoustic_count,
             self.expected, self.matched, self.missed, structure.confirmed_kicks, structure.acoustic_kicks,
-            tuple(self.slots), grid, structure.rejected_timbre, grid.rejected_offgrid if grid else 0, self.last_confirmed_at)
+            tuple(self.slots), grid, structure.rejected_timbre, grid.rejected_offgrid if grid else 0, self.last_confirmed_at,
+            peak_grid=structure.peak_grid,kick_recovery=structure.kick_recovery)

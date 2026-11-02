@@ -1,8 +1,8 @@
-# ESP32 USB + WS2812: uma fita com 300 LEDs individuais
+# ESP32 USB + WS2812: uma fita com 1 a 300 LEDs individuais
 
-Aplicativo 0.26, compatível com o firmware USB 0.22 já fornecido; não é necessário regravá-lo para os efeitos novos. Placa confirmada: **ESP32 DevKit / ESP32-WROOM-32**. Fita RGB WS2812/WS2812B de **5 V**, 300 LEDs. Saída de dados: **GPIO 18**, ordem física **GRB**. Este firmware não é destinado a ESP32-S3/C3 nem a fitas RGBW/12 V.
+Aplicativo 0.36, compatível com o firmware USB 0.22 já fornecido; não é necessário regravá-lo para os efeitos novos ou para usar uma fita menor. Placa confirmada: **ESP32 DevKit / ESP32-WROOM-32**. Fita RGB WS2812/WS2812B de **5 V**, até 300 LEDs. Saída de dados: **GPIO 18**, ordem física **GRB**. Este firmware não é destinado a ESP32-S3/C3 nem a fitas RGBW/12 V. [Passo a passo para 120 LEDs](fitas-variaveis-v0.36.md).
 
-O computador executa o mesmo motor do Pixel Studio: 26 efeitos, Orgânico, Auto Show, transições por compassos, cores, baixo/densidade, estrutura musical e DROP AGORA. Envia 300 triplos RGB por USB. O ESP32 recebe cada quadro completo e gera o sinal da fita. **Um pixel corresponde a um LED**, sem agrupamentos de três.
+O computador executa o mesmo motor do Pixel Studio: 33 efeitos, Orgânico, Auto Show, transições por compassos, cores, baixo/densidade, estrutura musical e DROP AGORA. Envia 300 triplos RGB por USB, com os endereços excedentes apagados quando a fita é menor. O ESP32 recebe cada quadro completo e gera o sinal da fita. **Um pixel corresponde a um LED**, sem agrupamentos de três.
 
 Na 0.26, selecione **Saída física · ESP32 USB** no cabeçalho antes de conectar. O padrão é **Simular projeto atual · sem USB**, que bloqueia a conexão e os quadros físicos. **Apresentação leve** permite operar com a prévia pausada; minimizar também suspende os gráficos, preservando o envio. [Guia de operação](apresentacao-leve.md).
 
@@ -100,7 +100,7 @@ Troque COM5 pela porta da placa e mantenha o BEATLIGHT desconectado dessa porta 
 ## Operar no BEATLIGHT
 
 1. Abra **iniciar.cmd**. Na página Pixel Studio, expanda **ESP32 USB · configuração da fita** acima da prévia.
-2. Escolha a **fita lógica do projeto** que deseja enviar. Pode ser uma barra independente ou várias barras unidas em **Conexões · continuidade e simetria**. Clique **Preparar 300 WS2812**: distribui 300 LEDs/pixels individuais entre os trechos, proporcionalmente à resolução atual, e aplica o perfil WS2812 a todos eles. As outras fitas são preservadas. Veja [continuidade e simetria](conexoes-fitas.md) e [uma fita de 300 pixels em seis barras](../examples/uma-fita-300-6-barras.json). O projeto é salvo normalmente. Se preferir começar com uma única linha, importe [examples/ws2812-300.json](../examples/ws2812-300.json) em **Importar projeto de fitas**; exporte antes seu projeto atual se quiser guardá-lo.
+2. Escolha a **fita lógica do projeto** que deseja enviar. Pode ser uma barra independente ou várias barras unidas em **Conexões · continuidade e simetria**. Confira **LEDs na fita física** (1 a 300) e clique **Preparar fita WS2812**: aplica um pixel individual por LED e o perfil WS2812 a todos os trechos. Se o total indicado já corresponde ao projeto, conserva os LEDs de cada trecho; se você alterar o total, redistribui os endereços entre eles. As outras fitas são preservadas. Veja [continuidade e simetria](conexoes-fitas.md) e [uma fita de 300 pixels em seis barras](../examples/uma-fita-300-6-barras.json). O projeto é salvo normalmente. Para uma fita de 120 LEDs, indique 120; não precisa regravar o ESP32.
 3. Com o firmware já gravado, selecione a porta **COM** e clique **Conectar ESP32**. O aplicativo confere a identificação e envia os limites de brilho/corrente. A conexão começa com a saída apagada.
 4. Clique **Ativar saída física**. Isso também ativa as fitas no motor de efeitos. **Conectar não equivale a acender**; a ativação física é sempre manual e não é restaurada ao abrir o aplicativo.
 5. Para música real, use **BEATLIGHT · áudio / Ableton Link**, inicie a captura e conecte o Link como de costume. Para conferir a montagem sem música, selecione **Demonstração · BPM interno**. O modo ao vivo permanece apagado quando não há áudio recente/audível.
@@ -133,7 +133,7 @@ O computador descarta quadros com mais de 250 ms e apaga se o motor parar de for
 
 **O watchdog precisa de energia no ESP32.** Nesta montagem ele é alimentado pelo USB: retirar fisicamente o cabo desliga a placa, e a fita, ainda alimentada pela fonte externa, pode conservar a última cor. Use APAGAR SAÍDA antes de retirar o USB e depois desligue a fonte. Apagamento garantido ao perder também a alimentação do controlador requer uma solução elétrica adicional; o firmware sozinho não consegue transmitir um quadro apagado enquanto a placa está sem energia.
 
-O limite de potência utiliza a implementação da [FastLED](https://raw.githubusercontent.com/FastLED/FastLED/3.10.3/src/power_mgt.h). Há somente um canal físico de 300 LEDs nesta versão; outras fitas do projeto continuam disponíveis na simulação. Não há saída DMX física. Não há análise musical no ESP32: BPM, estrutura e efeitos continuam no computador.
+O limite de potência utiliza a implementação da [FastLED](https://raw.githubusercontent.com/FastLED/FastLED/3.10.3/src/power_mgt.h). Há somente um canal físico de até 300 LEDs nesta versão; outras fitas do projeto continuam disponíveis na simulação. Não há saída DMX física. Não há análise musical no ESP32: BPM, estrutura e efeitos continuam no computador.
 
 ## Validação disponível
 

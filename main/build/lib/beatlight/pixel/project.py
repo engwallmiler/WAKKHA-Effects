@@ -8,7 +8,8 @@ from beatlight.pixel.topology import validate_patch,validate_exact_copies
 
 EFFECTS={"inherit","ambient","pulse","chase","mirror","wave","helix","rain","drop","comet",
          "scanner","sparkle","meteor","fire","rainbow","blocks","bounce","ripple","equalizer","snake","aurora",
-         "weave","orbit","shards","tide","lattice","vortex"}
+         "weave","orbit","shards","tide","lattice","vortex","wash","breathe","gradient","colorflow",
+         "liquid","crossflow","chromatide"}
 PALETTES={"inherit","deep","fire","ice","acid","mono","red","green","blue","magenta","cyan","amber","primaries","neon","sunset","ocean"}
 MAX_BYTES=500_000
 
@@ -61,21 +62,23 @@ def validate_project(data):
     if not isinstance(show,dict) or len(show)>64:
         raise ValueError("Controles globais inválidos.")
     ranges={"bpm":(40,240),"brightness":(0,1),"speed":(.1,4),"trail":(0,1),"transition":(1,12),
-            "variation":(0,1),"white":(0,1),"kickDepth":(0,1),"dropEnergy":(0,1),"strobeLevel":(0,1),"peakLevel":(0,1),"glow":(0,3)}
+            "variation":(0,1),"white":(0,1),"kickDepth":(0,1),"dropEnergy":(0,1),"strobeLevel":(0,1),"peakLevel":(0,1),"glow":(0,3),
+            "flowDepth":(0,1),"flowSpeed":(.25,2.5)}
     choices={"palette":PALETTES-{"inherit"},"colorBehavior":{"scene","spectrum","beat","bar","solid"},
              "colorMode":{"rgb","rgbw"},"whiteTone":{"warm","neutral","cool"},"kickMode":{"beat","bar","off"},
              "dropStyle":{"impact","turbo","prism"},"strobeMode":{"drop","beat","bar"},"strobeColor":{"rgbw","rgb","white"},
              "meter":{3,4,6},"sceneBars":{1,2,4,8,16},"dropBars":{4,8,16},"dropRate":{1,2,4},
              "changeMode":{"bars","hybrid","elements","hold"},"morphBeats":{0,.5,1,2,4,8,16},
              "layerCount":{2,3,4},"peakMode":{"auto","on","off"},"peakEvery":{4,8},
-             "compositionStyle":{"hypnotic","varied"},
+             "compositionStyle":{"hypnotic","varied","continuous"},"regularStyle":{"hypnotic","varied"},
+             "peakStyle":{"flood","wave","blocks"},"peakColor":{"white","palette"},
              "mode":EFFECTS-{"inherit","dropseq"}|{"organic","auto"}}
     for key,value in show.items():
         if key in ranges:
             valid=number(value,*ranges[key])
         elif key in choices:
             valid=type(value) in (str,int,float) and value in choices[key]
-        elif key in ("strobes","followStructure","progressive","energyMotion"):
+        elif key in ("strobes","followStructure","progressive","energyMotion","dropVariety","musicColors","autoContinuous"):
             valid=type(value) is bool
         elif key=="solidColor":
             valid=isinstance(value,list) and len(value)==3 and all(type(v) is int and 0<=v<=255 for v in value)

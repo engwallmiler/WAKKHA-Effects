@@ -1,0 +1,142 @@
+{
+  "version": "0.32.0",
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "external_clock_used": false,
+  "reference_only": false,
+  "tolerance_ms": 75,
+  "cases": {
+    "bass65": {
+      "confirmed": {
+        "true": 22,
+        "missed": 2,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 10.08
+      },
+      "recovered": {
+        "true": 2,
+        "missed": 22,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 7.58
+      },
+      "recovered_count": 2,
+      "stable_bpms": [
+        128.0
+      ],
+      "false_drops": 0,
+      "max_recovery_availability_ms": 178.25
+    },
+    "bass65_strong": {
+      "confirmed": {
+        "true": 22,
+        "missed": 2,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 26.33
+      },
+      "recovered": {
+        "true": 2,
+        "missed": 22,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 3.08
+      },
+      "recovered_count": 2,
+      "stable_bpms": [
+        128.0
+      ],
+      "false_drops": 0,
+      "max_recovery_availability_ms": 168.75
+    },
+    "bass105": {
+      "confirmed": {
+        "true": 22,
+        "missed": 2,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 27.58
+      },
+      "recovered": {
+        "true": 0,
+        "missed": 24,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 0
+      },
+      "recovered_count": 0,
+      "stable_bpms": [
+        128.0
+      ],
+      "false_drops": 0,
+      "max_recovery_availability_ms": 0
+    },
+    "bass105_44100": {
+      "confirmed": {
+        "true": 21,
+        "missed": 3,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 15.53
+      },
+      "recovered": {
+        "true": 0,
+        "missed": 24,
+        "false": 0,
+        "truth": 24,
+        "max_error_ms": 0
+      },
+      "recovered_count": 0,
+      "stable_bpms": [
+        128.0
+      ],
+      "false_drops": 0,
+      "max_recovery_availability_ms": 0
+    },
+    "held_without_kicks": {
+      "confirmed": {
+        "true": 9,
+        "missed": 0,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 8.67
+      },
+      "recovered": {
+        "true": 0,
+        "missed": 9,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 0
+      },
+      "recovered_count": 0,
+      "stable_bpms": [
+        128.0
+      ],
+      "false_drops": 0,
+      "max_recovery_availability_ms": 0
+    },
+    "offbeat_without_kicks": {
+      "confirmed": {
+        "true": 9,
+        "missed": 0,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 8.67
+      },
+      "recovered": {
+        "true": 0,
+        "missed": 9,
+        "false": 0,
+        "truth": 9,
+        "max_error_ms": 0
+      },
+      "recovered_count": 0,
+      "stable_bpms": [
+        128.0
+      ],
+      "false_drops": 0,
+      "max_recovery_availability_ms": 0
+    }
+  }
+}

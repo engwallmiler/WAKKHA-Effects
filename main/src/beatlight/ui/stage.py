@@ -381,6 +381,8 @@ def update_stage_view(self, snapshot, status, at):
                  if evidence and evidence.candidate_db is not None else "Potência do kick: aguardando retorno para comparar com o groove.")
         if evidence and evidence.confirmation_ms is not None:
             power += f" · última decisão: {evidence.confirmation_ms:.0f} ms de análise"
+            if evidence.click_supported:
+                power += ' · clique aprendido confirmou o corpo grave'
             if evidence.rescued_attack:
                 power += " · ataque recuperado"
         if evidence and evidence.reference_peak_db is not None:

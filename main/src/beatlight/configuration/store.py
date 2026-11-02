@@ -43,6 +43,8 @@ class Settings:
     beat_min_bpm: float = 90.0
     beat_max_bpm: float = 160.0
     beat_hold_seconds: float = 4.0
+    beat_grid_mode: str = "integer"
+    beat_fixed_bpm: float = 128.0
 
     light_effect: str = "kick_pulse"
     light_master: float = 0.8

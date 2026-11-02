@@ -184,7 +184,8 @@ def test_rhythm_monitor_acquires_freezes_and_saves_settings(app, tmp_path):
         assert window.page_title.text() == "Rhythm Monitor"
         window.rhythm_start.click()
         pump(app, lambda: window.runtime.snapshot() is not None and
-             window.runtime.snapshot().beat is not None and window.runtime.snapshot().beat.state == "locked", timeout=8)
+             window.runtime.snapshot().structure is not None and window.runtime.snapshot().structure.grid.tempo_locked
+             and window.runtime.snapshot().structure.grid.period > 0, timeout=10)
         window._tick()
         assert window.rhythm_badge.text() == "SINCRONIZADO"
         assert float(window.rhythm_metrics["bpm"].text()) == pytest.approx(120, abs=1)
@@ -201,9 +202,13 @@ def test_rhythm_monitor_acquires_freezes_and_saves_settings(app, tmp_path):
         assert window.beat_clock.snapshot.phase == phase
         window._navigate(2)
         window.beat_spins["beat_hold_seconds"].setValue(5)
+        window.beat_mode_combo.setCurrentIndex(window.beat_mode_combo.findData('manual'))
+        window.beat_spins['beat_fixed_bpm'].setValue(128)
         window._apply_settings()
         assert store.load().beat_hold_seconds == 5
         assert window.runtime._analyzer_factory()._beats.config.beat_hold_seconds == 5
+        assert store.load().beat_grid_mode == 'manual'
+        assert window.runtime._analyzer_factory()._structure.config.beat_fixed_bpm == 128
         prior = window.runtime
         window.beat_spins["beat_min_bpm"].setValue(180)
         window._apply_settings()
@@ -518,7 +523,7 @@ def test_bass_density_controls_and_demo_are_shared_saved_and_keep_capture_runnin
         assert window.runtime is original and original.status().state=="running"
         window._navigate(4)
         window._tick()
-        assert window.kick_table.columnCount()==5
+        assert window.kick_table.columnCount()==6
     finally:
         window.close()
         pump(app,lambda:window.closed_ready)

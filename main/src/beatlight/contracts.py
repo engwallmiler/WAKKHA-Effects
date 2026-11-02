@@ -77,6 +77,7 @@ class KickEvent:
     detected_at: float
     intensity: float  # força relativa ao histórico recente, 0–1
     confidence: float  # heurística; não é probabilidade calibrada
+    evidence: str = "energy"  # energy ou spectral; ambos são candidatos acústicos
 
 
 @dataclass(frozen=True, slots=True)
@@ -99,6 +100,13 @@ class KickSnapshot:
     band_hz: tuple[float, float]
     window_ms: float
     hop_ms: float
+    masked_score: float = 0.0
+    masked_threshold: float = 0.0
+    masked_count: int = 0
+    masked_history: tuple[tuple[float, float, float], ...] = ()
+    eligible_events: tuple[KickEvent, ...] | None = None
+    grid_guided: bool = False
+    offgrid_count: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -148,6 +156,9 @@ class StructureFeatures:
     texture_bands_db: tuple[float, ...] = ()
     spectral_flux: float = 0.0  # fluxo positivo normalizado do ataque
     spectral_novelty: float = 0.0  # mudança da distribuição espectral, independente do ganho
+    click_db: float = -120.0  # canal auxiliar 2–6 kHz; nunca confirma kick sozinho
+    click_onset: bool = False
+    click_shape: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -175,6 +186,39 @@ class KickGridSnapshot:
     jitter_ms: float = 4.0
     period_error_ms: float = 0.0
     reference_confidence: float = 0.9
+    tempo_mode: str = "continuous"
+    tempo_locked: bool = True
+    estimated_bpm: float = 0.0
+    tempo_changes: int = 0
+
+
+@dataclass(frozen=True, slots=True)
+class PeakGridSnapshot:
+    updated_at: float
+    state: str
+    period: float = 0.0
+    anchor_at: float | None = None
+    count: int = 0
+    references: int = 0
+    last_match_at: float | None = None
+    next_peak_at: float | None = None
+    spectral_similarity: float = 0.0
+    envelope_similarity: float = 0.0
+    power_ratio: float = 0.0
+    phase_error_ms: float = 0.0
+    rejected_offgrid: int = 0
+    rejected_shape: int = 0
+    events: tuple[KickEvent, ...] = ()
+    history: tuple[tuple[float, float], ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class KickRecoverySnapshot:
+    progress: int = 0
+    required: int = 4
+    relearns: int = 0
+    decision: str = ''
+    reason: str = ''
 
 
 @dataclass(frozen=True, slots=True)
@@ -201,6 +245,7 @@ class DropEvidenceSnapshot:
     peak_ratio: float = 0.0
     reference_kicks: int = 0
     mean_reached: bool = False
+    click_supported: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -234,6 +279,8 @@ class StructureSnapshot:
     reference_ready: bool = False
     timing_source: str = "audio"
     drop_evidence: DropEvidenceSnapshot | None = None
+    peak_grid: PeakGridSnapshot | None = None
+    kick_recovery: KickRecoverySnapshot | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -264,6 +311,8 @@ class KickVerificationSnapshot:
     rejected_profile: int = 0
     rejected_grid: int = 0
     last_confirmed_at: float | None = None
+    peak_grid: PeakGridSnapshot | None = None
+    kick_recovery: KickRecoverySnapshot | None = None
 
 
 @dataclass(frozen=True, slots=True)

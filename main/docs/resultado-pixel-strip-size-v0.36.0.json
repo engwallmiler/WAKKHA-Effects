@@ -1,0 +1,19 @@
+{
+  "version": "0.36.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "preparation_preserves_layout": true,
+  "selected_source_preserved": true,
+  "real_pixels": 120,
+  "short_output_lit": true,
+  "unused_addresses_zero": true,
+  "switch_300_to_120_clears_tail": true,
+  "minimized_output_continues": true,
+  "reload_preserves_120": true,
+  "reload_requires_manual_activation": true,
+  "frames": 29,
+  "fps": 16.26016260167988,
+  "persistence_verified": true,
+  "closed_cleanly": true,
+  "passed": true
+}

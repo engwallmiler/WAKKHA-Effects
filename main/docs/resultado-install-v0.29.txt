@@ -1,0 +1,19 @@
+Obtaining file:///C:/Users/walli/OneDrive/%C3%81rea%20de%20Trabalho/Waka%20Discoteca/WAKKHA%20Effects/main
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: beatlight-dmx
+  Building editable for beatlight-dmx (pyproject.toml): started
+  Building editable for beatlight-dmx (pyproject.toml): finished with status 'done'
+  Created wheel for beatlight-dmx: filename=beatlight_dmx-0.29.0-0.editable-py3-none-any.whl size=1822 sha256=cb6d533f3b1180d1b8dbd685f15f37be8cfcb405fb2ae267707852f09ce69564
+  Stored in directory: C:\Users\walli\AppData\Local\Temp\pip-ephem-wheel-cache-y4fte0z8\wheels\65\8c\66\3263fd827a4bd14d8bd4868012426470eecba4d09d9c79855a
+Successfully built beatlight-dmx
+Installing collected packages: beatlight-dmx
+  Attempting uninstall: beatlight-dmx
+    Found existing installation: beatlight-dmx 0.28.0
+    Uninstalling beatlight-dmx-0.28.0:
+      Successfully uninstalled beatlight-dmx-0.28.0
+  WARNING: The scripts beatlight-replay.exe and beatlight.exe are installed in 'C:\Users\walli\OneDrive\�rea de Trabalho\Waka Discoteca\WAKKHA Effects\main\.runtime\python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed beatlight-dmx-0.29.0

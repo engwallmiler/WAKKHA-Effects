@@ -4,6 +4,21 @@ import pytest
 from beatlight.configuration.store import Settings, SettingsStore, validate
 
 
+def test_old_v13_preferences_get_stable_integer_mode_without_losing_kick_tuning(tmp_path):
+    settings = validate({'version':13, 'kick_sensitivity':1.3, 'beat_min_bpm':100, 'beat_max_bpm':150})
+    assert settings.beat_grid_mode == 'integer' and settings.kick_sensitivity == 1.3
+    store = SettingsStore(tmp_path/'grid.json')
+    store.save(replace(settings, beat_grid_mode='manual', beat_fixed_bpm=132))
+    assert store.load().beat_config().beat_fixed_bpm == 132
+    assert store.load().beat_config().beat_grid_mode == 'manual'
+
+
+@pytest.mark.parametrize('data', [{'beat_grid_mode':'other'}, {'beat_fixed_bpm':127.9}, {'beat_fixed_bpm':True}])
+def test_invalid_grid_preferences_are_rejected(data):
+    with pytest.raises(ValueError):
+        validate({'version':13, **data})
+
+
 def test_preferences_round_trip_and_atomic_cleanup(tmp_path):
     store = SettingsStore(tmp_path / "preferences.json")
     settings = replace(Settings(), block_size=1024, source="synthetic")

@@ -1,5 +1,9 @@
 # Detecção de kicks — fase 4, versão 0.3
 
+**Atualização 0.28:** a grade confiável orienta a procura por ataques reais, com BPM inteiro estável como padrão e modo fixo opcional. Candidatos fora da grade não bloqueiam o kick alinhado seguinte. [Uso e critérios atuais](grade-audio-estavel.md).
+
+**Atualização 0.27:** recuperação espectral de ataques sob baixo sustentado, grade adquirida entre candidatos intermediários e limites do decaimento abaixo do fundo. [Guia e evidências](kicks-baixo.md).
+
 ## Caminho independente
 
 KickDetector recebe AudioBlock original, sem Qt, PortAudio ou iluminação. Os filtros e a FFT escolhidos para o painel espectral não alteram suas decisões. AudioAnalyzer publica KickSnapshot junto dos medidores e do espectro. Uma falha opcional do detector não interrompe os demais; o erro fica no snapshot, nos logs e no painel. Uma troca válida de fonte/formato permite nova tentativa, sem repetição de logs a cada bloco.

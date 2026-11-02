@@ -1,0 +1,21 @@
+{
+  "version": "0.31.0",
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "passed": true,
+  "table_columns": 6,
+  "sensors": [
+    "Pico + BPM",
+    "Grade + áudio",
+    "Espectral",
+    "Espectral",
+    "Espectral",
+    "Energia",
+    "Grade + áudio",
+    "Energia"
+  ],
+  "detail": "Grade 128 BPM · inteiro estabilizado · intervalo 469 ms · confiança 91%\nPerfil rejeitou 1; grade rejeitou 0. A previsão não cria kicks.\nGrade de picos · acompanhando · espectro 97% · forma 84% · potência 1.07× · desvio -6 ms",
+  "preview": "preview-peak-grid-v0.31.png",
+  "period": 0.46875,
+  "peak_anchor": 2.6874359199999924
+}

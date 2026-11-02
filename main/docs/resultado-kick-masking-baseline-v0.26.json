@@ -1,0 +1,82 @@
+{
+  "isolated": {
+    "raw": {
+      "true": 12,
+      "missed": 0,
+      "false": 0,
+      "truth": 12,
+      "max_error_ms": 8.67
+    },
+    "confirmed": {
+      "true": 12,
+      "missed": 0,
+      "false": 0,
+      "truth": 12,
+      "max_error_ms": 8.67
+    }
+  },
+  "held": {
+    "raw": {
+      "true": 6,
+      "missed": 6,
+      "false": 0,
+      "truth": 12,
+      "max_error_ms": 11.33
+    },
+    "confirmed": {
+      "true": 0,
+      "missed": 12,
+      "false": 0,
+      "truth": 12,
+      "max_error_ms": 0
+    }
+  },
+  "offbeat": {
+    "raw": {
+      "true": 7,
+      "missed": 5,
+      "false": 11,
+      "truth": 12,
+      "max_error_ms": 21.33
+    },
+    "confirmed": {
+      "true": 0,
+      "missed": 12,
+      "false": 0,
+      "truth": 12,
+      "max_error_ms": 0
+    }
+  },
+  "rolling": {
+    "raw": {
+      "true": 9,
+      "missed": 3,
+      "false": 3,
+      "truth": 12,
+      "max_error_ms": 21.33
+    },
+    "confirmed": {
+      "true": 9,
+      "missed": 3,
+      "false": 3,
+      "truth": 12,
+      "max_error_ms": 21.33
+    }
+  },
+  "compressed": {
+    "raw": {
+      "true": 5,
+      "missed": 7,
+      "false": 11,
+      "truth": 12,
+      "max_error_ms": 21.33
+    },
+    "confirmed": {
+      "true": 0,
+      "missed": 12,
+      "false": 0,
+      "truth": 12,
+      "max_error_ms": 0
+    }
+  }
+}

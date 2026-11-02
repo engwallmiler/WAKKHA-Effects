@@ -191,11 +191,19 @@ def test_audio_pipeline_locks_to_detected_kicks():
     from beatlight.dsp.pipeline import AudioAnalyzer
     signal, truth = fixture_music(bpm=128, duration=9)
     analyzer = AudioAnalyzer()
+    last_count = 0
+    after_attack = None
     for block in blocks(signal):
         result = analyzer.process(block)
+        if result.kicks and result.kicks.count > last_count:
+            last_count = result.kicks.count
+            after_attack = result
     assert result.kicks.count == len(truth)
     assert not result.beat_error
-    assert result.beat.state == "locked"
+    assert after_attack.beat.state == "locked"
+    # O fim do sinal fica a ~1,5 períodos do último kick; um hop a mais/menos
+    # no timestamp pode cruzar exatamente o limite correto de coasting.
+    assert result.beat.state == project_clock(after_attack.beat, result.beat.updated_at).state
     assert result.beat.bpm == pytest.approx(128, abs=0.6)
 
 

@@ -1,4 +1,6 @@
-# Pixel Studio integrado — 0.26.0
+# Pixel Studio integrado — 0.30.0
+
+AUTO/ORGÂNICO têm 12 desenhos de drop, memória própria por estrutura e paletas musicais progressivas. Em **Automação**, use **Desenhos de drop** e **Cores no automático** para controlar os novos recursos. Projetos anteriores recebem ambos ativados, com geometria e conexões preservadas. [Guia completo](direcao-visual-v0.30.md).
 
 ## Conexões e imagem sem difusão
 
@@ -38,7 +40,7 @@ O protocolo físico continua BLP1/RGB/300 pixels. **O firmware 0.22 permanece co
 
 O botão **Sincronizar pico · N tempos** indica a participação pela cor e marca o momento do acento ao ser pressionado. Ele conserva o intervalo indicado e passa a **Sempre ativos**; não altera o BPM, o início da composição ou a sincronização geral. Para retomar a escolha automática, selecione **Picos por frase → Participação automática**. **Sincronizar 1/8** continua sendo o controle separado do ciclo geral. Nenhum desses controles inventa eventos acústicos de kick.
 
-A saída física inicial é **uma fita WS2812/WS2812B RGB com 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. No painel nativo, escolha a fita e use Preparar 300 WS2812 → Conectar ESP32 → Ativar saída física. O mesmo cálculo RGB atende a prévia e a transmissão, inclusive com o palco fora da área visível. Veja [ligação, firmware e operação](esp32-ws2812-usb.md); esse guia também abre pelo botão Instruções do painel.
+A saída física atende **uma fita WS2812/WS2812B RGB com 1 a 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. No painel nativo, escolha a fita, confira **LEDs na fita física** e use **Preparar fita WS2812 → Conectar ESP32 → Ativar saída física**. O mesmo cálculo RGB atende a prévia e a transmissão, inclusive com o palco fora da área visível. Veja [ligação, firmware e operação](esp32-ws2812-usb.md) e [como usar 120 LEDs](fitas-variaveis-v0.36.md); o guia também abre pelo botão Instruções do painel.
 
 O arquivo `beatlight/beatlight_pixel_studio.html` é a fonte do simulador embutido na página **Pixel Studio · LEDs**. Não é necessário abrir um navegador separado. A aplicação mantém a captura WASAPI, a análise musical e o módulo Ableton Link e passa seus resultados ao simulador.
 
@@ -82,7 +84,7 @@ Em uma fita contínua, os controles de efeito são compartilhados a partir da pr
 
 As linhas podem ter comprimento, resolução e direção diferentes. Reverter a direção do efeito não troca a identificação da fita. Ao excluir uma linha, os controles das linhas sobreviventes acompanham suas identidades.
 
-Os perfis **WS2811 · RGB** e **WS2812 · RGB individual** geram três canais por pixel, inclusive para branco obtido pela combinação RGB. Eles não criam um emissor W dedicado. **RGBW · simulação** é um perfil virtual separado. A escolha global RGBW da demonstração não transforma essas fitas RGB em RGBW. Para a saída USB desta versão, a fita lógica selecionada precisa somar 300 LEDs e 300 pixels, com perfil WS2812 em todos os trechos. Preparar 300 WS2812 distribui esses 300 endereços proporcionalmente entre seus trechos e preserva as outras fitas. Uma linha independente continua sendo uma saída possível.
+Os perfis **WS2811 · RGB** e **WS2812 · RGB individual** geram três canais por pixel, inclusive para branco obtido pela combinação RGB. Eles não criam um emissor W dedicado. **RGBW · simulação** é um perfil virtual separado. A escolha global RGBW da demonstração não transforma essas fitas RGB em RGBW. Para a saída USB, a fita lógica selecionada precisa somar de 1 a 300 LEDs, com um pixel por LED e perfil WS2812 em todos os trechos. **Preparar fita WS2812** usa a quantidade indicada no painel, conservando os LEDs por trecho quando o total já corresponde ao projeto. Uma linha independente continua sendo uma saída possível. Os endereços restantes do protocolo de 300 pixels são enviados apagados.
 
 O modelo inicial usa seis linhas de 5 m, 600 LEDs e 200 pixels cada. Os três LEDs de cada grupo desse modelo compartilham um triplo RGB; o quadro exportado contém 200 pixels, sem duplicar 600 endereços. As resoluções do editor são configuráveis, conforme a geometria fornecida pelo usuário. Limites: 32 linhas, 32.768 LEDs físicos e 8.192 pixels no total; cada linha aceita até 4.096 LEDs e 2.048 pixels.
 

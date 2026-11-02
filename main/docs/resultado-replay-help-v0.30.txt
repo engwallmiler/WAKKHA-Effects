@@ -1,0 +1,23 @@
+usage: replay.py [-h] --out OUT [--block-size BLOCK_SIZE]
+                 [--settings SETTINGS] [--grid-mode {integer,continuous}]
+                 [--fixed-bpm FIXED_BPM]
+                 audio labels
+
+Replay causal de WAV PCM com rótulos em segundos; não abre captura ou saídas
+físicas.
+
+positional arguments:
+  audio
+  labels
+
+options:
+  -h, --help            show this help message and exit
+  --out OUT             Diretório NOVO para report.json, report.html e
+                        decisions.jsonl
+  --block-size BLOCK_SIZE
+  --settings SETTINGS   Preferências exportadas da aplicação; somente
+                        parâmetros de análise são usados
+  --grid-mode {integer,continuous}
+                        Padrão inteiro, ou modo das preferências fornecidas
+  --fixed-bpm FIXED_BPM
+                        BPM fixo do operador; não usa o BPM dos rótulos

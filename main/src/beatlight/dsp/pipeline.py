@@ -16,6 +16,7 @@ from beatlight.dsp.structure_features import StructureFeatureExtractor
 from beatlight.music.structure import StructureTracker
 from beatlight.music.texture import TextureTracker
 from beatlight.music.kick_audit import KickAudit
+from beatlight.music.grid import grid_clock
 
 log = logging.getLogger(__name__)
 
@@ -23,7 +24,7 @@ log = logging.getLogger(__name__)
 class AudioAnalyzer:
     def __init__(self, silence_db: float = -65.0, config: DspConfig | None = None,
                  kick_config: KickConfig | None = None,
-                 beat_config: BeatConfig | None = None, clock_provider=None):
+                 beat_config: BeatConfig | None = None, clock_provider=None, diagnostics=None):
         self._clock_provider = clock_provider
         self.config = config or DspConfig()
         self._texture = TextureTracker()
@@ -35,7 +36,7 @@ class AudioAnalyzer:
         self._feature_failed_signature = None
         self._texture_failed_signature = None
         self._audit_failed_signature = None
-        self._structure = StructureTracker(beat_config)
+        self._structure = StructureTracker(beat_config, diagnostics=diagnostics)
         self._structure_features = StructureFeatureExtractor()
         self._structure_latest = None
         self._structure_error = ""
@@ -77,6 +78,17 @@ class AudioAnalyzer:
         gap = (block.discontinuity or (self._last_sequence is not None
                                       and block.sequence != self._last_sequence + 1))
         self._last_sequence = block.sequence
+        guidance=None
+        stable_guidance=False
+        if self._clock_provider:
+            try:guidance=self._clock_provider(block.acquired_at)
+            except Exception:pass
+        if guidance is None and not gap and not block.status_flags and signature==self._structure_signature and self._structure_latest:
+            grid=self._structure_latest.grid
+            if grid and grid.tempo_locked:
+                guidance=grid_clock(grid,block.acquired_at)
+                stable_guidance=grid.tempo_mode in ('integer','manual')
+        self._kicks.set_clock(guidance,stable_grid=stable_guidance)
         if signature != self._kick_failed_signature:
             try:
                 self._kick_latest = self._kicks.push(block)
@@ -94,7 +106,7 @@ class AudioAnalyzer:
                     self._beat_at = 0.0
                     self._beat_signature = signature
                 self._beat_at = max(self._beat_at, block.acquired_at + block.frames / block.sample_rate)
-                events = self._kick_latest.events if self._kick_latest else ()
+                events = self._eligible_events()
                 self._beat_latest = self._beats.process(events, self._beat_at)
                 self._beat_error = ""
                 self._beat_failed_signature = None
@@ -163,7 +175,15 @@ class AudioAnalyzer:
             self._structure_error = self._texture_error = self._audit_error = str(exc)
             self._structure_latest = self._texture_latest = self._audit_latest = None
             return
-        events = self._kick_latest.events if self._kick_latest and not self._kick_error else ()
+        events = self._eligible_events() if not self._kick_error else ()
+        raw_events=self._kick_latest.events if self._kick_latest and not self._kick_error else ()
+        # Ataques fortes fora da grade só podem propor uma correção estrutural
+        # após identidade e cadência. Não entram no estimador bruto de BPM.
+        structural_events = {event.occurred_at: event for event in events}
+        for event in raw_events:
+            if event.evidence == 'energy' and event.confidence >= .7:
+                structural_events[event.occurred_at] = event
+        events = tuple(sorted(structural_events.values(), key=lambda event: event.occurred_at))
         for feature in features:
             if signature != self._texture_failed_signature:
                 try:
@@ -181,7 +201,7 @@ class AudioAnalyzer:
                         except Exception:
                             log.warning("external_clock_unavailable", exc_info=True)
                     self._structure_latest = self._structure.process(feature, events,
-                        external or (self._beat_latest if not self._beat_error else None), bool(external))
+                        external or (self._beat_latest if not self._beat_error else None), bool(external),raw_events)
                 except Exception as exc:
                     log.exception("structure_analysis_failed")
                     self._structure_error, self._structure_latest = str(exc), None
@@ -191,9 +211,17 @@ class AudioAnalyzer:
                 self._audit_error = "Estrutura indisponível; kicks não confirmados."
             elif self._structure_latest and signature != self._audit_failed_signature:
                 try:
-                    self._audit_latest = self._audit.process(self._structure_latest, events)
+                    self._audit_latest = self._audit.process(self._structure_latest, raw_events)
                     self._audit_error = ""
                 except Exception as exc:
                     log.exception("kick_verification_failed")
                     self._audit_error, self._audit_latest = str(exc), None
                     self._audit_failed_signature = signature
+
+    def _eligible_events(self):
+        if self._kick_latest is None:return ()
+        raw=self._kick_latest.events
+        eligible=self._kick_latest.eligible_events
+        if eligible is None:return raw
+        ids={event.occurred_at for event in raw}
+        return tuple(event for event in eligible if event.occurred_at in ids)

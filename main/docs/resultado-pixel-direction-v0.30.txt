@@ -1,0 +1,204 @@
+[5180:4556:1030/185004.802:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[5180:4556:1030/185004.802:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[5180:4556:1030/185004.861:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[5180:4556:1030/185004.861:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[5180:4556:1030/185004.861:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[5180:4556:1030/185004.861:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[5180:1316:1030/185016.156:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+{
+  "version": "0.30.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "drops": [
+    {
+      "motif": "wings",
+      "name": "Asas espelhadas",
+      "palette": "acid",
+      "frame_sha256": "77bafed3550c1e71aa96c3da2786dea6482e2dcc7b3596560c39a092b566f9ad",
+      "fps": 20.83333333337484
+    },
+    {
+      "motif": "tunnel",
+      "name": "Túnel pulsante",
+      "palette": "primaries",
+      "frame_sha256": "58a3d4b588b07660896563c90878ae70ad654fbc4162e818e2eac18dfb19f399",
+      "fps": 20.325203252024707
+    },
+    {
+      "motif": "pendulum",
+      "name": "Pêndulos opostos",
+      "palette": "sunset",
+      "frame_sha256": "0ac90807b22f27c9ec3f3d7b0f7b2428d0e87543ceb5113cca066cdaa6250ccb",
+      "fps": 20.30456852794428
+    },
+    {
+      "motif": "impact",
+      "name": "Impacto total",
+      "palette": "ocean",
+      "frame_sha256": "2eeb9ef1a85cd68f2e98da729dddde5332122fe297f8dbbc55f618200801aec4",
+      "fps": 20.325203252024707
+    },
+    {
+      "motif": "bursts",
+      "name": "Rajadas de segmentos",
+      "palette": "fire",
+      "frame_sha256": "ee094536fcf83b0c043b73e5ec12e62230887e1d6ffca1105f2d5ae61958ad5e",
+      "fps": 21.321961620466766
+    },
+    {
+      "motif": "rings",
+      "name": "Explosão de anéis",
+      "palette": "neon",
+      "frame_sha256": "1d8a53ccc4f28eb11e3668f1958df97df82ab05d4500a384dab148c2673ef653",
+      "fps": 21.34146341462594
+    },
+    {
+      "motif": "chord",
+      "name": "Acordes de barras",
+      "palette": "magenta",
+      "frame_sha256": "b5254cf5dcd04bd6f59a9c19d3d5f851841ed42e9cd9263b2d6d421b86886dee",
+      "fps": 21.34146341466539
+    },
+    {
+      "motif": "stars",
+      "name": "Constelação elétrica",
+      "palette": "neon",
+      "frame_sha256": "3a31b7028828d2b2542d9bfd4d4f84a0657510581ddf06333fbc70591c91d8ec",
+      "fps": 21.34146341462594
+    },
+    {
+      "motif": "cascade",
+      "name": "Cascata cruzada",
+      "palette": "fire",
+      "frame_sha256": "9b463a62e86d574b62d206d37ca0f2d8189bd3ec42038d8c4f3b968e91bfd888",
+      "fps": 21.31979695434149
+    },
+    {
+      "motif": "fan",
+      "name": "Leques em expansão",
+      "palette": "magenta",
+      "frame_sha256": "20a0a7c59631fc46f3478a83e7630995325714250ffcad218ee90fba17eb9718",
+      "fps": 21.34146341462594
+    },
+    {
+      "motif": "sweep",
+      "name": "Varredura dupla",
+      "palette": "primaries",
+      "frame_sha256": "a78cb383fe00e9f6040ea886a05f0d2d612bc101f4c2f062f4d321de8f7c4508",
+      "fps": 21.34146341466539
+    },
+    {
+      "motif": "checker",
+      "name": "Xadrez rítmico",
+      "palette": "ocean",
+      "frame_sha256": "0b1d6504e486ac3e2270823b89eba242169f3ca23057f8405a647ede7123ad8f",
+      "fps": 21.34146341462594
+    }
+  ],
+  "contexts": [
+    {
+      "context": "breakdown",
+      "family": "Corrente",
+      "signature": "comet|ripple|wave",
+      "colours": {
+        "enabled": true,
+        "primary": "sunset",
+        "accent": "deep",
+        "context": "breakdown",
+        "energy": 0.259158997723155,
+        "tension": 0.03579993345082293
+      }
+    },
+    {
+      "context": "buildup",
+      "family": "Túnel",
+      "signature": "helix|ripple|vortex",
+      "colours": {
+        "enabled": true,
+        "primary": "neon",
+        "accent": "sunset",
+        "context": "buildup",
+        "energy": 0.5342266733118103,
+        "tension": 0.5830111540081153
+      }
+    },
+    {
+      "context": "groove",
+      "family": "Prisma",
+      "signature": "lattice|mirror|shards",
+      "colours": {
+        "enabled": true,
+        "primary": "acid",
+        "accent": "ice",
+        "context": "groove",
+        "energy": 0.7413753351604844,
+        "tension": 0.3088740874787138
+      }
+    },
+    {
+      "context": "breakdown",
+      "family": "Névoa",
+      "signature": "ambient|aurora|tide",
+      "colours": {
+        "enabled": true,
+        "primary": "mono",
+        "accent": "ice",
+        "context": "breakdown",
+        "energy": 0.3106054923314458,
+        "tension": 0.12782779817879908
+      }
+    },
+    {
+      "context": "buildup",
+      "family": "Convergência",
+      "signature": "helix|mirror|vortex",
+      "colours": {
+        "enabled": true,
+        "primary": "ice",
+        "accent": "acid",
+        "context": "buildup",
+        "energy": 0.5557409846735272,
+        "tension": 0.6194776542107625
+      }
+    },
+    {
+      "context": "groove",
+      "family": "Trama",
+      "signature": "helix|wave|weave",
+      "colours": {
+        "enabled": true,
+        "primary": "neon",
+        "accent": "acid",
+        "context": "groove",
+        "energy": 0.7451370075443956,
+        "tension": 0.32583837313413705
+      }
+    }
+  ],
+  "buffers_reused": true,
+  "minimized_output_continues": true,
+  "blackout_zero": true,
+  "frames": 228,
+  "fps": 21.34146341462594,
+  "performance": {
+    "allocations": 12,
+    "rootAllocations": 8,
+    "sampledPixels": 65100,
+    "frames": 438,
+    "roots": 1,
+    "source_pixels": 150,
+    "signal_bytes": 6300,
+    "texture_bytes": 10800,
+    "history": 12,
+    "direction_bags": 15,
+    "direction_items": 40
+  },
+  "closed_cleanly": true,
+  "passed": true
+}

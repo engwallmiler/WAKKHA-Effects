@@ -168,7 +168,8 @@ def test_refractory_rejects_repeated_low_frequency_hits():
     # 400 ms impede confirmação de todos os ataques a cada 375 ms.
     _, events = detect(x, config=KickConfig(kick_refractory_ms=400))
     assert 0 < len(events) < len(truth)
-    assert all(b.occurred_at - a.occurred_at >= 0.4 for a, b in zip(events, events[1:]))
+    # O relógio em ponto flutuante pode representar 400 ms como 399,999999999 ms.
+    assert all(b.occurred_at - a.occurred_at >= 0.4-1e-9 for a, b in zip(events, events[1:]))
 
 
 def test_spectral_failure_does_not_disable_kicks(block_factory):

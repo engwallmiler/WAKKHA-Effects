@@ -1,0 +1,84 @@
+{
+  "version": "0.27.0",
+  "reference_only": true,
+  "synthetic_only": true,
+  "physical_device_used": false,
+  "external_clock_used": false,
+  "tolerance_ms": 75,
+  "bass_lead_ms": 110,
+  "cases": {
+    "100": {
+      "raw": {
+        "true": 8,
+        "missed": 14,
+        "false": 29,
+        "truth": 22,
+        "max_error_ms": 8.67
+      },
+      "confirmed": {
+        "true": 8,
+        "missed": 14,
+        "false": 3,
+        "truth": 22,
+        "max_error_ms": 8.67
+      },
+      "bpm_target": 100,
+      "final_bpm": 100.00000000000105,
+      "stable_bpms": [],
+      "locked_at": null,
+      "guided": false,
+      "offgrid_attacks": null,
+      "cpu_seconds": 3.3125,
+      "audio_seconds": 14.0
+    },
+    "128": {
+      "raw": {
+        "true": 11,
+        "missed": 17,
+        "false": 33,
+        "truth": 28,
+        "max_error_ms": 8.67
+      },
+      "confirmed": {
+        "true": 20,
+        "missed": 8,
+        "false": 0,
+        "truth": 28,
+        "max_error_ms": 22.92
+      },
+      "bpm_target": 128,
+      "final_bpm": 127.74705167987516,
+      "stable_bpms": [],
+      "locked_at": null,
+      "guided": false,
+      "offgrid_attacks": null,
+      "cpu_seconds": 2.8594,
+      "audio_seconds": 14.0
+    },
+    "150": {
+      "raw": {
+        "true": 12,
+        "missed": 21,
+        "false": 43,
+        "truth": 33,
+        "max_error_ms": 11.33
+      },
+      "confirmed": {
+        "true": 11,
+        "missed": 22,
+        "false": 0,
+        "truth": 33,
+        "max_error_ms": 8.67
+      },
+      "bpm_target": 150,
+      "final_bpm": 149.2884032362075,
+      "stable_bpms": [],
+      "locked_at": null,
+      "guided": false,
+      "offgrid_attacks": null,
+      "cpu_seconds": 2.6719,
+      "audio_seconds": 14.0
+    }
+  },
+  "passed": true
+}

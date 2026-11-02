@@ -7,6 +7,7 @@ from beatlight.dsp.pipeline import AudioAnalyzer
 from beatlight.sync.link import LinkSnapshot
 from beatlight.sync.timeline import link_grid
 from beatlight.music.grid import grid_clock
+from beatlight.music.config import BeatConfig
 
 
 def composition(t, *, pause=True, weak=True):
@@ -23,11 +24,12 @@ def composition(t, *, pause=True, weak=True):
 
 
 @pytest.mark.parametrize("gain,link", [(1.0,False),(.25,False),(1.0,True),(.25,True)])
-def test_weak_double_build_then_short_silence_detects_first_full_kick(gain,link):
+@pytest.mark.parametrize('mode', ['continuous','integer'])
+def test_weak_double_build_then_short_silence_detects_first_full_kick(gain,link,mode):
     def clock(at):
         sample = LinkSnapshot(at, "connected", 120, (at-100)*2, 1, 1)
         return grid_clock(link_grid(sample, at), at)
-    analyzer = AudioAnalyzer(clock_provider=clock if link else None)
+    analyzer = AudioAnalyzer(clock_provider=clock if link else None,beat_config=BeatConfig(beat_grid_mode=mode))
     build, silent, drops = [], [], []
     raw_weak = set()
     for seq,first in enumerate(range(0,48000*25,512)):

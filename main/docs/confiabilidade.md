@@ -1,6 +1,70 @@
-# Confiabilidade e operação prolongada — 0.26.0
+# Confiabilidade e operação prolongada — 0.36.0
 
 Esta rodada corrige gargalos identificados no código e acrescenta um ensaio repetível. Ainda não foi realizado um teste de seis ou oito horas reais nesta entrega. O avanço acelerado do relógio musical verifica contadores e evolução de padrões; não substitui tempo real de execução, drivers, temperatura, alimentação ou comunicação com hardware.
+
+## Rodada 0.36: quantidade física e preparação consistente
+
+A amostragem aceita de 1 a 300 LEDs individuais. A conversão Python valida a quantidade, o formato e cada canal, e completa os endereços não usados com zero, mantendo o protocolo/firmware anteriores. O custo adicional é limitado a completar um quadro de 900 bytes; não há novas threads ou filas. A preparação valida geometria e perfis juntos antes de alterar o projeto, conservando grupos incompatíveis em vez de removê-los.
+
+A seleção e o total da fita são retornados pela mesma operação de preparação. Uma revisão invalida consultas anteriores de fontes; um prazo de dois segundos libera uma preparação que não respondeu, mantendo a saída apagada. O ensaio Qt/USB emulado confirmou uma fita de 120 LEDs, troca 300 → 120 sem resíduos nos últimos endereços, saída minimizada, persistência e blackout no fechamento. Não representa teste elétrico nem duração prolongada. [Resultados](resultado-pixel-strip-size-v0.36.0.json) · [Operação](fitas-variaveis-v0.36.md).
+
+## Rodada 0.35: seleção esporádica na troca de combinação
+
+A participação de contínuos no AUTO é decidida somente quando uma nova combinação é criada. Usa um contador limitado a quatro e um booleano; não há sorteio, fila ou timer por quadro. Os catálogos regulares e contínuos conservam seleções separadas para não reiniciar sua variedade ao intercalar os estilos. Histórico permanece limitado a 12 combinações; os catálogos e contextos limitam os demais mapas.
+
+O ensaio nativo com 300 pixels e USB emulado manteve buffers, saída minimizada e desligamento com zero. Registrou aproximadamente 21,3 fps em execução curta com trocas e capturas de tela. Não certifica seis horas reais ou comportamento elétrico do ESP32. [Resultados](resultado-auto-continuous-v0.35.0.json) · [Operação](auto-continuo-v0.35.md).
+
+## Rodada 0.34: ondas contínuas e velocidade integrada
+
+Os três movimentos novos combinam funções periódicas de espaço e tempo, com uma base positiva de emissão. O cálculo de brilho e cor de cada pixel compartilha os mesmos campos; não há sorteio por quadro ou histórico de posições. Um acumulador de fase e um fator de velocidade suavizado avançam nos timers existentes, inclusive pela amostragem USB quando a janela está minimizada. Não cria timers, threads, buffers ou FFTs.
+
+O ensaio nativo emulado de 300 pixels manteve buffers, mostrou movimento minimizado e concluiu blackout/fechamento com zero. Registrou 21,34 fps e média de renderização de 6,12 ms, com máximo de 10,90 ms, nessa execução curta. Não certifica seis horas reais ou temporização elétrica. Os testes incluem fases avançadas, continuidade de espaço/tempo e troca de velocidade sem salto em fases altas. [Resultados](resultado-pixel-flow-v0.34.0.json) · [Operação](ondas-organicas-v0.34.md).
+
+## Rodada 0.33: picos e preenchimento contínuo
+
+O pico é uma composição RGB no mesmo amostrador da prévia e do envio, depois da resposta musical e antes dos limites de brilho. O status do pico é consultado uma vez por pixel, substituindo três consultas anteriores. Não há novos buffers, timers ou threads. Os quatro efeitos contínuos usam funções periódicas e as quatro famílias novas reutilizam os limites de histórico e os envelopes existentes.
+
+O ensaio nativo com 300 pixels e cópias exatas reutilizou os buffers, manteve transmissão minimizada e concluiu blackout/encerramento com zero. A medição ficou próxima de 20 fps no transporte emulado durante interação/capturas; não representa precisão elétrica do ESP32. Os testes do motor incluem avanço acelerado de oito horas e os novos casos verificam continuidade de todas as respostas de fita. Não foi repetido um ensaio de seis horas reais. [Resultados](resultado-pixel-peaks-v0.33.0.json) · [Operação](picos-continuos-v0.33.md).
+
+## Rodada 0.32: reaprendizado independente do perfil antigo
+
+A comparação ocorre nas janelas de candidatos já analisadas. Acrescenta quatro descritores de ataques alinhados e até oito observações de contratempo, com seis amostras de envoltória cada. Filas são limitadas e expiram quando a sequência se interrompe. O reaprendizado troca as referências em uma operação; não acumula bancos antigos. Não adiciona FFT, thread, timer ou gravação de candidatos durante a apresentação. [Operação e limites](perfil-recorrente-v0.32.md).
+
+O ensaio curto, sem GUI/trace/pytest simultâneo, mediu medianas de 16,60% → 17,19% de um núcleo no groove e 17,38% → 18,75% com clique: cerca de +0,6 e +1,4 pontos percentuais de um núcleo, respectivamente. Há variação relevante entre execuções. São três repetições de oito segundos por cenário; não certificam seis horas com Traktor/USB. [Referência 0.31](resultado-dsp-cost-reference-v0.31.json) · [Versão 0.32](resultado-dsp-cost-current-v0.32.json).
+
+## Rodada 0.31: recorrência de picos sem novo FFT
+
+A grade de picos usa os descritores estruturais existentes, com 64 frames, 32 espectros de fundo, até oito propostas, 16 sementes, oito referências, 16 eventos e 200 pontos para o monitor. Cada posição guarda no máximo quatro candidatos e é descartada depois da janela de decisão. A fila adicional da identidade conserva até oito propostas. Não há crescimento de histórico com as horas de festa, nova thread ou timer. O rastreio por candidato continua desativado na operação normal.
+
+O relógio fornece o período; comparar ataques não alimenta o estimador de BPM. A recuperação espera a confirmação normal e não adiciona espera ao primeiro impacto do drop. A fase pode ser corrigida após quatro ataques coerentes, conservando o período informado. [Operação e resultados](grade-picos-v0.31.md).
+
+Três execuções de oito segundos por cenário, sem GUI, trace ou pytest simultâneo, mediram medianas de 16,99% → 16,60% de um núcleo no groove e 17,77% → 17,58% com clique. A diferença está dentro da variação do ensaio; não demonstra ganho de desempenho ou custo universal. [Referência 0.30](resultado-dsp-cost-reference-v0.30.json) · [Versão 0.31](resultado-dsp-cost-current-v0.31.json). O ensaio não certifica seis horas reais com Traktor/USB.
+
+## Rodada 0.30: direção visual com memória limitada
+
+O catálogo de 12 drops e as 14 famílias usam seleção embaralhada com memória por contexto. As listas são limitadas pelo próprio catálogo; o histórico de combinações conserva 12 entradas. Paletas interpoladas são calculadas por descritor/instante e reutilizadas pelos pixels. Não há sorteio por pixel, nova thread, timer ou persistência a cada quadro.
+
+O teste nativo de uma fita de 300 pixels dividida em seis barras, com cópias exatas, manteve buffers e texturas durante os 12 drops. O envio USB foi emulado, ficou próximo de 21 fps e continuou minimizado. Blackout e encerramento enviaram zero. Essa medição curta não representa temporização elétrica real nem certifica seis horas contínuas. [Resultados e limites](validacao.md) · [Operação](direcao-visual-v0.30.md).
+
+## Rodada 0.29: clique auxiliar e diagnóstico separado
+
+O clique de 2–6 kHz reutiliza o FFT estrutural existente. Acrescenta um envelope com até 120 observações e quatro valores de forma por descritor; os 64 descritores e 16 referências continuam limitados. Não há IFFT, novo filtro em áudio, rede ou runtime de inferência. O callback de rastreio é `None` na aplicação normal, sem escrita de candidatos no disco.
+
+O replay é um processo offline, com leitura PCM em blocos e arquivos separados. Suas listas de eventos crescem com a duração analisada para permitir métricas completas; não fazem parte do processo da apresentação. Percentis usam os últimos 8.192 blocos e a prévia limita o desenho a 4.000 marcas por linha. Não execute análise acelerada concorrente com uma festa se quiser reservar CPU ao Traktor.
+
+O ensaio curto de produção fez três execuções por cenário, sem GUI e com rastreio desligado. A mediana passou de 13,28% para 12,30% de um núcleo no groove e de 14,06% para 13,67% no groove com clique. A diferença é pequena e compatível com variação de medição; não demonstra ganho universal nem certifica seis horas reais. [Medição completa](resultado-dsp-cost-v0.29.json) · [Validação](validacao.md).
+
+## Rodada 0.28: estabilidade da grade acústica
+
+A prioridade da grade reutiliza o FFT e os descritores existentes. O detector conserva até 16 candidatos brutos e 16 elegíveis; a grade conserva 32 observações e usa até oito referências (28 inclinações entre pares) para decidir o inteiro. As filas e históricos continuam limitados. Nenhum histórico cresce com a duração da festa, e a nova análise não depende de desenho da interface.
+
+Há regressões para candidatos antecipados, manutenção do período sob jitter, silêncio/baixo sustentado/vibrato com grade ativa, troca persistente de andamento, perda de áudio e critérios de drop nos modos contínuo e inteiro. Os ensaios são sintéticos e curtos; não certificam seis horas reais. [Resultados desta rodada](validacao.md) · [Funcionamento](grade-audio-estavel.md).
+
+## Rodada 0.27: recuperação de kicks sob bassline
+
+O novo sensor reutiliza o FFT existente e mantém vetores de frequência limitados ao necessário, dois espectros anteriores, fundo/proposta, 100 escores e 200 pontos. A aquisição usa até 16 candidatos e o perfil conserva até 16 referências. Não há modelo externo, rede ou dependência adicional. A confirmação espectral observa mais um hop, de aproximadamente 10 ms, sem atrasar o caminho principal.
+
+O ensaio nativo sintético de oito segundos processou 749 blocos sem descarte. A comparação de 56 s de áudio registrou aproximadamente +0,6 ponto percentual de um núcleo de CPU sobre a 0.26. São medidas locais curtas; não certificam seis horas reais ou custo idêntico com o Traktor. [Matriz, metodologia e limitações](kicks-baixo.md).
 
 ## Rodada 0.26: operação em segundo plano
 

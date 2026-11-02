@@ -1,4 +1,6 @@
-# Arquitetura — versão 0.36
+# Arquitetura — versão 0.37
+
+**Atualização 0.37:** `outputFrames(ids)` avança uma vez o relógio e abre uma única geração de cache para as quatro saídas, reutilizando quadros de fontes repetidas. A UI guarda quatro mapeamentos GPIO/fita, habilita apenas os usados e migra as preferências anteriores para GPIO 18. `OutputConfig.pixels` define quatro comprimentos; o handshake seleciona BLP1 legado ou configuração BLP2 de 11 bytes. O payload novo concatena somente os pixels ativos na ordem 18/19/25/26. Um pacote CRC e um ACK cobrem todas as saídas. O firmware registra quatro controladores RMT4, usa comprimentos reais, CRC por tabela, buffers fixos e watchdog conjunto. [Guia](esp32-quatro-saidas.md).
 
 **Atualização 0.36:** `prepareWs2812(id,count)` valida geometria e perfis em conjunto antes de aplicar uma fita com 1 a 300 LEDs. A UI usa o total físico selecionado, retorna a lista atualizada na mesma chamada e ignora consultas de fontes de uma revisão anterior. `outputFrame` exporta somente os pixels reais; `rgb_payload` valida esses canais e completa com zeros os endereços restantes até 300. BLP1, firmware, ACKs, limites e relógio continuam compatíveis. [Operação](fitas-variaveis-v0.36.md).
 
@@ -28,7 +30,7 @@ O detector mantém médias lineares aparadas do pico grave e da potência do tra
 
 `pixel/usb_protocol.py` define BLP1, CRC32, identificação e configuração de uma saída de 300 WS2812 RGB. `pixel/usb.py` mantém a COM em uma thread, aguarda confirmação e conserva somente o quadro pendente mais recente. A prioridade de blackout pode interromper a espera de confirmação de um frame; falhas encerram a conexão sem reconectar/reativar automaticamente. O emissor é limitado a 30 Hz e descarta amostras com mais de 250 ms.
 
-`ui/pixel_usb.py` amostra `BeatlightPixel.outputFrame(id)` pelo WebChannel do processo local, sem desenhar Canvas. O relógio do motor avança nessa chamada mesmo com a prévia fora da área visível. `computeChannels` é usado tanto pela prévia quanto pela amostragem física, preservando os 33 efeitos e as automações. A identidade selecionada é uma fita lógica independente ou composta, somando 1 a 300 LEDs/pixels WS2812; não há reamostragem de grupos WS2811. Limites e seleção são salvos em pixel-usb.json, sem ativação/conexão automática.
+`ui/pixel_usb.py` amostra `BeatlightPixel.outputFrames(ids)` pelo WebChannel do processo local, sem desenhar Canvas. O relógio avança uma vez para todas as saídas, mesmo com a prévia fora da área visível. `computeChannels` atende prévia e amostragem física, preservando os 33 efeitos e as automações. Cada identidade é uma fita lógica independente ou composta, somando 1 a 300 LEDs/pixels WS2812. Limites globais e quatro mapeamentos são salvos em pixel-usb.json, sem ativação/conexão automática. Alterar o mapeamento ou os comprimentos exige reconectar, impedindo que dados novos sejam interpretados com comprimentos antigos.
 
 O firmware em firmware/beatlight_esp32 valida cada pacote completo, aplica limites de brilho/potência e gera WS2812 GRB no GPIO 18. Duplicatas e sequências antigas não atualizam os LEDs; quadros incompletos/corrompidos não renovam o watchdog de 750 ms. Boot, conexão inicial e blackout apagam a fita; o watchdog atua na perda de comunicação enquanto o ESP32 continua energizado. Consulte [esp32-ws2812-usb.md](esp32-ws2812-usb.md), incluindo a limitação ao retirar o USB que alimenta a placa.
 
@@ -171,7 +173,7 @@ Importação/exportação atual é de preferências do protótipo. Um projeto de
 | Lighting Automation | Motor implementado: dez efeitos, grupos A/B, transições e prioridade blackout/desativado/manual/automação. Editor completo de regras/cenas está planejado. |
 | Fixture Management | FixtureDefinition e FixtureState implementados com capacidades, grupos e parâmetros normalizados. Inventário de demonstração fixo; editor e personalidades físicas estão planejados. |
 | Visual Simulation | StageView implementado: recebe FixtureState via LightingSnapshot e desenha seis luminárias, fachos e piso 2D. |
-| Lighting Output | LightingOutput permanece a borda conceitual para DMX; PixelUsbOutput implementa separadamente a saída física de uma fita WS2812. |
+| Lighting Output | LightingOutput permanece a borda conceitual para DMX; PixelUsbOutput implementa separadamente até quatro saídas WS2812 em uma conexão ESP32 USB. |
 | User Interface | Monitor, análise espectral, kicks, ritmo, Lighting Studio, Stage Preview, diagnóstico e configurações implementados. Demais áreas estão identificadas como próximas fases. |
 | Configuration/Projects | Preferências v13 com migração de v1 a v12 implementadas; projetos de iluminação entram com cenas e fixtures reais. |
 | Diagnostics/Testing | Logs, métricas, testes isolados e integração sem hardware implementados. |

@@ -1,0 +1,33 @@
+{
+  "version": "0.37.0",
+  "board": "ESP32 DevKit / WROOM-32",
+  "platform": "espressif32 6.12.0",
+  "arduino": "2.0.17",
+  "fastled": "3.10.3",
+  "pins": [
+    18,
+    19,
+    25,
+    26
+  ],
+  "pixels_per_output": 300,
+  "max_pixels": 1200,
+  "protocol": 2,
+  "baud": 921600,
+  "rmt_hardware_slots": 8,
+  "rmt_memory_blocks": 2,
+  "parallel_outputs": 4,
+  "ram_bytes": 29920,
+  "program_bytes": 293561,
+  "physical_device_used": false,
+  "source_matches_build": true,
+  "source_sha256": {
+    "firmware/beatlight_esp32/beatlight_esp32.ino": "c398e103365af7b1ca314a505af83a0d6844bead0e061752be92539e45d3f645",
+    "firmware/beatlight_esp32/protocol.h": "a5e5232a84e12af680b6982989e490af6b132eab29682bce98d1d54887b69302",
+    "firmware/beatlight_esp32/platformio.ini": "35f65e378704b18ca4f33f3eeec5a71004aee6cdcdb6a7570fb457c8d96b92d1"
+  },
+  "merged_file": "firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-4x300-v0.37.0.bin",
+  "flash_offset": "0x0",
+  "sha256": "beafae8245a6329c298232bdb2ee7ecc012c868b9d57e4104870e8018cf52d6a",
+  "bytes": 359456
+}

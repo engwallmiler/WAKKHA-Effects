@@ -32,7 +32,7 @@ Cada composição hipnótica permanece por **pelo menos 32 tempos da grade**. Co
 
 **Velocidade automática** suaviza a passagem entre fatores de movimento. Um breakdown com energia/tensão baixas se move devagar; build-up e drop aceleram. BPM, fase e o intervalo de quatro/oito tempos não são acelerados junto com o movimento. Desligue essa opção para usar somente a velocidade escolhida.
 
-O protocolo físico continua BLP1/RGB/300 pixels. **O firmware 0.22 permanece compatível com todos os efeitos e camadas novos; não é necessário regravá-lo.**
+O firmware 0.37 usa quadros RGB conjuntos para até quatro saídas e os comprimentos reais das fitas. **Para habilitar GPIO 19, 25 e 26 é necessário gravá-lo; o firmware 0.22 continua aceito somente no GPIO 18.** [Guia e firmware](esp32-quatro-saidas.md).
 
 ## Picos por frase
 
@@ -40,7 +40,7 @@ O protocolo físico continua BLP1/RGB/300 pixels. **O firmware 0.22 permanece co
 
 O botão **Sincronizar pico · N tempos** indica a participação pela cor e marca o momento do acento ao ser pressionado. Ele conserva o intervalo indicado e passa a **Sempre ativos**; não altera o BPM, o início da composição ou a sincronização geral. Para retomar a escolha automática, selecione **Picos por frase → Participação automática**. **Sincronizar 1/8** continua sendo o controle separado do ciclo geral. Nenhum desses controles inventa eventos acústicos de kick.
 
-A saída física atende **uma fita WS2812/WS2812B RGB com 1 a 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. No painel nativo, escolha a fita, confira **LEDs na fita física** e use **Preparar fita WS2812 → Conectar ESP32 → Ativar saída física**. O mesmo cálculo RGB atende a prévia e a transmissão, inclusive com o palco fora da área visível. Veja [ligação, firmware e operação](esp32-ws2812-usb.md) e [como usar 120 LEDs](fitas-variaveis-v0.36.md); o guia também abre pelo botão Instruções do painel.
+A saída física atende **quatro fitas WS2812/WS2812B RGB de 1 a 300 LEDs individuais cada, via ESP32 DevKit/WROOM-32 USB**, nos GPIOs 18, 19, 25 e 26. Marque as saídas usadas, escolha suas fitas, confira os LEDs e use **Preparar fita WS2812 → Conectar ESP32 → Ativar saídas físicas**. O mesmo cálculo RGB atende a prévia e a transmissão, inclusive com o palco fora da área visível. Escolher a mesma fita lógica em mais de uma saída cria cópias físicas exatas. Veja [ligação, firmware e operação](esp32-quatro-saidas.md); o guia também abre pelo botão Instruções.
 
 O arquivo `beatlight/beatlight_pixel_studio.html` é a fonte do simulador embutido na página **Pixel Studio · LEDs**. Não é necessário abrir um navegador separado. A aplicação mantém a captura WASAPI, a análise musical e o módulo Ableton Link e passa seus resultados ao simulador.
 
@@ -84,7 +84,7 @@ Em uma fita contínua, os controles de efeito são compartilhados a partir da pr
 
 As linhas podem ter comprimento, resolução e direção diferentes. Reverter a direção do efeito não troca a identificação da fita. Ao excluir uma linha, os controles das linhas sobreviventes acompanham suas identidades.
 
-Os perfis **WS2811 · RGB** e **WS2812 · RGB individual** geram três canais por pixel, inclusive para branco obtido pela combinação RGB. Eles não criam um emissor W dedicado. **RGBW · simulação** é um perfil virtual separado. A escolha global RGBW da demonstração não transforma essas fitas RGB em RGBW. Para a saída USB, a fita lógica selecionada precisa somar de 1 a 300 LEDs, com um pixel por LED e perfil WS2812 em todos os trechos. **Preparar fita WS2812** usa a quantidade indicada no painel, conservando os LEDs por trecho quando o total já corresponde ao projeto. Uma linha independente continua sendo uma saída possível. Os endereços restantes do protocolo de 300 pixels são enviados apagados.
+Os perfis **WS2811 · RGB** e **WS2812 · RGB individual** geram três canais por pixel, inclusive para branco obtido pela combinação RGB. Eles não criam um emissor W dedicado. **RGBW · simulação** é um perfil virtual separado. A escolha global RGBW da demonstração não transforma essas fitas RGB em RGBW. Cada saída USB precisa somar de 1 a 300 LEDs, com um pixel por LED e perfil WS2812 em todos os trechos. **Preparar fita WS2812** usa a quantidade indicada no painel, conservando os LEDs por trecho quando o total já corresponde ao projeto. O firmware 0.37 recebe apenas os pixels habilitados; o firmware legado recebe preenchimento apagado até 300 no GPIO 18.
 
 O modelo inicial usa seis linhas de 5 m, 600 LEDs e 200 pixels cada. Os três LEDs de cada grupo desse modelo compartilham um triplo RGB; o quadro exportado contém 200 pixels, sem duplicar 600 endereços. As resoluções do editor são configuráveis, conforme a geometria fornecida pelo usuário. Limites: 32 linhas, 32.768 LEDs físicos e 8.192 pixels no total; cada linha aceita até 4.096 LEDs e 2.048 pixels.
 

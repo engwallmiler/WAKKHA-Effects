@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <array>
 struct CRGB {
     uint8_t r=0,g=0,b=0;
     CRGB()=default;
@@ -8,14 +9,20 @@ struct CRGB {
 struct WS2812B {};
 enum EOrder { GRB };
 enum ColorCorrection { UncorrectedColor };
+struct CLEDController {
+    CRGB* data=nullptr;int size=0;int pin=0;
+    CLEDController& setLeds(CRGB* pixels,int count) { data=pixels;size=count;return *this; }
+};
 struct FakeFastLED {
-    CRGB* data=nullptr;int size=0;uint32_t shows=0;uint8_t brightness=0;uint32_t current=0;
-    template<class Chip,int Pin,EOrder Order> void addLeds(CRGB* pixels,int count) { data=pixels;size=count; }
+    std::array<CLEDController,4> controllers;int count=0;uint32_t shows=0;uint8_t brightness=0;uint32_t current=0;
+    template<class Chip,int Pin,EOrder Order> CLEDController& addLeds(CRGB* pixels,int size) {
+        CLEDController& controller=controllers[count++];controller.pin=Pin;return controller.setLeds(pixels,size);
+    }
     void setCorrection(ColorCorrection) {}
     void setDither(uint8_t) {}
     void setBrightness(uint8_t value) { brightness=value; }
     void setMaxPowerInVoltsAndMilliamps(uint8_t volts,uint32_t ma) { current=ma; }
     void show() { shows++; }
-    void clear(bool write) { for(int i=0;i<size;i++)data[i]=CRGB(0,0,0);if(write)show(); }
+    void clear(bool write) { for(auto& controller:controllers)for(int i=0;i<controller.size;i++)controller.data[i]=CRGB(0,0,0);if(write)show(); }
 };
 extern FakeFastLED FastLED;

@@ -62,6 +62,34 @@ def test_cancelled_or_timed_out_preparation_cannot_restore_stale_sources(panel):
     assert control.source.currentData()=='b' and 'não respondeu' in control.error
 
 
+def test_all_four_gpio_mappings_are_independent_and_persisted_with_legacy_migration(panel):
+    control,_=panel;control._sources(json.dumps(sources()))
+    assert [row.isChecked() for row in control.output_enabled]==[True,False,False,False]
+    for i in range(4):
+        control.sources[i].setCurrentIndex(control.sources[i].findData('b'))
+        control.output_enabled[i].setChecked(True)
+    assert control._config().pixels==(120,)*4
+    assert control._mapping()[0]==('b',)*4
+    control._save();saved=json.loads(control.path.read_text(encoding='utf-8'))
+    assert saved['version']==2 and [row['pin'] for row in saved['outputs']]==[18,19,25,26]
+    restored=PixelUsbPanel(control.page);restored.timer.stop()
+    try:
+        restored._sources(json.dumps(sources()))
+        assert restored._mapping()==control._mapping()
+        assert all(row.isChecked() for row in restored.output_enabled)
+    finally:restored.shutdown();restored.deleteLater()
+
+
+def test_disabled_outputs_are_empty_and_removed_sources_do_not_switch_to_another_strip(panel):
+    control,_=panel;control._sources(json.dumps(sources()));control.source.setCurrentIndex(1)
+    assert control._mapping()==(('b',None,None,None),(120,0,0,0))
+    control._sources(json.dumps(sources()[:1]))
+    assert control.source.currentData()=='b' and 'removida' in control.source.currentText()
+    with pytest.raises(ValueError,match='GPIO 18'):control._config()
+    control.output_enabled[0].setChecked(False)
+    with pytest.raises(ValueError,match='pelo menos'):control._config()
+
+
 def test_blackout_invalidates_a_nonzero_sample_already_in_flight():
     calls=[]
     runtime=SimpleNamespace(blackout=lambda:calls.append('blackout'),submit=lambda *args:calls.append('frame'))

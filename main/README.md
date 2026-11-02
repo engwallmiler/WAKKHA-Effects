@@ -1,4 +1,6 @@
-# BEATLIGHT — Pixel Studio 0.36.0
+# BEATLIGHT — Pixel Studio 0.37.0
+
+**Quatro saídas 0.37:** GPIOs **18, 19, 25 e 26**, até **300 LEDs por saída / 1.200 no total**, com comprimentos diferentes e mapeamentos independentes ou cópias exatas. Um quadro USB compartilha o mesmo instante musical e o firmware usa quatro controladores RMT. **Para usar as quatro saídas, grave o novo firmware 0.37.** [Guia completo e gravação](docs/esp32-quatro-saidas.md) · [Projeto de quatro fitas de 120 LEDs](examples/quatro-saidas-ws2812.json).
 
 **Saída USB 0.36:** fitas de **1 a 300 LEDs individuais**, incluindo 120 LEDs, com o firmware 0.22 existente. **Preparar fita WS2812** usa a quantidade física indicada no painel e mantém a seleção, o desenho e as conexões. Os endereços não usados são enviados apagados. [Como usar sua fita de 120 LEDs](docs/fitas-variaveis-v0.36.md).
 
@@ -36,15 +38,15 @@ Aplicação desktop local para Windows 11. A versão **0.26** prioriza motivos h
 
 **Picos por frase** podem participar automaticamente das combinações, repetindo um acento a cada quatro ou oito tempos. **Sincronizar pico** marca o acento desejado sem alterar o BPM ou o sincronismo geral. Cada drop recebe um plano diferente, com camadas adicionadas progressivamente durante as oito posições. A interface abre em **Foco no palco**; **Mostrar todos os controles** revela os painéis recolhíveis. O botão para apagar a saída física permanece acessível.
 
-A saída física atende **uma fita WS2812/WS2812B de 1 a 300 LEDs individuais, via ESP32 DevKit/WROOM-32 USB**. O cálculo RGB é compartilhado pela prévia e pela transmissão. **O firmware 0.22 que já está funcionando continua compatível: não é necessário regravar o ESP32 para usar os novos efeitos.**
+A saída física atende **quatro fitas WS2812/WS2812B de 1 a 300 LEDs individuais cada, via ESP32 DevKit/WROOM-32 USB**. O cálculo RGB é compartilhado pela prévia e pela transmissão. **Grave o firmware 0.37 para usar os quatro GPIOs; o firmware 0.22 continua aceito somente para GPIO 18.**
 
-**[Guia de ligação, firmware e operação](docs/esp32-ws2812-usb.md)** · **[Código para o ESP32](firmware/beatlight_esp32/beatlight_esp32.ino)** · **[Projeto de uma fita / 300 LEDs](examples/ws2812-300.json)**. O firmware inclui protocol.h na mesma pasta e uma configuração PlatformIO. A fita precisa de fonte externa de 5 V, GND comum e conversor de nível 3,3 → 5 V; ela não é alimentada pelo USB do ESP32. A saída inicia desativada, com teto de brilho de 25% e limite estimado de 2.000 mA.
+**[Guia de ligação, firmware e operação](docs/esp32-quatro-saidas.md)** · **[Código para o ESP32](firmware/beatlight_esp32/beatlight_esp32.ino)** · **[Binário pronto de quatro saídas](firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-4x300-v0.37.0.bin)**. O firmware inclui protocol.h na mesma pasta e uma configuração PlatformIO. As fitas precisam de fonte externa de 5 V, GND comum e conversão de nível 3,3 → 5 V em cada saída; não são alimentadas pelo USB do ESP32. A saída inicia desativada, com teto de brilho de 25% e limite total estimado de 2.000 mA compartilhado entre as quatro fitas.
 
 Cada fita tem efeito, paleta, brilho, velocidade, defasagem, sentido e resposta musical próprios. ORGÂNICO e AUTO SHOW oferecem **Compassos + novos elementos**, **A cada N compassos**, **Somente novos elementos** e **Manter padrão**. **Direção visual → Hipnótica** é o padrão; usa fusões progressivas de pelo menos oito tempos, preservando as camadas que continuam. A opção **Variada** conserva as combinações mais livres e mínimo de 16 tempos. Mudanças de estrutura têm prioridade. **[Operação do Pixel Studio](docs/pixel-studio.md)**.
 
-A captura, os detectores e a integração **Ableton Link** continuam disponíveis, assim como os painéis anteriores de PARs/moves. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**. O único transporte físico atual é ESP32 USB para uma fita WS2812 de até 300 pixels; não há saída DMX física.
+A captura, os detectores e a integração **Ableton Link** continuam disponíveis, assim como os painéis anteriores de PARs/moves. **[Instruções para Traktor e Ableton Link](docs/ableton-link.md)**. O transporte físico atual é ESP32 USB para até quatro saídas WS2812; não há saída DMX física.
 
-Selecione **Saída física · ESP32 USB** no cabeçalho e expanda **ESP32 USB · configuração da fita**, escolha a fita, confira **LEDs na fita física** e clique **Preparar fita WS2812**. Selecione a COM e **Conectar ESP32**; depois clique **Ativar saída física**. Conectar apenas verifica o firmware e configura os limites; não acende a fita. **APAGAR SAÍDA** permanece visível com o painel recolhido. **Instruções** abre o guia dentro do aplicativo.
+Selecione **Saída física · ESP32 USB** no cabeçalho e expanda **configurar 4 saídas**. Marque cada GPIO usado, escolha sua fita, confira o total de LEDs e clique **Preparar fita WS2812**. Selecione a COM e **Conectar ESP32**; depois clique **Ativar saídas físicas**. Conectar apenas verifica o firmware e configura os limites; não acende as fitas. **APAGAR TODAS** permanece visível com o painel recolhido. **Instruções** abre o guia dentro do aplicativo.
 
 ## Começar pelas fitas
 

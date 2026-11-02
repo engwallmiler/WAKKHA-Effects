@@ -1,6 +1,14 @@
-# Confiabilidade e operação prolongada — 0.36.0
+# Confiabilidade e operação prolongada — 0.37.0
 
 Esta rodada corrige gargalos identificados no código e acrescenta um ensaio repetível. Ainda não foi realizado um teste de seis ou oito horas reais nesta entrega. O avanço acelerado do relógio musical verifica contadores e evolução de padrões; não substitui tempo real de execução, drivers, temperatura, alimentação ou comunicação com hardware.
+
+## Rodada 0.37: quatro saídas por quadro
+
+As quatro saídas compartilham um avanço do relógio, uma geração de cache, um pacote CRC e um ACK. O emissor conserva uma posição pendente, substituída pelo quadro mais recente, sem criar uma fila ou thread por fita. Dados de fontes duplicadas reaproveitam o mesmo resultado no motor. Apenas os comprimentos ativos percorrem a USB no firmware novo.
+
+O ESP32 usa quatro controladores RMT4 com buffers fixos, CRC por tabela de 16 entradas e recepção de 8 KB. O orçamento estimado de corrente é global. Todos os comprimentos e o pacote inteiro são validados antes de alterar os LEDs; um único show atualiza as saídas e o watchdog apaga o conjunto. A compilação WROOM-32 usa 29.920 bytes de RAM estática, sem representar o pico de heap do driver em execução. [Compilação](resultado-esp32-v0.37.json).
+
+O teste do sketch real em periféricos simulados cobre 1.200 pixels, ordens, CRC, quadro incompleto, tamanhos variáveis, saídas desativadas, watchdog e wraparound. O ensaio Qt/USB emulado confirmou mapeamentos, cópias físicas exatas, reutilização de buffers, persistência, minimização e blackout conjunto. Essa execução curta não certifica estabilidade elétrica, fps real ou seis horas com quatro fitas. [Resultados](resultado-pixel-four-outputs-v0.37.0.json) · [Guia](esp32-quatro-saidas.md).
 
 ## Rodada 0.36: quantidade física e preparação consistente
 

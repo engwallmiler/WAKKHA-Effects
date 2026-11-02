@@ -15,9 +15,9 @@ def test_actual_esp32_sketch_with_python_wire_vectors_and_mock_peripherals(tmp_p
     built=subprocess.run([compiler,'-std=c++11','-Wall','-Wextra','-static-libgcc','-static-libstdc++',
         '-I',str(root/'tests/esp32_stubs'),str(root/'tests/esp32_firmware_test.cpp'),'-o',str(executable)],capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
     assert built.returncode==0,built.stderr
-    rgb=bytes(channel for pixel in range(300) for channel in (pixel%256,255-pixel%256,pixel//256))
+    rgb=bytes(channel for pixel in range(1200) for channel in (pixel%256,255-pixel%256,pixel//256))
     input_path=tmp_path/'wire-input.bin';output_path=tmp_path/'wire-output.bin'
-    input_path.write_bytes(b'boot log\r\n'+encode(CONFIG,10,OutputConfig().payload())+encode(FRAME,11,rgb))
+    input_path.write_bytes(b'boot log\r\n'+encode(CONFIG,10,OutputConfig(pixels=(300,300,300,300)).payload(2))+encode(FRAME,11,rgb))
     result=subprocess.run([str(executable),str(input_path),str(output_path)],capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=10)
     assert result.returncode==0,result.stdout+result.stderr
     replies=Decoder().feed(output_path.read_bytes())

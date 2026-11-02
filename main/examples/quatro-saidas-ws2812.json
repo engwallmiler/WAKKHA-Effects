@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "geometry": {
+    "version": 1,
+    "lines": [
+      {
+        "name": "GPIO 18 - 120 LEDs",
+        "start": {
+          "x": 150,
+          "y": 540
+        },
+        "end": {
+          "x": 150,
+          "y": 80
+        },
+        "meters": 2,
+        "leds": 120,
+        "pixels": 120
+      },
+      {
+        "name": "GPIO 19 - 120 LEDs",
+        "start": {
+          "x": 450,
+          "y": 540
+        },
+        "end": {
+          "x": 450,
+          "y": 80
+        },
+        "meters": 2,
+        "leds": 120,
+        "pixels": 120
+      },
+      {
+        "name": "GPIO 25 - 120 LEDs",
+        "start": {
+          "x": 750,
+          "y": 540
+        },
+        "end": {
+          "x": 750,
+          "y": 80
+        },
+        "meters": 2,
+        "leds": 120,
+        "pixels": 120
+      },
+      {
+        "name": "GPIO 26 - 120 LEDs",
+        "start": {
+          "x": 1050,
+          "y": 540
+        },
+        "end": {
+          "x": 1050,
+          "y": 80
+        },
+        "meters": 2,
+        "leds": 120,
+        "pixels": 120
+      }
+    ]
+  },
+  "strips": [
+    {
+      "id": "gpio-18",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "gpio-19",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "gpio-25",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    },
+    {
+      "id": "gpio-26",
+      "enabled": true,
+      "profile": "ws2812",
+      "effect": "inherit",
+      "palette": "inherit",
+      "response": "hybrid",
+      "brightness": 1,
+      "speed": 1,
+      "phase": 0,
+      "reverse": false
+    }
+  ],
+  "show": {
+    "mode": "auto",
+    "palette": "neon",
+    "brightness": 0.8,
+    "sceneBars": 8,
+    "changeMode": "hybrid",
+    "morphBeats": 8,
+    "followStructure": true,
+    "strobes": false,
+    "layerCount": 3,
+    "compositionStyle": "hypnotic",
+    "progressive": true,
+    "energyMotion": true,
+    "peakMode": "auto",
+    "peakEvery": 8,
+    "peakLevel": 0.75,
+    "autoContinuous": true
+  }
+}

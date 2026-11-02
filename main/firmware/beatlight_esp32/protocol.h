@@ -7,7 +7,8 @@
 // payload[length] | CRC32(header without magic + payload):u32le
 namespace beatlight {
 constexpr uint16_t PIXELS = 300;
-constexpr uint16_t MAX_PAYLOAD = PIXELS * 3;
+constexpr uint8_t OUTPUTS = 4;
+constexpr uint16_t MAX_PAYLOAD = PIXELS * 3 * OUTPUTS;
 constexpr size_t HEADER = 12;
 constexpr size_t MAX_PACKET = HEADER + MAX_PAYLOAD + 4;
 enum Kind : uint8_t { HELLO=1, CONFIG=2, FRAME=3, BLACKOUT=4, INFO=0x81, ACK=0x82 };
@@ -17,10 +18,13 @@ inline uint32_t read32(const uint8_t* p) { return uint32_t(p[0]) | uint32_t(p[1]
 inline void write16(uint8_t* p, uint16_t n) { p[0]=uint8_t(n);p[1]=uint8_t(n>>8); }
 inline void write32(uint8_t* p, uint32_t n) { for (uint8_t i=0;i<4;i++) p[i]=uint8_t(n>>(8*i)); }
 inline uint32_t crc32(const uint8_t* p, size_t n) {
+    static const uint32_t table[16]={0x00000000UL,0x1db71064UL,0x3b6e20c8UL,0x26d930acUL,
+        0x76dc4190UL,0x6b6b51f4UL,0x4db26158UL,0x5005713cUL,0xedb88320UL,0xf00f9344UL,
+        0xd6d6a3e8UL,0xcb61b38cUL,0x9b64c2b0UL,0x86d3d2d4UL,0xa00ae278UL,0xbdbdf21cUL};
     uint32_t crc=0xffffffffUL;
     for (size_t i=0;i<n;i++) {
         crc^=p[i];
-        for (uint8_t b=0;b<8;b++) crc=(crc>>1) ^ (0xedb88320UL & (0UL-(crc&1UL)));
+        crc=(crc>>4)^table[crc&15];crc=(crc>>4)^table[crc&15];
     }
     return crc ^ 0xffffffffUL;
 }

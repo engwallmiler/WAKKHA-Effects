@@ -5,7 +5,7 @@ import struct
 from threading import Event,Lock,Thread
 from time import monotonic
 from beatlight.pixel.usb_protocol import (ACK,INFO,HELLO,CONFIG,FRAME,BLACKOUT,BAUD,
-    MAX_PAYLOAD,Decoder,OutputConfig,encode,device_info)
+    Decoder,OutputConfig,encode,device_info)
 
 
 @dataclass(frozen=True)
@@ -19,6 +19,8 @@ class OutputStatus:
     fps: float=0
     last_frame: float=0
     error: str=""
+    protocol: int=1
+    pixels: tuple=(300,0,0,0)
 
 
 def list_ports():
@@ -45,6 +47,7 @@ class PixelUsbOutput:
         self._thread=None;self._status=OutputStatus()
         self._pending=None;self._urgent=False
         self._sequence=0;self._decoder=Decoder()
+        self._frame_bytes=900
 
     @property
     def closed(self):return self._thread is None or not self._thread.is_alive()
@@ -78,7 +81,7 @@ class PixelUsbOutput:
         self._wake.set()
 
     def submit(self,data,created_at=None):
-        if not isinstance(data,bytes) or len(data)!=MAX_PAYLOAD:raise ValueError("São necessários 900 bytes RGB.")
+        if not isinstance(data,bytes) or len(data)!=self._frame_bytes:raise ValueError(f"São necessários {self._frame_bytes} bytes RGB para as saídas configuradas.")
         at=monotonic() if created_at is None else created_at
         now=monotonic()
         with self._lock:
@@ -133,8 +136,9 @@ class PixelUsbOutput:
                 except TimeoutError:
                     if monotonic()>=deadline:raise TimeoutError("Sem identificação BEATLIGHT-ESP32. Confira firmware, cabo USB e porta COM; feche o Monitor Serial.") from None
             verified=True
-            self._command(port,CONFIG,config.payload())
-            self._update(state="connected",firmware=info["firmware"])
+            self._command(port,CONFIG,config.payload(info['protocol']))
+            self._frame_bytes=sum(config.pixels)*3 if info['protocol']==2 else 900
+            self._update(state="connected",firmware=info["firmware"],protocol=info['protocol'],pixels=config.pixels)
             last_data=monotonic();last_send=0;blank=True
             while not self._stop.is_set():
                 self._wake.clear();now=monotonic()

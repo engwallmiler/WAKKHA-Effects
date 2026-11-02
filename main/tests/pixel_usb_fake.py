@@ -7,6 +7,8 @@ from beatlight.pixel.usb_protocol import ACK,INFO,HELLO,FRAME,CONFIG,Decoder,enc
 
 INFO_DATA={'device':'BEATLIGHT-ESP32','protocol':1,'firmware':'0.22.0','pixels':300,
            'pin':18,'order':'GRB','watchdog_ms':750}
+INFO_MULTI={'device':'BEATLIGHT-ESP32','protocol':2,'firmware':'0.37.0','pixels':300,
+            'outputs':4,'pins':[18,19,25,26],'order':'GRB','watchdog_ms':750}
 
 
 class FakeEsp32Port:

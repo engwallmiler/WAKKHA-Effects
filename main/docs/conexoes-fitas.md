@@ -50,9 +50,9 @@ O exemplo contém:
 
 Os primeiros três trechos mostram a base contínua do efeito. Os três seguintes repetem os trechos correspondentes no mesmo instante. As cópias conservam seus endereços no fio, mas não gastam posições adicionais na base visual: o efeito completo percorre os 150 pixels de origem e aparece também nas três cópias.
 
-No painel **ESP32 USB**, escolha **Uma fita - 300 pixels / 6 barras**. O aplicativo envia um único quadro de 900 bytes RGB, na ordem dos seis trechos. O firmware 0.22 permanece compatível e não precisa ser regravado. A versão atual transmite uma única fita lógica de 1 a 300 pixels; várias fitas lógicas no desenho não criam novas saídas físicas no ESP32. Nas fitas menores, os endereços não usados são enviados apagados.
+No painel **ESP32 USB**, associe **Uma fita - 300 pixels / 6 barras** a uma saída. Seus 900 bytes RGB seguem a ordem dos seis trechos. Com o firmware 0.37, há quatro saídas independentes, GPIO 18/19/25/26, e cada uma pode transmitir uma fita lógica de 1 a 300 pixels. No firmware legado 0.22, somente GPIO 18 funciona. [Ligação e atualização](esp32-quatro-saidas.md).
 
-O segundo exemplo, [fitas-simetricas-continuas.json](../examples/fitas-simetricas-continuas.json), mostra duas fitas lógicas de 300 pixels, cada uma com três trechos, com cópia entre as fitas inteiras. A prévia mostra ambas; a saída USB permite selecionar uma delas.
+O segundo exemplo, [fitas-simetricas-continuas.json](../examples/fitas-simetricas-continuas.json), mostra duas fitas lógicas de 300 pixels, cada uma com três trechos, com cópia entre as fitas inteiras. A prévia mostra ambas; elas podem ser associadas a saídas diferentes. Também é possível associar a mesma fita lógica a mais de um GPIO para duplicar exatamente o sinal físico.
 
 ## Resolução, limites e salvamento
 

@@ -36,8 +36,11 @@ with tempfile.TemporaryDirectory(prefix='usb-size-',dir=root/'.runtime') as fold
     PixelProjectStore(directory/'pixel-studio.json').save(project)
     (directory/'pixel-usb.json').write_text(json.dumps(dict(strip_id='physical-120',brightness=64,milliamps=2000)),encoding='utf-8')
     window=MainWindow(SettingsStore(directory/'preferences.json'),Settings(source='synthetic'))
-    panel=window.pixel_page.usb;device=FakeEsp32Port();device.frames=deque(maxlen=128);device.commands=deque(maxlen=256)
-    panel.runtime=PixelUsbOutput(lambda name:device);window.show();window._navigate(9)
+    panel=window.pixel_page.usb;devices=[]
+    def open_device(_):
+        global device
+        device=FakeEsp32Port();device.frames=deque(maxlen=128);device.commands=deque(maxlen=256);devices.append(device);return device
+    panel.runtime=PixelUsbOutput(open_device);window.show();window._navigate(9)
 
     def pump(condition,timeout=20):
         end=monotonic()+timeout
@@ -54,6 +57,10 @@ with tempfile.TemporaryDirectory(prefix='usb-size-',dir=root/'.runtime') as fold
     def frames(count=5):
         initial=panel.runtime.status().frames;pump(lambda:panel.runtime.status().frames>=initial+count)
         return bytes(device.frames[-1])
+
+    def reconnect():
+        pump(lambda:panel.runtime.closed and panel.connect_button.text()=='Conectar ESP32')
+        panel.connect_button.click();pump(lambda:panel.runtime.status().state=='connected')
 
     try:
         pump(lambda:window.pixel_page.bridge.ready_state and not window.busy)
@@ -75,12 +82,13 @@ with tempfile.TemporaryDirectory(prefix='usb-size-',dir=root/'.runtime') as fold
         assert js('BeatlightPixel.outputFrame("physical-120").data.length')==360
         report.update(short_output_lit=True,unused_addresses_zero=True)
         for _ in range(6):app.processEvents();sleep(.01)
-        assert window.grab().save(str(root/'preview-fita-120-v0.36.png'))
+        assert window.grab().save(str(root/f'preview-fita-120-v{__version__}.png'))
         panel.off.click();pump(lambda:device.commands[-1].kind==BLACKOUT)
         pump(lambda:panel.source.isEnabled());panel.source.setCurrentIndex(panel.source.findData('reference-300'))
+        reconnect();pump(lambda:panel.enable.isEnabled())
         panel.enable.click();payload=frames();assert any(payload[360:])
         panel.off.click();pump(lambda:panel.source.isEnabled())
-        panel.source.setCurrentIndex(panel.source.findData('physical-120'));panel.enable.click()
+        panel.source.setCurrentIndex(panel.source.findData('physical-120'));reconnect();pump(lambda:panel.enable.isEnabled());panel.enable.click()
         payload=frames();assert any(payload[:360]) and payload[360:]==bytes(540)
         report['switch_300_to_120_clears_tail']=True
         window.showMinimized();payload=frames(8);assert any(payload[:360]) and not any(payload[360:])
@@ -96,10 +104,10 @@ with tempfile.TemporaryDirectory(prefix='usb-size-',dir=root/'.runtime') as fold
         report.update(reload_preserves_120=True,reload_requires_manual_activation=True,frames=panel.runtime.status().frames,fps=panel.runtime.status().fps)
     finally:
         window.timer.start();window.close();pump(lambda:window.closed_ready)
-    assert device.closed and device.commands[-1].kind==BLACKOUT
+    assert all(port.closed and port.commands[-1].kind==BLACKOUT for port in devices)
     saved=window.pixel_page.bridge.store.load()
     assert saved['geometry']==project['geometry'] and saved['strips'][1]['profile']=='ws2812'
     assert json.loads((directory/'pixel-usb.json').read_text(encoding='utf-8'))['strip_id']=='physical-120'
-    report.update(persistence_verified=True,closed_cleanly=True,passed=True)
+    report.update(persistence_verified=True,legacy_firmware_022_verified=True,closed_cleanly=True,passed=True)
 (root/'docs'/f'resultado-pixel-strip-size-v{__version__}.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps(report,ensure_ascii=False,indent=2))

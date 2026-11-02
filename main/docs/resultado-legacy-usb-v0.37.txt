@@ -1,0 +1,29 @@
+[22780:21836:1102/135758.044:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[22780:21836:1102/135758.044:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[22780:21836:1102/135758.108:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[22780:21836:1102/135758.108:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[22780:21836:1102/135758.108:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[22780:21836:1102/135758.108:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[22780:12480:1102/135801.371:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[22780:12480:1102/135801.372:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[22780:12480:1102/135801.372:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+{
+  "version": "0.37.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "preparation_preserves_layout": true,
+  "selected_source_preserved": true,
+  "real_pixels": 120,
+  "short_output_lit": true,
+  "unused_addresses_zero": true,
+  "switch_300_to_120_clears_tail": true,
+  "minimized_output_continues": true,
+  "reload_preserves_120": true,
+  "reload_requires_manual_activation": true,
+  "frames": 18,
+  "fps": 10.856453558501887,
+  "persistence_verified": true,
+  "legacy_firmware_022_verified": true,
+  "closed_cleanly": true,
+  "passed": true
+}

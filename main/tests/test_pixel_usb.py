@@ -5,7 +5,8 @@ import pytest
 from beatlight.pixel.usb_protocol import (ACK,HELLO,CONFIG,FRAME,BLACKOUT,HEADER,MAGIC,
     Decoder,Packet,OutputConfig,encode,device_info,rgb_payload)
 from beatlight.pixel.usb import PixelUsbOutput
-from pixel_usb_fake import FakeEsp32Port,INFO_DATA
+from pixel_usb_fake import FakeEsp32Port,INFO_DATA,INFO_MULTI
+from beatlight.pixel.usb_protocol import outputs_payload,PINS
 
 
 def wait(condition,timeout=2):
@@ -73,9 +74,9 @@ def test_invalid_short_strip_counts_are_rejected(pixels):
 @pytest.fixture
 def output():
     ports=[];runtimes=[]
-    def create(**options):
+    def create(config=OutputConfig(),**options):
         port=FakeEsp32Port(**options);runtime=PixelUsbOutput(lambda name:port)
-        ports.append(port);runtimes.append(runtime);runtime.connect('FAKE-COM',OutputConfig())
+        ports.append(port);runtimes.append(runtime);runtime.connect('FAKE-COM',config)
         return runtime,port
     yield create
     for runtime in runtimes:runtime.disconnect()
@@ -143,3 +144,55 @@ def test_incompatible_device_never_receives_pixel_frames(output):
     runtime,port=output(info={**INFO_DATA,'pixels':150});wait(lambda:runtime.closed)
     assert runtime.status().state=='error' and not port.frames
     assert [c.kind for c in port.commands]==[HELLO]
+
+
+@pytest.mark.parametrize('counts',[(120,120,120,120),(300,300,300,300),(0,120,0,300),(1,0,0,0)])
+def test_four_output_configuration_and_rgb_order_with_no_unused_wire_addresses(counts):
+    config=OutputConfig(pixels=counts)
+    assert struct.unpack('<4HBH',config.payload(2))==(*counts,64,2000)
+    sources=tuple(f's{pin}' if count else None for pin,count in zip(PINS,counts))
+    bundle={'version':2,'outputs':[{'id':source,'profile':'ws2812','model':'RGB','pixels':count,'leds':count,'data':[i,12,255]*count} if count else None for i,(source,count) in enumerate(zip(sources,counts))]}
+    data=outputs_payload(bundle,sources,counts,2)
+    assert data==b''.join(bytes([i,12,255])*count for i,count in enumerate(counts))
+    assert len(data)==sum(counts)*3
+
+
+@pytest.mark.parametrize('counts',[(0,0,0,0),(301,1,1,1),(True,0,0,0),(-1,0,0,0),(120,),[120,0,0,0]])
+def test_invalid_four_output_lengths_are_rejected(counts):
+    with pytest.raises(ValueError):OutputConfig(pixels=counts)
+
+
+@pytest.mark.parametrize('change',[{'pins':[18,19,25,27]},{'outputs':3},{'protocol':3},{'pixels':301}])
+def test_wrong_multichannel_device_is_rejected(change):
+    with pytest.raises(ValueError):device_info(json.dumps({**INFO_MULTI,**change}).encode())
+
+
+def test_four_outputs_use_one_atomic_ack_and_latest_frame_queue(output):
+    port=FakeEsp32Port(info=INFO_MULTI,hold_frames=True);runtime=PixelUsbOutput(lambda _:port)
+    try:
+        runtime.connect('FAKE-FOUR',OutputConfig(pixels=(120,120,120,120)))
+        wait(lambda:runtime.status().state=='connected')
+        assert runtime.status().protocol==2 and runtime.status().pixels==(120,)*4
+        runtime.arm(True);runtime.submit(bytes([10])*1440);wait(lambda:len(port.frames)==1)
+        for level in range(11,50):runtime.submit(bytes([level])*1440)
+        port.allow_ack.set();wait(lambda:runtime.status().frames==2)
+        assert port.frames==[bytes([10])*1440,bytes([49])*1440]
+        assert runtime.status().dropped>=37
+        runtime.arm(False);wait(lambda:port.commands[-1].kind==BLACKOUT)
+    finally:runtime.disconnect();wait(lambda:runtime.closed)
+
+
+def test_old_firmware_cannot_silently_drop_the_three_new_outputs(output):
+    runtime,port=output(config=OutputConfig(pixels=(120,120,0,0)))
+    wait(lambda:runtime.closed)
+    assert 'novo firmware' in runtime.status().error
+    assert all(packet.kind!=CONFIG and packet.kind!=FRAME for packet in port.commands)
+
+
+def test_changed_or_disabled_mapping_cannot_be_packed_as_a_valid_frame():
+    frame={'id':'a','profile':'ws2812','model':'RGB','pixels':120,'leds':120,'data':[1,2,3]*120}
+    bundle={'version':2,'outputs':[frame,None,None,None]}
+    assert len(outputs_payload(bundle,('a',None,None,None),(120,0,0,0),1))==900
+    with pytest.raises(ValueError,match='quantidade'):outputs_payload(bundle,('a',None,None,None),(300,0,0,0),2)
+    with pytest.raises(ValueError,match='desativada'):outputs_payload(bundle,(None,None,None,None),(0,0,0,0),2)
+    with pytest.raises(ValueError):outputs_payload(bundle,('wrong',None,None,None),(120,0,0,0),2)

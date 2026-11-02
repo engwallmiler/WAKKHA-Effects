@@ -1,5 +1,7 @@
 # ESP32 USB + WS2812: uma fita com 1 a 300 LEDs individuais
 
+**Para as quatro saídas da versão 0.37, use o [novo guia de GPIO 18, 19, 25 e 26](esp32-quatro-saidas.md).** Este documento conserva a montagem de uma saída e as instruções do firmware legado 0.22. O código `.ino` atual já corresponde à versão de quatro saídas; o binário 0.22 permanece disponível para a montagem antiga.
+
 Aplicativo 0.36, compatível com o firmware USB 0.22 já fornecido; não é necessário regravá-lo para os efeitos novos ou para usar uma fita menor. Placa confirmada: **ESP32 DevKit / ESP32-WROOM-32**. Fita RGB WS2812/WS2812B de **5 V**, até 300 LEDs. Saída de dados: **GPIO 18**, ordem física **GRB**. Este firmware não é destinado a ESP32-S3/C3 nem a fitas RGBW/12 V. [Passo a passo para 120 LEDs](fitas-variaveis-v0.36.md).
 
 O computador executa o mesmo motor do Pixel Studio: 33 efeitos, Orgânico, Auto Show, transições por compassos, cores, baixo/densidade, estrutura musical e DROP AGORA. Envia 300 triplos RGB por USB, com os endereços excedentes apagados quando a fita é menor. O ESP32 recebe cada quadro completo e gera o sinal da fita. **Um pixel corresponde a um LED**, sem agrupamentos de três.

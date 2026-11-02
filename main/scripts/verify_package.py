@@ -57,11 +57,18 @@ with ZipFile(args.wheel) as archive:
     firmware = root/'firmware/beatlight_esp32/dist/beatlight-wroom32-ws2812-300-v0.22.0.bin'
     firmware_hash = hashlib.sha256(firmware.read_bytes()).hexdigest()
     assert firmware_hash=='9b46db6cc3661fd19cc909819c064c2d8e68041c663088c98fd792a88cec4cff'
+    multi=json.loads((root/'docs/resultado-esp32-v0.37.json').read_text(encoding='utf-8'))
+    multi_path=root/multi['merged_file']
+    assert hashlib.sha256(multi_path.read_bytes()).hexdigest()==multi['sha256']
+    assert multi_path.stat().st_size==multi['bytes'] and multi['source_matches_build']
+    for filename,digest in multi['source_sha256'].items():
+        assert hashlib.sha256((root/filename).read_bytes()).hexdigest()==digest,filename
 report = dict(passed=True,version=expected_version,editable_version=version('beatlight-dmx'),
     files_verified=len(checked),wheel=str(args.wheel),wheel_sha256=hashlib.sha256(args.wheel.read_bytes()).hexdigest(),
     verified=checked,unchanged_from_reference=unchanged,firmware_sha256=firmware_hash,
     music_verified=music_verified if args.reference_wheel else [],
     music_files_verified=len(music_verified) if args.reference_wheel else 0,
-    firmware_bytes=firmware.stat().st_size,physical_device_used=False)
+    firmware_bytes=firmware.stat().st_size,four_output_firmware_sha256=multi['sha256'],
+    four_output_firmware_bytes=multi['bytes'],four_output_sources_verified=True,physical_device_used=False)
 args.out.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({k:v for k,v in report.items() if k not in ('verified','unchanged_from_reference','music_verified')},indent=2))

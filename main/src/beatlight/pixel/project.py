@@ -12,6 +12,15 @@ EFFECTS={"inherit","ambient","pulse","chase","mirror","wave","helix","rain","dro
          "liquid","crossflow","chromatide"}
 PALETTES={"inherit","deep","fire","ice","acid","mono","red","green","blue","magenta","cyan","amber","primaries","neon","sunset","ocean"}
 MAX_BYTES=500_000
+BAR_CHOICES={1,2,4,8,16,32,64,128}
+
+
+def valid_single_rules(rules):
+    if not isinstance(rules,dict) or len(rules)>len(EFFECTS)-1:return False
+    for effect,rule in rules.items():
+        if effect not in EFFECTS-{'inherit'} or not isinstance(rule,dict) or set(rule)!={'enabled','bars'}:return False
+        if type(rule['enabled']) is not bool or type(rule['bars']) not in (int,float) or rule['bars'] not in BAR_CHOICES|{0}:return False
+    return any(rules.get(effect,{}).get('enabled',True) for effect in EFFECTS-{'inherit'})
 
 
 def number(value,low,high):
@@ -67,10 +76,11 @@ def validate_project(data):
     choices={"palette":PALETTES-{"inherit"},"colorBehavior":{"scene","spectrum","beat","bar","solid"},
              "colorMode":{"rgb","rgbw"},"whiteTone":{"warm","neutral","cool"},"kickMode":{"beat","bar","off"},
              "dropStyle":{"impact","turbo","prism"},"strobeMode":{"drop","beat","bar"},"strobeColor":{"rgbw","rgb","white"},
-             "meter":{3,4,6},"sceneBars":{1,2,4,8,16},"dropBars":{4,8,16},"dropRate":{1,2,4},
+             "meter":{3,4,6},"sceneBars":BAR_CHOICES,"dropBars":{4,8,16},"dropRate":{1,2,4},
              "changeMode":{"bars","hybrid","elements","hold"},"morphBeats":{0,.5,1,2,4,8,16},
              "layerCount":{2,3,4},"peakMode":{"auto","on","off"},"peakEvery":{4,8},
              "compositionStyle":{"hypnotic","varied","continuous"},"regularStyle":{"hypnotic","varied"},
+             "effectMix":{"layers","single"},
              "peakStyle":{"flood","wave","blocks"},"peakColor":{"white","palette"},
              "mode":EFFECTS-{"inherit","dropseq"}|{"organic","auto"}}
     for key,value in show.items():
@@ -82,6 +92,8 @@ def validate_project(data):
             valid=type(value) is bool
         elif key=="solidColor":
             valid=isinstance(value,list) and len(value)==3 and all(type(v) is int and 0<=v<=255 for v in value)
+        elif key=='singleRules':
+            valid=valid_single_rules(value)
         else:
             valid=False
         if not valid:

@@ -14,7 +14,7 @@ import ctypes
 from ctypes import wintypes
 import json
 from pathlib import Path
-import sys
+import sys,tempfile,zlib
 from time import monotonic,process_time,sleep
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFontDatabase
@@ -30,9 +30,11 @@ from beatlight.ui.theme import STYLE
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--seconds',type=float,default=60)
 parser.add_argument('--music-hours',type=float,default=8)
+parser.add_argument('--single',action='store_true')
 args=parser.parse_args()
 if not 10<=args.seconds<=43200 or not 1<=args.music_hours<=24:parser.error('Use 10–43200 segundos reais e 1–24 horas musicais.')
-root=Path(__file__).resolve().parents[1];directory=root/'.runtime/pixel-endurance-qa'
+root=Path(__file__).resolve().parents[1];session=tempfile.TemporaryDirectory(prefix='pixel-endurance-',dir=root/'.runtime');directory=Path(session.name)
+assert directory.resolve().is_relative_to(root/'.runtime')
 sys.path.insert(0,str(root/'tests'))
 from pixel_usb_fake import FakeEsp32Port
 
@@ -56,7 +58,9 @@ app=QApplication([]);app.setStyle('Fusion');app.setStyleSheet(STYLE)
 if os.name=='nt':
     for name in ('segoeui.ttf','segoeuib.ttf','seguisym.ttf'):QFontDatabase.addApplicationFont('C:/Windows/Fonts/'+name)
 store=PixelProjectStore(directory/'pixel-studio.json')
-example=json.loads((root/'examples/uma-fita-300-6-barras.json').read_text(encoding='utf-8'));store.save(example)
+example=json.loads((root/'examples/uma-fita-300-6-barras.json').read_text(encoding='utf-8'))
+if args.single:example['show'].update(effectMix='single',sceneBars=32,morphBeats=2,changeMode='bars')
+store.save(example)
 expected_sources=len(example['patch']['runs'])+len(example['strips'])-sum(len(run['segments']) for run in example['patch']['runs'])
 window=MainWindow(SettingsStore(directory/'preferences.json'),Settings(source='synthetic'))
 device=FakeEsp32Port();panel=window.pixel_page.usb;panel.runtime=PixelUsbOutput(lambda name:device)
@@ -98,7 +102,7 @@ def publish():
     window.pixel_page.bridge.send_music(packet)
 feed.timeout.connect(publish)
 
-report={'version':__version__,'physical_device_used':False,'serial_emulated_only':True,
+report={'version':__version__,'physical_device_used':False,'serial_emulated_only':True,'single_mode':args.single,
   'requested_wall_seconds':args.seconds,'requested_musical_hours':args.music_hours,'real_six_hour_run':args.seconds>=21600}
 try:
     pump(lambda:window.pixel_page.bridge.ready_state and not window.busy and bool(window.devices))
@@ -107,7 +111,7 @@ try:
     settle(.5)
     # Check the actual controls and make a reviewable image before starting audio.
     js('(document.getElementById("presentationBtn").click(),document.getElementById("geometryFold").open=true,document.getElementById("connectionsFold").open=true,document.getElementById("runSelect").value='+json.dumps(example['patch']['runs'][0]['id'])+',document.getElementById("runSelect").dispatchEvent(new Event("change")),document.getElementById("connectionsFold").scrollIntoView({block:"center"}),true)')
-    settle(.5);window.grab().save(str(root/'preview-pixel-connections.png'))
+    settle(.5);window.grab().save(str(root/f'preview-pixel-connections-endurance-v{__version__}.png'))
     js('(document.getElementById("presentationBtn").click(),document.getElementById("stage").scrollIntoView({block:"center"}),true)')
     # Force 50 ms disk writes in the worker, never in the GUI thread.
     save=store.save
@@ -115,10 +119,13 @@ try:
     window.pixel_page.bridge.writer.store.save=slow_save
     window.source_combo.setCurrentIndex(window.source_combo.findData('synthetic'));window._start()
     pump(lambda:not window.busy and window.runtime.status().state=='running')
-    panel.runtime.connect('FAKE-COM',OutputConfig());pump(lambda:panel.runtime.status().state=='connected')
     panel.last_sources=-10;panel._tick();pump(lambda:panel.source.count()==expected_sources)
+    panel.port.clear();panel.port.addItem('ESP32 EMULADO','FAKE-COM');panel.connect_button.click();pump(lambda:panel.runtime.status().state=='connected')
     js('(BeatlightPixel.setInput("live"),BeatlightPixel.arm(true),true)')
+    window.pixel_page.bridge._music_serial=2_147_483_645
     initial=status()['performance'];started=monotonic();cpu_start=process_time();feed.start();publish();settle(.1)
+    if args.single:js('(BeatlightPixel.markCueReference(),true)')
+    fingerprints=set()
     panel._arm(True);pump(lambda:bool(device.frames));freeze_at=None;checked=False;last_sample=-10;last_edit=-10;render_peak=0;renderer_pid=0;previous_render=-1
     while monotonic()-started<args.seconds:
         app.processEvents();sleep(.003);elapsed=monotonic()-started
@@ -127,8 +134,8 @@ try:
             js(f'(document.getElementById("lineStartX").value="{value}",document.getElementById("lineForm").dispatchEvent(new Event("submit",{{cancelable:true}})),true)')
         if freeze_at is None and elapsed>=args.seconds/2:
             freeze_at=elapsed
-            window.pixel_page.webpage.runJavaScript('(()=>{const until=performance.now()+450;while(performance.now()<until){};return true})()')
-        if freeze_at is not None and not checked and elapsed-freeze_at>1:
+            window.pixel_page.webpage.runJavaScript('(()=>{const until=performance.now()+1100;while(performance.now()<until){};return true})()')
+        if freeze_at is not None and not checked and elapsed-freeze_at>1.5:
             assert not panel.runtime.status().armed and device.commands[-1].kind==BLACKOUT
             report['renderer_stall_disarms_output']=True;report['stale_frames_rejected']=True
             panel._arm(True);checked=True
@@ -138,7 +145,10 @@ try:
             assert not window.pixel_page.render_errors,list(window.pixel_page.render_errors)
             assert p['allocations']==initial['allocations'] and p['rootAllocations']==initial['rootAllocations'],(initial,p)
             assert p['signal_bytes']==initial['signal_bytes'] and p['history']<=12
+            if args.single:assert p['retainedSnapshotBytes']==0 and not p.get('captures',0) and len(s['patternSources'])<=2
             assert window.pixel_page.bridge.writer.pending<=1
+            assert p['direction_bags']<100 and p['direction_items']<1024
+            if device.frames and len(fingerprints)<32:fingerprints.add(zlib.crc32(device.frames[-1]))
             assert js('(()=>{const s=BeatlightPixel.renderFrame().strips;return s.every(s=>s.data.every(v=>Number.isInteger(v)&&v>=0&&v<=255))&&s[0].data.every((v,i)=>v===s[5].data[i])&&s[1].data.every((v,i)=>v===s[4].data[i])&&s[2].data.every((v,i)=>v===s[3].data[i])})()')
             renderer_pid=getattr(window.pixel_page.webpage,'renderProcessPid',lambda:0)()
             heap=js('(performance.memory?{used:performance.memory.usedJSHeapSize,total:performance.memory.totalJSHeapSize}:null)')
@@ -152,9 +162,17 @@ try:
       usb_frames=panel.runtime.status().frames,usb_fps=panel.runtime.status().fps,project_writes=window.pixel_page.bridge.writer.writes,
       project_replacements=window.pixel_page.bridge.writer.replaced,renderer_pid=renderer_pid,
       stable_buffers=True,mirror_checks=True,samples=list(samples))
+    report['delivery_ids_wrapped_safely']=window.pixel_page.bridge._music_serial<2_147_483_645
+    report['distinct_sampled_frames']=len(fingerprints)
+    assert report['delivery_ids_wrapped_safely'] and len(fingerprints)>1
     assert checked and report['musical_coalesced']>0
     assert not window.pixel_page.bridge.writer.error
     assert report['dropped_audio_blocks']==0,report['dropped_audio_blocks']
+    diagnostics=window.output_journal.snapshot()
+    assert len(diagnostics['events'])<=1000 and len(diagnostics['health'])<=60
+    assert not diagnostics['disk_error'] and not diagnostics['writes_lost']
+    report['diagnostic_events']=len(diagnostics['events']);report['diagnostic_health_samples']=len(diagnostics['health'])
+    report['diagnostic_buffers_bounded']=True;report['diagnostic_writes_lost']=diagnostics['writes_lost']
     feed.stop();blocks_before=window.runtime.status().blocks;panel.reload.click()
     pump(lambda:window.pixel_page.bridge.ready_state and not window.pixel_page._reloading)
     assert not panel.runtime.status().armed and window.runtime.status().state=='running'
@@ -164,5 +182,6 @@ try:
 finally:
     feed.stop();window.close();pump(lambda:window.closed_ready,20)
 report['closed_cleanly']=True;report['passed']=True
+assert directory.resolve().is_relative_to(root/'.runtime');session.cleanup()
 (root/'docs'/f'resultado-pixel-endurance-v{__version__}.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({key:value for key,value in report.items() if key!='samples'},ensure_ascii=False,indent=2))

@@ -1,0 +1,141 @@
+[12472:9908:1105/213103.560:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[12472:9908:1105/213103.560:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[12472:9908:1105/213103.602:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[12472:9908:1105/213103.602:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[12472:9908:1105/213103.602:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[12472:9908:1105/213103.602:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[12472:28592:1105/213113.514:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[12472:28592:1105/213113.516:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[12472:28592:1105/213113.516:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[12472:28592:1105/213113.516:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[12472:28592:1105/213113.516:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[12472:28592:1105/213113.516:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[12472:28592:1105/213113.516:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/command_buffer/service/shared_image/shared_image_manager.cc:521] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+{
+  "version": "0.40.0",
+  "physical_device_used": false,
+  "layouts": [
+    {
+      "area": "stage",
+      "stage": [
+        19,
+        105,
+        1156,
+        457
+      ],
+      "panel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "effects",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "layout",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "library",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    }
+  ],
+  "copy_checks": 12,
+  "fullscreen_escape_f11_button": true,
+  "complete_frame_parity": true,
+  "single_repertoire_and_reference_visible": true,
+  "minimum_window_layout": {
+    "stage": [
+      19,
+      128,
+      456,
+      140
+    ],
+    "panel": [
+      496,
+      50,
+      350,
+      450
+    ],
+    "viewport": [
+      854,
+      508
+    ],
+    "scroll": [
+      854,
+      508
+    ]
+  },
+  "reload_exits_fullscreen": true,
+  "errors": [],
+  "passed": true,
+  "closed_cleanly": true
+}

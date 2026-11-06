@@ -1,0 +1,39 @@
+{
+  "version": "0.38.0",
+  "asset": "beatlight_dmx-0.37.0-py3-none-any.whl",
+  "seed": 1337,
+  "hardware_used": false,
+  "software_renderer": true,
+  "phases": [
+    {
+      "mode": "auto",
+      "seconds": 6.0,
+      "frames": 114,
+      "fps": 19.0,
+      "pattern": "Aurora + Maré + Onda Vertical",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 11.476315789349508,
+      "renderer_cpu_percent": 38.02083333333333,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "liquid",
+      "seconds": 6.0,
+      "frames": 111,
+      "fps": 18.5,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 11.651351351307722,
+      "renderer_cpu_percent": 37.5,
+      "allocations": 0,
+      "errors": []
+    }
+  ]
+}

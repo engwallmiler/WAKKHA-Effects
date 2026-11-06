@@ -1,0 +1,180 @@
+[23852:8056:1105/190331.210:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[23852:8056:1105/190331.210:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[23852:8056:1105/190331.260:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[23852:8056:1105/190331.260:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[23852:8056:1105/190331.260:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[23852:8056:1105/190331.260:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.39.0",
+  "asset": "current",
+  "seed": 1337,
+  "hardware_used": false,
+  "software_renderer": true,
+  "phases": [
+    {
+      "mode": "auto",
+      "seconds": 6.0,
+      "frames": 180,
+      "fps": 30.0,
+      "pattern": "Aurora + Maré + Onda Vertical",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 2.414444444080194,
+      "renderer_cpu_percent": 13.28125,
+      "parent_cpu_percent": 79.6875,
+      "renderer_memory": {
+        "working_mib": 194.68359375,
+        "private_mib": 124.46875
+      },
+      "parent_memory": {
+        "working_mib": 275.65234375,
+        "private_mib": 1139.859375
+      },
+      "texture_bytes": 3072,
+      "ticks": 180,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 30,
+      "readback_pixels": 30240000,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "liquid",
+      "seconds": 6.0,
+      "frames": 180,
+      "fps": 30.0,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 2.2966666667825644,
+      "renderer_cpu_percent": 25.78125,
+      "parent_cpu_percent": 86.19791666666666,
+      "renderer_memory": {
+        "working_mib": 197.51171875,
+        "private_mib": 127.18359375
+      },
+      "parent_memory": {
+        "working_mib": 277.828125,
+        "private_mib": 1141.9921875
+      },
+      "texture_bytes": 3072,
+      "ticks": 180,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 30,
+      "readback_pixels": 30240000,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "economy",
+      "seconds": 6.0,
+      "frames": 90,
+      "fps": 15.0,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        480,
+        224
+      ],
+      "draw_ms": 1.6500000004967041,
+      "renderer_cpu_percent": 17.1875,
+      "parent_cpu_percent": 84.11458333333334,
+      "renderer_memory": {
+        "working_mib": 198.32421875,
+        "private_mib": 129.18359375
+      },
+      "parent_memory": {
+        "working_mib": 274.37109375,
+        "private_mib": 1139.859375
+      },
+      "texture_bytes": 1920,
+      "ticks": 90,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 15,
+      "readback_pixels": 9676800,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "inactive",
+      "seconds": 6.0,
+      "frames": 0,
+      "fps": 0.0,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        480,
+        224
+      ],
+      "draw_ms": 0.0,
+      "renderer_cpu_percent": 6.770833333333333,
+      "parent_cpu_percent": 28.125,
+      "renderer_memory": {
+        "working_mib": 198.95703125,
+        "private_mib": 129.89453125
+      },
+      "parent_memory": {
+        "working_mib": 276.53515625,
+        "private_mib": 1141.9921875
+      },
+      "texture_bytes": 1920,
+      "ticks": 23,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 15,
+      "readback_pixels": 0,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "minimized",
+      "seconds": 6.0,
+      "frames": 0,
+      "fps": 0.0,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        480,
+        224
+      ],
+      "draw_ms": 0.0,
+      "renderer_cpu_percent": 0.0,
+      "parent_cpu_percent": 2.34375,
+      "renderer_memory": {
+        "working_mib": 197.109375,
+        "private_mib": 130.02734375
+      },
+      "parent_memory": {
+        "working_mib": 274.578125,
+        "private_mib": 1141.91796875
+      },
+      "texture_bytes": 1920,
+      "ticks": 0,
+      "preview": {
+        "visible": false,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 15,
+      "readback_pixels": 0,
+      "allocations": 0,
+      "errors": []
+    }
+  ]
+}

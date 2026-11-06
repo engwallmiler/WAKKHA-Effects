@@ -1,4 +1,14 @@
-# Pixel Studio integrado — 0.30.0
+# Pixel Studio integrado — 0.41.0
+
+**Logs da saída** abre um histórico separado com motivos de desarme, contexto USB/motor/áudio, horário local do PC e exportação. Atrasos breves descartam quadros antigos e permitem retomar dentro de 750 ms desde o último válido; falhas persistentes exigem reativação manual. Diálogos Qt preservam o envio no Windows. [Investigação e operação 0.41](logs-saida-v0.41.md).
+
+**EFEITO ÚNICO** oferece um padrão estável por vez, com dois somente na fusão. Personalize repertório e duração por efeito, incluindo 32/64/128 compassos. **Marcar compasso 1** ancora a contagem das trocas e pode ser aprendido por MIDI, preservando os mapeamentos anteriores. [Guia 0.40](efeito-unico-e-compassos-v0.40.md) · [Auditoria de recursos](auditoria-buffers-v0.40.md).
+
+O palco permanece visível em todas as abas, com ajustes laterais e rolagem separada. **Palco / Fechar ajustes** amplia a prévia. O seletor de qualidade altera apenas o desenho; o ESP32 recebe todos os LEDs. A tela cheia tem saída nativa por **Esc**, **F11** ou botão, com restauração da janela anterior. [Organização e medições 0.39](interface-pixel-v0.39.md).
+
+**Controladora MIDI** reúne dez funções com Learn, salvamento explícito e retorno de LEDs. Há também **Comandos manuais** no Pixel Studio para manter Groove, Breakdown ou Build-up e agendar outra combinação no próximo compasso. Auto Show, Orgânico, Contínuo ou um novo drop liberam a estrutura mantida. [Operação com X1 MK1](midi-x1-mk1.md).
+
+A prévia usa agenda corrigida e amostragem de desenho limitada, conservando todos os pixels na saída física. Lighting Studio e Stage Preview começam desabilitados e podem ser reativados em Configurações. [Medições e limites](otimizacao-pixel-v0.38.md).
 
 AUTO/ORGÂNICO têm 12 desenhos de drop, memória própria por estrutura e paletas musicais progressivas. Em **Automação**, use **Desenhos de drop** e **Cores no automático** para controlar os novos recursos. Projetos anteriores recebem ambos ativados, com geometria e conexões preservadas. [Guia completo](direcao-visual-v0.30.md).
 
@@ -90,7 +100,7 @@ O modelo inicial usa seis linhas de 5 m, 600 LEDs e 200 pixels cada. Os três LE
 
 ## Salvar, importar e exportar
 
-`pixel-studio.json` fica no diretório das preferências/logs do BEATLIGHT. O projeto é independente do arquivo `preferences.json` v13, que continua cuidando de áudio, Link e palco anterior. As gravações são validadas e atômicas em uma thread própria; há somente uma gravação ativa e a última edição pendente. Um projeto inválido não substitui o último válido. O aviso de salvamento só confirma a escrita concluída.
+`pixel-studio.json` fica no diretório das preferências/logs do BEATLIGHT. O projeto é independente do arquivo `preferences.json` v14, que continua cuidando de áudio, Link e palco anterior, e do perfil MIDI `midi-controls.json`. As preferências antigas migram automaticamente, deixando os painéis PAR/moves desabilitados. As gravações são validadas e atômicas em uma thread própria; há somente uma gravação ativa e a última edição pendente. Um projeto inválido não substitui o último válido. O aviso de salvamento só confirma a escrita concluída.
 
 **Exportar projeto de fitas** inclui geometria, identificadores, continuidade, simetria, controles por fita e controles globais. **Importar projeto de fitas** recupera esses dados. Ativação, blackout, pausa e seleção de entrada ao vivo/demonstração não são reativados pelo projeto. O fechamento também salva a última edição, mesmo se o usuário não aguardou o pequeno intervalo do salvamento automático.
 

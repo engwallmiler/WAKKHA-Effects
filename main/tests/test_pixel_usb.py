@@ -123,6 +123,26 @@ def test_missing_ack_fails_closed_and_requires_manual_reconnection(output):
     assert port.closed and port.commands[-1].kind==BLACKOUT
 
 
+def test_usb_diagnostics_record_fault_command_and_device_uptime_without_frame_spam(output):
+    runtime,port=output(hold_frames=True);events=[]
+    runtime.set_event_sink(lambda level,code,message,**context:events.append((level,code,context)))
+    wait(lambda:runtime.status().state=='connected')
+    assert runtime.status().uptime_ms==123 and runtime.status().ack_ms>=0
+    runtime.arm(True);runtime.submit(bytes(900));wait(lambda:runtime.closed)
+    fault=next(row for row in events if row[1]=='usb.transport_error')
+    assert fault[0]=='ERROR' and fault[2]['command']==FRAME and fault[2]['port']=='FAKE-COM'
+    assert fault[2]['exception']=='TimeoutError' and fault[2]['bytes']==900
+    assert len(events)<12 and not runtime.status().armed
+
+
+def test_broken_diagnostic_sink_cannot_stop_usb_frames(output):
+    runtime,port=output();wait(lambda:runtime.status().state=='connected')
+    def broken(*args,**kwargs):raise OSError('Disco cheio')
+    runtime.set_event_sink(broken);runtime.arm(True);runtime.submit(bytes([1])*900)
+    wait(lambda:runtime.status().frames==1)
+    assert runtime.status().armed and not runtime.status().error
+
+
 def test_stale_producer_is_blacked_out_and_late_callbacks_are_rejected(output):
     runtime,port=output();wait(lambda:runtime.status().state=='connected')
     runtime.arm(True);runtime.submit(bytes([1])*900);wait(lambda:runtime.status().frames==1)

@@ -1,0 +1,76 @@
+{
+  "version": "0.40.0",
+  "asset": "beatlight_dmx-0.39.0-py3-none-any.whl",
+  "seed": 1337,
+  "single_auto": false,
+  "hardware_used": false,
+  "software_renderer": true,
+  "phases": [
+    {
+      "mode": "auto",
+      "seconds": 6.0,
+      "frames": 180,
+      "fps": 30.0,
+      "pattern": "Aurora + Maré + Onda Vertical",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 2.1399999991887144,
+      "renderer_cpu_percent": 19.270833333333336,
+      "parent_cpu_percent": 90.625,
+      "renderer_memory": {
+        "working_mib": 196.3515625,
+        "private_mib": 125.6171875
+      },
+      "parent_memory": {
+        "working_mib": 278.3203125,
+        "private_mib": 1141.05859375
+      },
+      "texture_bytes": 3072,
+      "ticks": 180,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 30,
+      "readback_pixels": 30240000,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "liquid",
+      "seconds": 6.0,
+      "frames": 180,
+      "fps": 30.0,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 1.8294444440139668,
+      "renderer_cpu_percent": 19.53125,
+      "parent_cpu_percent": 92.44791666666666,
+      "renderer_memory": {
+        "working_mib": 200.765625,
+        "private_mib": 130.7109375
+      },
+      "parent_memory": {
+        "working_mib": 278.51171875,
+        "private_mib": 1141.0703125
+      },
+      "texture_bytes": 3072,
+      "ticks": 180,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 30,
+      "readback_pixels": 30240000,
+      "allocations": 0,
+      "errors": []
+    }
+  ]
+}

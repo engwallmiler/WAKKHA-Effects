@@ -1,7 +1,7 @@
 """Construção dos painéis; ações e ciclo de vida ficam no controlador da janela."""
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QButtonGroup, QComboBox, QDoubleSpinBox, QFormLayout,
-    QFrame, QHBoxLayout, QPushButton, QSpinBox, QSplitter, QTextEdit, QVBoxLayout, QWidget, QScrollArea)
+    QFrame, QHBoxLayout, QPushButton, QSpinBox, QSplitter, QTextEdit, QVBoxLayout, QWidget, QScrollArea,QCheckBox)
 from beatlight.ui.components import card, label, metric
 from beatlight.ui.plots import StereoMeter, WaveformWidget
 from beatlight.ui.dsp_settings import build_dsp_settings
@@ -22,7 +22,7 @@ def build_sidebar(self):
     layout.addWidget(label("WORKSPACE", "eyebrow"))
     group = QButtonGroup(self)
     self.nav_group = group
-    for index, text in ((9, "▥   Pixel Studio · LEDs"), (0, "◉   Audio Monitor"), (8, "⇄   Ableton Link"), (5, "◷   Rhythm Monitor"), (4, "●   Kick Monitor"), (3, "∿   Análise espectral"), (6, "◇   Lighting Studio"), (7, "▱   Stage Preview"), (1, "▥   Diagnósticos"), (2, "⚙   Configurações")):
+    for index, text in ((9, "▥   Pixel Studio · LEDs"), (10,"⌨   Controladora MIDI"), (0, "◉   Audio Monitor"), (8, "⇄   Ableton Link"), (5, "◷   Rhythm Monitor"), (4, "●   Kick Monitor"), (3, "∿   Análise espectral"), (6, "◇   Lighting Studio"), (7, "▱   Stage Preview"), (1, "▥   Diagnósticos"), (2, "⚙   Configurações")):
         button = QPushButton(text)
         button.setObjectName("nav")
         button.setCheckable(True)
@@ -32,7 +32,7 @@ def build_sidebar(self):
         layout.addWidget(button)
     layout.addSpacing(30)
     layout.addWidget(label("PRÓXIMAS FASES", "eyebrow"))
-    for name in ("Múltiplas saídas USB", "Mapeamento de instalações", "Controladores em rede"):
+    for name in ("Múltiplos controladores USB", "Mapeamento de instalações", "Controladores em rede"):
         item = label("   " + name, "muted")
         item.setContentsMargins(0, 7, 0, 7)
         layout.addWidget(item)
@@ -172,6 +172,10 @@ def build_settings_page(self):
     form.addRow("Atualização da interface", self.fps_spin)
     contents.addLayout(form)
     contents.addWidget(label("Sobrecarga: descartar o bloco mais antigo e contar a perda. A UI recebe apenas snapshots reduzidos.", "muted", True))
+    self.legacy_panels=QCheckBox('Habilitar Lighting Studio e Stage Preview · PAR/moves')
+    self.legacy_panels.setChecked(self.settings.legacy_panels_enabled)
+    self.legacy_panels.setToolTip('Reativa os painéis e o motor PAR/moves quando essas páginas estão abertas. A preferência é salva imediatamente; o Pixel Studio continua independente.')
+    self.legacy_panels.toggled.connect(self._set_legacy_panels);contents.addWidget(self.legacy_panels)
     self.apply_button = QPushButton("Salvar ajustes")
     self.apply_button.setObjectName("primary")
     self.apply_button.clicked.connect(self._apply_settings)
@@ -182,7 +186,7 @@ def build_settings_page(self):
     layout.addWidget(self.apply_button, 0, Qt.AlignmentFlag.AlignRight)
     self.settings_notice = label("Salve os ajustes antes de iniciar outra sessão de captura.", "notice", True)
     layout.addWidget(self.settings_notice)
-    storage, storage_layout = card("Preferências locais", "JSON versionado • formato v13 · migração de v1 a v12")
+    storage, storage_layout = card("Preferências locais", "JSON versionado • formato v14 · migração de v1 a v13")
     storage_layout.addWidget(label(str(self.store.path), "muted", True))
     row = QHBoxLayout()
     self.import_button = QPushButton("Importar preferências")
@@ -194,7 +198,7 @@ def build_settings_page(self):
     row.addStretch()
     storage_layout.addLayout(row)
     layout.addWidget(storage)
-    layout.addWidget(label("Escopo desta versão: captura, DSP, kicks, Beat Tracker e iluminação abstrata. Ajustes de luz ficam em Lighting Studio. O palco virtual inclui Show rítmico; editor de cenas e saída DMX seguem nas próximas fases.", "notice", True))
+    layout.addWidget(label("Pixel Studio reúne simulação, quatro saídas WS2812 e controle por MIDI. Lighting Studio e Stage Preview podem ser reativados na opção acima. Os ajustes de captura e sincronização continuam disponíveis.", "notice", True))
     layout.addStretch()
     scroll = QScrollArea()
     scroll.setWidgetResizable(True)

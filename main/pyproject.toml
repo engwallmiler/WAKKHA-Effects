@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "beatlight-dmx"
-version = "0.37.0"
+version = "0.41.0"
 description = "Pixel Studio, WS2812 via ESP32 USB e sincronização musical — BEATLIGHT"
 requires-python = ">=3.12"
 dependencies = ["numpy>=1.26,<3", "scipy>=1.12,<2", "PySide6>=6.7,<7", "pyserial==3.5", "PyAudioWPatch>=0.2.12.6,<0.3; sys_platform == 'win32'"]
@@ -45,7 +45,24 @@ where = ["src"]
     "docs/resultado-auto-continuous-v0.35.0.json", "docs/fitas-variaveis-v0.36.md",
     "docs/resultado-pixel-strip-size-v0.36.0.json", "docs/esp32-quatro-saidas.md",
     "docs/resultado-pixel-four-outputs-v0.37.0.json", "docs/resultado-esp32-v0.37.json",
-    "docs/resultado-pixel-strip-size-v0.37.0.json"
+    "docs/resultado-pixel-strip-size-v0.37.0.json",
+    "docs/midi-x1-mk1.md", "docs/otimizacao-pixel-v0.38.md", "docs/arquitetura.md",
+    "docs/resultado-pixel-midi-v0.38.0.json", "docs/resultado-pixel-four-outputs-v0.38.0.json",
+    "docs/resultado-pixel-render-reference-v0.37.json", "docs/resultado-pixel-render-v0.38.json",
+    "docs/resultado-pixel-rgb-parity-v0.38.json",
+    "docs/interface-pixel-v0.39.md", "docs/resultado-pixel-render-reference-v0.38.json",
+    "docs/resultado-pixel-render-v0.39.json", "docs/resultado-pixel-workspace-v0.39.0.json",
+    "docs/resultado-pixel-midi-v0.39.0.json", "docs/resultado-pixel-four-outputs-v0.39.0.json",
+    "docs/resultado-pixel-rgb-parity-v0.39.json", "docs/validacao-v0.38.md",
+    "docs/efeito-unico-e-compassos-v0.40.md", "docs/auditoria-buffers-v0.40.md",
+    "docs/resultado-pixel-rgb-parity-v0.40.json", "docs/resultado-pixel-render-reference-v0.39.json",
+    "docs/resultado-pixel-render-single-v0.40.json", "docs/resultado-pixel-workspace-v0.40.0.json",
+    "docs/resultado-pixel-midi-v0.40.0.json", "docs/resultado-pixel-four-outputs-v0.40.0.json",
+    "docs/resultado-pixel-endurance-v0.40.0.json", "docs/validacao-v0.39.md",
+    "docs/logs-saida-v0.41.md", "docs/validacao-v0.40.md",
+    "docs/resultado-output-diagnostics-v0.41.0.json", "docs/resultado-pixel-rgb-parity-v0.41.json",
+    "docs/resultado-pixel-workspace-v0.41.0.json", "docs/resultado-pixel-four-outputs-v0.41.0.json",
+    "docs/resultado-pixel-midi-v0.41.0.json", "docs/resultado-pixel-endurance-v0.41.0.json"
 ]
 "share/beatlight/examples" = ["examples/ws2812-300.json", "examples/fitas-simetricas-continuas.json", "examples/uma-fita-300-6-barras.json", "examples/replay-labels.json", "examples/quatro-saidas-ws2812.json"]
 "share/beatlight/firmware/beatlight_esp32" = ["firmware/beatlight_esp32/beatlight_esp32.ino", "firmware/beatlight_esp32/protocol.h", "firmware/beatlight_esp32/platformio.ini"]

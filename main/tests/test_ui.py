@@ -262,7 +262,7 @@ def test_rhythm_projection_expires_without_callbacks_and_clears_hypotheses(app, 
 def test_lighting_controls_blackout_export_and_shutdown(app, tmp_path, monkeypatch):
     import json
     store = SettingsStore(tmp_path / "preferences.json")
-    settings = Settings(source="synthetic", light_transition_ms=0)
+    settings = Settings(legacy_panels_enabled=True,source="synthetic", light_transition_ms=0)
     window = MainWindow(store, settings)
     window.show()
     try:
@@ -342,7 +342,7 @@ def test_light_controls_do_not_replace_running_audio(app, tmp_path):
 
 
 def test_stage_shares_controls_renders_live_states_and_blackout(app, tmp_path):
-    window = MainWindow(SettingsStore(tmp_path / "preferences.json"), Settings(source="synthetic", light_transition_ms=0))
+    window = MainWindow(SettingsStore(tmp_path / "preferences.json"), Settings(legacy_panels_enabled=True,source="synthetic", light_transition_ms=0))
     window.show()
     try:
         pump(app, lambda: not window.busy and bool(window.devices))
@@ -383,7 +383,7 @@ def test_stage_shares_controls_renders_live_states_and_blackout(app, tmp_path):
 
 def test_structure_demo_source_survives_preferences_and_remains_explicitly_synthetic(app, tmp_path):
     store = SettingsStore(tmp_path / "preferences.json")
-    settings = Settings(source="structure_demo", light_effect="musical")
+    settings = Settings(legacy_panels_enabled=True,source="structure_demo", light_effect="musical")
     store.save(settings)
     window = MainWindow(store, store.load())
     window.show()
@@ -431,7 +431,7 @@ def test_stage_geometry_stays_fixed_across_structure_labels(app, tmp_path, size,
     from beatlight.contracts import StructureSnapshot
     from beatlight.dsp.pipeline import AudioAnalyzer
     from beatlight.ui.stage import update_stage_view
-    window = MainWindow(SettingsStore(tmp_path / "preferences.json"), Settings(source="synthetic"))
+    window = MainWindow(SettingsStore(tmp_path / "preferences.json"), Settings(legacy_panels_enabled=True,source="synthetic"))
     window.resize(*size)
     window.show()
     try:
@@ -466,7 +466,7 @@ def test_stage_geometry_stays_fixed_across_structure_labels(app, tmp_path, size,
 
 def test_auto_color_choice_is_shared_saved_and_does_not_replace_audio_runtime(app, tmp_path):
     store = SettingsStore(tmp_path / "preferences.json")
-    window = MainWindow(store, Settings(source="synthetic"))
+    window = MainWindow(store, Settings(legacy_panels_enabled=True,source="synthetic"))
     window.show()
     try:
         pump(app, lambda: not window.busy and bool(window.devices))
@@ -493,7 +493,7 @@ def test_auto_color_choice_is_shared_saved_and_does_not_replace_audio_runtime(ap
 
 def test_bass_density_controls_and_demo_are_shared_saved_and_keep_capture_running(app,tmp_path):
     store=SettingsStore(tmp_path/"preferences.json")
-    window=MainWindow(store,Settings(source="texture_demo",light_effect="bass_flow",light_transition_ms=0))
+    window=MainWindow(store,Settings(legacy_panels_enabled=True,source="texture_demo",light_effect="bass_flow",light_transition_ms=0))
     window.show()
     try:
         pump(app,lambda:not window.busy and bool(window.devices))
@@ -536,7 +536,7 @@ def test_stage_and_rhythm_project_same_grid_without_new_kicks(app, tmp_path, mon
     from beatlight.music.grid import KickGrid
     from beatlight.ui.stage import update_stage_view
     from beatlight.ui.rhythm import update_rhythm_view
-    window = MainWindow(SettingsStore(tmp_path / "preferences.json"), Settings(source="synthetic"))
+    window = MainWindow(SettingsStore(tmp_path / "preferences.json"), Settings(legacy_panels_enabled=True,source="synthetic"))
     window.show()
     try:
         pump(app, lambda: not window.busy and bool(window.devices))
@@ -573,7 +573,7 @@ def test_stage_and_rhythm_project_same_grid_without_new_kicks(app, tmp_path, mon
 
 def test_rgbw_manual_controls_table_and_new_preferences(app, tmp_path):
     store = SettingsStore(tmp_path / "rgbw.json")
-    window = MainWindow(store, Settings(source="synthetic", light_transition_ms=0))
+    window = MainWindow(store, Settings(legacy_panels_enabled=True,source="synthetic", light_transition_ms=0))
     window.show()
     try:
         pump(app, lambda: not window.busy and bool(window.devices))
@@ -582,7 +582,7 @@ def test_rgbw_manual_controls_table_and_new_preferences(app, tmp_path):
         window.light_spins["light_show_complexity"].setValue(90)
         window.stage_show_button.click()
         window._save_lighting_settings()
-        assert store.load().version == 13
+        assert store.load().version == 14
         assert store.load().light_white_strength == .4
         assert store.load().light_show_complexity == .9
         assert store.load().light_effect == "phrase_show"
@@ -607,7 +607,7 @@ def test_rgbw_manual_controls_table_and_new_preferences(app, tmp_path):
 def test_phrase_sync_button_aligns_lights_without_restarting_audio_or_saving_click(app,tmp_path):
     import json
     store=SettingsStore(tmp_path/"cycles.json")
-    window=MainWindow(store,Settings(source="structure_demo",light_transition_ms=0))
+    window=MainWindow(store,Settings(legacy_panels_enabled=True,source="structure_demo",light_transition_ms=0))
     window.show()
     try:
         pump(app,lambda:not window.busy and bool(window.devices))
@@ -653,7 +653,7 @@ def test_phrase_sync_button_aligns_lights_without_restarting_audio_or_saving_cli
 
 
 def test_show_eight_toggle_changes_effect_and_stage_pattern_selector_is_shared(app,tmp_path):
-    window=MainWindow(SettingsStore(tmp_path/"toggles.json"),Settings(source="synthetic",light_effect="phrase_show"))
+    window=MainWindow(SettingsStore(tmp_path/"toggles.json"),Settings(legacy_panels_enabled=True,source="synthetic",light_effect="phrase_show"))
     window.show()
     try:
         pump(app,lambda:not window.busy and bool(window.devices))
@@ -710,7 +710,7 @@ def test_mover_and_calm_controls_share_settings_and_preserve_audio_runtime(app,t
         window.light_breakdown_combo.setCurrentIndex(window.light_breakdown_combo.findData("crossfade"))
         window._save_lighting_settings()
         saved=store.load()
-        assert saved.version == 13 and saved.light_mover_pattern=="double" and saved.light_breakdown_style=="crossfade"
+        assert saved.version == 14 and saved.light_mover_pattern=="double" and saved.light_breakdown_style=="crossfade"
         assert window.light_runtime.controls().config.light_mover_pattern=="double"
         assert window.runtime is runtime and runtime.status().state=="running"
     finally:

@@ -1,4 +1,16 @@
-# BEATLIGHT — Pixel Studio 0.37.0
+# BEATLIGHT — Pixel Studio 0.41.0
+
+**Saída e diagnóstico 0.41:** atrasos breves da prévia apagam temporariamente e retomam com quadro novo; 750 ms sem quadro válido exigem reativação manual. **Logs da saída**, no topo do Pixel Studio, mostra motivos e contexto com horário local do PC, mantém o histórico após reativar e exporta diagnóstico. Diálogos Qt preservam o envio no Windows. O mostrador de fase passa a ciclo relativo 1–8 com porcentagem, conservando a grade interna. [Investigação, operação e limites](docs/logs-saida-v0.41.md). Reinicie por **iniciar.cmd**; firmware ESP32 0.37 permanece compatível.
+
+**Auto Show 0.40:** **EFEITO ÚNICO** mantém um padrão por cena e combina apenas o anterior e o próximo durante a fusão. Há repertório selecionável, duração por efeito e intervalos de **32, 64 e 128 compassos**, além dos anteriores. **Marcar compasso 1**, no palco e no MIDI Learn, inicia a contagem das trocas sem alterar BPM ou sincronismo 1/8. [Como usar e personalizar](docs/efeito-unico-e-compassos-v0.40.md).
+
+**Estabilidade 0.40:** transições únicas sem snapshots de misturas, descarte de ciclos perdidos, contador de entrega protegido no limite Qt e revisão dos buffers/filas. No ensaio, a Aurora isolada manteve 30 fps com aproximadamente 30% menos CPU do renderer que a composição de três padrões. [Auditoria](docs/auditoria-buffers-v0.40.md) · [Testes, medições e limites](docs/validacao.md). Reinicie o aplicativo por **iniciar.cmd** para carregar os novos controles e o perfil MIDI atualizado; o firmware ESP32 0.37 permanece compatível.
+
+**Interface 0.39:** palco permanente com ajustes laterais e rolagem separada; controles repetidos recolhidos; tela cheia nativa com saída por **Esc/F11/botão**. Prévia **Fluida, Econômica ou Detalhada**, sem reduzir a resolução dos LEDs físicos. No ensaio controlado, manteve 30 fps com CPU do renderer 45–69% menor e cerca de 50 MiB a menos de memória residente frente à 0.38. Não redesenha quadros pretos continuamente. [Organização, operação e medições](docs/interface-pixel-v0.39.md) · [Validação](docs/validacao.md).
+
+**Fluidez e MIDI 0.38:** prévia otimizada, com aproximadamente **19 → 29 fps** no ensaio controlado por software. **Controladora MIDI** oferece Learn explícito, dez funções, encoder de intensidade e retorno dos LEDs para a **Traktor Kontrol X1 MK1**. AUTO SHOW continua como base; estruturas manuais ficam mantidas até serem liberadas. **Lighting Studio e Stage Preview** vêm desabilitados e podem ser reativados em Configurações. [Guia MIDI e X1 MK1](docs/midi-x1-mk1.md) · [Otimizações e medições](docs/otimizacao-pixel-v0.38.md) · [Validação](docs/validacao.md).
+
+Reinicie o aplicativo por **iniciar.cmd**. Na X1 MK1, **SHIFT + HOTCUE** alterna o modo MIDI. Na página Controladora MIDI, use **Atualizar portas → Conectar MIDI → selecionar função → Ativar Learn → movimentar controle → Encerrar Learn → Salvar perfil**. Para atualizar da 0.37, o firmware das quatro saídas permanece o mesmo; não é necessário gravar o ESP32 novamente.
 
 **Quatro saídas 0.37:** GPIOs **18, 19, 25 e 26**, até **300 LEDs por saída / 1.200 no total**, com comprimentos diferentes e mapeamentos independentes ou cópias exatas. Um quadro USB compartilha o mesmo instante musical e o firmware usa quatro controladores RMT. **Para usar as quatro saídas, grave o novo firmware 0.37.** [Guia completo e gravação](docs/esp32-quatro-saidas.md) · [Projeto de quatro fitas de 120 LEDs](examples/quatro-saidas-ws2812.json).
 

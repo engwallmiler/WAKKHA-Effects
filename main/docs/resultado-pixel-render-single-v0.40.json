@@ -1,0 +1,76 @@
+{
+  "version": "0.40.0",
+  "asset": "current",
+  "seed": 1337,
+  "single_auto": true,
+  "hardware_used": false,
+  "software_renderer": true,
+  "phases": [
+    {
+      "mode": "auto",
+      "seconds": 6.0,
+      "frames": 180,
+      "fps": 30.0,
+      "pattern": "Aurora",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 1.5388888888061047,
+      "renderer_cpu_percent": 13.541666666666666,
+      "parent_cpu_percent": 89.58333333333334,
+      "renderer_memory": {
+        "working_mib": 167.5390625,
+        "private_mib": 97.1171875
+      },
+      "parent_memory": {
+        "working_mib": 276.8359375,
+        "private_mib": 1140.5390625
+      },
+      "texture_bytes": 3072,
+      "ticks": 180,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 30,
+      "readback_pixels": 30240000,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "liquid",
+      "seconds": 6.0,
+      "frames": 180,
+      "fps": 30.0,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 1.8172222225202455,
+      "renderer_cpu_percent": 14.84375,
+      "parent_cpu_percent": 90.88541666666666,
+      "renderer_memory": {
+        "working_mib": 161.4140625,
+        "private_mib": 90.83984375
+      },
+      "parent_memory": {
+        "working_mib": 277.54296875,
+        "private_mib": 1140.5546875
+      },
+      "texture_bytes": 3072,
+      "ticks": 180,
+      "preview": {
+        "visible": true,
+        "lowPower": false,
+        "workspace": "stage"
+      },
+      "target_fps": 30,
+      "readback_pixels": 30240000,
+      "allocations": 0,
+      "errors": []
+    }
+  ]
+}

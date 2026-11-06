@@ -42,14 +42,15 @@ class BeatClockWidget(QWidget):
             flash = running and beat.phase < 0.12
             p.setPen(color if flash else QColor("#dce5e9"))
             p.setFont(QFont("Segoe UI", 29, QFont.Weight.Bold))
-            p.drawText(QRectF(center.x() - radius, center.y() - 28, radius * 2, 50), Qt.AlignmentFlag.AlignCenter, str(beat.beat_index + 1))
+            p.drawText(QRectF(center.x() - radius, center.y() - 28, radius * 2, 50), Qt.AlignmentFlag.AlignCenter, str(beat.beat_index % 8 + 1))
         else:
             p.setPen(QColor("#8396a4"))
             p.setFont(QFont("Segoe UI", 29))
             p.drawText(circle, Qt.AlignmentFlag.AlignCenter, "—")
         p.setPen(QColor("#8396a4"))
         p.setFont(QFont("Segoe UI", 9))
-        p.drawText(QRectF(0, self.height() - 24, self.width(), 22), Qt.AlignmentFlag.AlignCenter, "BATIDA RELATIVA · SEM POSIÇÃO DE COMPASSO")
+        caption=f"CICLO RELATIVO /8 · FASE {beat.phase:.0%}" if beat and beat.period else "CICLO RELATIVO · SEM POSIÇÃO DA TRACK"
+        p.drawText(QRectF(0, self.height() - 24, self.width(), 22), Qt.AlignmentFlag.AlignCenter, caption)
         p.end()
 
 
@@ -239,6 +240,7 @@ def update_rhythm_view(self, snapshot, status):
     self.rhythm_grid.events = structure.confirmed_kicks if structure else ()
     self.rhythm_grid.active = live
     self.beat_clock.snapshot = beat
+    self.beat_clock.setToolTip(f"Tempo acumulado da grade: {beat.beat_index + 1}. A fase varia de 0% a 100%; o ciclo visual repete oito tempos e não identifica o compasso original da track." if beat else '')
     raw = self.runtime.snapshot()
     self.tempo_history.snapshot = raw.beat if raw and not raw.beat_error else None
     self.beat_clock.active = self.tempo_history.active = live and bool(beat and beat.period)

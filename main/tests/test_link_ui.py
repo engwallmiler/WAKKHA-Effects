@@ -54,5 +54,5 @@ def test_link_panel_routes_clock_preserves_audio_and_returns_to_audio(app, tmp_p
 def test_v12_migration_does_not_implicitly_activate_link():
     old = validate({"version": 12, "sync_source": "link", "link_offset_ms": 100,
         "light_mover_pattern": "double", "light_phrase_variation": "texture"})
-    assert old.version == 13 and old.sync_source == "audio" and old.link_offset_ms == 0
+    assert old.version == 14 and old.sync_source == "audio" and old.link_offset_ms == 0
     assert old.light_mover_pattern == "double" and old.light_phrase_variation == "texture"

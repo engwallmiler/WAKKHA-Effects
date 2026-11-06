@@ -1,6 +1,8 @@
 import json
 import logging
+from datetime import datetime
 from beatlight.diagnostics.logging import JsonFormatter
+from beatlight.diagnostics.pc_time import local_time
 
 
 def test_structured_log_preserves_context_and_unicode():
@@ -12,4 +14,6 @@ def test_structured_log_preserves_context_and_unicode():
     assert data["event"] == "capture_started"
     assert data["device"] == "Altofalantes • Realtek"
     assert data["rate"] == 48000
-    assert data["time"].endswith("+00:00")
+    assert datetime.fromisoformat(data['time'])==local_time(record.created)
+    assert datetime.fromisoformat(data['time']).utcoffset()==local_time(record.created).utcoffset()
+    assert data['utc'].endswith('+00:00')

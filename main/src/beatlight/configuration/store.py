@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 @dataclass(frozen=True, slots=True)
 class Settings:
-    version: int = 13
+    version: int = 14
     source: str = "wasapi"
     device_id: str = ""
     block_size: int = 512
@@ -25,6 +25,7 @@ class Settings:
     ui_fps: int = 30
     sync_source: str = "audio"
     link_offset_ms: float = 0.0
+    legacy_panels_enabled: bool = False
     fft_size: int = 2048
     fft_overlap: int = 75
     remove_dc: bool = True
@@ -81,7 +82,7 @@ class Settings:
 
 
 def validate(data: dict) -> Settings:
-    if not isinstance(data, dict) or type(data.get("version", 1)) is not int or data.get("version", 1) not in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13):
+    if not isinstance(data, dict) or type(data.get("version", 1)) is not int or data.get("version", 1) not in range(1,15):
         raise ValueError("Formato de configuração não suportado.")
     migrated = {k: v for k, v in data.items() if k in Settings.__dataclass_fields__}
     if data.get("version", 1) == 1:
@@ -117,7 +118,8 @@ def validate(data: dict) -> Settings:
     if data.get("version", 1) < 13:
         migrated.pop("sync_source", None)
         migrated.pop("link_offset_ms", None)
-    migrated["version"] = 13  # Mantém os campos conhecidos de cada versão anterior.
+    if data.get('version',1)<14:migrated.pop('legacy_panels_enabled',None)
+    migrated["version"] = 14  # Mantém os campos conhecidos de cada versão anterior.
     settings = Settings(**migrated)
     if settings.source not in ("wasapi", "synthetic", "structure_demo", "texture_demo"):
         raise ValueError("Fonte de áudio inválida.")
@@ -133,6 +135,7 @@ def validate(data: dict) -> Settings:
         raise ValueError("Taxa de atualização inválida.")
     if settings.sync_source not in ("audio", "link"):
         raise ValueError("Fonte de sincronismo inválida.")
+    if type(settings.legacy_panels_enabled) is not bool:raise ValueError('Opção dos painéis PAR/moves deve ser booleana.')
     if (type(settings.link_offset_ms) not in (int, float) or not math.isfinite(settings.link_offset_ms)
             or not -250 <= settings.link_offset_ms <= 250):
         raise ValueError("Compensação Link inválida.")

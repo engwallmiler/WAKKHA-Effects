@@ -1,0 +1,31 @@
+{
+  "version": "0.38.0",
+  "physical_device_used": false,
+  "emulated_serial": true,
+  "pins": [
+    18,
+    19,
+    25,
+    26
+  ],
+  "counts": [
+    120,
+    300,
+    90,
+    120
+  ],
+  "payload_bytes": 1890,
+  "distinct_lengths": true,
+  "exact_physical_copy": true,
+  "buffers_reused": true,
+  "minimized_output_continues": true,
+  "all_outputs_blackout": true,
+  "disabled_output_omitted": true,
+  "preview_reload_preserves_mapping": true,
+  "frames": 10,
+  "fps": 15.985790408522863,
+  "persisted_mapping": true,
+  "layout_preserved": true,
+  "closed_cleanly": true,
+  "passed": true
+}

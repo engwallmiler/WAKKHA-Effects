@@ -49,6 +49,20 @@ def test_pending_revert_is_not_lost_while_another_value_is_being_written(tmp_pat
         assert store.load()==first
     finally:gate.set();writer.close();wait(lambda:writer.closed)
 
+def test_delivery_ids_wrap_inside_the_qt_signed_int_range_and_ignore_stale_acks(tmp_path):
+    bridge=PixelBridge(PixelProjectStore(tmp_path/'p.json'));received=[]
+    bridge.packet.connect(lambda payload:received.append(json.loads(payload)))
+    bridge.ready_state=True;bridge._music_serial=2_147_483_646
+    try:
+        bridge.send_music({'sample':1});assert received[-1]['delivery_id']==2_147_483_647
+        bridge.send_music({'sample':2});bridge.musicConsumed(2_147_483_647)
+        assert received[-1]['delivery_id']==1
+        bridge.send_music({'sample':3});bridge.musicConsumed(2_147_483_647)
+        assert len(received)==2
+        bridge.musicConsumed(1);assert received[-1]['delivery_id']==2
+    finally:bridge.writer.close();wait(lambda:bridge.writer.closed)
+
+
 def test_unresponsive_renderer_has_one_music_message_in_flight_and_only_the_latest_pending(tmp_path):
     bridge=PixelBridge(PixelProjectStore(tmp_path/'p.json'));bridge.ready_state=True;received=[];bridge.packet.connect(lambda value:received.append(json.loads(value)))
     bridge.send_music({'sample':0});token=received[0]['delivery_id']

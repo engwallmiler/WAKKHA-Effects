@@ -1,6 +1,34 @@
-# Confiabilidade e operação prolongada — 0.37.0
+# Confiabilidade e operação prolongada — 0.41.0
 
 Esta rodada corrige gargalos identificados no código e acrescenta um ensaio repetível. Ainda não foi realizado um teste de seis ou oito horas reais nesta entrega. O avanço acelerado do relógio musical verifica contadores e evolução de padrões; não substitui tempo real de execução, drivers, temperatura, alimentação ou comunicação com hardware.
+
+## Rodada 0.41: desarmes e registro de falhas
+
+O painel deixa de desarmar definitivamente por uma única resposta com mais de 250 ms: descarta o quadro, apaga temporariamente e aguarda um novo dentro de 750 ms desde o último válido. Falhas persistentes, USB e apagamentos manuais continuam exigindo intervenção. Há somente uma solicitação de quadro em andamento, inclusive após um desarme. Diálogos de arquivos usam Qt para não bloquear os QTimers no Windows.
+
+O registro dedicado tem 1.000 eventos em memória, 60 amostras recentes a 1 Hz, fila de 256 escritas e rotação de quatro arquivos de aproximadamente 2 MB. Disco e exportação trabalham fora da GUI/USB. A janela é não modal e não atualiza quando fechada. Horários seguem o fuso local do PC; causas persistem após reativação. O índice acumulado não é limitado a 32 bits nem aumenta buffers; a exibição separa ciclo de oito tempos e fase percentual. [Investigação e uso](logs-saida-v0.41.md) · [Teste nativo de falhas](resultado-output-diagnostics-v0.41.0.json).
+
+## Rodada 0.40: efeito único e ciclos ancorados
+
+O modo único mantém no máximo dois descritores durante a fusão e evita snapshots de misturas. Repertório e durações têm limites validados; intervalos de até 128 compassos usam somente números de prazo. O contador de entrega entre Python e Qt trata o rollover antes do limite inteiro assinado, e correções de relógio preservam origem e evolução cromática.
+
+Os testes avançam 48 horas musicais com buffers estáveis e sem snapshots no modo único. O ensaio nativo de oito horas musicais aceleradas exercita áudio sintético, serial emulada, gravações lentas, renderer interrompido e reabertura, sem certificar seis horas reais. [Auditoria completa](auditoria-buffers-v0.40.md) · [Resultados](validacao.md).
+
+## Rodada 0.39: palco permanente e desenho sob demanda
+
+A região da prévia e o painel de ajustes têm layouts e rolagem independentes. A tela cheia usa a janela nativa, restaura o estado anterior e mantém saída por teclado e botão. Falha/recarga do renderer e navegação encerram esse modo. Texturas de uma coluna, qualidade exclusiva da prévia e prazos de desenho reduzem trabalho, conservando a composição completa do canvas frontal.
+
+Sem emissão, há um desenho de apagamento, seguido de atualização lenta dos controles sem redesenhar o palco. Ao retomar, existe somente um agendamento de desenho. O estado estático não interrompe o relógio dos efeitos, MIDI ou as solicitações USB. A comparação física manteve 140 quadros RGB exatos contra 0.38.
+
+[Organização e benchmark](interface-pixel-v0.39.md) · [Ensaios e limites](validacao.md).
+
+## Rodada 0.38: prévia e controle MIDI
+
+A prévia reduz cálculos repetidos por pixel, amostra o desenho conforme sua resolução e corrige o prazo de 30 fps. A saída física continua em resolução integral, com 140 quadros de referência idênticos. Lighting Studio e Stage Preview deixam de iniciar o worker por padrão; a reativação é reversível em Configurações.
+
+O MIDI nativo usa uma thread, entrada limitada a 512 eventos, retorno de até dez LEDs somente por mudança e uma chamada de comando WebEngine ativa. O encoder relativo mantém a ordem dos incrementos. Falhas, desconexão e fechamento não impedem o funcionamento independente do Auto Show. O salvamento do perfil é explícito, atômico e fora da interface.
+
+[Detalhes e benchmark](otimizacao-pixel-v0.38.md) · [Operação MIDI](midi-x1-mk1.md) · [Validação da entrega](validacao.md).
 
 ## Rodada 0.37: quatro saídas por quadro
 
@@ -111,11 +139,11 @@ A prévia em software permanece um custo relevante, especialmente pela cópia de
 | Música → renderizador | Mensagens antigas se acumularem durante uma pausa | Uma entrega em voo, confirmação por identificador e somente o snapshot mais recente pendente. Mensagens preservam o instante original de envio. |
 | Lista USB | Consultas JavaScript repetidas enquanto outra está bloqueada | Uma consulta em voo, prazo de dois segundos, sem recriar a lista quando nada mudou. |
 | Histórico do navegador | Crescimento por recursos bloqueados/erros repetidos | Filas circulares: 128 eventos de navegação e 32 erros JavaScript, com mensagens limitadas. |
-| Renderizador travado | Último frame continuar sendo apresentado ou quadros antigos voltarem depois | Pedido de frame vence em 250 ms, saída é desarmada, blackout tem prioridade e callbacks antigos são rejeitados. Firmware conserva watchdog de 750 ms. |
+| Renderizador travado | Último frame continuar sendo apresentado ou quadros antigos voltarem depois | Quadros acima de 250 ms são descartados com apagamento temporário; 750 ms sem quadro válido desarmam. Um pedido em voo, callbacks de gerações antigas rejeitados. Firmware conserva watchdog independente de 750 ms. |
 | Recuperação da prévia | Reiniciar toda a aplicação e perder captura | **Reabrir prévia** tenta salvar a edição, recarrega o simulador e preserva a captura. Saída física permanece apagada até nova ativação. Se o renderer não responder, usa o último projeto salvo. |
 | Históricos de música/USB | Acúmulo de dados ao longo de horas | Históricos DSP e de estrutura são limitados; a composição guarda até 12 combinações, eventos do bridge até 64 e tempos de confirmação USB até 31. |
 | Captura de áudio | Atraso crescer sem limite se DSP ficar mais lento | A fila existente conserva oito blocos e descarta o mais antigo quando cheia; o contador de descarte permite identificar sobrecarga. Não foi ampliada para esconder atrasos. |
-| Logs | Crescimento ilimitado em disco | Rotação já existente: 2.000.000 bytes por arquivo, mais três cópias, aproximadamente 8 MB no total. |
+| Logs | Crescimento ilimitado em disco ou escrita bloquear USB | Dois registros com rotação própria: geral e saída, aproximadamente 8 MB cada. O da saída usa worker, fila de 256 e memória limitada; informa saturação/erro de disco. |
 
 O contador de quadros não guarda os quadros anteriores. A topologia tem buffers proporcionais ao número de pixels configurados, não ao tempo de funcionamento. O rollover do identificador interno de quadro limpa as marcas de cache.
 

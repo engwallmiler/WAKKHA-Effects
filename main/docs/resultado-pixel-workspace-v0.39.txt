@@ -1,0 +1,133 @@
+[24000:30380:1105/190505.685:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[24000:30380:1105/190505.685:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[24000:30380:1105/190505.728:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[24000:30380:1105/190505.728:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[24000:30380:1105/190505.728:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[24000:30380:1105/190505.728:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.39.0",
+  "physical_device_used": false,
+  "layouts": [
+    {
+      "area": "stage",
+      "stage": [
+        19,
+        105,
+        1156,
+        457
+      ],
+      "panel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "effects",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "layout",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "library",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    }
+  ],
+  "copy_checks": 12,
+  "fullscreen_escape_f11_button": true,
+  "complete_frame_parity": true,
+  "minimum_window_layout": {
+    "stage": [
+      19,
+      128,
+      456,
+      183
+    ],
+    "panel": [
+      496,
+      50,
+      350,
+      450
+    ],
+    "viewport": [
+      854,
+      508
+    ],
+    "scroll": [
+      854,
+      508
+    ]
+  },
+  "reload_exits_fullscreen": true,
+  "errors": [],
+  "passed": true,
+  "closed_cleanly": true
+}

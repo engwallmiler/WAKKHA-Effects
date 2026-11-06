@@ -1,0 +1,63 @@
+[30020:29740:1105/214034.439:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[30020:29740:1105/214034.439:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[30020:29740:1105/214034.476:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[30020:29740:1105/214034.476:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[30020:29740:1105/214034.476:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[30020:29740:1105/214034.476:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.40.0",
+  "physical_device_used": false,
+  "serial_emulated_only": true,
+  "single_mode": true,
+  "requested_wall_seconds": 60.0,
+  "requested_musical_hours": 8.0,
+  "real_six_hour_run": false,
+  "renderer_stall_disarms_output": true,
+  "stale_frames_rejected": true,
+  "actual_wall_seconds": 60.0,
+  "main_cpu_seconds": 36.15625,
+  "published_packets": 1281,
+  "musical_hours_observed": 8.000000305555558,
+  "musical_coalesced": 9,
+  "render_ms": {
+    "frames": 1817,
+    "ticks": 1817,
+    "last": 2,
+    "average": 1.5396257566270686,
+    "max": 7.4000000059604645,
+    "columns": 0.9000000059604645,
+    "glow": 0,
+    "readbackPixels": 305256000
+  },
+  "performance": {
+    "allocations": 12,
+    "rootAllocations": 7,
+    "sampledPixels": 463800,
+    "frames": 3093,
+    "retainedSnapshotBytes": 0,
+    "previewQuality": "balanced",
+    "idle": false,
+    "previewFps": 30,
+    "roots": 1,
+    "source_pixels": 150,
+    "signal_bytes": 6300,
+    "texture_bytes": 1200,
+    "history": 12,
+    "direction_bags": 13,
+    "direction_items": 51
+  },
+  "audio_blocks": 5628,
+  "dropped_audio_blocks": 0,
+  "usb_frames": 1252,
+  "usb_fps": 21.341463414704844,
+  "project_writes": 30,
+  "project_replacements": 0,
+  "renderer_pid": 6360,
+  "stable_buffers": true,
+  "mirror_checks": true,
+  "delivery_ids_wrapped_safely": true,
+  "distinct_sampled_frames": 19,
+  "preview_reload_preserves_audio_and_project": true,
+  "closed_cleanly": true,
+  "passed": true
+}

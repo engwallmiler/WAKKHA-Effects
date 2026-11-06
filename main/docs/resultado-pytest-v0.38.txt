@@ -1,0 +1,5 @@
+Comando: .runtime/python312/python.exe -m pytest -q
+Resultado completo observado: 920 passed in 249.20s (0:04:09)
+
+Depois desta execução foram acrescentados dois testes de encerramento/erro parcial e um de edição de LED durante teste.
+O reteste final de MIDI/backend/interface está em resultado-midi-tests-v0.38.txt.

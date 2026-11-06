@@ -1,4 +1,12 @@
-# Arquitetura — versão 0.37
+# Arquitetura — versão 0.41
+
+**Atualização 0.41:** `diagnostics/output_log.py` recebe eventos do painel e worker USB em uma fila limitada, grava JSONL rotativo numa thread e mantém eventos/saúde recentes para exportação. `ui/output_log.py` fornece janela não modal com horário local, filtros e exportação assíncrona. `PixelUsbPanel` separa identidade do pedido em voo da geração do projeto: descarta respostas acima de 250 ms, tenta novo quadro dentro de 750 ms desde o último válido e desarma em falhas persistentes. `outputHealth()` retorna somente escalares do motor; não modifica RGB. Diálogos Qt evitam o bloqueio de QTimers no Windows. Mostrador de fase usa oito tempos relativos sem rebase da grade. DSP, análise musical, protocolo e firmware preservados. [Operação](logs-saida-v0.41.md).
+
+**Atualização 0.40:** `effectMix=single` utiliza descritores de cena com paletas musicais e repertório/durações validados. Fusões guardam apenas origem/destino, sem `capturePattern`; interrupções escolhem um dos anteriores. `cueReference` conserva origem e início do ciclo na sessão, com salto aritmético dos períodos perdidos e correção conjunta ao rebase do relógio. A ação MIDI `cue_sync` foi acrescentada ao perfil v2, migrando as dez ações v1 sem modificar seus endereços. IDs de entrega musical retornam a 1 antes de exceder o inteiro de 32 bits do slot Qt. [Operação](efeito-unico-e-compassos-v0.40.md) · [Limites](auditoria-buffers-v0.40.md).
+
+**Atualização 0.39:** o palco fica num dock permanente e os ajustes em um painel lateral com rolagem própria. O desktop agenda a prévia por timer com prazo e uma única chamada pendente; pausa desenhos quando não há emissão ou a página está oculta. Qualidade controla somente raster/texturas da prévia. Texturas de uma coluna substituem nove colunas repetidas, mantendo canais físicos integrais e uma única atualização completa do canvas frontal por quadro. Tela cheia passa pela janela Qt e restaura seu estado anterior; o filtro de eventos recebe Esc/F11 também com foco no WebEngine. A análise musical, contratos e firmware permanecem idênticos. [Operação e medições](interface-pixel-v0.39.md).
+
+**Atualização 0.38:** `midi/mapping.py` valida perfis e transforma Note/CC em dez comandos; `midi/winmm.py` mantém handles de 64 bits e callback curto; `midi/runtime.py` limita a entrada e envia apenas mudanças dos LEDs numa thread. `ui/midi.py` oferece Learn silencioso, confirmação ao encerrar e salvamento explícito assíncrono. O Pixel Studio recebe lotes validados por `controlBatch`, com uma chamada em andamento e prazo de 500 ms, e publica estado compacto separado para os LEDs. Estruturas manuais permanecem até liberação; o Auto Show continua sendo a base. A prévia compartilha envelopes por quadro e usa resolução de desenho limitada; a amostragem física integral mantém os mesmos RGBs. Preferências v14 acrescentam a reativação reversível dos painéis PAR/moves, desabilitados por padrão. [MIDI](midi-x1-mk1.md) · [Otimizações](otimizacao-pixel-v0.38.md).
 
 **Atualização 0.37:** `outputFrames(ids)` avança uma vez o relógio e abre uma única geração de cache para as quatro saídas, reutilizando quadros de fontes repetidas. A UI guarda quatro mapeamentos GPIO/fita, habilita apenas os usados e migra as preferências anteriores para GPIO 18. `OutputConfig.pixels` define quatro comprimentos; o handshake seleciona BLP1 legado ou configuração BLP2 de 11 bytes. O payload novo concatena somente os pixels ativos na ordem 18/19/25/26. Um pacote CRC e um ACK cobrem todas as saídas. O firmware registra quatro controladores RMT4, usa comprimentos reais, CRC por tabela, buffers fixos e watchdog conjunto. [Guia](esp32-quatro-saidas.md).
 
@@ -121,7 +129,10 @@ flowchart LR
 | ui/lighting.py | Lighting Studio: comandos e inspeção, sem geração de efeitos. |
 | core/runtime.py | Inicialização, encerramento, análise em worker, captura de falhas, métricas e publicação do último snapshot. Aceita fábrica de analisadores. |
 | configuration/store.py | Settings v13, validação, fallback e JSON atômico. Não depende de Qt. |
-| diagnostics/logging.py | Logs JSON UTC com contexto e rotação. |
+| diagnostics/logging.py | Logs JSON com horário local, referência UTC, contexto e rotação. |
+| diagnostics/pc_time.py | Conversão ao fuso do Windows com regras históricas, independente da variável TZ do processo. |
+| diagnostics/output_log.py | Registro limitado de eventos/saúde da saída, escrita assíncrona e histórico persistente. |
+| ui/output_log.py | Janela não modal de diagnóstico com filtros e exportação sem bloquear envio. |
 | ui/window.py | Comandos do operador, worker de controle e apresentação do estado. |
 | ui/panels.py | Construção dos painéis e formulários. |
 | ui/plots.py | Desenho com QPainter; recebe somente dados reduzidos. |

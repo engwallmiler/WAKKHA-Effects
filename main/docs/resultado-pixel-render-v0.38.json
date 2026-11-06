@@ -1,0 +1,39 @@
+{
+  "version": "0.38.0",
+  "asset": "current",
+  "seed": 1337,
+  "hardware_used": false,
+  "software_renderer": true,
+  "phases": [
+    {
+      "mode": "auto",
+      "seconds": 6.0,
+      "frames": 173,
+      "fps": 28.833333333333332,
+      "pattern": "Aurora + Maré + Onda Vertical",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 8.85144508667721,
+      "renderer_cpu_percent": 30.729166666666668,
+      "allocations": 0,
+      "errors": []
+    },
+    {
+      "mode": "liquid",
+      "seconds": 6.0,
+      "frames": 171,
+      "fps": 28.5,
+      "pattern": "Ondas orgânicas",
+      "canvas": [
+        600,
+        280
+      ],
+      "draw_ms": 9.350877192982457,
+      "renderer_cpu_percent": 44.53125,
+      "allocations": 0,
+      "errors": []
+    }
+  ]
+}

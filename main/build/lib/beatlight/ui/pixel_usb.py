@@ -22,6 +22,10 @@ class PixelUsbPanel(QWidget):
         self.path=page.owner.store.path.parent/'pixel-usb.json'
         self.closing=False;self.pending=False;self.generation=0
         self.preview_only=True
+        self._inflight=None;self._frame_serial=0;self._last_good_at=0;self._recovering=False
+        self._last_tick=0;self._tick_gap=0;self._last_sample=-10;self._health={};self._roundtrip_ms=0
+        self._last_gate=None
+        self._bind_journal()
         self.request_at=0;self.last_sources=-10;self.last_status=-10;self.reading_sources=False
         self.error='';self.desired_id='';self.preparing=False;self.source_revision=0;self.source_metadata={};saved={}
         try:
@@ -55,7 +59,7 @@ class PixelUsbPanel(QWidget):
         self.prepare.setToolTip('Prepara somente a fita selecionada, com a quantidade indicada abaixo. Preserva nome, desenho e conexões; não transmite nem ativa a saída.')
         self.enable=QPushButton('Ativar saídas físicas');self.enable.setCheckable(True);self.enable.clicked.connect(self._arm)
         self.enable.setStyleSheet('QPushButton:checked {background:#1b684e;border:2px solid #59e1af;color:white;}')
-        self.off=QPushButton('APAGAR TODAS');self.off.clicked.connect(self._off)
+        self.off=QPushButton('APAGAR TODAS');self.off.clicked.connect(lambda:self._off())
         self.off.setStyleSheet('QPushButton {background:#6f2929;color:white;border:1px solid #df7770;font-weight:800;}')
         header.addWidget(self.enable);header.addWidget(self.off)
         self.reload=QPushButton('Reabrir prévia');self.reload.clicked.connect(page.reload_preview);header.addWidget(self.reload)
@@ -104,7 +108,7 @@ class PixelUsbPanel(QWidget):
         self.preview_only=bool(preview_only)
         self.last_status=-10
         if self.preview_only:
-            self._off()
+            self._off('simulation_mode','Modo de simulação selecionado; saída física desativada.')
             if not self.runtime.closed:self.runtime.disconnect()
         self.timer.setInterval(250 if self.preview_only else 33)
         if self.page.bridge.ready_state:
@@ -124,7 +128,8 @@ class PixelUsbPanel(QWidget):
             with tempfile.NamedTemporaryFile(mode='w',encoding='utf-8',dir=self.path.parent,suffix='.tmp',delete=False) as stream:
                 temporary=Path(stream.name);json.dump(data,stream,ensure_ascii=False);stream.flush();os.fsync(stream.fileno())
             os.replace(temporary,self.path)
-        except (OSError,ValueError) as exc:self.error=f'Ajustes USB não salvos: {exc}'
+        except (OSError,ValueError) as exc:
+            self.error=f'Ajustes USB não salvos: {exc}';self._log('WARNING','output.settings_save_failed',self.error)
         finally:
             if temporary and temporary.exists():temporary.unlink()
 
@@ -173,23 +178,24 @@ class PixelUsbPanel(QWidget):
         index=self.port.findData(previous)
         if index>=0:self.port.setCurrentIndex(index)
         self.refresh.setEnabled(True)
-        if error:self.error=error
+        if error:self.error=error;self._log('WARNING','usb.port_scan_failed',error)
 
     def _connect(self):
         if self.preview_only:return
         self.generation+=1;self.pending=False;self.error=''
-        if not self.runtime.closed:self.runtime.disconnect();return
+        if not self.runtime.closed:
+            self._off('disconnect','Desconexão solicitada pelo operador.');self.runtime.disconnect();return
         try:
             config=self._config();self.active_sources,self.active_pixels=self._mapping()
             self.runtime.connect(self.port.currentData(),config);self._save()
-        except (ValueError,OSError) as exc:self.error=str(exc)
+        except (ValueError,OSError) as exc:
+            self.error=str(exc);self._log('ERROR','output.connection_rejected',self.error)
 
     def _mapping_changed(self,row=0):
         self._source_changed(row)
 
     def _source_changed(self,row=0):
-        self.generation+=1;self.pending=False
-        if self.runtime.status().armed:self.runtime.arm(False)
+        self._off('mapping_changed','Mapeamento das saídas alterado; reconexão necessária.')
         self.desired_ids[row]=self.sources[row].currentData() or ''
         self.desired_id=self.desired_ids[0]
         item=self.source_metadata.get(self.desired_ids[row])
@@ -206,7 +212,7 @@ class PixelUsbPanel(QWidget):
         if self.preview_only or self.preparing or self.page.bridge.operator.get('simulation'):return
         source=self.sources[row].currentData()
         if not source or not self.page.bridge.ready_state:return
-        self._off();self.error='';self.preparing=True;self.preparing_at=monotonic();generation=self.generation
+        self._off('prepare','Preparação de fita solicitada.');self.error='';self.preparing=True;self.preparing_at=monotonic();generation=self.generation
         self.source_revision+=1;self.reading_sources=False;self.last_status=-10
         for widget in (*self.sources,*self.pixel_counts,*self.prepares,*self.output_enabled):widget.setEnabled(False)
         self.enable.setEnabled(False)
@@ -223,7 +229,8 @@ class PixelUsbPanel(QWidget):
             item=self.source_metadata[source]
             self.source_info.setText(f"Pronta: {item['name']} · WS2812 · {item['pixels']} LEDs individuais. Clique Ativar saídas físicas após conectar.")
             self._save()
-        except (ValueError,TypeError,KeyError) as exc:self.error=str(exc) or 'Não foi possível preparar a fita.'
+        except (ValueError,TypeError,KeyError) as exc:
+            self.error=str(exc) or 'Não foi possível preparar a fita.';self._log('ERROR','output.prepare_failed',self.error)
 
     def _arm(self,enabled):
         if self.preparing:return
@@ -231,31 +238,74 @@ class PixelUsbPanel(QWidget):
             self._off();self.error='Somente simulação: selecione Saída física · ESP32 USB para transmitir.';return
         if enabled and self.page.bridge.operator.get('simulation'):
             self._off();return
+        if enabled and self._inflight is not None:
+            self.error='Aguardando resposta pendente da prévia. Se persistir, use Reabrir prévia.';return
+        if not enabled:self._off();return
         self.generation+=1;self.pending=False;self.error=''
         try:
             if enabled and self._mapping()!=(self.active_sources,self.active_pixels):raise ValueError('Mapeamento ou quantidade alterados. Desconecte e conecte o ESP32 novamente.')
             self.runtime.arm(enabled)
-            if enabled:self.page.webpage.runJavaScript('BeatlightPixel.arm(true)')
+            if enabled:
+                self._last_good_at=monotonic();self._recovering=False;self._last_gate=None
+                self._log('INFO','output.activated','Saídas ativadas pelo operador.')
+                self.page.webpage.runJavaScript('BeatlightPixel.arm(true)')
             self._save()
-        except ValueError as exc:self.error=str(exc)
+        except ValueError as exc:self.error=str(exc);self._log('WARNING','output.activation_rejected',self.error)
 
-    def _off(self):
+    def _off(self,reason='manual_stop',message='Saídas apagadas pelo operador.',level='INFO'):
+        was_armed=self.runtime.status().armed
+        if reason=='manual_stop':self.error=''
         self.generation+=1;self.pending=False
+        self._recovering=False
         if self.preparing:
             self.preparing=False;self.source_revision+=1;self.reading_sources=False;self.last_sources=-10;self.last_status=-10
         self.runtime.arm(False)
+        if was_armed or level in ('WARNING','ERROR'):self._log(level,'output.'+reason,message)
+
+    def _bind_journal(self):
+        journal=getattr(self.page.owner,'output_journal',None)
+        if journal and hasattr(self.runtime,'set_event_sink'):self.runtime.set_event_sink(journal.event)
+
+    def _log(self,level,code,message,**extra):
+        journal=getattr(self.page.owner,'output_journal',None)
+        if not journal:return
+        from dataclasses import asdict
+        journal.event(level,code,message,usb=asdict(self.runtime.status()),sources=self.active_sources,
+            preview_only=self.preview_only,request_age_ms=max(0,monotonic()-self.request_at)*1000 if self._inflight is not None else 0,
+            since_good_ms=max(0,monotonic()-self._last_good_at)*1000 if self._last_good_at else 0,
+            gui_gap_ms=self._tick_gap*1000,roundtrip_ms=self._roundtrip_ms,health=self._health,audio=self._audio_health(),**extra)
+
+    def _audio_health(self):
+        runtime=getattr(self.page.owner,'runtime',None)
+        if runtime is None:return {}
+        status=runtime.status()
+        return {'state':status.state,'error':status.error,'blocks':status.blocks,
+            'dropped_blocks':status.dropped_blocks,'queue_depth':status.queue_depth,'age_ms':status.audio_age*1000}
+
+    def _soft_gap(self):
+        if self._recovering:return
+        self._recovering=True;self.runtime.blackout()
+        self.error='Prévia atrasada: saída temporariamente apagada; aguardando quadro novo.'
+        self._log('WARNING','output.frame_gap','Atraso breve da prévia; quadro antigo descartado e saída temporariamente apagada.')
+
+    def _frame_received(self,payload,serial,generation,source,at):
+        if serial!=self._inflight:return
+        self._inflight=None
+        self._frame(payload,generation,source,at)
 
     def _operator_changed(self):
         state=self.page.bridge.operator
         if state.get('simulation'):
-            self._off();return
+            self._off('temporary_simulation','Montagem temporária selecionada.');return
         if state.get('blackout') or not state.get('armed',False):
             # Ignore samples requested before blackout, even if their JS callback
             # arrives after the priority command has already cleared the strip.
             self.generation+=1;self.pending=False;self.runtime.blackout()
 
     def _bridge_ready(self):
-        self._off();self.preparing=False;self.source_revision+=1;self.reading_sources=False;self.source_timeout=False;self.sources_payload=None;self.last_sources=-10
+        self._off('preview_reload','Prévia aberta ou recarregada; reativação física manual necessária.')
+        self._frame_serial+=1;self._inflight=None
+        self.preparing=False;self.source_revision+=1;self.reading_sources=False;self.source_timeout=False;self.sources_payload=None;self.last_sources=-10
         self.set_preview_only(self.preview_only)
 
     def _sources(self,payload,revision=None):
@@ -269,7 +319,8 @@ class PixelUsbPanel(QWidget):
             if not isinstance(data,list) or any(not isinstance(item,dict) or not isinstance(item.get('id'),str) or not isinstance(item.get('name'),str) or not isinstance(item.get('profile'),str) or type(item.get('leds')) is not int or type(item.get('pixels')) is not int for item in data):return
             ids={item['id'] for item in data}
             if self.runtime.status().armed and any(source and source not in ids for source in self.active_sources):
-                self._off();self.error='Uma fita física foi removida do projeto. Confira o mapeamento e conecte novamente.'
+                self.error='Uma fita física foi removida do projeto. Confira o mapeamento e conecte novamente.'
+                self._off('source_removed',self.error,'WARNING')
             for row,source in enumerate(self.sources):
                 previous=source.currentData() or self.desired_ids[row]
                 source.blockSignals(True);source.clear()
@@ -289,7 +340,9 @@ class PixelUsbPanel(QWidget):
             if not self.runtime.closed:
                 try:changed=self._mapping()!=(self.active_sources,self.active_pixels)
                 except ValueError:changed=True
-                if changed:self._off();self.runtime.disconnect();self.error='Quantidade ou fita alterada no projeto. Conecte novamente para aplicar o mapeamento.'
+                if changed:
+                    self.error='Quantidade ou fita alterada no projeto. Conecte novamente para aplicar o mapeamento.'
+                    self._off('project_mapping_changed',self.error,'WARNING');self.runtime.disconnect()
             self.sources_payload=payload
         except (ValueError,TypeError,KeyError):
             for source in self.sources:source.blockSignals(False)
@@ -298,35 +351,62 @@ class PixelUsbPanel(QWidget):
         if self.closing or generation!=self.generation:return
         self.pending=False
         if not self.runtime.status().armed:return
+        now=monotonic()
+        self._roundtrip_ms=(now-at)*1000
+        if now-self._last_good_at>=.75:
+            self.fail('Prévia sem quadros novos por 750 ms; saída desarmada. Ative novamente após a prévia responder.','frame_timeout');return
+        if not 0<=now-at<=.25:
+            self._soft_gap();return
         try:
             frame=json.loads(payload)
             if isinstance(frame,dict) and 'error' in frame:raise ValueError(frame['error'])
+            if isinstance(frame,dict) and isinstance(frame.get('diagnostics'),dict):self._health=frame['diagnostics']
             state=self.runtime.status()
             data=outputs_payload(frame,source,self.active_pixels,state.protocol)
-            if not self.runtime.submit(data,at):raise ValueError('Quadro atrasado; saída física apagada. Ative novamente para retomar.')
+            if not self.runtime.submit(data,at):
+                if self.runtime.status().armed:self._soft_gap()
+                return
+            self._last_good_at=monotonic()
+            if self._recovering:
+                self._log('INFO','output.recovered','Quadro novo recebido; envio retomado sem rearmar a saída.')
+                self._recovering=False;self.error=''
+            gate=self._health.get('gate')
+            if gate!=self._last_gate:
+                self._last_gate=gate
+                if gate:self._log('INFO','output.gate','Estado do motor de efeitos: '+str(gate))
         except (ValueError,TypeError) as exc:
-            self.error=str(exc);self._off()
+            self.fail(str(exc),'invalid_frame')
 
     def _tick(self):
         if self.closing:return
-        at=monotonic();state=self.runtime.status();ready=self.page.view is not None and self.page.bridge.ready_state
+        self._bind_journal()
+        at=monotonic();self._tick_gap=at-self._last_tick if self._last_tick else 0;self._last_tick=at
+        state=self.runtime.status();ready=self.page.view is not None and self.page.bridge.ready_state
+        if state.armed and self._tick_gap>.25 and at-self._last_good_at<.75:self._soft_gap()
         if self.preparing and at-self.preparing_at>2:
-            self.fail('A preparação não respondeu. Reabra a prévia e prepare a fita novamente.')
+            self.fail('A preparação não respondeu. Reabra a prévia e prepare a fita novamente.','prepare_timeout')
         if ready and not self.preview_only and not self.preparing and not self.reading_sources and at-self.last_sources>=1:
             self.reading_sources=True;self.last_sources=at;self.source_request_at=at
             revision=self.source_revision
             self.page.webpage.runJavaScript('JSON.stringify(BeatlightPixel.outputSources())',lambda payload,r=revision:self._sources(payload,r))
         if self.reading_sources and at-self.source_request_at>2 and not self.source_timeout:
-            self.source_timeout=True;self.fail('A prévia não respondeu; saída física apagada. Reabra a prévia antes de ativar novamente.')
+            self.source_timeout=True;self.fail('A prévia não respondeu; saída física apagada. Reabra a prévia antes de ativar novamente.','source_timeout')
         if state.armed and ready:
-            if self.pending and at-self.request_at>.25:
-                self.error='Motor de efeitos não respondeu a tempo; saída física apagada.';self._off()
-            elif not self.pending:
+            if at-self._last_good_at>=.75:
+                self.fail('Prévia sem quadros novos por 750 ms; saída desarmada. Ative novamente após a prévia responder.','frame_timeout')
+            elif self._inflight is not None and at-self.request_at>.25:self._soft_gap()
+            elif self._inflight is None:
                 source=self.active_sources;generation=self.generation
-                self.pending=True;self.request_at=at
-                expression='JSON.stringify((()=>{try{return BeatlightPixel.outputFrames('+json.dumps(source)+')}catch(e){return {error:e.message}}})())'
-                self.page.webpage.runJavaScript(expression,lambda payload,g=generation,s=source,t=at:self._frame(payload,g,s,t))
-        elif state.armed:self._off()
+                self.pending=True;self.request_at=at;self._frame_serial+=1;serial=self._frame_serial;self._inflight=serial
+                expression='JSON.stringify((()=>{try{const f=BeatlightPixel.outputFrames('+json.dumps(source)+');f.diagnostics=BeatlightPixel.outputHealth();return f}catch(e){return {error:e.message}}})())'
+                self.page.webpage.runJavaScript(expression,lambda payload,n=serial,g=generation,s=source,t=at:self._frame_received(payload,n,g,s,t))
+        elif state.armed:self.fail('Motor da prévia indisponível; saída desarmada.','preview_unavailable')
+        state=self.runtime.status()
+        journal=getattr(self.page.owner,'output_journal',None)
+        if journal and state.armed and at-self._last_sample>=1:
+            from dataclasses import asdict
+            self._last_sample=at
+            journal.sample(usb=asdict(state),gui_gap_ms=self._tick_gap*1000,request_ms=(at-self.request_at)*1000 if self.pending else 0,roundtrip_ms=self._roundtrip_ms,health=self._health,audio=self._audio_health())
         if not getattr(self.page.owner,'visuals_active',True):return
         if at-self.last_status<.2:return
         self.last_status=at;connected=state.state=='connected';busy=state.state in ('connecting','stopping')
@@ -340,7 +420,7 @@ class PixelUsbPanel(QWidget):
             enabled=editable and self.output_enabled[row].isChecked()
             self.sources[row].setEnabled(enabled);self.pixel_counts[row].setEnabled(enabled)
             self.prepares[row].setEnabled(enabled and ready and not self.source_timeout and self.sources[row].count()>0)
-        self.enable.setEnabled(not self.preview_only and connected and ready and not virtual and not self.preparing and not self.source_timeout and self.source.count()>0)
+        self.enable.setEnabled(not self.preview_only and connected and ready and not virtual and not self.preparing and not self.source_timeout and (state.armed or self._inflight is None) and self.source.count()>0)
         self.enable.setChecked(state.armed);self.enable.setText('Saídas físicas ATIVAS' if state.armed else 'Ativar saídas físicas')
         self.off.setEnabled(connected or busy)
         if self.preview_only:self.status.setText('Projeto atual em simulação · conexão e quadros USB bloqueados. Use áudio/Link ou Demonstração na prévia.')
@@ -354,8 +434,9 @@ class PixelUsbPanel(QWidget):
         elif busy:self.status.setText('Conectando e verificando firmware…' if state.state=='connecting' else 'Apagando a fita e encerrando USB…')
         else:self.status.setText('Desconectado · fonte externa 5 V · brilho inicial 25% e limite estimado 2.000 mA.')
 
-    def fail(self,message):self.error=message;self._off()
+    def fail(self,message,reason='preview_failure'):self.error=message;self._off(reason,message,'ERROR')
 
     def shutdown(self):
         if self.closing:return
+        self._off('shutdown','Programa encerrando; saída apagada.')
         self.closing=True;self.generation+=1;self.timer.stop();self.runtime.disconnect()

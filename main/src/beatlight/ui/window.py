@@ -1,7 +1,6 @@
 """Interface e comandos do operador. Trabalhos de driver nunca rodam na GUI."""
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, replace
-from datetime import datetime, timezone
 import json
 from pathlib import Path
 from time import monotonic
@@ -31,6 +30,9 @@ from beatlight.ui.components import label
 from beatlight.ui.stage import build_stage_page, update_stage_view
 from beatlight.ui.panels import build_sidebar, build_monitor_page, build_diagnostics_page, build_settings_page
 from beatlight.ui.pixel import PixelStudioPage
+from beatlight.ui.midi import MidiPage
+from beatlight.diagnostics.output_log import OutputJournal
+from beatlight.diagnostics.pc_time import local_time
 
 
 class JobBridge(QObject):
@@ -41,6 +43,8 @@ class MainWindow(QMainWindow):
     def __init__(self, store: SettingsStore, settings: Settings, startup_warning: str = ""):
         super().__init__()
         self.store, self.settings = store, settings
+        self.output_journal=OutputJournal(store.path.parent/'logs')
+        self._journal_deadline=None
         self.link_runtime = LinkRuntime()
         self._sync_options = (settings.sync_source, settings.link_offset_ms)
         self.runtime = self._make_runtime(settings)
@@ -69,9 +73,10 @@ class MainWindow(QMainWindow):
         root = QHBoxLayout(container)
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
-        root.addWidget(build_sidebar(self))
+        self.sidebar=build_sidebar(self);root.addWidget(self.sidebar)
         body = QWidget()
         layout = QVBoxLayout(body)
+        self.body_layout=layout
         layout.setContentsMargins(30, 24, 30, 16)
         layout.setSpacing(18)
         header = QHBoxLayout()
@@ -83,9 +88,9 @@ class MainWindow(QMainWindow):
         self.performance_button.setToolTip('Pausa desenhos e o palco PAR/moves. Áudio, Link, efeitos de pixels e envio USB continuam. Os controles do show permanecem disponíveis.')
         self.performance_button.toggled.connect(self._set_presentation)
         header.addWidget(self.performance_button)
-        header.addWidget(label("PIXEL & MUSIC · v0.37", "badge"))
+        header.addWidget(label("PIXEL & MUSIC · v0.41", "badge"))
         layout.addLayout(header)
-        layout.addWidget(label("Da batida ao palco: acompanhe o groove, a tensão e o drop.", "subtitle"))
+        self.subtitle=label("Da batida ao palco: acompanhe o groove, a tensão e o drop.", "subtitle");layout.addWidget(self.subtitle)
         self.performance_notice=label('Apresentação leve: gráficos e prévias pausados. Captura, Link e efeitos de pixels continuam ativos.','notice',True)
         self.performance_notice.setVisible(False);layout.addWidget(self.performance_notice)
         self.pages = QStackedWidget()
@@ -100,17 +105,19 @@ class MainWindow(QMainWindow):
         self.pages.addWidget(build_link_page(self))
         self.pixel_page=PixelStudioPage(self)
         self.pages.addWidget(self.pixel_page)
+        self.midi_page=MidiPage(self);self.pages.addWidget(self.midi_page)
         layout.addWidget(self.pages, 1)
         footer = QHBoxLayout()
         self.footer_status = label("●  Pronto para monitorar", "muted")
         footer.addWidget(self.footer_status)
         footer.addStretch()
-        footer.addWidget(label("PIXEL STUDIO  /  WS2812 USB  /  v0.37.0", "eyebrow"))
+        footer.addWidget(label("PIXEL STUDIO  /  WS2812 USB  /  v0.41.0", "eyebrow"))
         layout.addLayout(footer)
         root.addWidget(body, 1)
         self.setCentralWidget(container)
         self.light_runtime.set_suspended(True)
-        self.light_runtime.start()
+        if self.settings.legacy_panels_enabled:self.light_runtime.start()
+        for index in (6,7):self.nav_group.button(index).setVisible(self.settings.legacy_panels_enabled)
         self.timer = QTimer(self)
         self.timer.setInterval(round(1000 / settings.ui_fps))
         self.timer.timeout.connect(self._tick)
@@ -146,11 +153,28 @@ class MainWindow(QMainWindow):
         self._sync_options = ("link" if self.link_use.isChecked() else "audio", self.link_offset.value())
 
     def _navigate(self, index):
+        if index in (6,7) and not self.settings.legacy_panels_enabled:return
+        if index!=9:self.pixel_page.exit_fullscreen()
+        self.subtitle.setVisible(index!=9)
+        self.body_layout.setContentsMargins(*( (16,10,16,8) if index==9 else (30,24,30,16)))
+        self.body_layout.setSpacing(8 if index==9 else 18)
         self.pages.setCurrentIndex(index)
         if self.nav_group.button(index):
             self.nav_group.button(index).setChecked(True)
-        self.page_title.setText(("Audio Monitor", "Diagnósticos", "Configurações", "Análise espectral", "Kick Monitor", "Rhythm Monitor", "Lighting Studio", "Stage Preview", "Ableton Link", "Pixel Studio")[index])
-        if index==9:self.pixel_page.ensure_loaded()
+        self.page_title.setText(("Audio Monitor", "Diagnósticos", "Configurações", "Análise espectral", "Kick Monitor", "Rhythm Monitor", "Lighting Studio", "Stage Preview", "Ableton Link", "Pixel Studio","Controladora MIDI")[index])
+        if index in (9,10):self.pixel_page.ensure_loaded()
+        self._tick()
+
+    def _set_legacy_panels(self,enabled):
+        self.settings=replace(self.settings,legacy_panels_enabled=bool(enabled))
+        if not hasattr(self,'light_runtime'):return
+        for index in (6,7):self.nav_group.button(index).setVisible(bool(enabled))
+        if enabled:self.light_runtime.start()
+        else:
+            self.light_runtime.set_suspended(True)
+            if self.pages.currentIndex() in (6,7):self._navigate(9)
+        try:self.store.save(self.settings)
+        except (OSError,ValueError) as exc:self._notice(f'Preferência dos painéis não salva: {exc}',True)
         self._tick()
 
 
@@ -267,7 +291,7 @@ class MainWindow(QMainWindow):
         page = self.pages.currentIndex()
         visible=self.visuals_active
         self.pixel_page.set_render_context(visible and page==9,self.presentation_mode)
-        self.light_runtime.set_suspended(not visible or self.presentation_mode or page not in (6,7))
+        self.light_runtime.set_suspended(not self.settings.legacy_panels_enabled or not visible or self.presentation_mode or page not in (6,7))
         if page==9 or self.pixel_page.bridge.ready_state:
             self.pixel_page.update_music(snapshot,status,monotonic(),paint=visible and page==9)
         if status.state != self._last_state:
@@ -361,7 +385,8 @@ class MainWindow(QMainWindow):
             f"\nIluminação: {light.status} / {light.update_hz:.1f} Hz / {light.processing_ms:.3f} ms / quadro {light.frame_id} / 6 luminárias abstratas")
 
     def _event(self, text):
-        self.events.append(datetime.now(timezone.utc).strftime("%H:%M:%S UTC") + "  " + text.replace("<", "&lt;"))
+        self.events.append(local_time().strftime("%d/%m/%Y %H:%M:%S") + "  " + text.replace("<", "&lt;"))
+        self.output_journal.event('INFO','app.notice',text)
 
     def _notice(self, text, error=False):
         self.notice.setText(("Atenção: " if error else "") + text)
@@ -411,6 +436,7 @@ class MainWindow(QMainWindow):
             load_kick_settings(self, settings)
             load_beat_settings(self, settings)
             load_lighting_settings(self, settings)
+            self.legacy_panels.setChecked(settings.legacy_panels_enabled)
             self.link_use.setChecked(settings.sync_source == "link")
             self.link_offset.setValue(settings.link_offset_ms)
             self.block_combo.setCurrentIndex((256, 512, 1024, 2048).index(settings.block_size))
@@ -475,9 +501,13 @@ class MainWindow(QMainWindow):
                 self.link_runtime.stop()
 
     def _finish_shutdown(self):
-        if not self.pixel_page.closed_ready:
+        if not self.pixel_page.closed_ready or not self.midi_page.closed_ready:
             QTimer.singleShot(25,self._finish_shutdown)
             return
+        if self._journal_deadline is None:
+            self.output_journal.close();self._journal_deadline=monotonic()+2
+        if not self.output_journal.closed and monotonic()<self._journal_deadline:
+            QTimer.singleShot(25,self._finish_shutdown);return
         self.closed_ready=True
         self.close()
 
@@ -493,6 +523,7 @@ class MainWindow(QMainWindow):
         else:
             event.ignore()
             self.closing = True
+            self.midi_page.shutdown()
             self.pixel_page.shutdown()
             self.footer_status.setText("Encerrando áudio e iluminação…")
             if not self.busy:

@@ -112,7 +112,7 @@ def test_calm_and_movers_do_not_bypass_overrides(override):
 def test_v11_preferences_migrate_and_new_styles_round_trip(tmp_path):
     old=validate(dict(version=11,light_phrase_pattern="sparks",light_phrase_variation="texture",
         light_mover_pattern="unknown",light_breakdown_style="unknown"))
-    assert old.version == 13 and old.light_mover_pattern==old.light_breakdown_style=="auto"
+    assert old.version == 14 and old.light_mover_pattern==old.light_breakdown_style=="auto"
     assert old.light_phrase_pattern=="sparks" and old.light_phrase_variation=="texture"
     store=SettingsStore(tmp_path/"styles.json")
     chosen=replace(old,light_mover_pattern="offbeat",light_breakdown_style="glow")

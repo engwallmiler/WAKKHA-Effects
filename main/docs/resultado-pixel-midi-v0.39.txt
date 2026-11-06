@@ -1,0 +1,48 @@
+[21624:13060:1105/190656.870:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[21624:13060:1105/190656.870:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[21624:13060:1105/190656.910:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[21624:13060:1105/190656.910:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[21624:13060:1105/190656.910:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[21624:13060:1105/190656.910:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.39.0",
+  "physical_midi_used": false,
+  "physical_esp32_used": false,
+  "latency_ms": [
+    0.0,
+    0.0,
+    31.0,
+    16.0,
+    15.0,
+    32.0,
+    15.0,
+    16.0,
+    15.0,
+    0.0,
+    0.0,
+    31.0,
+    16.0,
+    16.0,
+    16.0,
+    15.0
+  ],
+  "learn_all_ten": true,
+  "learn_never_executes": true,
+  "explicit_save_verified": true,
+  "manual_hold_and_toggles": true,
+  "show_modes_clear_manual": true,
+  "immediate_eight_beat_drop": true,
+  "quantized_next_combination": true,
+  "peak_full_range": true,
+  "led_state_feedback": true,
+  "minimized_midi_and_usb": true,
+  "legacy_toggle_reversible": true,
+  "quiet_audio_all_outputs_dark": true,
+  "rgb_frame_bytes": 1440,
+  "usb_frames": 35,
+  "midi_received": 56,
+  "midi_sent": 35,
+  "errors": [],
+  "closed_cleanly": true,
+  "passed": true
+}

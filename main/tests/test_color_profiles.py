@@ -60,7 +60,7 @@ def test_manual_color_is_the_selected_palette_even_when_auto_is_enabled():
 
 def test_v5_migration_preserves_existing_palette_and_enables_explicit_auto_profile():
     settings = validate(dict(version=5, light_palette="amber_violet", light_master=0.65, kick_sensitivity=1.3))
-    assert settings.version == 13 and settings.light_color_mode == "automatic"
+    assert settings.version == 14 and settings.light_color_mode == "automatic"
     assert settings.light_palette == "amber_violet" and settings.light_master == 0.65
     assert settings.kick_sensitivity == 1.3
 

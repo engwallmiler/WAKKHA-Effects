@@ -77,9 +77,9 @@ with tempfile.TemporaryDirectory(prefix='usb-four-',dir=root/'.runtime') as fold
         assert after['allocations']==before['allocations'] and after['rootAllocations']==before['rootAllocations']
         report['buffers_reused']=True
         QCoreApplication.sendPostedEvents(None,QEvent.Type.DeferredDelete)
-        assert window.grab().save(str(root/'preview-quatro-saidas-v0.37.png'))
+        assert window.grab().save(str(root/f'preview-quatro-saidas-v{__version__}.png'))
         panel.fold.setChecked(False);frames()
-        assert window.grab().save(str(root/'preview-quatro-saidas-palco-v0.37.png'))
+        assert window.grab().save(str(root/f'preview-quatro-saidas-palco-v{__version__}.png'))
         window.showMinimized();frames(10);window.showNormal();report['minimized_output_continues']=True
         js('(BeatlightPixel.blackout(true),true)');pump(lambda:not any(devices[-1].frames[-1]))
         report['all_outputs_blackout']=True;js('(BeatlightPixel.blackout(false),true)');frames()

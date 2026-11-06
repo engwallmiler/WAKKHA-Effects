@@ -4,8 +4,8 @@ from pathlib import Path
 import sysconfig
 from time import monotonic
 from collections import deque
-from PySide6.QtCore import QObject,QUrl,QFile,QIODevice,Signal,Slot,Qt,QCoreApplication,QTimer
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QFileDialog,QSizePolicy
+from PySide6.QtCore import QObject,QUrl,QFile,QIODevice,Signal,Slot,Qt,QCoreApplication,QTimer,QEvent
+from PySide6.QtWidgets import QApplication,QWidget,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QFileDialog,QSizePolicy
 from beatlight.pixel.project import PixelProjectStore,MAX_BYTES
 from beatlight.pixel.project_writer import LatestProjectWriter
 from beatlight.pixel.protocol import music_packet,validate_frame
@@ -13,6 +13,9 @@ from beatlight.pixel.rendering import configure_renderer
 from beatlight.ui.pixel_usb import PixelUsbPanel
 
 RENDERER=configure_renderer()
+
+# Native Windows file dialogs stop QTimers, including the USB frame producer.
+QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_DontUseNativeDialogs)
 
 if QCoreApplication.instance() is None:
     QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
@@ -31,6 +34,11 @@ class PixelBridge(QObject):
     connected=Signal()
     operatorChanged=Signal()
     previewRequested=Signal()
+    controlsChanged=Signal()
+    fullscreenRequested=Signal()
+
+    @Slot()
+    def toggleFullscreen(self):self.fullscreenRequested.emit()
 
     def __init__(self,store,parent=None):
         super().__init__(parent)
@@ -40,6 +48,7 @@ class PixelBridge(QObject):
         self.last_frame=None
         self.events=deque(maxlen=64)
         self.operator={}
+        self.controls={}
         self._music_pending=None;self._music_inflight=None;self._music_serial=0
         self.music_coalesced=0
 
@@ -57,6 +66,20 @@ class PixelBridge(QObject):
     @Slot()
     def requestPreview(self):
         self.previewRequested.emit()
+
+    @Slot(str)
+    def controlState(self,payload):
+        try:
+            if not isinstance(payload,str) or len(payload)>512:return
+            data=json.loads(payload)
+            if not isinstance(data,dict) or data.get('manual_structure') not in (None,'groove','breakdown','buildup'):return
+            if data.get('structure') not in ('warming','groove','breakdown','buildup','drop','silence'):return
+            if not isinstance(data.get('mode'),str) or len(data['mode'])>32:return
+            if any(type(data.get(key)) is not bool for key in ('drop','continuous','queued','sync')):return
+            if 'cue_sync' in data and type(data['cue_sync']) is not bool:return
+            if type(data.get('peak_level')) not in (float,int) or not 0<=data['peak_level']<=1:return
+            self.controls=data;self.controlsChanged.emit()
+        except (ValueError,TypeError):pass
 
     @Slot()
     def ready(self):
@@ -80,7 +103,7 @@ class PixelBridge(QObject):
     def send_music(self,packet):
         if self._music_inflight is not None:
             self._music_pending=packet;self.music_coalesced+=1;return
-        self._music_serial+=1;self._music_inflight=self._music_serial
+        self._music_serial=self._music_serial%2_147_483_647+1;self._music_inflight=self._music_serial
         self.packet.emit(json.dumps({**packet,'delivery_id':self._music_serial},allow_nan=False,separators=(',',':')))
 
     @Slot(int)
@@ -109,6 +132,7 @@ class PixelBridge(QObject):
 
 
 class PixelStudioPage(QWidget):
+    commandRejected=Signal(str)
     def __init__(self,owner):
         super().__init__(owner)
         self.owner=owner
@@ -119,7 +143,11 @@ class PixelStudioPage(QWidget):
         self._web_closed=True
         self._reloading=False
         self._render_context=None
+        self._fullscreen_state=None
+        self._control_commands=deque();self._control_busy=False;self._control_serial=0;self.control_blocked=False
         self.bridge=PixelBridge(PixelProjectStore(owner.store.path.parent/"pixel-studio.json"),self)
+        self.bridge.fullscreenRequested.connect(self.toggle_fullscreen)
+        QCoreApplication.instance().installEventFilter(self)
         self.layout_box=QVBoxLayout(self); self.layout_box.setContentsMargins(0,0,0,0)
         row=QHBoxLayout()
         self.start=QPushButton("▶ Iniciar áudio")
@@ -137,6 +165,9 @@ class PixelStudioPage(QWidget):
         self.status=QLabel("Fitas independentes · sincronização pela análise de áudio e Link")
         self.status.setSizePolicy(QSizePolicy.Policy.Ignored,QSizePolicy.Policy.Preferred)
         row.addWidget(self.status,1); self.layout_box.addLayout(row)
+        self.fullscreen_button=QPushButton('Tela cheia · F11');self.fullscreen_button.clicked.connect(self.toggle_fullscreen);row.addWidget(self.fullscreen_button)
+        self.logs_button=QPushButton('Logs da saída');self.logs_button.clicked.connect(self.show_output_logs);row.addWidget(self.logs_button)
+        self._log_dialog=None
         self.usb=PixelUsbPanel(self);self.layout_box.addWidget(self.usb)
         self.placeholder=QLabel("Pixel Studio · abrindo o simulador local…")
         self.placeholder.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -146,6 +177,38 @@ class PixelStudioPage(QWidget):
         self.layout_box.addWidget(self.notice)
         self.bridge.notice.connect(self.notice.setText)
         self.bridge.connected.connect(lambda:setattr(self,'_render_context',None))
+        self.bridge.connected.connect(self._reset_commands)
+
+    def _reset_commands(self):
+        self._control_serial+=1;self._control_busy=False;self.control_blocked=False;self._control_commands.clear()
+
+    def queue_controls(self,commands):
+        if self.shutting_down or not self.bridge.ready_state or self.control_blocked:return False
+        from beatlight.midi.mapping import ACTIONS
+        for action,value in commands:
+            if not isinstance(action,str):return False
+            if action not in ACTIONS and action!='release_structure':return False
+            if action=='peak_level':
+                if type(value) not in (int,float) or not 0<=value<=1:return False
+                self._control_commands=deque(item for item in self._control_commands if item[0]!='peak_level')
+            if len(self._control_commands)>=64:
+                self.notice.setText('Comandos MIDI excederam o limite; aguarde a prévia.');return False
+            self._control_commands.append((action,value))
+        self._flush_commands();return True
+
+    def _flush_commands(self):
+        if self._control_busy or not self._control_commands or not self.bridge.ready_state or self.control_blocked:return
+        commands=list(self._control_commands);self._control_commands.clear();self._control_busy=True;self._control_serial+=1;serial=self._control_serial
+        expression='BeatlightPixel.controlBatch('+json.dumps(commands)+','+str(monotonic())+')'
+        def completed(result):
+            if serial!=self._control_serial:return
+            if result is False:self.commandRejected.emit('Um comando MIDI não foi aplicado. Confira áudio/grade e aguarde o final do drop para trocar combinações.')
+            self._control_busy=False;self._flush_commands()
+        def expired():
+            if serial!=self._control_serial or not self._control_busy:return
+            self.control_blocked=True;self._control_serial+=1;self._control_commands.clear();self._control_busy=False
+            self.notice.setText('A prévia não respondeu aos comandos. Reabra a prévia para retomar o controle MIDI.')
+        self.webpage.runJavaScript(expression,completed);QTimer.singleShot(500,expired)
 
     def ensure_loaded(self):
         if self.view is not None:return
@@ -180,7 +243,7 @@ class PixelStudioPage(QWidget):
             self.webpage=Page(self.profile,self.view); self.view.setPage(self.webpage)
             self.webpage.loadingChanged.connect(lambda info:self.load_events.append((str(info.status()),info.errorCode(),info.errorString(),info.url().toString()[:200])))
             self.webpage.loadingChanged.connect(lambda info:self.notice.setText("Pixel Studio: "+info.errorString()) if info.errorCode() else None)
-            self.webpage.renderProcessTerminated.connect(lambda status,code:self.usb.fail(f"Renderizador Pixel Studio encerrou: {status}, {code}"))
+            self.webpage.renderProcessTerminated.connect(self._renderer_failed)
             self.webpage.settings().setAttribute(QWebEngineSettings.WebAttribute.FullScreenSupportEnabled,True)
             if RENDERER=="software":
                 self.webpage.settings().setAttribute(QWebEngineSettings.WebAttribute.Accelerated2dCanvasEnabled,False)
@@ -211,9 +274,45 @@ class PixelStudioPage(QWidget):
             return
         self.webpage.runJavaScript("new QWebChannel(qt.webChannelTransport,c=>BeatlightPixel.attachBridge(c.objects.beatlight));")
 
+    def _renderer_failed(self,status,code):
+        self.exit_fullscreen()
+        self._reset_commands();self.control_blocked=True;self.bridge.controls={};self.bridge.controlsChanged.emit()
+        self.usb.fail(f'Renderizador Pixel Studio encerrou: {status}, {code}')
+
     def _fullscreen(self,request):
-        request.accept()
-        self.owner.showFullScreen() if request.toggleOn() else self.owner.showNormal()
+        # Canvas-only Chromium fullscreen hides every exit control. Keep the
+        # native window and its exit button in charge, including old requests.
+        request.reject()
+        self.toggle_fullscreen() if request.toggleOn() and not self.owner.isFullScreen() else self.exit_fullscreen() if not request.toggleOn() else None
+
+    def toggle_fullscreen(self):
+        if self.owner.isFullScreen():self.exit_fullscreen();return
+        if self.owner.closing:return
+        self._fullscreen_state=self.owner.windowState()
+        self.owner.showFullScreen();self.fullscreen_button.setText('Sair da tela cheia · Esc')
+        self.owner.sidebar.setVisible(False)
+
+    def exit_fullscreen(self):
+        if self._fullscreen_state is None and not self.owner.isFullScreen():return
+        previous=self._fullscreen_state;self._fullscreen_state=None
+        self.owner.setWindowState(previous if previous is not None else Qt.WindowState.WindowNoState)
+        self.owner.sidebar.setVisible(True);self.fullscreen_button.setText('Tela cheia · F11')
+
+    def eventFilter(self,watched,event):
+        if event.type() not in (QEvent.Type.KeyPress,QEvent.Type.ShortcutOverride):return False
+        if self.owner.pages.currentIndex()!=9 or self.owner.closing:return False
+        if QApplication.activeWindow() not in (None,self.owner):return False
+        key=event.key()
+        if key==Qt.Key.Key_F11 or key==Qt.Key.Key_Escape and self.owner.isFullScreen():
+            if event.type()==QEvent.Type.KeyPress and not event.isAutoRepeat():
+                self.toggle_fullscreen() if key==Qt.Key.Key_F11 else self.exit_fullscreen()
+            event.accept();return True
+        return False
+
+    def show_output_logs(self):
+        from beatlight.ui.output_log import OutputLogDialog
+        if self._log_dialog is None:self._log_dialog=OutputLogDialog(self.owner.output_journal,self)
+        self._log_dialog.show();self._log_dialog.raise_();self._log_dialog.activateWindow()
 
     def _manual_drop(self):
         if self.view and self.bridge.ready_state:
@@ -221,7 +320,10 @@ class PixelStudioPage(QWidget):
 
     def reload_preview(self):
         if self.owner.closing or self._reloading or not self.view:return
-        self._reloading=True;self.usb._off();self.bridge.ready_state=False
+        self.exit_fullscreen()
+        self._reloading=True;self.usb._off('preview_reload','Prévia recarregada pelo operador; saída física desativada.');self.bridge.ready_state=False
+        self.bridge.controls={};self.bridge.controlsChanged.emit()
+        self._reset_commands()
         self.bridge._music_pending=self.bridge._music_inflight=None
         self.notice.setText('Reabrindo a prévia; áudio continua ativo e a saída USB fica apagada.')
         launched=False
@@ -271,6 +373,9 @@ class PixelStudioPage(QWidget):
     def closed_ready(self):return self._web_closed and self.usb.runtime.closed and self.bridge.writer.closed
 
     def shutdown(self):
+        self.exit_fullscreen()
+        QCoreApplication.instance().removeEventFilter(self)
+        self._reset_commands()
         self.usb.shutdown()
         if self.view and not self.shutting_down:
             self.shutting_down=True

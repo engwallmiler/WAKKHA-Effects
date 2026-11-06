@@ -1,14 +1,16 @@
 """Logs estruturados e limitados em disco; áudio bruto nunca é persistido."""
-from datetime import datetime, timezone
+from datetime import timezone
 import json
 import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from beatlight.diagnostics.pc_time import local_time
 
 
 class JsonFormatter(logging.Formatter):
     def format(self, record):
-        data = {"time": datetime.now(timezone.utc).isoformat(), "level": record.levelname,
+        at=local_time(record.created)
+        data = {"time": at.isoformat(), "utc":at.astimezone(timezone.utc).isoformat(), "level": record.levelname,
                 "module": record.name, "event": record.getMessage()}
         for key in ("device", "rate", "channels", "block_size", "reason"):
             if hasattr(record, key):

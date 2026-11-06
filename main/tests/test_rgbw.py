@@ -118,7 +118,7 @@ def test_invalid_new_settings_are_rejected(field, value):
 def test_old_preferences_migrate_with_rgbw_defaults_and_keep_known_fields(version):
     s = validate(dict(version=version, source="wasapi", device_id="saved-realtek", block_size=1024,
         light_white_strength="unknown-before-v8", light_show_complexity="unknown-before-v8"))
-    assert s.version == 13 and s.device_id == "saved-realtek" and s.block_size == 1024
+    assert s.version == 14 and s.device_id == "saved-realtek" and s.block_size == 1024
     assert s.light_white_strength == 1 and s.light_show_complexity == .7
 
 

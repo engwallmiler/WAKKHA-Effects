@@ -1,4 +1,8 @@
-# Operação e apresentação leve — Pixel Studio 0.26
+# Operação e apresentação leve — Pixel Studio 0.39
+
+O palco agora permanece visível durante a edição, em uma região independente dos ajustes. Com o painel lateral aberto, a prévia usa até 15 fps. **Econômica** reduz somente a imagem; **Apresentação leve** pausa totalmente o desenho. Sem emissão, o programa também deixa de redesenhar quadros pretos. [Interface e medições](interface-pixel-v0.39.md).
+
+Lighting Studio e Stage Preview vêm desabilitados. Reative em **Configurações → Habilitar Lighting Studio e Stage Preview · PAR/moves** quando precisar deles. O worker PAR/moves não inicia enquanto desabilitado. A página Controladora MIDI continua operando minimizada, atualizando a tabela somente quando visível. [Guia MIDI](midi-x1-mk1.md) · [Otimizações da prévia](otimizacao-pixel-v0.38.md).
 
 ## Simular o projeto que já está montado
 

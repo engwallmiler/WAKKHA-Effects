@@ -36,6 +36,17 @@ def test_constant_tempo_acquires_predicts_and_locks(bpm):
     assert len(tracker._events) <= 32 and len(result.history) <= 120
 
 
+def test_cumulative_beats_and_phase_survive_long_sessions_and_integer_boundaries():
+    _,snapshots=feed(np.arange(20)*.5)
+    base=replace(snapshots[-1],updated_at=0,bpm=128,period=60/128,phase=0,
+        beat_index=2**63+46080,last_beat_at=0,last_reference_at=0,expires_at=None)
+    for hours in (6,48):
+        projected=project_clock(base,hours*3600+base.period/4)
+        assert projected.beat_index==base.beat_index+hours*60*128
+        assert projected.phase==pytest.approx(.25)
+        assert 0<=projected.phase<1 and 1<=projected.beat_index%8+1<=8
+
+
 def test_jitter_and_extra_offbeat_do_not_double_bpm():
     rng = np.random.default_rng(19)
     times = 0.8 + np.arange(36) * 0.5 + rng.uniform(-0.008, 0.008, 36)

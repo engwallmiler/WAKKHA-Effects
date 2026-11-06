@@ -131,7 +131,7 @@ def test_click_without_clock_is_not_saved_for_later_playback():
 def test_new_preferences_migrate_and_round_trip_without_persisting_sync_command(tmp_path):
     old=validate(dict(version=8,light_effect="orchestrated_show",light_white_strength=.8,
         light_phrase_pattern="unknown-before-v9"))
-    assert old.version == 13 and old.light_phrase_pattern=="auto" and old.light_white_strength==.8
+    assert old.version == 14 and old.light_phrase_pattern=="auto" and old.light_white_strength==.8
     store=SettingsStore(tmp_path/"phrase.json")
     s=replace(old,light_effect="phrase_show",light_phrase_pattern="reverse",light_phrase_prepare="blackout",light_phrase_prepare_ms=180)
     store.save(s)
@@ -259,7 +259,7 @@ def test_switching_to_phrase_with_sync_has_immediate_impact_without_mode_fade():
 def test_v9_migrates_variation_default_and_v10_preserves_policy():
     s=validate(dict(version=9,light_effect="phrase_show",light_phrase_pattern="chase",
         light_phrase_variation="unknown-before-v10"))
-    assert s.version == 13 and s.light_phrase_variation=="texture" and s.light_phrase_pattern=="chase"
+    assert s.version == 14 and s.light_phrase_variation=="texture" and s.light_phrase_pattern=="chase"
     assert validate(dict(version=10,light_phrase_variation="cycle")).light_phrase_variation=="cycle"
     with pytest.raises(ValueError):validate(dict(version=10,light_phrase_variation="bad"))
 

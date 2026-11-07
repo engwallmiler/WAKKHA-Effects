@@ -1,0 +1,62 @@
+[20624:26340:1106/204619.200:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[20624:26340:1106/204619.200:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[20624:26340:1106/204619.230:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[20624:26340:1106/204619.230:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+[20624:26340:1106/204619.230:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:920] Failed to create GLES3 context, fallback to GLES2.
+[20624:26340:1106/204619.230:ERROR:../../../qtwebengine/src/3rdparty/chromium/gpu/ipc/service/gpu_channel_manager.cc:931] ContextResult::kFatalFailure: Failed to create shared context for virtualization.
+{
+  "version": "0.43.0",
+  "physical_device_used": false,
+  "renderer_queued_tests": [
+    {
+      "block_ms": 400,
+      "age_bound_ms": 33.872,
+      "roundtrip_ms": 375.0,
+      "javascript_ms": 1.6,
+      "queue_lower_ms": 356.753,
+      "stamped": true,
+      "clock_reset": false,
+      "reference_age_ms": 422.0
+    },
+    {
+      "block_ms": 594,
+      "age_bound_ms": 24.443,
+      "roundtrip_ms": 546.0,
+      "javascript_ms": 0.1,
+      "queue_lower_ms": 537.182,
+      "stamped": true,
+      "clock_reset": false,
+      "reference_age_ms": 593.0
+    },
+    {
+      "block_ms": 594,
+      "age_bound_ms": 32.26,
+      "roundtrip_ms": 578.0,
+      "javascript_ms": 0.1,
+      "queue_lower_ms": 561.365,
+      "stamped": true,
+      "clock_reset": false,
+      "reference_age_ms": 610.0
+    }
+  ],
+  "preview_visible": true,
+  "presentation_light": false,
+  "effect_mix": "layers",
+  "bpm": 127,
+  "pixels": [
+    120,
+    120,
+    120,
+    120
+  ],
+  "fourth_output_copies_first": true,
+  "594ms_old_rgb_delivery_rejected": true,
+  "persistent_stall_still_requires_manual_rearm": true,
+  "manual_off_cannot_be_overridden_by_fresh_callback": true,
+  "audio_blocks": 541,
+  "audio_dropped": 0,
+  "usb_frames": 29,
+  "render_errors": [],
+  "closed_cleanly": true,
+  "passed": true
+}

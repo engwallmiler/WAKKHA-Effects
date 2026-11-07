@@ -1,0 +1,98 @@
+{
+  "version": "0.44.0",
+  "physical_device_used": false,
+  "patterns": [
+    {
+      "id": "standing",
+      "moving": true,
+      "rgb_copy_exact": true,
+      "sample_ms": 0.4000000003725468,
+      "audio_dropped": 0
+    },
+    {
+      "id": "portals",
+      "moving": true,
+      "rgb_copy_exact": true,
+      "sample_ms": 0.4999999999997229,
+      "audio_dropped": 0
+    },
+    {
+      "id": "zipper",
+      "moving": true,
+      "rgb_copy_exact": true,
+      "sample_ms": 0.3000000007453707,
+      "audio_dropped": 0
+    },
+    {
+      "id": "diamonds",
+      "moving": true,
+      "rgb_copy_exact": true,
+      "sample_ms": 1.9000000003721595,
+      "audio_dropped": 0
+    },
+    {
+      "id": "ribbons",
+      "moving": true,
+      "rgb_copy_exact": true,
+      "sample_ms": 0.39999999850959256,
+      "audio_dropped": 0
+    },
+    {
+      "id": "silk",
+      "moving": true,
+      "rgb_copy_exact": true,
+      "sample_ms": 1.0000000000012221,
+      "audio_dropped": 0
+    }
+  ],
+  "audio_dropped_before_manual": 0,
+  "navigation_visible_with_usb_panel": {
+    "top": 256,
+    "bottom": 294,
+    "height": 38,
+    "viewport": 340
+  },
+  "manual_next_previous": true,
+  "manual_ignores_detected_structure": true,
+  "strip_settings_preserved": true,
+  "four_outputs_continuous": true,
+  "minimized_output": true,
+  "project_export_validated": true,
+  "audio_blocks": 780,
+  "audio_dropped": 0,
+  "usb_frames": 174,
+  "errors": [],
+  "slow_audio": [],
+  "timeline": [
+    {
+      "phase": "standing",
+      "seconds": 2.484,
+      "dropped": 0
+    },
+    {
+      "phase": "portals",
+      "seconds": 3.765,
+      "dropped": 0
+    },
+    {
+      "phase": "zipper",
+      "seconds": 5.031,
+      "dropped": 0
+    },
+    {
+      "phase": "diamonds",
+      "seconds": 6.296,
+      "dropped": 0
+    },
+    {
+      "phase": "ribbons",
+      "seconds": 7.562,
+      "dropped": 0
+    },
+    {
+      "phase": "silk",
+      "seconds": 8.828,
+      "dropped": 0
+    }
+  ]
+}

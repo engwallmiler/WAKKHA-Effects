@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (QWidget,QGroupBox,QGridLayout,QHBoxLayout,QVBoxLa
     QComboBox,QPushButton,QLabel,QSpinBox,QDialog,QDialogButtonBox,QTextBrowser,QCheckBox)
 from beatlight.pixel.usb import PixelUsbOutput,list_ports
 from beatlight.pixel.usb_protocol import OutputConfig,outputs_payload,PINS
+from beatlight.pixel.frame_time import FrameClock
 
 
 class PixelUsbPanel(QWidget):
@@ -25,6 +26,7 @@ class PixelUsbPanel(QWidget):
         self._inflight=None;self._frame_serial=0;self._last_good_at=0;self._recovering=False
         self._last_tick=0;self._tick_gap=0;self._last_sample=-10;self._health={};self._roundtrip_ms=0
         self._last_gate=None
+        self._frame_clock=FrameClock();self._frame_timing={}
         self._bind_journal()
         self.request_at=0;self.last_sources=-10;self.last_status=-10;self.reading_sources=False
         self.error='';self.desired_id='';self.preparing=False;self.source_revision=0;self.source_metadata={};saved={}
@@ -273,7 +275,7 @@ class PixelUsbPanel(QWidget):
         journal.event(level,code,message,usb=asdict(self.runtime.status()),sources=self.active_sources,
             preview_only=self.preview_only,request_age_ms=max(0,monotonic()-self.request_at)*1000 if self._inflight is not None else 0,
             since_good_ms=max(0,monotonic()-self._last_good_at)*1000 if self._last_good_at else 0,
-            gui_gap_ms=self._tick_gap*1000,roundtrip_ms=self._roundtrip_ms,health=self._health,audio=self._audio_health(),**extra)
+            gui_gap_ms=self._tick_gap*1000,roundtrip_ms=self._roundtrip_ms,frame_timing=self._frame_timing,health=self._health,audio=self._audio_health(),**extra)
 
     def _audio_health(self):
         runtime=getattr(self.page.owner,'runtime',None)
@@ -305,6 +307,7 @@ class PixelUsbPanel(QWidget):
     def _bridge_ready(self):
         self._off('preview_reload','Prévia aberta ou recarregada; reativação física manual necessária.')
         self._frame_serial+=1;self._inflight=None
+        self._frame_clock.reset();self._frame_timing={}
         self.preparing=False;self.source_revision+=1;self.reading_sources=False;self.source_timeout=False;self.sources_payload=None;self.last_sources=-10
         self.set_preview_only(self.preview_only)
 
@@ -353,17 +356,20 @@ class PixelUsbPanel(QWidget):
         if not self.runtime.status().armed:return
         now=monotonic()
         self._roundtrip_ms=(now-at)*1000
-        if now-self._last_good_at>=.75:
-            self.fail('Prévia sem quadros novos por 750 ms; saída desarmada. Ative novamente após a prévia responder.','frame_timeout');return
-        if not 0<=now-at<=.25:
-            self._soft_gap();return
         try:
             frame=json.loads(payload)
             if isinstance(frame,dict) and 'error' in frame:raise ValueError(frame['error'])
             if isinstance(frame,dict) and isinstance(frame.get('diagnostics'),dict):self._health=frame['diagnostics']
+            timing=self._frame_clock.inspect(at,now,frame.get('_timing') if isinstance(frame,dict) else None)
+            self._frame_timing=timing.diagnostics()
+            if timing.clock_reset:self._log('WARNING','output.clock_resync','Relógio do renderizador recalibrado; idade do quadro verificada conservadoramente.')
+            if timing.age_bound_ms>250:
+                if now-self._last_good_at>=.75:self.fail('Prévia sem quadros novos por 750 ms; saída desarmada. Ative novamente após a prévia responder.','frame_timeout')
+                else:self._soft_gap()
+                return
             state=self.runtime.status()
             data=outputs_payload(frame,source,self.active_pixels,state.protocol)
-            if not self.runtime.submit(data,at):
+            if not self.runtime.submit(data,timing.created_at):
                 if self.runtime.status().armed:self._soft_gap()
                 return
             self._last_good_at=monotonic()
@@ -406,7 +412,7 @@ class PixelUsbPanel(QWidget):
         if journal and state.armed and at-self._last_sample>=1:
             from dataclasses import asdict
             self._last_sample=at
-            journal.sample(usb=asdict(state),gui_gap_ms=self._tick_gap*1000,request_ms=(at-self.request_at)*1000 if self.pending else 0,roundtrip_ms=self._roundtrip_ms,health=self._health,audio=self._audio_health())
+            journal.sample(usb=asdict(state),gui_gap_ms=self._tick_gap*1000,request_ms=(at-self.request_at)*1000 if self.pending else 0,roundtrip_ms=self._roundtrip_ms,frame_timing=self._frame_timing,health=self._health,audio=self._audio_health())
         if not getattr(self.page.owner,'visuals_active',True):return
         if at-self.last_status<.2:return
         self.last_status=at;connected=state.state=='connected';busy=state.state in ('connecting','stopping')

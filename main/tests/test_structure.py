@@ -229,25 +229,46 @@ def test_fast_percussion_that_was_already_in_the_learned_groove_is_not_new_build
     assert all(s.state == "groove" for s in result)
 
 
-def test_missing_confirmations_with_sustained_bass_do_not_truncate_eight_kicks():
+def test_missing_confirmations_with_sustained_bass_end_after_eight_bpm_beats():
     p = Performance()
     p.groove()
     p.segment(3, low=-70, high=-35, rms=-25, kicks=False)
     p.segment(.2)
     assert p.last.state == "drop" and p.last.drop_kicks == 1
-    # Uma longa lacuna de confirmação mantém música/graves presentes.
+    started=p.last.drop_at;period=p.structure._drop_period
+    # A contagem real fica parada, mas a duração continua pelo BPM.
     held = p.segment(4, kicks=False)
-    assert all(s.state == "drop" and s.drop_kicks == 1 for s in held)
+    assert all(s.state=='drop' and s.drop_kicks==1 for s in held if s.updated_at<started+8*period-1e-7)
+    assert all(s.state!='drop' for s in held if s.updated_at>=started+8*period+1e-7)
+    assert held[-1].state=='groove'
     resumed = p.segment(4)
-    assert {s.drop_kicks for s in resumed if s.state == "drop"} >= set(range(2,9))
+    assert all(s.state!='drop' for s in resumed)
     assert resumed[-1].state == "groove"
 
 
-def test_sparse_confirmed_kicks_survive_old_absolute_drop_timeout():
+def test_sparse_confirmed_kicks_cannot_extend_drop_until_eighth_acoustic_confirmation():
     p = Performance()
     p.groove()
     p.segment(3, low=-70, high=-35, rms=-25, kicks=False)
     result = p.segment(12.2, kick_every=1.5)
-    assert {s.drop_kicks for s in result if s.state == "drop"} == set(range(1,9))
-    assert any(s.state == "drop" and s.updated_at - s.drop_at > 8 for s in result)
+    drops=[s for s in result if s.state=='drop']
+    assert drops and max(s.drop_kicks for s in drops)<8
+    assert all(s.updated_at-s.drop_at<8*.5+1e-7 for s in drops)
     assert result[-1].state == "groove"
+
+
+@pytest.mark.parametrize('bpm',[90,128,150])
+def test_drop_duration_scales_with_established_bpm_and_never_creates_kick_events(bpm):
+    p=Performance();period=60/bpm
+    p.segment(8,kick_every=period,rate=bpm/60)
+    assert p.last.state=='groove'
+    p.segment(3,low=-70,rms=-25,kicks=False)
+    first=p.segment(period*1.2,kick_every=period,rate=bpm/60)
+    assert p.last.state=='drop'
+    start=p.last.drop_at;fixed_period=p.structure._drop_period;count=p.last.drop_kicks
+    assert fixed_period==pytest.approx(period,abs=.03)
+    remaining=p.segment(8*fixed_period+1,kicks=False,rate=bpm/60)
+    assert all(s.drop_kicks==count for s in remaining if s.state=='drop')
+    assert all(s.updated_at<start+8*fixed_period+1e-7 for s in remaining if s.state=='drop')
+    after=next(s for s in remaining if s.updated_at>=start+8*fixed_period+1e-7)
+    assert after.state!='drop' and remaining[-1].state=='groove'

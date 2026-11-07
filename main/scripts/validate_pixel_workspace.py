@@ -66,8 +66,25 @@ with tempfile.TemporaryDirectory(prefix='workspace-',dir=root/'.runtime') as fol
         window.resize(1100,760);window.showNormal();settle();js('(BeatlightPixel.setWorkspace("effects"),true)');settle()
         js('(BeatlightPixel.setEffectMix("single"),BeatlightPixel.markCueReference(),document.getElementById("singleRulesFold").open=true,true)');settle()
         data=rects();assert data['stage'][2]>=200 and data['stage'][3]>=140 and data['scroll'][0]<=data['viewport'][0]+1 and data['scroll'][1]<=data['viewport'][1]+1,data
-        assert js('document.querySelectorAll("#singleRules .single-rule").length')==33
+        assert js('document.querySelectorAll("#singleRules .single-rule").length')==39
         report['single_repertoire_and_reference_visible']=True
+        assert js('document.getElementById("cueSync").getAttribute("aria-pressed")')=='true'
+        js('(document.getElementById("cueSync").click(),true)')
+        assert js('BeatlightPixel.status().reference.origin') is None
+        assert js('document.getElementById("cueSync").getAttribute("aria-pressed")')=='false'
+        js('(document.getElementById("cueSync").click(),true)')
+        assert js('BeatlightPixel.status().reference.origin') is not None
+        report['reference_button_toggles_off_and_on']=True
+        js('(document.getElementById("quickManual").click(),true)');settle()
+        assert js('BeatlightPixel.status().manual.active')
+        manual_before=js('BeatlightPixel.status().manual.pattern')
+        js('(document.getElementById("manualNext").click(),true)');assert js('BeatlightPixel.status().manual.pattern')!=manual_before
+        js('(document.getElementById("manualPrevious").click(),true)');assert js('BeatlightPixel.status().manual.pattern')==manual_before
+        nav=js('(()=>{const r=document.getElementById("manualNav").getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom,viewport:innerHeight}})()')
+        assert nav['width']>250 and nav['height']>0 and nav['bottom']<=nav['viewport']+1,nav
+        data=rects();assert data['stage'][3]>=140 and data['scroll'][1]<=data['viewport'][1]+1,data
+        report['manual_navigation_visible_compact']=nav;screenshot('manual-compact')
+        js('(document.getElementById("quickAuto").click(),true)');assert not js('BeatlightPixel.status().manual.active')
         report['minimum_window_layout']=data;screenshot('compact')
         window.pixel_page.toggle_fullscreen();window.pixel_page.reload_preview();pump(lambda:window.pixel_page.bridge.ready_state and not window.pixel_page._reloading)
         assert not window.isFullScreen();report['reload_exits_fullscreen']=True

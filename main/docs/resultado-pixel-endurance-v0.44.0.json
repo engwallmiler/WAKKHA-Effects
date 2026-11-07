@@ -1,0 +1,343 @@
+{
+  "version": "0.44.0",
+  "physical_device_used": false,
+  "serial_emulated_only": true,
+  "single_mode": true,
+  "requested_wall_seconds": 60.0,
+  "requested_musical_hours": 8.0,
+  "real_six_hour_run": false,
+  "renderer_stall_disarms_output": true,
+  "stale_frames_rejected": true,
+  "actual_wall_seconds": 60.0,
+  "main_cpu_seconds": 48.59375,
+  "published_packets": 1281,
+  "musical_hours_observed": 8.00000163888889,
+  "musical_coalesced": 23,
+  "render_ms": {
+    "frames": 1806,
+    "ticks": 1806,
+    "last": 2.599999999627471,
+    "average": 1.7379291251142934,
+    "max": 10.300000000745058,
+    "columns": 1.400000000372529,
+    "glow": 0,
+    "readbackPixels": 303408000
+  },
+  "performance": {
+    "allocations": 12,
+    "rootAllocations": 7,
+    "sampledPixels": 460350,
+    "frames": 3072,
+    "retainedSnapshotBytes": 0,
+    "previewQuality": "balanced",
+    "idle": false,
+    "previewFps": 30,
+    "roots": 1,
+    "source_pixels": 150,
+    "signal_bytes": 6300,
+    "texture_bytes": 1200,
+    "history": 12,
+    "direction_bags": 13,
+    "direction_items": 69
+  },
+  "audio_blocks": 5626,
+  "dropped_audio_blocks": 0,
+  "usb_frames": 1244,
+  "usb_fps": 21.34146341462594,
+  "project_writes": 30,
+  "project_replacements": 0,
+  "renderer_pid": 23340,
+  "stable_buffers": true,
+  "mirror_checks": true,
+  "samples": [
+    {
+      "wall_seconds": 0.16,
+      "musical_beat": 167.43659999963828,
+      "main_rss": 293388288,
+      "renderer_rss": 164343808,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 2,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.444186046589599
+    },
+    {
+      "wall_seconds": 3.16,
+      "musical_beat": 3047.367199999636,
+      "main_rss": 294440960,
+      "renderer_rss": 163549184,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7287878787963453
+    },
+    {
+      "wall_seconds": 6.16,
+      "musical_beat": 5927.413599999634,
+      "main_rss": 292147200,
+      "renderer_rss": 171802624,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7531531531162359
+    },
+    {
+      "wall_seconds": 9.16,
+      "musical_beat": 8807.364599999635,
+      "main_rss": 292560896,
+      "renderer_rss": 171614208,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7778846153583474
+    },
+    {
+      "wall_seconds": 12.16,
+      "musical_beat": 11656.700000000363,
+      "main_rss": 293023744,
+      "renderer_rss": 170577920,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.765671641769731
+    },
+    {
+      "wall_seconds": 15.16,
+      "musical_beat": 14536.699400000365,
+      "main_rss": 293527552,
+      "renderer_rss": 165601280,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7764227641935695
+    },
+    {
+      "wall_seconds": 18.16,
+      "musical_beat": 17461.783399999076,
+      "main_rss": 293380096,
+      "renderer_rss": 171462656,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.748109965597974
+    },
+    {
+      "wall_seconds": 21.16,
+      "musical_beat": 20296.71480000036,
+      "main_rss": 293879808,
+      "renderer_rss": 164065280,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.731845238068629
+    },
+    {
+      "wall_seconds": 24.16,
+      "musical_beat": 23221.784399999076,
+      "main_rss": 294326272,
+      "renderer_rss": 165588992,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7272965879084206
+    },
+    {
+      "wall_seconds": 27.16,
+      "musical_beat": 26056.70680000036,
+      "main_rss": 294649856,
+      "renderer_rss": 173031424,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7361502347277924
+    },
+    {
+      "wall_seconds": 30.16,
+      "musical_beat": 29882.28279999917,
+      "main_rss": 294797312,
+      "renderer_rss": 165892096,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7283582089405292
+    },
+    {
+      "wall_seconds": 33.16,
+      "musical_beat": 31816.690600000362,
+      "main_rss": 294920192,
+      "renderer_rss": 164884480,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7294999999869616
+    },
+    {
+      "wall_seconds": 36.16,
+      "musical_beat": 34741.78239999908,
+      "main_rss": 295395328,
+      "renderer_rss": 172744704,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.731192660536788
+    },
+    {
+      "wall_seconds": 39.16,
+      "musical_beat": 37576.70940000036,
+      "main_rss": 295714816,
+      "renderer_rss": 174080000,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.744406779643969
+    },
+    {
+      "wall_seconds": 42.16,
+      "musical_beat": 40501.78839999907,
+      "main_rss": 295165952,
+      "renderer_rss": 167383040,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7370078739952148
+    },
+    {
+      "wall_seconds": 45.16,
+      "musical_beat": 43336.69800000036,
+      "main_rss": 295559168,
+      "renderer_rss": 160428032,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7297794117400531
+    },
+    {
+      "wall_seconds": 48.16,
+      "musical_beat": 46216.694400000364,
+      "main_rss": 295841792,
+      "renderer_rss": 163430400,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7384137930785273
+    },
+    {
+      "wall_seconds": 51.16,
+      "musical_beat": 49096.70400000036,
+      "main_rss": 296013824,
+      "renderer_rss": 163381248,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7462337662103018
+    },
+    {
+      "wall_seconds": 54.16,
+      "musical_beat": 52021.787799999074,
+      "main_rss": 296148992,
+      "renderer_rss": 160870400,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7468098159250947
+    },
+    {
+      "wall_seconds": 57.16,
+      "musical_beat": 54856.72080000036,
+      "main_rss": 296427520,
+      "renderer_rss": 171626496,
+      "js_heap": {
+        "used": 42100000,
+        "total": 44700000
+      },
+      "history": 12,
+      "texture_bytes": 1200,
+      "signal_bytes": 6300,
+      "render_average_ms": 1.7367441860233368
+    }
+  ],
+  "delivery_ids_wrapped_safely": true,
+  "distinct_sampled_frames": 20,
+  "diagnostic_events": 20,
+  "diagnostic_health_samples": 58,
+  "diagnostic_buffers_bounded": true,
+  "diagnostic_writes_lost": 0,
+  "preview_reload_preserves_audio_and_project": true,
+  "closed_cleanly": true,
+  "passed": true
+}

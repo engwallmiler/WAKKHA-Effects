@@ -1,4 +1,10 @@
-# Pixel Studio integrado — 0.41.0
+# Pixel Studio integrado — 0.44.0
+
+**Manual no palco:** botão de acesso direto, navegação Anterior/Próximo e seletor com 39 padrões. Mantém o desenho escolhido e sai ao selecionar outro modo. Efeitos individuais ficam guardados durante a seleção global. Seis desenhos novos preservam a geometria e as cópias. [Guia 0.44](manual-e-padroes-v0.44.md).
+
+**Saída 0.43:** carimbos distinguem RGB recém-gerado de pedidos que ficaram esperando na fila do renderizador. A proteção contra quadros antigos continua, e os logs mostram os tempos separados. [Investigação do apagamento e correção](correcao-falha1-v0.43.md).
+
+**Drop por BPM:** duração de oito tempos independente das confirmações acústicas, com progresso/camadas pela grade e proteção contra reinício do mesmo evento. **Marcar compasso 1** alterna para **Desmarcar compasso 1**, inclusive por MIDI/retorno LED. [Guia 0.42](drop-bpm-e-referencia-v0.42.md).
 
 **Logs da saída** abre um histórico separado com motivos de desarme, contexto USB/motor/áudio, horário local do PC e exportação. Atrasos breves descartam quadros antigos e permitem retomar dentro de 750 ms desde o último válido; falhas persistentes exigem reativação manual. Diálogos Qt preservam o envio no Windows. [Investigação e operação 0.41](logs-saida-v0.41.md).
 

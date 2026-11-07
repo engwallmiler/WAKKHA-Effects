@@ -40,7 +40,7 @@ Para testar sem controladora, selecione a linha e use **Executar função seleci
 | Auto Show | Libera a estrutura manual e retoma o automático. |
 | Orgânico | Libera a estrutura manual e seleciona o orgânico. |
 | Contínuo | Libera a estrutura manual e alterna o contínuo fixo. Outro toque sai dele. |
-| Marcar compasso 1 · trocas | Inicia a contagem até a próxima troca por compassos. Outro toque marca uma nova referência; exige grade recente ao vivo. |
+| Compasso 1 · marcar/desmarcar | Marca a referência das trocas. Outro toque desmarca e apaga o LED. Marcar exige grade recente ao vivo; desmarcar pode ser feito sem grade. |
 
 A intervenção manual altera o contexto visual, sem fabricar kicks ou modificar a análise. Energia, baixo e densidade ainda vêm do áudio. Estruturas manuais, drop e agendamento são estados da sessão; o perfil persiste mapeamentos e opções MIDI.
 

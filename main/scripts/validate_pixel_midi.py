@@ -56,7 +56,7 @@ with tempfile.TemporaryDirectory(prefix='pixel-midi-',dir=root/'.runtime') as fo
         panel.mode.setCurrentIndex(1);pump(lambda:panel.source.count()==4 and panel.refresh.isEnabled())
         for i,strip in enumerate(project['strips']):panel.sources[i].setCurrentIndex(panel.sources[i].findData(strip['id']));panel.output_enabled[i].setChecked(True)
         panel.port.clear();panel.port.addItem('EMULADO · sem ESP32 físico','EMULATED');panel.connect_button.click();pump(lambda:panel.runtime.status().state=='connected')
-        js('(()=>{window.qaBeat=32;window.qaState="groove";window.qaAudible=true;const base='+str(monotonic())+',origin=performance.now();window.qaFeed=()=>BeatlightPixel.receive({version:1,at:100,sent_at:base+(performance.now()-origin)/1000,active:true,audible:qaAudible,kick:null,clock:{beat:qaBeat,bpm:120,source:"link"},music:{state:qaState,energy:.7,tension:.2,brightness:.5,bass:.6,density:.6,activity:.4,drop_id:1,drop_kicks:1}});BeatlightPixel.setInput("live");BeatlightPixel.arm(true);qaFeed();window.qaTimer=setInterval(qaFeed,40);return true})()')
+        js('(()=>{window.qaBeat=32;window.qaState="groove";window.qaAudible=true;window.qaDropId=1;const base='+str(monotonic())+',origin=performance.now();window.qaFeed=()=>BeatlightPixel.receive({version:1,at:100,sent_at:base+(performance.now()-origin)/1000,active:true,audible:qaAudible,kick:null,clock:{beat:qaBeat,bpm:120,source:"link"},music:{state:qaState,energy:.7,tension:.2,brightness:.5,bass:.6,density:.6,activity:.4,drop_id:qaDropId,drop_kicks:1}});BeatlightPixel.setInput("live");BeatlightPixel.arm(true);qaFeed();window.qaTimer=setInterval(qaFeed,40);return true})()')
         window.pixel_page.queue_controls([('auto',None)]);pump(lambda:window.pixel_page.bridge.controls.get('mode')=='auto')
         pump(lambda:panel.enable.isEnabled());panel.enable.click();assert any(frames())
         midi._scan();pump(lambda:not midi.scanning);midi.output.setCurrentIndex(1);midi.connect_button.click();pump(lambda:midi.runtime.status().state=='connected' and midi.learn.isEnabled())
@@ -79,6 +79,12 @@ with tempfile.TemporaryDirectory(prefix='pixel-midi-',dir=root/'.runtime') as fo
         report.update(learn_all_actions=len(ACTIONS),learn_never_executes=True,explicit_save_verified=True)
         js('(BeatlightPixel.setEffectMix("single"),true)');assert js('BeatlightPixel.status().patternSources.length')==1
         report['single_four_outputs']=True
+        for action in ('auto','organic','continuous','groove','breakdown','buildup','drop'):
+            js('(BeatlightPixel.selectManualPattern("portals"),true)');assert js('BeatlightPixel.status().manual.active')
+            press(action,lambda:not js('BeatlightPixel.status().manual.active'))
+            if action=='drop':press('drop',lambda:window.pixel_page.bridge.controls.get('drop') is False)
+        press('auto',lambda:window.pixel_page.bridge.controls.get('mode')=='auto')
+        report['existing_midi_modes_leave_manual']=True
         press('breakdown',lambda:window.pixel_page.bridge.controls.get('manual_structure')=='breakdown');pump(lambda:led(37)==127)
         js('(qaState="buildup",qaFeed(),true)');frames();assert window.pixel_page.bridge.controls['manual_structure']=='breakdown'
         js('(qaState="groove",qaFeed(),true)');press('breakdown',lambda:window.pixel_page.bridge.controls.get('manual_structure') is None);pump(lambda:led(37)==0)
@@ -103,11 +109,22 @@ with tempfile.TemporaryDirectory(prefix='pixel-midi-',dir=root/'.runtime') as fo
         report.update(manual_hold_and_toggles=True,show_modes_clear_manual=True,immediate_eight_beat_drop=True,quantized_next_combination=True,peak_full_range=True,led_state_feedback=True,reference_midi_and_led=True)
         window.showMinimized();press('groove',lambda:window.pixel_page.bridge.controls.get('manual_structure')=='groove')
         old_origin=js('BeatlightPixel.status().reference.origin');js('(qaBeat+=4,qaFeed(),true)')
-        press('cue_sync',lambda:js('BeatlightPixel.status().reference.origin')>old_origin+1)
+        press('cue_sync',lambda:window.pixel_page.bridge.controls.get('cue_sync') is False);pump(lambda:led(46)==0)
+        assert js('BeatlightPixel.status().reference.origin') is None
+        press('cue_sync',lambda:window.pixel_page.bridge.controls.get('cue_sync') is True);pump(lambda:led(46)==127)
+        assert js('BeatlightPixel.status().reference.origin')>old_origin+1
         assert window.pixel_page.bridge.controls.get('manual_structure')=='groove'
-        report['reference_midi_while_minimized']=True
+        report['reference_midi_while_minimized']=True;report['reference_toggle_off_and_on_with_led']=True
         frames(6);window.showNormal()
         press('auto',lambda:window.pixel_page.bridge.controls.get('manual_structure') is None)
+        js('(qaDropId=2,qaState="drop",qaFeed(),true)');pump(lambda:window.pixel_page.bridge.controls.get('drop') is True);pump(lambda:led(36)==127)
+        assert js('BeatlightPixel.status().drop_kicks')==1
+        js('(qaBeat+=7.5,qaFeed(),true)');frames();assert window.pixel_page.bridge.controls.get('drop') is True
+        js('(qaBeat+=.6,qaFeed(),true)');pump(lambda:window.pixel_page.bridge.controls.get('drop') is False);pump(lambda:led(36)==0)
+        assert js('BeatlightPixel.status().drop_kicks')==1 and js('BeatlightPixel.status().structure')=='groove'
+        frames();assert js('BeatlightPixel.status().effect')!='dropseq'
+        report['automatic_drop_eight_grid_beats_with_stuck_kick_count']=True
+        js('(qaState="groove",qaFeed(),true)')
         window.legacy_panels.setChecked(True);assert window.light_runtime.running and window.nav_group.button(6).isVisible()
         window.legacy_panels.setChecked(False);assert not window.nav_group.button(6).isVisible()
         report.update(minimized_midi_and_usb=True,legacy_toggle_reversible=True)

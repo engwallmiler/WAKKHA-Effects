@@ -1,5 +1,7 @@
 # Saída física, logs e contador de batidas — 0.41
 
+**Atualização 0.43:** a idade do RGB agora é calculada a partir do início da geração, considerando a calibração entre relógios. Uma espera do pedido antes do cálculo não torna antigo o quadro calculado depois. Os limites de segurança abaixo continuam para dados realmente antigos ou ausência persistente. [Investigação de falha1.json](correcao-falha1-v0.43.md).
+
 ## Investigação do apagamento
 
 O botão de saída ficou desativado e bastou ativá-lo novamente, sem reconectar o ESP32. Esse comportamento é compatível com um desarme pelo painel, mantendo a porta COM aberta. Uma falha de confirmação USB encerra a conexão e exige reconectar.

@@ -9,10 +9,11 @@ from beatlight.pixel.topology import validate_patch,validate_exact_copies
 EFFECTS={"inherit","ambient","pulse","chase","mirror","wave","helix","rain","drop","comet",
          "scanner","sparkle","meteor","fire","rainbow","blocks","bounce","ripple","equalizer","snake","aurora",
          "weave","orbit","shards","tide","lattice","vortex","wash","breathe","gradient","colorflow",
-         "liquid","crossflow","chromatide"}
+         "liquid","crossflow","chromatide","standing","portals","zipper","diamonds","ribbons","silk"}
 PALETTES={"inherit","deep","fire","ice","acid","mono","red","green","blue","magenta","cyan","amber","primaries","neon","sunset","ocean"}
 MAX_BYTES=500_000
 BAR_CHOICES={1,2,4,8,16,32,64,128}
+NEW_EFFECTS={'standing','portals','zipper','diamonds','ribbons','silk'}
 
 
 def valid_single_rules(rules):
@@ -20,7 +21,7 @@ def valid_single_rules(rules):
     for effect,rule in rules.items():
         if effect not in EFFECTS-{'inherit'} or not isinstance(rule,dict) or set(rule)!={'enabled','bars'}:return False
         if type(rule['enabled']) is not bool or type(rule['bars']) not in (int,float) or rule['bars'] not in BAR_CHOICES|{0}:return False
-    return any(rules.get(effect,{}).get('enabled',True) for effect in EFFECTS-{'inherit'})
+    return any(rules.get(effect,{}).get('enabled',not rules or effect not in NEW_EFFECTS) for effect in EFFECTS-{'inherit'})
 
 
 def number(value,low,high):
@@ -78,9 +79,10 @@ def validate_project(data):
              "dropStyle":{"impact","turbo","prism"},"strobeMode":{"drop","beat","bar"},"strobeColor":{"rgbw","rgb","white"},
              "meter":{3,4,6},"sceneBars":BAR_CHOICES,"dropBars":{4,8,16},"dropRate":{1,2,4},
              "changeMode":{"bars","hybrid","elements","hold"},"morphBeats":{0,.5,1,2,4,8,16},
-             "layerCount":{2,3,4},"peakMode":{"auto","on","off"},"peakEvery":{4,8},
+             "layerCount":{2,3,4},"peakMode":{"auto","on","off"},"peakEvery":{4,8,16,32},
              "compositionStyle":{"hypnotic","varied","continuous"},"regularStyle":{"hypnotic","varied"},
              "effectMix":{"layers","single"},
+             "manualPattern":EFFECTS-{"inherit"},
              "peakStyle":{"flood","wave","blocks"},"peakColor":{"white","palette"},
              "mode":EFFECTS-{"inherit","dropseq"}|{"organic","auto"}}
     for key,value in show.items():
@@ -88,7 +90,7 @@ def validate_project(data):
             valid=number(value,*ranges[key])
         elif key in choices:
             valid=type(value) in (str,int,float) and value in choices[key]
-        elif key in ("strobes","followStructure","progressive","energyMotion","dropVariety","musicColors","autoContinuous"):
+        elif key in ("strobes","followStructure","progressive","energyMotion","dropVariety","musicColors","autoContinuous","manualMode"):
             valid=type(value) is bool
         elif key=="solidColor":
             valid=isinstance(value,list) and len(value)==3 and all(type(v) is int and 0<=v<=255 for v in value)
@@ -98,6 +100,8 @@ def validate_project(data):
             valid=False
         if not valid:
             raise ValueError(f"Controle global inválido: {key}.")
+    if show.get('manualMode') and (show.get('manualPattern') not in EFFECTS-{'inherit'} or show.get('mode')!=show['manualPattern']):
+        raise ValueError('Modo manual exige o mesmo padrão válido em mode e manualPattern.')
     return data
 
 

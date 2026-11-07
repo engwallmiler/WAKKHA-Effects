@@ -76,6 +76,13 @@ def test_link_beat_is_continuous_without_manufacturing_kick_and_preserves_music(
     assert packet["kick"] is None and packet["music"]["drop_id"]==0
 
 
+def test_drop_onset_age_is_forwarded_without_fabricating_confirmations():
+    snapshot=monitor();structure=replace(snapshot.structure,state='drop',drop_at=9.7,drop_kicks=1,drop_id=3)
+    packet=music_packet(replace(snapshot,structure=structure),status(),10.1)
+    assert packet['music']['drop_age']==pytest.approx(.4)
+    assert packet['music']['drop_kicks']==1 and packet['kick'] is None
+
+
 @pytest.mark.parametrize("change",["stopped","stale","silent","no-snapshot"])
 def test_missing_or_quiet_audio_does_not_emit_audible_packet(change):
     snapshot=monitor();runtime=status()
@@ -121,10 +128,17 @@ def test_layered_show_and_new_effects_round_trip_without_altering_the_usb_pixel_
     assert validate_project(data)==data
 
 
-@pytest.mark.parametrize('field,value',[('layerCount',5),('peakEvery',16),('peakMode','random-every-frame'),('peakLevel',1.1),('peakStyle','invalid'),('peakColor','ultraviolet'),('progressive',1),('energyMotion','yes'),('compositionStyle','random-per-pixel'),('musicColors','yes'),('dropVariety',1),('flowDepth',1.1),('flowDepth',True),('flowSpeed',0),('flowSpeed',2.51),('autoContinuous','yes'),('regularStyle','continuous')])
+@pytest.mark.parametrize('field,value',[('layerCount',5),('peakEvery',64),('peakMode','random-every-frame'),('peakLevel',1.1),('peakStyle','invalid'),('peakColor','ultraviolet'),('progressive',1),('energyMotion','yes'),('compositionStyle','random-per-pixel'),('musicColors','yes'),('dropVariety',1),('flowDepth',1.1),('flowDepth',True),('flowSpeed',0),('flowSpeed',2.51),('autoContinuous','yes'),('regularStyle','continuous')])
 def test_invalid_evolution_settings_are_rejected(field,value):
     data=project();data['show'][field]=value
     with pytest.raises(ValueError):validate_project(data)
+
+
+@pytest.mark.parametrize('every',[4,8,16,32])
+def test_peak_intervals_round_trip_without_changing_the_project(tmp_path,every):
+    data=project();data['show'].update(peakMode='on',peakEvery=every)
+    store=PixelProjectStore(tmp_path/'peaks.json');store.save(data)
+    assert store.load()==data
 
 
 def test_rgb_frame_contains_one_rgb_triplet_per_addressable_pixel():

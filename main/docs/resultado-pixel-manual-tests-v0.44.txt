@@ -1,0 +1,28 @@
+✔ main Manual button exposes previous, direct selection and next with a full cyclic catalogue (31.2406ms)
+✔ manual pattern stays selected across phrases and all detected structures including drops (9.5025ms)
+✔ auto explicitly leaves Manual (5.8576ms)
+✔ organic explicitly leaves Manual (6.2065ms)
+✔ continuous explicitly leaves Manual (6.8382ms)
+✔ groove explicitly leaves Manual (5.4237ms)
+✔ breakdown explicitly leaves Manual (5.3964ms)
+✔ buildup explicitly leaves Manual (5.4655ms)
+✔ drop explicitly leaves Manual (8.6102ms)
+✔ manual selection overrides strip patterns and kick-only gates temporarily without editing the installation (26.6058ms)
+✔ manual selection persists and old projects keep their previous fixed-pattern behavior (13.8879ms)
+✔ mix, peak and synchronization controls do not cancel Manual, and next-combo keeps bar quantization (7.1346ms)
+✔ rapid manual navigation has at most two descriptors and no snapshot allocations (52.2844ms)
+✔ manual patterns preserve silence, stale audio and preview-only USB protection (7.2687ms)
+✔ standing is animated, bounded and works on physical and preview frames (60.0976ms)
+✔ portals is animated, bounded and works on physical and preview frames (62.2038ms)
+✔ zipper is animated, bounded and works on physical and preview frames (64.4946ms)
+✔ diamonds is animated, bounded and works on physical and preview frames (61.2557ms)
+✔ ribbons is animated, bounded and works on physical and preview frames (63.4407ms)
+✔ silk is animated, bounded and works on physical and preview frames (84.3404ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 681.3316

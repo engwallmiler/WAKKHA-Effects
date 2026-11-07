@@ -7,7 +7,7 @@ import tempfile
 
 ACTIONS={'drop':'Drop agora','breakdown':'Breakdown manual','groove':'Groove manual','buildup':'Build-up manual',
          'peak_level':'Intensidade do pico','sync_1_8':'Sincronizar beat 1/8','next_combo':'Próxima combinação · no compasso',
-         'auto':'Auto Show','organic':'Orgânico','continuous':'Contínuo','cue_sync':'Marcar compasso 1 · trocas'}
+         'auto':'Auto Show','organic':'Orgânico','continuous':'Contínuo','cue_sync':'Compasso 1 · marcar/desmarcar'}
 MODES=('absolute','relative_twos','relative_binary','relative_sign')
 
 

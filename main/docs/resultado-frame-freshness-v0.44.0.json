@@ -1,0 +1,56 @@
+{
+  "version": "0.44.0",
+  "physical_device_used": false,
+  "renderer_queued_tests": [
+    {
+      "block_ms": 400,
+      "age_bound_ms": 34.072,
+      "roundtrip_ms": 375.0,
+      "javascript_ms": 1.2,
+      "queue_lower_ms": 356.553,
+      "stamped": true,
+      "clock_reset": false,
+      "reference_age_ms": 422.0
+    },
+    {
+      "block_ms": 594,
+      "age_bound_ms": 29.544,
+      "roundtrip_ms": 547.0,
+      "javascript_ms": 0.1,
+      "queue_lower_ms": 533.081,
+      "stamped": true,
+      "clock_reset": false,
+      "reference_age_ms": 594.0
+    },
+    {
+      "block_ms": 594,
+      "age_bound_ms": 32.375,
+      "roundtrip_ms": 578.0,
+      "javascript_ms": 0.1,
+      "queue_lower_ms": 561.25,
+      "stamped": true,
+      "clock_reset": false,
+      "reference_age_ms": 625.0
+    }
+  ],
+  "preview_visible": true,
+  "presentation_light": false,
+  "effect_mix": "layers",
+  "bpm": 127,
+  "pixels": [
+    120,
+    120,
+    120,
+    120
+  ],
+  "fourth_output_copies_first": true,
+  "594ms_old_rgb_delivery_rejected": true,
+  "persistent_stall_still_requires_manual_rearm": true,
+  "manual_off_cannot_be_overridden_by_fresh_callback": true,
+  "audio_blocks": 518,
+  "audio_dropped": 0,
+  "usb_frames": 31,
+  "render_errors": [],
+  "closed_cleanly": true,
+  "passed": true
+}

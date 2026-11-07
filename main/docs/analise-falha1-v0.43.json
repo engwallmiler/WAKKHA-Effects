@@ -1,0 +1,41 @@
+{
+  "source": "falha1.json",
+  "source_sha256": "3900cb6046e0464df5a33cd753e6161022e6e094e4c1008d1438e5c5b75bca36",
+  "application": "0.42.0",
+  "incident_local": "2026-11-06T20:29:14.349-03:00",
+  "incident_utc": "2026-11-06T23:29:14.349+00:00",
+  "session": "386e36806bc7",
+  "code": "output.frame_timeout",
+  "host_disarmed": true,
+  "usb_state": "connected",
+  "usb_error": "",
+  "transport_errors_in_session": 0,
+  "frames_confirmed": 11056,
+  "pixels": [
+    120,
+    120,
+    120,
+    120
+  ],
+  "request_ms": 141.0,
+  "last_good_ms": 781.0,
+  "last_roundtrip_ms": 594.0,
+  "gui_tick_ms": 47.0,
+  "last_render_ms": 1.3,
+  "audio_state": "running",
+  "audio_dropped_blocks": 0,
+  "audio_queue": 0,
+  "bpm": 127,
+  "structure": "buildup",
+  "effect": "auto",
+  "effect_mix": "layers",
+  "generation_stamps_available_in_original": false,
+  "generation_queue_vs_delivery_not_determined_from_original": true,
+  "operator_report": {
+    "window_visible": true,
+    "presentation_light": false
+  },
+  "confirmed_immediate_reason": "Host desarmou por 781 ms sem aceitar quadro; conexão continuava aberta, sem erro de transporte registrado.",
+  "fixed_design_issue": "A idade do quadro usava a hora do pedido JS. Passa a usar carimbo de geração e limite conservador entre relógios.",
+  "limits": "O log original não mede geração, fila e entrega separadamente; não determina o motivo inicial da espera de 594 ms."
+}

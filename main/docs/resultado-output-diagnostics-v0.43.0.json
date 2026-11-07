@@ -1,0 +1,32 @@
+{
+  "version": "0.43.0",
+  "physical_device_used": false,
+  "fake_usb": true,
+  "400ms_renderer_stall_recovers_without_rearm": true,
+  "350ms_gui_stall_recovers_without_rearm": true,
+  "persistent_stall_requires_manual_rearm": true,
+  "qt_file_dialog_keeps_usb_frames_running": true,
+  "pc_local_time_example": "2026-11-06T20:42:22.415-03:00",
+  "nonmodal_logs_export_local_time_and_previous_cause": true,
+  "missing_ack_closes_usb_and_records_command": true,
+  "event_counts": {
+    "app.notice": 4,
+    "output.activated": 2,
+    "output.frame_gap": 3,
+    "output.frame_timeout": 1,
+    "output.gate": 2,
+    "output.recovered": 2,
+    "session.started": 1,
+    "usb.armed": 2,
+    "usb.closed": 1,
+    "usb.connected": 1,
+    "usb.connecting": 1,
+    "usb.disarmed": 1,
+    "usb.producer_gap": 3,
+    "usb.transport_error": 1
+  },
+  "health_samples": 4,
+  "errors": [],
+  "closed_cleanly": true,
+  "passed": true
+}

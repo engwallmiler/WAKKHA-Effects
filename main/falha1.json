@@ -1,0 +1,4407 @@
+{
+  "version": 1,
+  "application": "0.42.0",
+  "session": "386e36806bc7",
+  "exported_at": "2026-11-06T20:30:21.754-03:00",
+  "events": [
+    {
+      "time": "2026-11-05T23:18:47.662-03:00",
+      "utc": "2026-11-06T02:18:47.662+00:00",
+      "level": "INFO",
+      "code": "session.started",
+      "message": "Registro da saída iniciado.",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 0.0,
+      "context": {
+        "version": "0.41.0",
+        "pid": 29376
+      },
+      "sequence": 1
+    },
+    {
+      "time": "2026-11-05T23:18:49.080-03:00",
+      "utc": "2026-11-06T02:18:49.080+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Motor abstrato de iluminação disponível; ative em Lighting Studio.",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 1.422,
+      "context": {},
+      "sequence": 2
+    },
+    {
+      "time": "2026-11-05T23:18:49.080-03:00",
+      "utc": "2026-11-06T02:18:49.080+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Aplicação inicializada. Nenhuma saída física está ativa.",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 1.422,
+      "context": {},
+      "sequence": 3
+    },
+    {
+      "time": "2026-11-05T23:18:49.372-03:00",
+      "utc": "2026-11-06T02:18:49.372+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: parada • Pronto para monitorar",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 1.719,
+      "context": {},
+      "sequence": 4
+    },
+    {
+      "time": "2026-11-05T23:18:49.669-03:00",
+      "utc": "2026-11-06T02:18:49.669+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "3 fonte(s) disponível(is).",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 2.016,
+      "context": {},
+      "sequence": 5
+    },
+    {
+      "time": "2026-11-05T23:19:03.496-03:00",
+      "utc": "2026-11-06T02:19:03.496+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Loopback captura a mixagem da saída, incluindo outros aplicativos. Use WASAPI compartilhado; ASIO nativo não é capturado.",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 15.828,
+      "context": {},
+      "sequence": 6
+    },
+    {
+      "time": "2026-11-05T23:19:03.496-03:00",
+      "utc": "2026-11-06T02:19:03.496+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Abrindo Altofalantes (2- Realtek(R) Audio) • bloco 512 frames.",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 15.828,
+      "context": {},
+      "sequence": 7
+    },
+    {
+      "time": "2026-11-05T23:19:03.524-03:00",
+      "utc": "2026-11-06T02:19:03.524+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: abrindo • Abrindo dispositivo…",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 15.86,
+      "context": {},
+      "sequence": 8
+    },
+    {
+      "time": "2026-11-05T23:19:03.626-03:00",
+      "utc": "2026-11-06T02:19:03.626+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: capturando • Aguardando sinal de áudio",
+      "session": "c3201cfbf36e",
+      "elapsed_s": 15.969,
+      "context": {},
+      "sequence": 9
+    },
+    {
+      "time": "2026-11-06T20:14:11.177-03:00",
+      "utc": "2026-11-06T23:14:11.177+00:00",
+      "level": "INFO",
+      "code": "session.started",
+      "message": "Registro da saída iniciado.",
+      "session": "6b4c4843dc51",
+      "elapsed_s": 0.0,
+      "context": {
+        "version": "0.42.0",
+        "pid": 8884
+      },
+      "sequence": 1
+    },
+    {
+      "time": "2026-11-06T20:14:24.907-03:00",
+      "utc": "2026-11-06T23:14:24.907+00:00",
+      "level": "INFO",
+      "code": "session.started",
+      "message": "Registro da saída iniciado.",
+      "session": "28c709cffcf9",
+      "elapsed_s": 0.0,
+      "context": {
+        "version": "0.42.0",
+        "pid": 15260
+      },
+      "sequence": 1
+    },
+    {
+      "time": "2026-11-06T20:14:27.444-03:00",
+      "utc": "2026-11-06T23:14:27.444+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Motor abstrato de iluminação disponível; ative em Lighting Studio.",
+      "session": "28c709cffcf9",
+      "elapsed_s": 2.532,
+      "context": {},
+      "sequence": 2
+    },
+    {
+      "time": "2026-11-06T20:14:27.444-03:00",
+      "utc": "2026-11-06T23:14:27.444+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Aplicação inicializada. Nenhuma saída física está ativa.",
+      "session": "28c709cffcf9",
+      "elapsed_s": 2.532,
+      "context": {},
+      "sequence": 3
+    },
+    {
+      "time": "2026-11-06T20:14:36.974-03:00",
+      "utc": "2026-11-06T23:14:36.974+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: parada • Pronto para monitorar",
+      "session": "28c709cffcf9",
+      "elapsed_s": 12.063,
+      "context": {},
+      "sequence": 4
+    },
+    {
+      "time": "2026-11-06T20:14:37.533-03:00",
+      "utc": "2026-11-06T23:14:37.533+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "3 fonte(s) disponível(is).",
+      "session": "28c709cffcf9",
+      "elapsed_s": 12.625,
+      "context": {},
+      "sequence": 5
+    },
+    {
+      "time": "2026-11-06T20:14:51.960-03:00",
+      "utc": "2026-11-06T23:14:51.960+00:00",
+      "level": "INFO",
+      "code": "session.started",
+      "message": "Registro da saída iniciado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 0.0,
+      "context": {
+        "version": "0.42.0",
+        "pid": 484
+      },
+      "sequence": 1
+    },
+    {
+      "time": "2026-11-06T20:14:53.587-03:00",
+      "utc": "2026-11-06T23:14:53.587+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Motor abstrato de iluminação disponível; ative em Lighting Studio.",
+      "session": "386e36806bc7",
+      "elapsed_s": 1.625,
+      "context": {},
+      "sequence": 2
+    },
+    {
+      "time": "2026-11-06T20:14:53.587-03:00",
+      "utc": "2026-11-06T23:14:53.587+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Aplicação inicializada. Nenhuma saída física está ativa.",
+      "session": "386e36806bc7",
+      "elapsed_s": 1.625,
+      "context": {},
+      "sequence": 3
+    },
+    {
+      "time": "2026-11-06T20:14:53.877-03:00",
+      "utc": "2026-11-06T23:14:53.877+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: parada • Pronto para monitorar",
+      "session": "386e36806bc7",
+      "elapsed_s": 1.922,
+      "context": {},
+      "sequence": 4
+    },
+    {
+      "time": "2026-11-06T20:14:54.292-03:00",
+      "utc": "2026-11-06T23:14:54.292+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "3 fonte(s) disponível(is).",
+      "session": "386e36806bc7",
+      "elapsed_s": 2.328,
+      "context": {},
+      "sequence": 5
+    },
+    {
+      "time": "2026-11-06T20:18:07.358-03:00",
+      "utc": "2026-11-06T23:18:07.358+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Loopback captura a mixagem da saída, incluindo outros aplicativos. Use WASAPI compartilhado; ASIO nativo não é capturado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 195.391,
+      "context": {},
+      "sequence": 6
+    },
+    {
+      "time": "2026-11-06T20:18:07.358-03:00",
+      "utc": "2026-11-06T23:18:07.358+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Abrindo Altofalantes (2- Realtek(R) Audio) • bloco 512 frames.",
+      "session": "386e36806bc7",
+      "elapsed_s": 195.391,
+      "context": {},
+      "sequence": 7
+    },
+    {
+      "time": "2026-11-06T20:18:07.505-03:00",
+      "utc": "2026-11-06T23:18:07.505+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: abrindo • Abrindo dispositivo…",
+      "session": "386e36806bc7",
+      "elapsed_s": 195.547,
+      "context": {},
+      "sequence": 8
+    },
+    {
+      "time": "2026-11-06T20:18:07.618-03:00",
+      "utc": "2026-11-06T23:18:07.618+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: capturando • Aguardando sinal de áudio",
+      "session": "386e36806bc7",
+      "elapsed_s": 195.656,
+      "context": {},
+      "sequence": 9
+    },
+    {
+      "time": "2026-11-06T20:18:16.462-03:00",
+      "utc": "2026-11-06T23:18:16.462+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: encerrando • Encerrando captura…",
+      "session": "386e36806bc7",
+      "elapsed_s": 204.5,
+      "context": {},
+      "sequence": 10
+    },
+    {
+      "time": "2026-11-06T20:18:16.487-03:00",
+      "utc": "2026-11-06T23:18:16.487+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: parada • Captura encerrada",
+      "session": "386e36806bc7",
+      "elapsed_s": 204.531,
+      "context": {},
+      "sequence": 11
+    },
+    {
+      "time": "2026-11-06T20:18:29.225-03:00",
+      "utc": "2026-11-06T23:18:29.225+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Loopback captura a mixagem da saída, incluindo outros aplicativos. Use WASAPI compartilhado; ASIO nativo não é capturado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 217.266,
+      "context": {},
+      "sequence": 12
+    },
+    {
+      "time": "2026-11-06T20:18:29.225-03:00",
+      "utc": "2026-11-06T23:18:29.225+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Abrindo Auscultadores (2- Realtek(R) Audio) • bloco 512 frames.",
+      "session": "386e36806bc7",
+      "elapsed_s": 217.266,
+      "context": {},
+      "sequence": 13
+    },
+    {
+      "time": "2026-11-06T20:18:29.267-03:00",
+      "utc": "2026-11-06T23:18:29.267+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: abrindo • Abrindo dispositivo…",
+      "session": "386e36806bc7",
+      "elapsed_s": 217.313,
+      "context": {},
+      "sequence": 14
+    },
+    {
+      "time": "2026-11-06T20:18:29.331-03:00",
+      "utc": "2026-11-06T23:18:29.331+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: capturando • Aguardando sinal de áudio",
+      "session": "386e36806bc7",
+      "elapsed_s": 217.375,
+      "context": {},
+      "sequence": 15
+    },
+    {
+      "time": "2026-11-06T20:18:45.734-03:00",
+      "utc": "2026-11-06T23:18:45.734+00:00",
+      "level": "INFO",
+      "code": "usb.connecting",
+      "message": "Abrindo conexão e verificando o ESP32.",
+      "session": "386e36806bc7",
+      "elapsed_s": 233.781,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connecting",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 1,
+          "pixels": [
+            300,
+            0,
+            0,
+            0
+          ],
+          "ack_ms": 0,
+          "uptime_ms": 0
+        },
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "brightness": 102,
+        "milliamps": 1500
+      },
+      "sequence": 16
+    },
+    {
+      "time": "2026-11-06T20:18:45.770-03:00",
+      "utc": "2026-11-06T23:18:45.770+00:00",
+      "level": "INFO",
+      "code": "usb.connected",
+      "message": "ESP32 identificado e saídas configuradas.",
+      "session": "386e36806bc7",
+      "elapsed_s": 233.813,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 4191
+        },
+        "firmware": "0.37.0",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ]
+      },
+      "sequence": 17
+    },
+    {
+      "time": "2026-11-06T20:19:37.128-03:00",
+      "utc": "2026-11-06T23:19:37.128+00:00",
+      "level": "INFO",
+      "code": "usb.armed",
+      "message": "Envio físico ativado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 285.172,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 5972
+        }
+      },
+      "sequence": 18
+    },
+    {
+      "time": "2026-11-06T20:19:37.128-03:00",
+      "utc": "2026-11-06T23:19:37.128+00:00",
+      "level": "INFO",
+      "code": "output.activated",
+      "message": "Saídas ativadas pelo operador.",
+      "session": "386e36806bc7",
+      "elapsed_s": 285.172,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 5972
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 0,
+        "since_good_ms": 0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 0,
+        "health": {},
+        "audio": {
+          "state": "running",
+          "error": "",
+          "blocks": 6355,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 0
+        }
+      },
+      "sequence": 19
+    },
+    {
+      "time": "2026-11-06T20:19:37.146-03:00",
+      "utc": "2026-11-06T23:19:37.146+00:00",
+      "level": "INFO",
+      "code": "output.gate",
+      "message": "Estado do motor de efeitos: emitindo",
+      "session": "386e36806bc7",
+      "elapsed_s": 285.188,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 5972
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 0,
+        "since_good_ms": 0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 0.0,
+        "health": {
+          "gate": "emitindo",
+          "source": "live",
+          "structure": "groove",
+          "context": "groove",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 12.8704,
+          "phase": 0.8704,
+          "analysis_age_ms": 52.6,
+          "render_ms": 8,
+          "delivery_ms": 3.5
+        },
+        "audio": {
+          "state": "running",
+          "error": "",
+          "blocks": 6357,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 0
+        }
+      },
+      "sequence": 20
+    },
+    {
+      "time": "2026-11-06T20:20:05.949-03:00",
+      "utc": "2026-11-06T23:20:05.949+00:00",
+      "level": "INFO",
+      "code": "usb.disarmed",
+      "message": "Envio físico desativado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 313.985,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 613,
+          "dropped": 0,
+          "fps": 21.3415,
+          "last_frame": 1270.093,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 31.0,
+          "uptime_ms": 84339
+        }
+      },
+      "sequence": 21
+    },
+    {
+      "time": "2026-11-06T20:20:05.949-03:00",
+      "utc": "2026-11-06T23:20:05.949+00:00",
+      "level": "INFO",
+      "code": "output.manual_stop",
+      "message": "Saídas apagadas pelo operador.",
+      "session": "386e36806bc7",
+      "elapsed_s": 313.985,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 613,
+          "dropped": 0,
+          "fps": 21.3415,
+          "last_frame": 1270.093,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 31.0,
+          "uptime_ms": 84339
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 0,
+        "since_good_ms": 0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 0.0,
+        "health": {
+          "gate": "emitindo",
+          "source": "live",
+          "structure": "groove",
+          "context": "groove",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 73.8281,
+          "phase": 0.8281,
+          "analysis_age_ms": 53.4,
+          "render_ms": 2.6,
+          "delivery_ms": 9.2
+        },
+        "audio": {
+          "state": "running",
+          "error": "",
+          "blocks": 9057,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 0
+        }
+      },
+      "sequence": 22
+    },
+    {
+      "time": "2026-11-06T20:20:14.212-03:00",
+      "utc": "2026-11-06T23:20:14.212+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: parada • Captura encerrada",
+      "session": "386e36806bc7",
+      "elapsed_s": 322.25,
+      "context": {},
+      "sequence": 23
+    },
+    {
+      "time": "2026-11-06T20:20:21.182-03:00",
+      "utc": "2026-11-06T23:20:21.182+00:00",
+      "level": "INFO",
+      "code": "usb.disconnect_requested",
+      "message": "Encerramento da conexão solicitado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 329.219,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 613,
+          "dropped": 0,
+          "fps": 21.3415,
+          "last_frame": 1270.093,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 84394
+        }
+      },
+      "sequence": 24
+    },
+    {
+      "time": "2026-11-06T20:20:21.216-03:00",
+      "utc": "2026-11-06T23:20:21.216+00:00",
+      "level": "INFO",
+      "code": "usb.closed",
+      "message": "Conexão USB encerrada.",
+      "session": "386e36806bc7",
+      "elapsed_s": 329.25,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "disconnected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 613,
+          "dropped": 0,
+          "fps": 21.3415,
+          "last_frame": 1270.093,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 99621
+        },
+        "error": "",
+        "frames": 613
+      },
+      "sequence": 25
+    },
+    {
+      "time": "2026-11-06T20:20:31.406-03:00",
+      "utc": "2026-11-06T23:20:31.406+00:00",
+      "level": "INFO",
+      "code": "usb.connecting",
+      "message": "Abrindo conexão e verificando o ESP32.",
+      "session": "386e36806bc7",
+      "elapsed_s": 339.453,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connecting",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 1,
+          "pixels": [
+            300,
+            0,
+            0,
+            0
+          ],
+          "ack_ms": 0,
+          "uptime_ms": 0
+        },
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "brightness": 178,
+        "milliamps": 1500
+      },
+      "sequence": 26
+    },
+    {
+      "time": "2026-11-06T20:20:31.424-03:00",
+      "utc": "2026-11-06T23:20:31.424+00:00",
+      "level": "INFO",
+      "code": "usb.connected",
+      "message": "ESP32 identificado e saídas configuradas.",
+      "session": "386e36806bc7",
+      "elapsed_s": 339.469,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 109849
+        },
+        "firmware": "0.37.0",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ]
+      },
+      "sequence": 27
+    },
+    {
+      "time": "2026-11-06T20:20:32.255-03:00",
+      "utc": "2026-11-06T23:20:32.255+00:00",
+      "level": "INFO",
+      "code": "usb.armed",
+      "message": "Envio físico ativado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 340.297,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 109849
+        }
+      },
+      "sequence": 28
+    },
+    {
+      "time": "2026-11-06T20:20:32.255-03:00",
+      "utc": "2026-11-06T23:20:32.255+00:00",
+      "level": "INFO",
+      "code": "output.activated",
+      "message": "Saídas ativadas pelo operador.",
+      "session": "386e36806bc7",
+      "elapsed_s": 340.297,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 109849
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 0,
+        "since_good_ms": 0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 0.0,
+        "health": {
+          "gate": "emitindo",
+          "source": "live",
+          "structure": "groove",
+          "context": "groove",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 73.8281,
+          "phase": 0.8281,
+          "analysis_age_ms": 53.4,
+          "render_ms": 2.6,
+          "delivery_ms": 9.2
+        },
+        "audio": {
+          "state": "stopped",
+          "error": "",
+          "blocks": 9830,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 18062.0
+        }
+      },
+      "sequence": 29
+    },
+    {
+      "time": "2026-11-06T20:20:32.270-03:00",
+      "utc": "2026-11-06T23:20:32.270+00:00",
+      "level": "INFO",
+      "code": "output.gate",
+      "message": "Estado do motor de efeitos: audio_inativo_ou_atrasado",
+      "session": "386e36806bc7",
+      "elapsed_s": 340.313,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 0,
+          "dropped": 0,
+          "fps": 0,
+          "last_frame": 0,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 109849
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 0,
+        "since_good_ms": 0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 0.0,
+        "health": {
+          "gate": "audio_inativo_ou_atrasado",
+          "source": "live",
+          "structure": "groove",
+          "context": "groove",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 0,
+          "phase": 0,
+          "analysis_age_ms": 51,
+          "render_ms": 0.9,
+          "delivery_ms": 5.8
+        },
+        "audio": {
+          "state": "stopped",
+          "error": "",
+          "blocks": 9830,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 18078.0
+        }
+      },
+      "sequence": 30
+    },
+    {
+      "time": "2026-11-06T20:20:36.622-03:00",
+      "utc": "2026-11-06T23:20:36.622+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Loopback captura a mixagem da saída, incluindo outros aplicativos. Use WASAPI compartilhado; ASIO nativo não é capturado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 344.656,
+      "context": {},
+      "sequence": 31
+    },
+    {
+      "time": "2026-11-06T20:20:36.623-03:00",
+      "utc": "2026-11-06T23:20:36.623+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Abrindo Auscultadores (2- Realtek(R) Audio) • bloco 512 frames.",
+      "session": "386e36806bc7",
+      "elapsed_s": 344.656,
+      "context": {},
+      "sequence": 32
+    },
+    {
+      "time": "2026-11-06T20:20:36.625-03:00",
+      "utc": "2026-11-06T23:20:36.625+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: abrindo • Abrindo dispositivo…",
+      "session": "386e36806bc7",
+      "elapsed_s": 344.672,
+      "context": {},
+      "sequence": 33
+    },
+    {
+      "time": "2026-11-06T20:20:36.743-03:00",
+      "utc": "2026-11-06T23:20:36.743+00:00",
+      "level": "INFO",
+      "code": "app.notice",
+      "message": "Estado: capturando • Aguardando sinal de áudio",
+      "session": "386e36806bc7",
+      "elapsed_s": 344.781,
+      "context": {},
+      "sequence": 34
+    },
+    {
+      "time": "2026-11-06T20:20:36.819-03:00",
+      "utc": "2026-11-06T23:20:36.819+00:00",
+      "level": "INFO",
+      "code": "output.gate",
+      "message": "Estado do motor de efeitos: emitindo",
+      "session": "386e36806bc7",
+      "elapsed_s": 344.86,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 96,
+          "dropped": 0,
+          "fps": 21.3415,
+          "last_frame": 1300.968,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 31.0,
+          "uptime_ms": 115216
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 0,
+        "since_good_ms": 0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 0.0,
+        "health": {
+          "gate": "emitindo",
+          "source": "live",
+          "structure": "warming",
+          "context": "groove",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 0,
+          "phase": 0,
+          "analysis_age_ms": 53.4,
+          "render_ms": 2,
+          "delivery_ms": 5.2
+        },
+        "audio": {
+          "state": "running",
+          "error": "",
+          "blocks": 6,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 0
+        }
+      },
+      "sequence": 35
+    },
+    {
+      "time": "2026-11-06T20:29:06.124-03:00",
+      "utc": "2026-11-06T23:29:06.124+00:00",
+      "level": "WARNING",
+      "code": "usb.producer_gap",
+      "message": "Saída apagada temporariamente: faltaram quadros recentes.",
+      "session": "386e36806bc7",
+      "elapsed_s": 854.172,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 10918,
+          "dropped": 0,
+          "fps": 19.3089,
+          "last_frame": 1810.171,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 46.0,
+          "uptime_ms": 624436
+        },
+        "gap_ms": 266.0,
+        "frames": 10918
+      },
+      "sequence": 36
+    },
+    {
+      "time": "2026-11-06T20:29:06.219-03:00",
+      "utc": "2026-11-06T23:29:06.219+00:00",
+      "level": "WARNING",
+      "code": "usb.producer_gap",
+      "message": "Saída apagada temporariamente: faltaram quadros recentes.",
+      "session": "386e36806bc7",
+      "elapsed_s": 854.266,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 10919,
+          "dropped": 0,
+          "fps": 16.2437,
+          "last_frame": 1810.375,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 32.0,
+          "uptime_ms": 624647
+        },
+        "gap_ms": 266.0,
+        "frames": 10919
+      },
+      "sequence": 37
+    },
+    {
+      "time": "2026-11-06T20:29:09.030-03:00",
+      "utc": "2026-11-06T23:29:09.030+00:00",
+      "level": "WARNING",
+      "code": "usb.producer_gap",
+      "message": "Saída apagada temporariamente: faltaram quadros recentes.",
+      "session": "386e36806bc7",
+      "elapsed_s": 857.078,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 10972,
+          "dropped": 0,
+          "fps": 19.6281,
+          "last_frame": 1813.093,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 31.0,
+          "uptime_ms": 627365
+        },
+        "gap_ms": 265.0,
+        "frames": 10972
+      },
+      "sequence": 38
+    },
+    {
+      "time": "2026-11-06T20:29:09.171-03:00",
+      "utc": "2026-11-06T23:29:09.171+00:00",
+      "level": "WARNING",
+      "code": "usb.producer_gap",
+      "message": "Saída apagada temporariamente: faltaram quadros recentes.",
+      "session": "386e36806bc7",
+      "elapsed_s": 857.219,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 10973,
+          "dropped": 0,
+          "fps": 16.2602,
+          "last_frame": 1813.312,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 47.0,
+          "uptime_ms": 627582
+        },
+        "gap_ms": 266.0,
+        "frames": 10973
+      },
+      "sequence": 39
+    },
+    {
+      "time": "2026-11-06T20:29:13.824-03:00",
+      "utc": "2026-11-06T23:29:13.824+00:00",
+      "level": "WARNING",
+      "code": "usb.producer_gap",
+      "message": "Saída apagada temporariamente: faltaram quadros recentes.",
+      "session": "386e36806bc7",
+      "elapsed_s": 861.86,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 11056,
+          "dropped": 0,
+          "fps": 20.0,
+          "last_frame": 1817.812,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 31.0,
+          "uptime_ms": 632083
+        },
+        "gap_ms": 266.0,
+        "frames": 11056
+      },
+      "sequence": 40
+    },
+    {
+      "time": "2026-11-06T20:29:13.881-03:00",
+      "utc": "2026-11-06T23:29:13.881+00:00",
+      "level": "WARNING",
+      "code": "output.frame_gap",
+      "message": "Atraso breve da prévia; quadro antigo descartado e saída temporariamente apagada.",
+      "session": "386e36806bc7",
+      "elapsed_s": 861.922,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": true,
+          "firmware": "0.37.0",
+          "frames": 11056,
+          "dropped": 0,
+          "fps": 20.0,
+          "last_frame": 1817.812,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 15.0,
+          "uptime_ms": 632280
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 281.0,
+        "since_good_ms": 312.0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 16.0,
+        "health": {
+          "gate": "emitindo",
+          "source": "live",
+          "structure": "buildup",
+          "context": "buildup",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 1059.9009,
+          "phase": 0.9009,
+          "analysis_age_ms": 65.2,
+          "render_ms": 1.3,
+          "delivery_ms": 40.6
+        },
+        "audio": {
+          "state": "running",
+          "error": "",
+          "blocks": 48480,
+          "dropped_blocks": 0,
+          "queue_depth": 3,
+          "age_ms": 16.0
+        }
+      },
+      "sequence": 41
+    },
+    {
+      "time": "2026-11-06T20:29:14.349-03:00",
+      "utc": "2026-11-06T23:29:14.349+00:00",
+      "level": "INFO",
+      "code": "usb.disarmed",
+      "message": "Envio físico desativado.",
+      "session": "386e36806bc7",
+      "elapsed_s": 862.391,
+      "context": {
+        "port": "COM5",
+        "status": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 11056,
+          "dropped": 0,
+          "fps": 20.0,
+          "last_frame": 1817.812,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 632338
+        }
+      },
+      "sequence": 42
+    },
+    {
+      "time": "2026-11-06T20:29:14.349-03:00",
+      "utc": "2026-11-06T23:29:14.349+00:00",
+      "level": "ERROR",
+      "code": "output.frame_timeout",
+      "message": "Prévia sem quadros novos por 750 ms; saída desarmada. Ative novamente após a prévia responder.",
+      "session": "386e36806bc7",
+      "elapsed_s": 862.391,
+      "context": {
+        "usb": {
+          "state": "connected",
+          "port": "COM5",
+          "armed": false,
+          "firmware": "0.37.0",
+          "frames": 11056,
+          "dropped": 0,
+          "fps": 20.0,
+          "last_frame": 1817.812,
+          "error": "",
+          "protocol": 2,
+          "pixels": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "ack_ms": 16.0,
+          "uptime_ms": 632338
+        },
+        "sources": [
+          "strip-82",
+          "strip-83",
+          "strip-84",
+          "strip-82"
+        ],
+        "preview_only": false,
+        "request_age_ms": 141.0,
+        "since_good_ms": 781.0,
+        "gui_gap_ms": 47.0,
+        "roundtrip_ms": 594.0,
+        "health": {
+          "gate": "emitindo",
+          "source": "live",
+          "structure": "buildup",
+          "context": "buildup",
+          "effect": "auto",
+          "mix": "layers",
+          "bpm": 127,
+          "beat": 1059.9009,
+          "phase": 0.9009,
+          "analysis_age_ms": 65.2,
+          "render_ms": 1.3,
+          "delivery_ms": 40.6
+        },
+        "audio": {
+          "state": "running",
+          "error": "",
+          "blocks": 48524,
+          "dropped_blocks": 0,
+          "queue_depth": 0,
+          "age_ms": 0
+        }
+      },
+      "sequence": 43
+    }
+  ],
+  "health": [
+    {
+      "time": "2026-11-06T20:28:13.104-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9803,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1757.234,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 571504
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 931.8417,
+        "phase": 0.8417,
+        "analysis_age_ms": 61,
+        "render_ms": 2.2,
+        "delivery_ms": 16.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 42783,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:14.132-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9825,
+        "dropped": 0,
+        "fps": 21.6718,
+        "last_frame": 1758.265,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 572534
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 934.016,
+        "phase": 0.016,
+        "analysis_age_ms": 57.7,
+        "render_ms": 1.8,
+        "delivery_ms": 9.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 42879,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:15.160-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9847,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1759.296,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 573566
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 936.1894,
+        "phase": 0.1894,
+        "analysis_age_ms": 52.5,
+        "render_ms": 1.4,
+        "delivery_ms": 5.1
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 42975,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 15.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:16.194-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9869,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1760.328,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 574596
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 938.3803,
+        "phase": 0.3803,
+        "analysis_age_ms": 56.6,
+        "render_ms": 1.4,
+        "delivery_ms": 8.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43073,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:17.221-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9891,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1761.359,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 575627
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 940.5533,
+        "phase": 0.5533,
+        "analysis_age_ms": 52.2,
+        "render_ms": 1.5,
+        "delivery_ms": 6.1
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43169,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:18.252-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9913,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1762.39,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 576659
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 942.7301,
+        "phase": 0.7301,
+        "analysis_age_ms": 49.7,
+        "render_ms": 1.3,
+        "delivery_ms": 8.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43265,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:19.283-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9935,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1763.421,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 577690
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 944.9181,
+        "phase": 0.9181,
+        "analysis_age_ms": 51.3,
+        "render_ms": 1.5,
+        "delivery_ms": 9.1
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43363,
+        "dropped_blocks": 0,
+        "queue_depth": 1,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:20.312-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9957,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1764.453,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 578723
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 947.0936,
+        "phase": 0.0936,
+        "analysis_age_ms": 48.4,
+        "render_ms": 6.5,
+        "delivery_ms": 8
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43458,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:21.357-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 9980,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1765.531,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 579799
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 949.3059,
+        "phase": 0.3059,
+        "analysis_age_ms": 62.4,
+        "render_ms": 1.5,
+        "delivery_ms": 8.1
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43557,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:22.383-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10001,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1766.515,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 580785
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 951.481,
+        "phase": 0.481,
+        "analysis_age_ms": 58.9,
+        "render_ms": 1.3,
+        "delivery_ms": 8.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43653,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:23.416-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10023,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1767.546,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 581817
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 953.6627,
+        "phase": 0.6627,
+        "analysis_age_ms": 57.8,
+        "render_ms": 6.9,
+        "delivery_ms": 11.9
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43750,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:24.449-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10046,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1768.625,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 582893
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 955.8528,
+        "phase": 0.8528,
+        "analysis_age_ms": 61.4,
+        "render_ms": 1.8,
+        "delivery_ms": 8.9
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43846,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:25.478-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10067,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1769.609,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 583878
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 958.0118,
+        "phase": 0.0118,
+        "analysis_age_ms": 50.6,
+        "render_ms": 1.7,
+        "delivery_ms": 10.8
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 43943,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:26.502-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10089,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1770.64,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 584911
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 960.1962,
+        "phase": 0.1962,
+        "analysis_age_ms": 51.3,
+        "render_ms": 1.3,
+        "delivery_ms": 6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44039,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:27.532-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10111,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1771.671,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 585942
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 962.3823,
+        "phase": 0.3823,
+        "analysis_age_ms": 52.1,
+        "render_ms": 2,
+        "delivery_ms": 3.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44135,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 15.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:28.563-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10133,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1772.703,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 586974
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 964.5616,
+        "phase": 0.5616,
+        "analysis_age_ms": 50.7,
+        "render_ms": 1.3,
+        "delivery_ms": 3.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44233,
+        "dropped_blocks": 0,
+        "queue_depth": 1,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:29.571-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10154,
+        "dropped": 0,
+        "fps": 21.0,
+        "last_frame": 1773.703,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 587973
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 966.6969,
+        "phase": 0.6969,
+        "analysis_age_ms": 58.5,
+        "render_ms": 1.5,
+        "delivery_ms": 13.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44326,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:30.602-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10176,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1774.734,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 589005
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 968.8761,
+        "phase": 0.8761,
+        "analysis_age_ms": 53.4,
+        "render_ms": 1.7,
+        "delivery_ms": 13.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44423,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:31.628-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10198,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1775.765,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 590035
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 971.0545,
+        "phase": 0.0545,
+        "analysis_age_ms": 56.5,
+        "render_ms": 6.5,
+        "delivery_ms": 8.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44520,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:32.656-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10220,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1776.796,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 591066
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 973.2387,
+        "phase": 0.2387,
+        "analysis_age_ms": 56,
+        "render_ms": 1.7,
+        "delivery_ms": 3.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44616,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 15.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:33.694-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10242,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1777.828,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 592100
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 975.4163,
+        "phase": 0.4163,
+        "analysis_age_ms": 53.9,
+        "render_ms": 1.4,
+        "delivery_ms": 7.9
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44714,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:34.722-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10264,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1778.859,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 593127
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 977.5901,
+        "phase": 0.5901,
+        "analysis_age_ms": 49.9,
+        "render_ms": 1.4,
+        "delivery_ms": 5.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44809,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:35.758-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10286,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1779.89,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 594162
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 979.78,
+        "phase": 0.78,
+        "analysis_age_ms": 53.5,
+        "render_ms": 1.2,
+        "delivery_ms": 5.5
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 44907,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:36.787-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10308,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1780.921,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 595192
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 981.9657,
+        "phase": 0.9657,
+        "analysis_age_ms": 54.1,
+        "render_ms": 1.3,
+        "delivery_ms": 8.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45003,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:37.817-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10330,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1781.953,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 596222
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 984.1456,
+        "phase": 0.1456,
+        "analysis_age_ms": 53,
+        "render_ms": 1.4,
+        "delivery_ms": 8.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45100,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:38.848-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10352,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1782.984,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 597253
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 986.3307,
+        "phase": 0.3307,
+        "analysis_age_ms": 54.3,
+        "render_ms": 1.4,
+        "delivery_ms": 8.4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45196,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:39.880-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10374,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1784.015,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 598286
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 988.522,
+        "phase": 0.522,
+        "analysis_age_ms": 55.3,
+        "render_ms": 2.3,
+        "delivery_ms": 6.4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45293,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:40.908-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10396,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1785.046,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 599317
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 990.6897,
+        "phase": 0.6897,
+        "analysis_age_ms": 51.1,
+        "render_ms": 1.7,
+        "delivery_ms": 9.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45390,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 15.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:41.938-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10418,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1786.078,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 600347
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 992.8737,
+        "phase": 0.8737,
+        "analysis_age_ms": 52,
+        "render_ms": 1.7,
+        "delivery_ms": 2.1
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45486,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:42.982-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10441,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1787.156,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 601426
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 995.085,
+        "phase": 0.085,
+        "analysis_age_ms": 62.8,
+        "render_ms": 1.9,
+        "delivery_ms": 17.1
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45584,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:44.003-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10462,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1788.14,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 602410
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 997.2389,
+        "phase": 0.2389,
+        "analysis_age_ms": 52.4,
+        "render_ms": 1.3,
+        "delivery_ms": 4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45680,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:45.039-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10483,
+        "dropped": 0,
+        "fps": 20.0,
+        "last_frame": 1789.187,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 603458
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 999.4328,
+        "phase": 0.4328,
+        "analysis_age_ms": 57.4,
+        "render_ms": 1.3,
+        "delivery_ms": 10.5
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45777,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:46.066-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10505,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1790.218,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 604490
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1001.6075,
+        "phase": 0.6075,
+        "analysis_age_ms": 52.8,
+        "render_ms": 1.3,
+        "delivery_ms": 8
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45873,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:47.103-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10527,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1791.25,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 605521
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1003.7991,
+        "phase": 0.7991,
+        "analysis_age_ms": 57.5,
+        "render_ms": 1.3,
+        "delivery_ms": 12
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 45971,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:48.136-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10549,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1792.281,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 606551
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1005.9869,
+        "phase": 0.9869,
+        "analysis_age_ms": 59.7,
+        "render_ms": 1.3,
+        "delivery_ms": 14.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46067,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:49.164-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10571,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1793.312,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 607583
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1008.1672,
+        "phase": 0.1672,
+        "analysis_age_ms": 56.3,
+        "render_ms": 1.3,
+        "delivery_ms": 11.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46164,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:50.193-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10593,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1794.343,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 608614
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1010.3443,
+        "phase": 0.3443,
+        "analysis_age_ms": 56.4,
+        "render_ms": 1.3,
+        "delivery_ms": 10.4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46260,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:51.222-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10615,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1795.375,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 609646
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1012.5234,
+        "phase": 0.5234,
+        "analysis_age_ms": 55.2,
+        "render_ms": 1.3,
+        "delivery_ms": 10
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46356,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:52.255-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10637,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1796.406,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 610677
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1014.7076,
+        "phase": 0.7076,
+        "analysis_age_ms": 57,
+        "render_ms": 1.3,
+        "delivery_ms": 10.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46454,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:53.285-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10659,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1797.437,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 611710
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1016.8854,
+        "phase": 0.8854,
+        "analysis_age_ms": 52.9,
+        "render_ms": 1.3,
+        "delivery_ms": 7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46550,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:54.313-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10681,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1798.468,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 612739
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1019.066,
+        "phase": 0.066,
+        "analysis_age_ms": 52.5,
+        "render_ms": 1.3,
+        "delivery_ms": 5.9
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46647,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:55.354-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10703,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1799.5,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 613769
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1021.2699,
+        "phase": 0.2699,
+        "analysis_age_ms": 61.9,
+        "render_ms": 1.3,
+        "delivery_ms": 15.4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46744,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:56.343-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10724,
+        "dropped": 0,
+        "fps": 21.3415,
+        "last_frame": 1800.484,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 614754
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1023.3605,
+        "phase": 0.3605,
+        "analysis_age_ms": 65.5,
+        "render_ms": 1.3,
+        "delivery_ms": 5.9
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46837,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:57.387-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10745,
+        "dropped": 0,
+        "fps": 20.6398,
+        "last_frame": 1801.5,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 47.0,
+        "uptime_ms": 615761
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 63.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1025.4807,
+        "phase": 0.4807,
+        "analysis_age_ms": 121.9,
+        "render_ms": 1.3,
+        "delivery_ms": 35.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 46935,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:58.405-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10766,
+        "dropped": 0,
+        "fps": 20.6612,
+        "last_frame": 1802.546,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 616818
+      },
+      "gui_gap_ms": 62.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1027.6929,
+        "phase": 0.6929,
+        "analysis_age_ms": 66.9,
+        "render_ms": 1.3,
+        "delivery_ms": 5
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47030,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 15.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:28:59.452-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10788,
+        "dropped": 0,
+        "fps": 21.0,
+        "last_frame": 1803.593,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 617865
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1029.9154,
+        "phase": 0.9154,
+        "analysis_age_ms": 50,
+        "render_ms": 1.3,
+        "delivery_ms": 18.9
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47128,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:00.478-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10810,
+        "dropped": 0,
+        "fps": 21.3198,
+        "last_frame": 1804.625,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 618896
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1032.1281,
+        "phase": 0.1281,
+        "analysis_age_ms": 60.4,
+        "render_ms": 1.3,
+        "delivery_ms": 14.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47224,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:01.509-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10831,
+        "dropped": 0,
+        "fps": 20.3046,
+        "last_frame": 1805.656,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 47.0,
+        "uptime_ms": 619918
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1034.2965,
+        "phase": 0.2965,
+        "analysis_age_ms": 61.2,
+        "render_ms": 1.3,
+        "delivery_ms": 24.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47321,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:02.535-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10853,
+        "dropped": 0,
+        "fps": 21.0,
+        "last_frame": 1806.687,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 620959
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 0.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1036.4713,
+        "phase": 0.4713,
+        "analysis_age_ms": 56.5,
+        "render_ms": 1.3,
+        "delivery_ms": 11.2
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47417,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:03.565-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10872,
+        "dropped": 0,
+        "fps": 18.2927,
+        "last_frame": 1807.718,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 621991
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 31.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1038.6648,
+        "phase": 0.6648,
+        "analysis_age_ms": 80.7,
+        "render_ms": 1.3,
+        "delivery_ms": 33.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47514,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:04.606-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10891,
+        "dropped": 0,
+        "fps": 18.5759,
+        "last_frame": 1808.75,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 623021
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1040.8518,
+        "phase": 0.8518,
+        "analysis_age_ms": 63.1,
+        "render_ms": 1.3,
+        "delivery_ms": 18.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47611,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:05.638-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10911,
+        "dropped": 0,
+        "fps": 19.6078,
+        "last_frame": 1809.765,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 624040
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1043.0429,
+        "phase": 0.0429,
+        "analysis_age_ms": 66.9,
+        "render_ms": 1.3,
+        "delivery_ms": 20.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47708,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:06.664-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10926,
+        "dropped": 0,
+        "fps": 14.2276,
+        "last_frame": 1810.812,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 625085
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1045.2123,
+        "phase": 0.2123,
+        "analysis_age_ms": 62.8,
+        "render_ms": 1.3,
+        "delivery_ms": 31
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47805,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:07.693-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10947,
+        "dropped": 0,
+        "fps": 21.0,
+        "last_frame": 1811.812,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 626085
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 78.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1047.4166,
+        "phase": 0.4166,
+        "analysis_age_ms": 123.7,
+        "render_ms": 1.3,
+        "delivery_ms": 17.4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47901,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:08.719-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10969,
+        "dropped": 0,
+        "fps": 21.0,
+        "last_frame": 1812.89,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 627162
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 31.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1049.5805,
+        "phase": 0.5805,
+        "analysis_age_ms": 75.8,
+        "render_ms": 1.3,
+        "delivery_ms": 31.4
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 47997,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 16.0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:09.760-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10979,
+        "dropped": 0,
+        "fps": 10.0,
+        "last_frame": 1813.89,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 47.0,
+        "uptime_ms": 628152
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 63.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1051.7674,
+        "phase": 0.7674,
+        "analysis_age_ms": 115,
+        "render_ms": 1.3,
+        "delivery_ms": 79
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 48094,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:10.792-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 10997,
+        "dropped": 0,
+        "fps": 17.0,
+        "last_frame": 1814.953,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 32.0,
+        "uptime_ms": 629226
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 32.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1053.9948,
+        "phase": 0.9948,
+        "analysis_age_ms": 87.9,
+        "render_ms": 1.3,
+        "delivery_ms": 22.8
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 48192,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:11.825-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 11018,
+        "dropped": 0,
+        "fps": 20.6612,
+        "last_frame": 1815.968,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 630239
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 15.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1056.1548,
+        "phase": 0.1548,
+        "analysis_age_ms": 73,
+        "render_ms": 1.3,
+        "delivery_ms": 17.7
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 48288,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:12.852-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 11039,
+        "dropped": 0,
+        "fps": 20.6398,
+        "last_frame": 1816.984,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 31.0,
+        "uptime_ms": 631257
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 0.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1058.3132,
+        "phase": 0.3132,
+        "analysis_age_ms": 65.2,
+        "render_ms": 1.3,
+        "delivery_ms": 14.3
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 48384,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    {
+      "time": "2026-11-06T20:29:13.882-03:00",
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": true,
+        "firmware": "0.37.0",
+        "frames": 11056,
+        "dropped": 0,
+        "fps": 20.0,
+        "last_frame": 1817.812,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 15.0,
+        "uptime_ms": 632280
+      },
+      "gui_gap_ms": 47.0,
+      "request_ms": 281.0,
+      "roundtrip_ms": 16.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1059.9009,
+        "phase": 0.9009,
+        "analysis_age_ms": 65.2,
+        "render_ms": 1.3,
+        "delivery_ms": 40.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 48481,
+        "dropped_blocks": 0,
+        "queue_depth": 4,
+        "age_ms": 0
+      }
+    }
+  ],
+  "last_incident": {
+    "time": "2026-11-06T20:29:14.349-03:00",
+    "utc": "2026-11-06T23:29:14.349+00:00",
+    "level": "ERROR",
+    "code": "output.frame_timeout",
+    "message": "Prévia sem quadros novos por 750 ms; saída desarmada. Ative novamente após a prévia responder.",
+    "session": "386e36806bc7",
+    "elapsed_s": 862.391,
+    "context": {
+      "usb": {
+        "state": "connected",
+        "port": "COM5",
+        "armed": false,
+        "firmware": "0.37.0",
+        "frames": 11056,
+        "dropped": 0,
+        "fps": 20.0,
+        "last_frame": 1817.812,
+        "error": "",
+        "protocol": 2,
+        "pixels": [
+          120,
+          120,
+          120,
+          120
+        ],
+        "ack_ms": 16.0,
+        "uptime_ms": 632338
+      },
+      "sources": [
+        "strip-82",
+        "strip-83",
+        "strip-84",
+        "strip-82"
+      ],
+      "preview_only": false,
+      "request_age_ms": 141.0,
+      "since_good_ms": 781.0,
+      "gui_gap_ms": 47.0,
+      "roundtrip_ms": 594.0,
+      "health": {
+        "gate": "emitindo",
+        "source": "live",
+        "structure": "buildup",
+        "context": "buildup",
+        "effect": "auto",
+        "mix": "layers",
+        "bpm": 127,
+        "beat": 1059.9009,
+        "phase": 0.9009,
+        "analysis_age_ms": 65.2,
+        "render_ms": 1.3,
+        "delivery_ms": 40.6
+      },
+      "audio": {
+        "state": "running",
+        "error": "",
+        "blocks": 48524,
+        "dropped_blocks": 0,
+        "queue_depth": 0,
+        "age_ms": 0
+      }
+    },
+    "sequence": 43
+  },
+  "disk_error": "",
+  "writes_lost": 0,
+  "limits": {
+    "events": 1000,
+    "health": 60,
+    "pending": 256,
+    "disk_files": 4,
+    "file_bytes": 2000000
+  }
+}

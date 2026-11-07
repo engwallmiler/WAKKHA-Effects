@@ -1,0 +1,137 @@
+{
+  "version": "0.44.0",
+  "physical_device_used": false,
+  "layouts": [
+    {
+      "area": "stage",
+      "stage": [
+        19,
+        105,
+        1156,
+        418
+      ],
+      "panel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "effects",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "layout",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    },
+    {
+      "area": "library",
+      "stage": [
+        19,
+        105,
+        674.8125,
+        418
+      ],
+      "panel": [
+        714.8125,
+        50,
+        471.1875,
+        650
+      ],
+      "viewport": [
+        1194,
+        708
+      ],
+      "scroll": [
+        1194,
+        708
+      ]
+    }
+  ],
+  "copy_checks": 12,
+  "fullscreen_escape_f11_button": true,
+  "complete_frame_parity": true,
+  "single_repertoire_and_reference_visible": true,
+  "reference_button_toggles_off_and_on": true,
+  "manual_navigation_visible_compact": {
+    "x": 19,
+    "y": 279,
+    "width": 456,
+    "height": 38,
+    "bottom": 317,
+    "viewport": 508
+  },
+  "minimum_window_layout": {
+    "stage": [
+      19,
+      128,
+      456,
+      140
+    ],
+    "panel": [
+      496,
+      50,
+      350,
+      450
+    ],
+    "viewport": [
+      854,
+      508
+    ],
+    "scroll": [
+      854,
+      508
+    ]
+  },
+  "reload_exits_fullscreen": true,
+  "errors": [],
+  "passed": true,
+  "closed_cleanly": true
+}

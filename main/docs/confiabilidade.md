@@ -1,4 +1,10 @@
-# Confiabilidade e operação prolongada — 0.41.0
+# Confiabilidade e operação prolongada — 0.44.0
+
+**Rodada 0.44:** o Manual e seus seis padrões novos foram isolados dos caminhos de captura, análise, Link, MIDI, transporte USB e idade dos quadros. Foram conferidos 93 módulos Python preservados contra a 0.43. A navegação manual mantém no máximo dois descritores na fusão e não cria snapshots de misturas; os desenhos usam funções periódicas limitadas por pixel. Repertórios personalizados existentes não ganham novos efeitos sem seleção. [Operação](manual-e-padroes-v0.44.md) · [Verificações e limites](validacao.md).
+
+**Rodada 0.43:** a idade física usa o início da geração no renderizador, com limite conservador calibrado entre relógios. Antes, uma espera na fila podia ser confundida com idade do RGB e impedir recuperação. O ajuste considera o relógio Windows de resolução grossa, renova referências rápidas e limita seu reaproveitamento a um segundo. Sem histórico crescente ou novo worker. Mantém rejeição de dados antigos, desarme persistente, blackout e watchdog. O incidente real e a incerteza sobre a origem da espera estão [documentados](correcao-falha1-v0.43.md).
+
+**Rodada 0.42:** duração de drop limitada a oito tempos pelo BPM, sem esperar confirmações faltantes. Idade do impacto evita ganhar duração por entrega atrasada; identificadores consumidos não reiniciam. Cancelar a referência das trocas limpa o estado visual/MIDI. São cálculos escalares, sem novos buffers, threads ou FFTs. [Operação e testes](drop-bpm-e-referencia-v0.42.md).
 
 Esta rodada corrige gargalos identificados no código e acrescenta um ensaio repetível. Ainda não foi realizado um teste de seis ou oito horas reais nesta entrega. O avanço acelerado do relógio musical verifica contadores e evolução de padrões; não substitui tempo real de execução, drivers, temperatura, alimentação ou comunicação com hardware.
 

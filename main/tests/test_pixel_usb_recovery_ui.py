@@ -101,3 +101,40 @@ def test_old_preview_callback_cannot_release_a_new_preview_request(armed):
     old(frame())
     assert control._inflight==current and current is not None and not control.runtime.frames
     callback(calls)(frame());assert len(control.runtime.frames)==1
+
+
+def timed_frame(start,end=None):
+    data=json.loads(frame());data['_timing']={'version':1,'epoch':1,'started_ms':start*1000,'completed_ms':(start if end is None else end)*1000}
+    return json.dumps(data)
+
+
+def test_falha1_594ms_renderer_queue_does_not_disarm_with_fresh_sample(armed):
+    control,calls,clock,journal=armed
+    clock[0]=100.016;callback(calls)(timed_frame(1,1.002))
+    clock[0]=100.047;control._tick();delayed=callback(calls)
+    clock[0]=100.328;control._tick();assert control._recovering and control.runtime.status().armed
+    clock[0]=100.641;delayed(timed_frame(1.630,1.633))
+    assert control.runtime.status().armed and not control._recovering
+    assert control.runtime.frames[-1][1]>100.5
+    clock[0]=100.687;control._tick()
+    clock[0]=100.828;callback(calls)(timed_frame(1.815,1.818))
+    assert control.runtime.status().armed and 'output.frame_timeout' not in codes(journal)
+    assert control._frame_timing['age_bound_ms']<100
+
+
+def test_delayed_delivery_of_previously_generated_rgb_remains_rejected(armed):
+    control,calls,clock,journal=armed
+    clock[0]=100.016;callback(calls)(timed_frame(1,1.002));count=len(control.runtime.frames)
+    clock[0]=100.047;control._tick()
+    clock[0]=100.641;callback(calls)(timed_frame(1.047,1.049))
+    assert len(control.runtime.frames)==count and control._recovering
+    clock[0]=100.828;control._tick()
+    assert not control.runtime.status().armed and 'output.frame_timeout' in codes(journal)
+
+
+def test_hard_disarm_or_manual_off_cannot_be_rearmed_by_fresh_timed_callback(armed):
+    control,calls,clock,journal=armed
+    clock[0]=100.016;callback(calls)(timed_frame(1,1.002))
+    clock[0]=100.047;control._tick();delayed=callback(calls)
+    clock[0]=100.828;control._tick();assert not control.runtime.status().armed
+    delayed(timed_frame(1.815,1.818));assert len(control.runtime.frames)==1

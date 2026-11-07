@@ -34,7 +34,7 @@ O botão **Marcar compasso 1**, junto dos controles do palco, inicia a contagem 
 
 Para uma troca regular, escolha **Variação automática → A cada N compassos**. **Compassos + novos elementos**, **Somente novos elementos** e **Manter padrão** continuam disponíveis com suas regras; o botão de referência não muda essa seleção.
 
-O texto abaixo da prévia mostra o compasso contado desde a marcação e quanto falta para a próxima troca. Pressione novamente para começar uma nova contagem. A referência também funciona nas apresentações em camadas.
+O texto abaixo da prévia mostra o compasso contado desde a marcação e quanto falta para a próxima troca. **Desde a 0.42**, outro toque desmarca a referência e apaga o destaque/LED. Para uma nova contagem, desmarque e marque no instante desejado. A referência também funciona nas apresentações em camadas. [Comportamento atualizado](drop-bpm-e-referencia-v0.42.md).
 
 Essa marcação é própria das trocas: **não muda BPM, grade do áudio/Link, Sincronizar 1/8 nem Sincronizar pico**. Mudanças de estrutura têm prioridade, preservando a referência do ciclo de trocas. Correções de relógio deslocam origem e prazos juntos; períodos perdidos durante uma interrupção são descartados, sem executar uma sequência de efeitos atrasados.
 

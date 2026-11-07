@@ -1,4 +1,6 @@
-# Retorno do drop — versão 0.24
+# Retorno do drop — versão 0.42
+
+**Duração 0.42:** os critérios de entrada continuam acústicos; após a entrada, o drop dura **oito tempos estimados pelo BPM**, sem aguardar oito confirmações. O contador acústico permanece separado, com prazo no analisador e no simulador. [Operação e limites](drop-bpm-e-referencia-v0.42.md). As notas de versões anteriores abaixo descrevem a evolução da detecção.
 
 **Atualização 0.29:** clique de 2–6 kHz previamente aprendido pode apoiar a identidade curta quando o baixo reduz o contraste da mixagem. Exige corpo/queda/harmônicos compatíveis, grade e margem de potência; preserva o contador de oito kicks confirmados. [Critérios e avaliação](avaliacao-abordagens-v0.29.md) · [Replay com rótulos](replay-causal.md).
 
@@ -54,7 +56,7 @@ Durante o retorno armado, um segundo caminho procura um aumento grave real quand
 
 Com um provedor Link válido, conectado e selecionado, a fase externa valida a janela do ataque. A decisão deixa de depender de quatro novos kicks corrigindo uma grade acústica antiga. O primeiro ataque isolado não reposiciona essa grade. Sem Link, após ausência longa ou pausa recente, a previsão aceita uma tolerância limitada a 18% do tempo para o retorno forte; o contratempo permanece fora dessa janela. Uma mudança maior de fase exige a correção acústica consistente já existente.
 
-O relógio, sozinho, nunca cria um kick. Depois da entrada, o drop continua contando oito confirmações acústicas, incluindo a primeira; a publicação duplicada desse impacto não avança o contador. A análise do transiente continua ativa durante esses oito kicks, com validação de timbre e potência, para o baixo sustentado não travar o contador. O novo caminho contextual é usado no retorno e no drop, sem relaxar globalmente o detector geral de kicks.
+O relógio, sozinho, nunca cria um kick. Depois da entrada, a duração é de oito tempos estimados pelo BPM; confirmações acústicas são contabilizadas separadamente, e a publicação duplicada do impacto não avança esse contador. A análise do transiente continua ativa, com validação de timbre e potência. O caminho contextual é usado no retorno e no drop, sem relaxar globalmente o detector geral de kicks.
 
 ## Potência do groove e kicks do build-up
 

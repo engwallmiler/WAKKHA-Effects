@@ -1,0 +1,16 @@
+{
+  "version": "0.44.1",
+  "passed": true,
+  "intervals": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "unit": "grid beats",
+  "python_tests_passed": 76,
+  "javascript_tests_passed": 234,
+  "python_modules_preserved": 93,
+  "html_changes_only_selector_and_project_validation": true,
+  "physical_device_used": false
+}

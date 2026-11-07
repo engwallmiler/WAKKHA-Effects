@@ -24,6 +24,7 @@ def mean_db(values):
 
 class StructureTracker:
     DROP_KICKS = 8
+    DROP_BEATS = 8
 
     def __init__(self, config: BeatConfig | None = None, diagnostics=None):
         self.config = config or BeatConfig()
@@ -68,6 +69,7 @@ class StructureTracker:
         self._tension = 0.0
         self._drop_id = 0
         self._drop_at = None
+        self._drop_period = 0.0
         self._return_context = "breakdown"
         self._withdrawal_at = None
         self._drop_count = 0
@@ -407,7 +409,7 @@ class StructureTracker:
                     self._roll_candidate_at = None
                 sustained_roll = self._roll_candidate_at is not None and at - self._roll_candidate_at >= 0.35
                 if self._state == "drop":
-                    self._drop_count += len(new_kicks)
+                    self._drop_count = min(self.DROP_KICKS,self._drop_count+len(new_kicks))
                     withdrawn = gap > max(1.5,3*self._period) and suppression>=7
                     continued = self._drop_detector.continue_drop(new_kicks,at,withdrawn)
                     if not continued:
@@ -416,10 +418,11 @@ class StructureTracker:
                         self._break_rate=max(.5,rate);self._pending_kick=None;self._pending_descriptor=None
                         self._return_armed=True
                         self._change(self._return_context,at,.65,self._tension)
-                    # Falha pontual de confirmação não encerra a cena antes de oito
-                    # kicks. Uma retirada real exige também queda sustentada dos graves.
+                    # Duração musical independente de falhas/duplicações do detector.
+                    # O período é fixado no impacto; não cria kicks previstos.
                     withdrawn = gap > max(1.5, 3 * self._period) and suppression >= 7
-                    ended = self._drop_count > self.DROP_KICKS or withdrawn
+                    elapsed = at-self._drop_at if self._drop_at is not None else 0
+                    ended = (self._drop_period>0 and elapsed>=self.DROP_BEATS*self._drop_period-1e-9) or withdrawn
                     if ended and self._state=="drop":
                         self._drop_detector.phase="complete"
                         self._drop_count = 0
@@ -469,6 +472,7 @@ class StructureTracker:
                         self._drop_id += 1
                         self._withdrawal_at=None
                         self._drop_at = pending.occurred_at
+                        self._drop_period = self._period
                         self._drop_count = self._phrase_count = 1
                         self._grid.reset_phrase(pending.occurred_at)
                         self._break_at = None
@@ -479,7 +483,8 @@ class StructureTracker:
                         self._change("groove", at, 0.5, 0.0)
                 if self._state == "drop":
                     target, confidence = 1.0, 0.85
-                    reason = f"Retorno do kick e dos graves; alta energia no kick {self._drop_count}/8. "+("Continuidade rítmica confirmada." if self._drop_detector.phase=="confirmed" else "Impacto imediato; verificando continuidade rítmica.")
+                    position=min(self.DROP_BEATS,1+int(max(0,at-self._drop_at)/self._drop_period))
+                    reason = f"Drop no tempo estimado {position}/8 pelo BPM; {self._drop_count} kicks confirmados. "+("Continuidade rítmica confirmada." if self._drop_detector.phase=="confirmed" else "Impacto imediato; verificando continuidade rítmica.")
                 elif self._state in ("breakdown", "buildup"):
                     rise = max(0.0, high - self._break_high)
                     acceleration = max(0.0, rate / self._break_rate - 1) if regular else 0.0
